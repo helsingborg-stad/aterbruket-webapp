@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-aterbruketwebapp-dev-224145-authRole",
+      "UnauthRoleArn": "arn:aws:iam::165945531802:role/amplify-aterbruketwebapp-dev-224145-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::165945531802:role/amplify-aterbruketwebapp-dev-224145-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-aterbruketwebapp-dev-224145-deployment",
+      "UnauthRoleName": "amplify-aterbruketwebapp-dev-224145-unauthRole",
+      "StackName": "amplify-aterbruketwebapp-dev-224145",
+      "StackId": "arn:aws:cloudformation:eu-west-1:165945531802:stack/amplify-aterbruketwebapp-dev-224145/30a23310-074b-11eb-bbf3-0ae0d664c880",
+      "AmplifyAppId": "d21bj89y0jdxx1"
+    }
+  }
+}

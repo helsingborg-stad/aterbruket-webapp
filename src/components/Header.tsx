@@ -1,9 +1,11 @@
-import React, { FC, useState } from "./node_modules/react";
+/* eslint-disable react/button-has-type */
+import React, { FC } from "react";
 
 const Header: FC = () => {
   return (
     <header>
       <p>Återbruket</p>
+      <button>AddItem</button>
     </header>
   );
 };

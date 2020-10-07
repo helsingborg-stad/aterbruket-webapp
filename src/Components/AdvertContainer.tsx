@@ -4,7 +4,7 @@ import React from "react";
 import { ListAdvertisementsQuery } from "../API";
 import { listAdvertisements } from "../graphql/queries";
 
-class AdvertContainer extends React.Component<{}, any> {
+class AdvertContainer extends React.Component<unknown, any> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -12,7 +12,7 @@ class AdvertContainer extends React.Component<{}, any> {
     };
   }
 
-  async componentDidMount() {
+  async componentDidMount(): Promise<void> {
     const result = (await API.graphql({
       query: listAdvertisements,
     })) as GraphQLResult<ListAdvertisementsQuery>;

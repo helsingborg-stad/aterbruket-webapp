@@ -1,24 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Redirect, Route, BrowserRouter as Router } from 'react-router-dom';
+// import { NavLink, NavLinkProps, match, Link, RouteComponentProps, LinkProps, HashRouter } from 'react-router-dom';
+
 import './App.css';
+import Home from './pages/Home';
+import AddItem from './pages/AddItem';
+import ItemDetails from './pages/ItemDetails';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Router>
+        <div className='App'>
+          <Route exact path='/' component={Home} />
+          <Route exact path='/add' component={AddItem} />
+          <Route path='/item/:id' component={ItemDetails} />
+        </div>
+      </Router>
     </div>
   );
 }

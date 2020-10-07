@@ -1,37 +1,32 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
-import React from "react";
+import React, { FC, useEffect, useState } from "react";
 import { ListAdvertisementsQuery } from "../API";
 import { listAdvertisements } from "../graphql/queries";
+import Card from "../Components/Card";
 
-class AdvertContainer extends React.Component<{}, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      items: [],
-    };
-  }
+const AdvertContainer = () => {
+  const [items, setItems] = useState([]) as any;
 
-  async componentDidMount() {
+  const fetchItems = async () => {
     const result = (await API.graphql({
       query: listAdvertisements,
     })) as GraphQLResult<ListAdvertisementsQuery>;
     const advertItems = result.data?.listAdvertisements?.items;
 
-    this.setState({
-      items: advertItems,
-    });
-  }
+    setItems(advertItems);
+  };
 
-  render() {
-    return (
-      <ul>
-        {this.state.items.map((item: { title: string }) => (
-          <li>{item.title}</li>
-        ))}
-      </ul>
-    );
-  }
-}
+  useEffect(() => {
+    fetchItems();
+  });
 
+  return (
+    <ul>
+      {items.map((item: any) => (
+        <Card title={item.title} description={item.description} />
+      ))}
+    </ul>
+  );
+};
 export default AdvertContainer;

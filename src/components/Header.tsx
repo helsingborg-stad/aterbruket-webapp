@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState } from "./node_modules/react";
 
 const Header: FC = () => {
   return (

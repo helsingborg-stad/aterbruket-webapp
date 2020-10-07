@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Redirect, Route, BrowserRouter as Router } from 'react-router-dom';
-// import { NavLink, NavLinkProps, match, Link, RouteComponentProps, LinkProps, HashRouter } from 'react-router-dom';
 
 import './App.css';
 import Home from './pages/Home';
 import AddItem from './pages/AddItem';
 import ItemDetails from './pages/ItemDetails';
 
-function App() {
+const App: FC = () => {
   return (
     <div className='App'>
       <Router>
@@ -19,6 +18,6 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
 export default App;

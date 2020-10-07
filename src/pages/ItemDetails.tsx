@@ -1,10 +1,14 @@
-import React from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import React, { FC } from 'react';
+import { useParams } from 'react-router-dom';
 
-export default function ItemDetails() {
-  const match = useRouteMatch('/item/:id');
-
-  // let id = this.props.match.params.id; // fast hooks
-
-  return <h1>Details about item {match}</h1>;
+interface ParamTypes {
+  id: string;
 }
+
+const ItemDetails: FC<ParamTypes> = () => {
+  const { id } = useParams<ParamTypes>();
+
+  return <h1>Details about item with id: {id}</h1>;
+};
+
+export default ItemDetails;

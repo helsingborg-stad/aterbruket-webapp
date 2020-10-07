@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-export default function AddItem() {
+const AddItem: FC = () => {
   return <h1>Add Item</h1>;
-}
+};
+
+export default AddItem;

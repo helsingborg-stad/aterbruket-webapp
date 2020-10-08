@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Redirect, Route, BrowserRouter as Router } from "react-router-dom";
 
 import "./App.css";
@@ -8,12 +8,14 @@ import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
 
 const App: FC = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <div className="App">
       <Router>
-        <Header />
+        <Header modalOpen={modalOpen} setModalOpen={setModalOpen} />
         <Route exact path="/" component={Home} />
-        <Route exact path="/add" component={AddItem} />
+        <Route path="/add" component={AddItem} />
         <Route path="/item/:id" component={ItemDetails} />
       </Router>
     </div>

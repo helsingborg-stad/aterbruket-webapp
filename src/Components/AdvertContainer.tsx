@@ -3,7 +3,7 @@ import { API } from "aws-amplify";
 import React, { FC, useEffect, useState } from "react";
 import { ListAdvertisementsQuery } from "../API";
 import { listAdvertisements } from "../graphql/queries";
-import Card from "../Components/Card";
+import Card from "./Card";
 
 const AdvertContainer = () => {
   const [items, setItems] = useState([]) as any;

@@ -1,6 +1,6 @@
-import { GraphQLResult } from "@aws-amplify/api";
-import { API } from "aws-amplify";
-import React from "react";
+import { GraphQLResult } from "./node_modules/@aws-amplify/api";
+import { API } from "./node_modules/aws-amplify";
+import React from "./node_modules/react";
 import { ListAdvertisementsQuery } from "../API";
 import { listAdvertisements } from "../graphql/queries";
 

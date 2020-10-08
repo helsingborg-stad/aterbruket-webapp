@@ -5,7 +5,9 @@ export default function AdvertForm() {
 
   const {
     values,
-    handleChange,
+    handleInputChange,
+    handleTextAreaChange,
+    handleSubmit
   } = useForm({
     
       title: '',
@@ -15,8 +17,10 @@ export default function AdvertForm() {
 
   return (
     <div>
-      <form>
-        <input type="text" value={values.title} onChange={handleChange}></input>
+      <form onSubmit={handleSubmit}> 
+        <input type="text" value={values.title} onChange={handleInputChange}></input>
+        <textarea value={values.description} onChange={handleTextAreaChange}></textarea>
+        <button type="submit">Submit</button>
       </form>
     </div>
   )

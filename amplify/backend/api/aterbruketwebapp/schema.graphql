@@ -2,4 +2,7 @@ type Advertisement @model {
   id: ID!
   title: String!
   description: String
+  height: Int
+  width: Int
+  length: Int
 }

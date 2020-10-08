@@ -2,39 +2,34 @@ import { API, graphqlOperation } from "aws-amplify";
 import React, { useState, useEffect, useRef } from "react";
 import { createAdvertisement } from "../graphql/mutations";
 
-const useForm = (
-        initialValues: {title: string, description: string}
-    ) => {
-	const [values, setValues] = useState(initialValues || {});
-	
-	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const { target } = event;
-		const { value } = target;
-		event.persist();
-		setValues({ ...values, title: value });
-	};
+const useForm = (initialValues: {
+  title: string;
+  description: string;
+  length: number;
+  width: number;
+  height: number;
+}) => {
+  const [values, setValues] = useState(initialValues || {});
 
-	const handleTextAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-		const { target } = event;
-		const { value } = target;
-		event.persist();
-		setValues({ ...values, description: value });
-		console.log(values.description)
-	};
+  const handleInputChange = (event: React.ChangeEvent<any>) => {
+    const { target } = event;
+    const { name, value } = target;
 
-	const handleSubmit = async (event: any) => {
-		event.preventDefault()
-		await API.graphql(graphqlOperation(createAdvertisement, {input: values}))
-	}
+    setValues({ ...values, [name]: value });
+  };
 
-	  return {
-		  values,
-		  handleInputChange,
-		  handleTextAreaChange,
-		  handleSubmit
-	  }
-	  
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setValues(initialValues);
 
-}
+    await API.graphql(graphqlOperation(createAdvertisement, { input: values }));
+  };
+
+  return {
+    values,
+    handleInputChange,
+    handleSubmit,
+  };
+};
 
 export default useForm;

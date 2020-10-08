@@ -19,12 +19,16 @@ const AdvertContainer = () => {
 
   useEffect(() => {
     fetchItems();
-  });
+  }, []);
 
   return (
     <ul>
       {items.map((item: any) => (
-        <Card title={item.title} description={item.description} />
+        <Card
+          title={item.title}
+          description={item.description}
+          width={item.width}
+        />
       ))}
     </ul>
   );

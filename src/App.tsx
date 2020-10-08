@@ -3,9 +3,9 @@ import { Redirect, Route, BrowserRouter as Router } from "react-router-dom";
 
 import "./App.css";
 import Home from "./pages/Home";
+import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
-import Header from "./Components/Header";
 
 const App: FC = () => {
   return (

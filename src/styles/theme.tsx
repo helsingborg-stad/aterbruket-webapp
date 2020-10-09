@@ -1,7 +1,18 @@
-// theming for styled components goes in this file.
-import colors from './colors';
-const theme = {
-  ...colors,
+import { DefaultTheme } from "styled-components";
+
+declare module "styled-components" {
+  export interface DefaultTheme {
+    primaryColor: string;
+    secondaryColor: string;
+  }
+}
+
+export const lightTheme: DefaultTheme = {
+  primaryColor: "#333",
+  secondaryColor: "#666"
 };
 
-export default theme;
+export const darkTheme: DefaultTheme = {
+  primaryColor: "#fff",
+  secondaryColor: "#cacaca"
+};

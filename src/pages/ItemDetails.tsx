@@ -21,15 +21,17 @@ const DescTable = styled.table`
   margin: 0 auto;
 `;
 
-const DescThead = styled.thead``;
-
 const DescTbody = styled.tbody``;
 
-const DescTh = styled.th``;
-
-const DescTd = styled.td``;
+const DescTd = styled.td`
+  text-align: left;
+`;
 
 const DescTr = styled.tr``;
+
+const DescArticle = styled.article``;
+
+const DescP = styled.p``;
 
 interface ParamTypes {
   id: string;
@@ -52,20 +54,21 @@ const ItemDetails: FC<ParamTypes> = () => {
             <DescTd>{id}</DescTd>
           </DescTr>
           <DescTr>
-            <DescTd>Measurement</DescTd>
+            <DescTd>Measurement:</DescTd>
             <DescTd>20 x 30 x 10 cm</DescTd>
           </DescTr>
           <DescTr>
-            <DescTd>Brand</DescTd>
+            <DescTd>Brand:</DescTd>
             <DescTd>IKEA</DescTd>
           </DescTr>
         </DescTbody>
-        {/* <li>Item id:{id} </li>
-        <li>Measurement: 20x10x10</li>
-        <li>Material: Wood</li>
-        <li>Brand: Ikea</li> */}
       </DescTable>
-      <article>Description</article>
+      <DescArticle>
+        <DescP>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta
+          asperiores nostrum quibusdam consequuntur.
+        </DescP>
+      </DescArticle>
       <div>
         <button>Back</button>
         <button>Reserve</button>

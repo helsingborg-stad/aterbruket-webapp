@@ -4,15 +4,12 @@ declare module "styled-components" {
   export interface DefaultTheme {
     primaryColor: string;
     secondaryColor: string;
+    width: number;
   }
 }
 
 export const lightTheme: DefaultTheme = {
   primaryColor: "#333",
-  secondaryColor: "#666"
-};
-
-export const darkTheme: DefaultTheme = {
-  primaryColor: "#fff",
-  secondaryColor: "#cacaca"
+  secondaryColor: "#666",
+  width: 350
 };

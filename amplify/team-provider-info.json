@@ -2,14 +2,27 @@
   "dev": {
     "awscloudformation": {
       "AuthRoleName": "amplify-aterbruketwebapp-dev-224145-authRole",
-      "UnauthRoleArn": "arn:aws:iam::165945531802:role/amplify-aterbruketwebapp-dev-224145-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::165945531802:role/amplify-aterbruketwebapp-dev-224145-authRole",
+      "UnauthRoleArn": "arn:aws:iam::543538172226:role/amplify-aterbruketwebapp-dev-224145-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::543538172226:role/amplify-aterbruketwebapp-dev-224145-authRole",
       "Region": "eu-west-1",
       "DeploymentBucketName": "amplify-aterbruketwebapp-dev-224145-deployment",
       "UnauthRoleName": "amplify-aterbruketwebapp-dev-224145-unauthRole",
       "StackName": "amplify-aterbruketwebapp-dev-224145",
       "StackId": "arn:aws:cloudformation:eu-west-1:165945531802:stack/amplify-aterbruketwebapp-dev-224145/30a23310-074b-11eb-bbf3-0ae0d664c880",
       "AmplifyAppId": "d21bj89y0jdxx1"
+    }
+  },
+  "sandbox": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-aterbruketwebapp-sandbox-130218-authRole",
+      "UnauthRoleArn": "arn:aws:iam::543538172226:role/amplify-aterbruketwebapp-sandbox-130218-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::543538172226:role/amplify-aterbruketwebapp-sandbox-130218-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-aterbruketwebapp-sandbox-130218-deployment",
+      "UnauthRoleName": "amplify-aterbruketwebapp-sandbox-130218-unauthRole",
+      "StackName": "amplify-aterbruketwebapp-sandbox-130218",
+      "StackId": "arn:aws:cloudformation:eu-west-1:543538172226:stack/amplify-aterbruketwebapp-sandbox-130218/e6c3f270-0a1e-11eb-b7a7-0615142f279a",
+      "AmplifyAppId": "d37t69ie5n7t16"
     }
   }
 }

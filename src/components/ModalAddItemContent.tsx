@@ -12,6 +12,7 @@ const ModalHeader = styled.header`
   button {
     height: 20px;
     width: auto;
+    cursor: pointer;
   }
 `;
 
@@ -22,7 +23,7 @@ const ContentDiv = styled.section`
   flex-direction: column;
 
   button {
-    margin-bottom: 20px;
+    cursor: pointer;
   }
 `;
 

@@ -6,6 +6,10 @@ import ModalAddItemContent from "./ModalAddItemContent";
 
 const HeaderDiv = styled.header`
   border: 1px solid black;
+
+  button {
+    cursor: pointer;
+  }
 `;
 
 type Props = {

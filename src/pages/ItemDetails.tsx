@@ -1,6 +1,6 @@
 /* eslint-disable react/button-has-type */
 import React, { FC } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 const MainDiv = styled.div`
@@ -39,7 +39,7 @@ interface ParamTypes {
 
 const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
-
+  let history = useHistory();
   return (
     <main>
       <h1>Designed Table</h1>
@@ -70,7 +70,7 @@ const ItemDetails: FC<ParamTypes> = () => {
         </DescP>
       </DescArticle>
       <div>
-        <button>Back</button>
+        <button onClick={() => history.goBack()}>Back</button>
         <button>Reserve</button>
       </div>
     </main>

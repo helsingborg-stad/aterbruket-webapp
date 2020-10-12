@@ -1,19 +1,19 @@
 interface DefaultTheme {
+  minHeight: number;
+  minWidth: number;
+  width: number;
+  padding: number[];
+  boxSizing: string;
   primaryColor: string;
   secondaryColor: string;
-  width: number;
-  height: number;
-  boxSizing: string;
-  minWidth: number;
-  maxWidth: number;
 }
 
-export const lightTheme: DefaultTheme = {
-  primaryColor: "#333",
-  secondaryColor: "red",
-  width: 375,
-  height: 667,
-  boxSizing: "border-box",
+export const theme: DefaultTheme = {
+  minHeight: 100,
   minWidth: 375,
-  maxWidth: 375
+  width: 100,
+  padding: [1, 0.2],
+  boxSizing: "border-box",
+  primaryColor: "#333",
+  secondaryColor: "lightgray"
 };

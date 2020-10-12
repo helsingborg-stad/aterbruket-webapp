@@ -3,12 +3,6 @@ import React, { FC } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
-const MainDiv = styled.div`
-  border: 1px solid black;
-  display: flex;
-  flex-direction: column;
-`;
-
 const ItemImg = styled.img`
   width: 300px;
   height: 300px;
@@ -17,21 +11,19 @@ const ItemImg = styled.img`
 
 const DescTable = styled.table`
   border: 1px solid purple;
-  width: 500px;
+  width: 90%;
   margin: 0 auto;
+
+  td {
+    text-align: left;
+  }
 `;
-
-const DescTbody = styled.tbody``;
-
-const DescTd = styled.td`
-  text-align: left;
-`;
-
-const DescTr = styled.tr``;
 
 const DescArticle = styled.article``;
 
-const DescP = styled.p``;
+const DescP = styled.p`
+  text-align: center;
+`;
 
 interface ParamTypes {
   id: string;
@@ -48,20 +40,20 @@ const ItemDetails: FC<ParamTypes> = () => {
         alt=""
       />
       <DescTable>
-        <DescTbody>
-          <DescTr>
-            <DescTd>Item number:</DescTd>
-            <DescTd>{id}</DescTd>
-          </DescTr>
-          <DescTr>
-            <DescTd>Measurement:</DescTd>
-            <DescTd>20 x 30 x 10 cm</DescTd>
-          </DescTr>
-          <DescTr>
-            <DescTd>Brand:</DescTd>
-            <DescTd>IKEA</DescTd>
-          </DescTr>
-        </DescTbody>
+        <tbody>
+          <tr>
+            <td>Item number:</td>
+            <td>{id}</td>
+          </tr>
+          <tr>
+            <td>Measurement:</td>
+            <td>20 x 30 x 10 cm</td>
+          </tr>
+          <tr>
+            <td>Brand:</td>
+            <td>IKEA</td>
+          </tr>
+        </tbody>
       </DescTable>
       <DescArticle>
         <DescP>

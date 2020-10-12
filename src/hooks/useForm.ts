@@ -7,7 +7,6 @@ const useForm = (initialValues: any, mutation: string) => {
   const handleInputChange = (event: React.ChangeEvent<any>) => {
     const { target } = event;
     const { name, value } = target;
-    console.log(value);
     setValues({ ...values, [name]: value });
   };
 

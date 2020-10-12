@@ -1407,8 +1407,6 @@
           },
           "defaultValue" : null
         }, {
-<<<<<<< HEAD
-=======
           "name" : "ge",
           "description" : null,
           "type" : {
@@ -1528,7 +1526,6 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
->>>>>>> develop
           "name" : "DESC",
           "description" : null,
           "isDeprecated" : false,

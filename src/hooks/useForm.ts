@@ -1,20 +1,13 @@
 import { API, graphqlOperation } from "aws-amplify";
 import React, { useState, useEffect, useRef } from "react";
-import { createAdvertisement } from "../graphql/mutations";
 
-const useForm = (initialValues: {
-  title: string;
-  description: string;
-  length: number;
-  width: number;
-  height: number;
-}) => {
-  const [values, setValues] = useState(initialValues || {});
+const useForm = (initialValues: any, mutation: string) => {
+  const [values, setValues] = useState(initialValues);
 
   const handleInputChange = (event: React.ChangeEvent<any>) => {
     const { target } = event;
     const { name, value } = target;
-
+    console.log(value);
     setValues({ ...values, [name]: value });
   };
 
@@ -22,7 +15,7 @@ const useForm = (initialValues: {
     event.preventDefault();
     setValues(initialValues);
 
-    await API.graphql(graphqlOperation(createAdvertisement, { input: values }));
+    await API.graphql(graphqlOperation(mutation, { input: values }));
   };
 
   return {

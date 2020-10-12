@@ -41,7 +41,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
 
   return (
-    <MainDiv>
+    <main>
       <h1>Designed Table</h1>
       <ItemImg
         src="https://storage.googleapis.com/web-pro-nilo-kavehome/media/cache/c4/10/c410118add2b5cb169d71a0c20596f50.jpg"
@@ -73,7 +73,7 @@ const ItemDetails: FC<ParamTypes> = () => {
         <button>Back</button>
         <button>Reserve</button>
       </div>
-    </MainDiv>
+    </main>
   );
 };
 

@@ -24,7 +24,7 @@ const AppContainer = styled.div`
 
   main {
     border: 1px black solid;
-    min-width: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;

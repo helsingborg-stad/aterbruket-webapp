@@ -12,7 +12,7 @@ const MainDiv = styled.div`
 const ItemImg = styled.img`
   width: 300px;
   height: 300px;
-  margin: 0 auto;
+  margin: 0;
 `;
 
 const DescTable = styled.table`

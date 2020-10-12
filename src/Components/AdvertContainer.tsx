@@ -19,7 +19,7 @@ const AdvertContainer = () => {
 
   useEffect(() => {
     fetchItems();
-  });
+  }, []);
 
   return (
     <ul>

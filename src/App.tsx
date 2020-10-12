@@ -1,10 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Redirect, Route, BrowserRouter as Router } from "react-router-dom";
-import { ThemeProvider } from "styled-components";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
 
 import "./App.css";
-import { theme } from "./styles/theme";
+import theme from "./styles/theme";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
@@ -29,11 +28,13 @@ const AppContainer = styled.div`
 `;
 
 const App: FC = () => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <ThemeProvider theme={theme}>
       <AppContainer>
         <Router>
-          <Header />
+          <Header modalOpen={modalOpen} setModalOpen={setModalOpen} />
           <Route exact path="/" component={Home} />
           <Route exact path="/add" component={AddItem} />
           <Route path="/item/:id" component={ItemDetails} />

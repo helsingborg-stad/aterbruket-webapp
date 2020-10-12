@@ -8,12 +8,14 @@ interface DefaultTheme {
   secondaryColor: string;
 }
 
-export const theme: DefaultTheme = {
+const theme: DefaultTheme = {
   minHeight: 100,
   minWidth: 375,
   width: 100,
   padding: [1, 0.2],
   boxSizing: "border-box",
   primaryColor: "#333",
-  secondaryColor: "lightgray"
+  secondaryColor: "lightgray",
 };
+
+export default theme;

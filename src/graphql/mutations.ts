@@ -11,6 +11,9 @@ export const createAdvertisement = /* GraphQL */ `
       id
       title
       description
+      height
+      width
+      length
       createdAt
       updatedAt
     }
@@ -25,6 +28,9 @@ export const updateAdvertisement = /* GraphQL */ `
       id
       title
       description
+      height
+      width
+      length
       createdAt
       updatedAt
     }
@@ -39,6 +45,9 @@ export const deleteAdvertisement = /* GraphQL */ `
       id
       title
       description
+      height
+      width
+      length
       createdAt
       updatedAt
     }

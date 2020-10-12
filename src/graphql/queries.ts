@@ -8,6 +8,9 @@ export const getAdvertisement = /* GraphQL */ `
       id
       title
       description
+      height
+      width
+      length
       createdAt
       updatedAt
     }
@@ -24,6 +27,9 @@ export const listAdvertisements = /* GraphQL */ `
         id
         title
         description
+        height
+        width
+        length
         createdAt
         updatedAt
       }

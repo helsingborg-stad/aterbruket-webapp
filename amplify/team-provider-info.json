@@ -48,6 +48,18 @@
       "StackName": "amplify-aterbruketwebapp-asandbox-110019",
       "StackId": "arn:aws:cloudformation:eu-west-1:095960699561:stack/amplify-aterbruketwebapp-asandbox-110019/5b568bb0-0c69-11eb-bd02-0655dfaca74c",
       "AmplifyAppId": "d22mzvr38iexm2"
+  },
+  "jsandbox": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-aterbruketwebapp-jsandbox-111327-authRole",
+      "UnauthRoleArn": "arn:aws:iam::594503562257:role/amplify-aterbruketwebapp-jsandbox-111327-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::594503562257:role/amplify-aterbruketwebapp-jsandbox-111327-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-aterbruketwebapp-jsandbox-111327-deployment",
+      "UnauthRoleName": "amplify-aterbruketwebapp-jsandbox-111327-unauthRole",
+      "StackName": "amplify-aterbruketwebapp-jsandbox-111327",
+      "StackId": "arn:aws:cloudformation:eu-west-1:594503562257:stack/amplify-aterbruketwebapp-jsandbox-111327/317928f0-0c6b-11eb-b7a7-0615142f279a",
+      "AmplifyAppId": "d3los6q8580i0m"
     }
   }
 }

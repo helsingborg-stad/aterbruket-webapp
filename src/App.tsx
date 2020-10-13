@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
-import AdvertContainer from "./components/AdvertContainer"
+import AdvertContainer from "./components/AdvertContainer";
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.minHeight}vh`};
@@ -21,10 +21,12 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   main {
     border: 1px black solid;
-    min-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -40,7 +42,7 @@ const App: FC = () => {
           <Route exact path="/add" component={AddItem} />
           <Route path="/item/:id" component={ItemDetails} />
         </Router>
-        <AdvertContainer/>
+        <AdvertContainer />
       </AppContainer>
     </ThemeProvider>
   );

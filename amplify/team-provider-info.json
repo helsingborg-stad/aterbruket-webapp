@@ -36,6 +36,7 @@
       "StackName": "amplify-aterbruketwebapp-esandbox-145645",
       "StackId": "arn:aws:cloudformation:eu-west-1:165945531802:stack/amplify-aterbruketwebapp-esandbox-145645/e3f72390-0a2e-11eb-bc13-0275bf88180c",
       "AmplifyAppId": "d21bj89y0jdxx1"
+    }
   },
   "asandbox": {
     "awscloudformation": {
@@ -48,6 +49,7 @@
       "StackName": "amplify-aterbruketwebapp-asandbox-110019",
       "StackId": "arn:aws:cloudformation:eu-west-1:095960699561:stack/amplify-aterbruketwebapp-asandbox-110019/5b568bb0-0c69-11eb-bd02-0655dfaca74c",
       "AmplifyAppId": "d22mzvr38iexm2"
+    }
   },
   "jsandbox": {
     "awscloudformation": {

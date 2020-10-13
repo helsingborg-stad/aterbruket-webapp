@@ -5,10 +5,11 @@ import { IFields } from '../interfaces/IForm'
 export default function AdvertForm(props: { fields: IFields[], mutation: string }) {
   const { values, handleInputChange, handleSubmit } = useForm({}, props.mutation);
 
-  const fields = props.fields.map((field) => {
+  const fields = props.fields.map((field, index) => {
     if (field.fieldType === "input") {
       return (
         <input
+          key={index}
           type={field.dataType}
           name={field.name}
           onChange={handleInputChange}
@@ -18,6 +19,7 @@ export default function AdvertForm(props: { fields: IFields[], mutation: string 
     } else if (field.fieldType === "textarea") {
       return (
         <textarea
+          key={index}
           name={field.name}
           onChange={handleInputChange}
           value={values[field.name]}

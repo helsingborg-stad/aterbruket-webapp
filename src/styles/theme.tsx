@@ -15,7 +15,7 @@ const theme: DefaultTheme = {
   padding: [1, 0.2],
   boxSizing: "border-box",
   primaryColor: "#333",
-  secondaryColor: "lightgray",
+  secondaryColor: "lightgray"
 };
 
 export default theme;

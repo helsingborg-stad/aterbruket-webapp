@@ -15,9 +15,6 @@ export default function QRCodeContainer(props:{id: string}) {
         )) as GraphQLResult<GetAdvertisementQuery>;
         const qrValue = JSON.stringify(result.data?.getAdvertisement);
         setItem(qrValue);
-        console.log(typeof result)
-        console.log(result)
-        
     };
     
     useEffect(() => {

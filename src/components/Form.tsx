@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/destructuring-assignment */
 import QRCode from "qrcode.react";
 import React from "react";
@@ -26,7 +28,7 @@ export default function AdvertForm(props: {
             value={values[field.name]}
           />
 
-          <QRCode value={"Johanna"} level="L" />
+          <QRCode value={values[field.name]} />
         </div>
       );
     }

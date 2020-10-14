@@ -38,9 +38,18 @@ const App: FC = () => {
 
   const fields = [
     {
-      name: "qrValue",
+      name: "title",
       dataType: "text",
       fieldType: "input",
+    },
+    {
+      name: "width",
+      dataType: "number",
+      fieldType: "input",
+    },
+    {
+      name: "description",
+      fieldType: "textarea",
     },
   ];
 

@@ -1,9 +1,9 @@
 import API, { GraphQLResult } from "@aws-amplify/api";
 import { graphqlOperation } from "aws-amplify";
 import React, { useEffect, useState } from "react";
+import QRCode from "qrcode.react";
 import { GetAdvertisementQuery } from "../API";
 import { getAdvertisement } from "../graphql/queries";
-import QRCode from "qrcode.react";
 
 export default function QRCodeContainer(props: { id: string }) {
   const [item, setItem] = useState({}) as any;
@@ -22,7 +22,7 @@ export default function QRCodeContainer(props: { id: string }) {
 
   return (
     <div>
-      <QRCode value={item}></QRCode>
+      <QRCode value={item} />
     </div>
   );
 }

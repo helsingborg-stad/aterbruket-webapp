@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 import React, { FC, useState } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";

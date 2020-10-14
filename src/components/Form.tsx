@@ -27,8 +27,6 @@ export default function AdvertForm(props: {
             onChange={handleInputChange}
             value={values[field.name]}
           />
-
-          <QRCode value={values[field.name]} />
         </div>
       );
     }

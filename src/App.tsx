@@ -61,7 +61,7 @@ const App: FC = () => {
           <Route exact path="/add" component={AddItem} />
           <Route path="/item/:id" component={ItemDetails} />
         </Router>
-        <AdvertForm fields={fields} mutation={createAdvertisement}/>
+        <AdvertForm initialValues={{title: "Title", description: "", width: 0}} fields={fields} mutation={createAdvertisement}/>
         <AdvertContainer/>
       </AppContainer>
     </ThemeProvider>

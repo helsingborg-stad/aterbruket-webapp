@@ -8,9 +8,7 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
-import AdvertContainer from "./components/AdvertContainer"
-import AdvertForm from "./components/Form"
-import { createAdvertisement } from "./graphql/mutations";
+
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.minHeight}vh`};
@@ -35,23 +33,6 @@ const AppContainer = styled.div`
 const App: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const fields  = [
-    {
-      name: 'title',
-      dataType: 'text',
-      fieldType: 'input'
-    },
-    {
-      name: 'width',
-      dataType: 'number',
-      fieldType: 'input'
-    },
-    {
-      name: 'description',
-      fieldType: 'textarea'
-    }
-  ]
-  
   return (
     <ThemeProvider theme={theme}>
       <AppContainer>
@@ -61,8 +42,6 @@ const App: FC = () => {
           <Route exact path="/add" component={AddItem} />
           <Route path="/item/:id" component={ItemDetails} />
         </Router>
-        <AdvertForm initialValues={{title: "Title", description: "", width: 0}} fields={fields} mutation={createAdvertisement}/>
-        <AdvertContainer/>
       </AppContainer>
     </ThemeProvider>
   );

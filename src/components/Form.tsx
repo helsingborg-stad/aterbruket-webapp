@@ -5,11 +5,12 @@ import useForm from "../hooks/useForm";
 import { IFields } from "../interfaces/IForm";
 
 export default function AdvertForm(props: {
+  initialValues: any;
   fields: IFields[];
   mutation: string;
 }) {
   const { values, handleInputChange, handleSubmit } = useForm(
-    {},
+    props.initialValues,
     props.mutation
   );
 

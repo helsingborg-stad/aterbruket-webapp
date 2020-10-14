@@ -2,8 +2,8 @@ import React from "react";
 import useForm from "../hooks/useForm";
 import { IFields } from '../interfaces/IForm'
 
-export default function AdvertForm(props: { fields: IFields[], mutation: string }) {
-  const { values, handleInputChange, handleSubmit } = useForm({}, props.mutation);
+export default function AdvertForm(props: { initialValues:any, fields: IFields[], mutation: string }) {
+  const { values, handleInputChange, handleSubmit } = useForm(props.initialValues, props.mutation);
 
   const fields = props.fields.map((field, index) => {
     if (field.fieldType === "input") {

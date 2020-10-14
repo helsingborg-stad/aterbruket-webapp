@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
-import AdvertContainer from "./components/AdvertContainer"
+import AdvertContainer from "./components/AdvertContainer";
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.minHeight}vh`};
@@ -30,17 +30,26 @@ const AppContainer = styled.div`
 
 const App: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [alreadyAQRCode, setAlreadyAQRCode] = useState(false);
 
   return (
     <ThemeProvider theme={theme}>
       <AppContainer>
         <Router>
-          <Header modalOpen={modalOpen} setModalOpen={setModalOpen} />
+          <Header
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+            setAlreadyAQRCode={setAlreadyAQRCode}
+          />
           <Route exact path="/" component={Home} />
-          <Route exact path="/add" component={AddItem} />
+          <Route
+            exact
+            path="/add"
+            component={() => <AddItem alreadyAQRCode={alreadyAQRCode} />}
+          />
           <Route path="/item/:id" component={ItemDetails} />
         </Router>
-        <AdvertContainer/>
+        <AdvertContainer />
       </AppContainer>
     </ThemeProvider>
   );

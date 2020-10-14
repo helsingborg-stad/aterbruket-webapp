@@ -1,27 +1,7 @@
-import React, { FC, useState } from "react";
-import OpenCamera from "../components/OpenCamera";
-
-// interface Props {
-//   test: {
-//     delay: number;
-//     result: string;
-//   };
-//   setTest: React.Dispatch<
-//     React.SetStateAction<{
-//       delay: number;
-//       result: string;
-//     }>
-//   >;
-// }
+import React, { FC } from "react";
 
 const Home: FC = () => {
-  const [test, setTest] = useState({ delay: 500, result: "No result" });
-  return (
-    <main>
-      Home
-      <OpenCamera test={test} setTest={setTest} />
-    </main>
-  );
+  return <main>Home</main>;
 };
 
 export default Home;

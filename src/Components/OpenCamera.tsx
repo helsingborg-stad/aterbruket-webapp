@@ -49,7 +49,7 @@ const OpenCamera: FC<Props> = ({ test, setTest }) => {
         delay={300}
         onError={handleError}
         onScan={handleScan}
-        style={{ width: "100%" }}
+        style={{ width: "50%" }}
       />
       <p>
         {test.result} and {test.delay}

@@ -15,17 +15,28 @@ const HeaderDiv = styled.header`
 type Props = {
   modalOpen: boolean;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setAlreadyAQRCode: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Header: FC<Props> = ({ modalOpen, setModalOpen }) => {
+const Header: FC<Props> = ({ modalOpen, setModalOpen, setAlreadyAQRCode }) => {
   return (
     <HeaderDiv>
       <Modal modalOpen={modalOpen}>
-        <ModalAddItemContent setModalOpen={setModalOpen} />
+        <ModalAddItemContent
+          setModalOpen={setModalOpen}
+          setAlreadyAQRCode={setAlreadyAQRCode}
+        />
       </Modal>
 
       <h1>Återbruket</h1>
-      <button onClick={() => setModalOpen(true)}>Add Item</button>
+      <button
+        onClick={() => {
+          setModalOpen(true);
+          setAlreadyAQRCode(false);
+        }}
+      >
+        Add Item
+      </button>
     </HeaderDiv>
   );
 };

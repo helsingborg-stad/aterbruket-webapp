@@ -29,9 +29,13 @@ const ContentDiv = styled.section`
 
 type Props = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setAlreadyAQRCode: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const ModalAddItemContent: FC<Props> = ({ setModalOpen }) => (
+const ModalAddItemContent: FC<Props> = ({
+  setModalOpen,
+  setAlreadyAQRCode
+}) => (
   <>
     <ModalHeader>
       <h2>Add item modal</h2>
@@ -43,14 +47,28 @@ const ModalAddItemContent: FC<Props> = ({ setModalOpen }) => (
     <ContentDiv>
       <p>Does you item already have a QR-code on it?</p>
       <Link to="/add">
-        <button type="button" onClick={() => setModalOpen(false)}>
+        <button
+          type="button"
+          onClick={() => {
+            setModalOpen(false);
+            setAlreadyAQRCode(false);
+          }}
+        >
           No, the item does <strong>not</strong> have a QR-code
         </button>
       </Link>
 
-      <button type="button" onClick={() => setModalOpen(false)}>
-        Yes, the item does have a QR-code already
-      </button>
+      <Link to="/add">
+        <button
+          type="button"
+          onClick={() => {
+            setModalOpen(false);
+            setAlreadyAQRCode(true);
+          }}
+        >
+          Yes, the item does have a QR-code already
+        </button>
+      </Link>
     </ContentDiv>
   </>
 );

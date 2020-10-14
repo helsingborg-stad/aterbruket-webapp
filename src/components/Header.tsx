@@ -29,7 +29,7 @@ const Header: FC<Props> = ({ modalOpen, setModalOpen }) => {
       </Modal>
 
       <h1>Återbruket</h1>
-      <button onClick={() => setModalOpen(true)}>Add Item</button>
+      <button onClick={() => setModalOpen(true)}>Add item</button>
     </HeaderDiv>
   );
 };

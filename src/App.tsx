@@ -1,5 +1,6 @@
+/* eslint-disable import/no-named-as-default-member */
 import React, { FC, useState } from "react";
-import { Redirect, Route, BrowserRouter as Router } from "react-router-dom";
+import { Route, BrowserRouter as Router } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 
 import "./App.css";
@@ -8,7 +9,6 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
-import AdvertContainer from "./components/AdvertContainer";
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.minHeight}vh`};
@@ -21,10 +21,12 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   main {
     border: 1px black solid;
-    min-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -49,7 +51,6 @@ const App: FC = () => {
           />
           <Route path="/item/:id" component={ItemDetails} />
         </Router>
-        <AdvertContainer />
       </AppContainer>
     </ThemeProvider>
   );

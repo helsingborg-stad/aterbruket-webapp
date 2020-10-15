@@ -3,16 +3,16 @@ import { createPortal } from "react-dom";
 import styled from "styled-components";
 
 const ModalDiv = styled.div`
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50%;
-  height: 50%;
-  background-color: #d35098;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffa99b;
 `;
 
 const ContentWrapper = styled.div`
@@ -21,7 +21,7 @@ const ContentWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  border: 1px solid yellow;
+  border: 1px solid #1f3b56;
   flex-direction: column;
 `;
 

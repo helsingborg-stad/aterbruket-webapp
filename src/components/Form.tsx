@@ -4,13 +4,14 @@
 import React from "react";
 import useForm from "../hooks/useForm";
 import { IFields } from "../interfaces/IForm";
+import { Redirect } from "react-router-dom";
 
 export default function Form(props: {
   initialValues: any;
   fields: IFields[];
   mutation: string;
 }) {
-  const { values, handleInputChange, handleSubmit } = useForm(
+  const { values, handleInputChange, handleSubmit, redirect } = useForm(
     props.initialValues,
     props.mutation
   );
@@ -38,6 +39,10 @@ export default function Form(props: {
       );
     }
   });
+
+  if (redirect) {
+    return <Redirect to={`/item/${redirect}`} />;
+  }
 
   return (
     <div>

@@ -23,9 +23,9 @@ const AdvertContainer = () => {
 
   return (
     <ul>
-      {items.map((item: any, index: number) => (
+      {items.map((item: any) => (
         <Card
-          key={index}
+          key={item.id}
           title={item.title}
           description={item.description}
           width={item.width}

@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 const useForm = (initialValues: any, mutation: string) => {
   const [values, setValues] = useState(initialValues);
+  const [redirect, setRedirect] = useState(false);
 
   const handleInputChange = (event: React.ChangeEvent<any>) => {
     const { target } = event;
@@ -14,12 +15,19 @@ const useForm = (initialValues: any, mutation: string) => {
     event.preventDefault();
     setValues(initialValues);
 
-    const result = await API.graphql(graphqlOperation(mutation, { input: values }));
-    console.log(result.data?.createAdvertisement.id);
+    const result: any = await API.graphql(
+      graphqlOperation(mutation, { input: values })
+    );
+
+    console.log(typeof result.data.createAdvertisement.id);
+    if (result.data) {
+      setRedirect(result.data.createAdvertisement.id);
+    }
   };
 
   return {
     values,
+    redirect,
     handleInputChange,
     handleSubmit,
   };

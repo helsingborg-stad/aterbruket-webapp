@@ -77,7 +77,10 @@ const ItemDetails: FC<ParamTypes> = () => {
         <p>{item.description}</p>
         <QRCode id={id} />
       </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> update again
       <div>
         <button onClick={() => history.goBack()}>Back</button>
         <button>Reserve</button>

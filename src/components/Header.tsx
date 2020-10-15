@@ -5,11 +5,11 @@ import Modal from "./Modal";
 import ModalAddItemContent from "./ModalAddItemContent";
 
 const HeaderDiv = styled.header`
-  border: 1px solid black;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
+  background-color: #fbf7f0;
 
   button {
     cursor: pointer;

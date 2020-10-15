@@ -15,14 +15,13 @@ const AppContainer = styled.div`
   min-width: ${(props) => `${props.theme.minWidth}px`};
   width: ${(props) => `${props.theme.width}vw`};
   padding: ${(props) =>
-    `${props.theme.padding[0]}rem ${props.theme.padding[1]}rem`};
+    `${props.theme.padding[0]}rem ${props.theme.padding[1]}rem ${props.theme.padding[2]}rem ${props.theme.padding[3]}rem`};
   box-sizing: ${(props) => props.theme.boxSizing};
-  background-color: ${(props) => props.theme.secondaryColor};
+  background-color: ${(props) => props.theme.primaryColor};
   display: flex;
   flex-direction: column;
   align-items: center;
   main {
-    border: 1px black solid;
     width: 100%;
     display: flex;
     flex-direction: column;

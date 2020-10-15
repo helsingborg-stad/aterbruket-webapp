@@ -26,7 +26,7 @@ type Props = {
 };
 
 const AddItem: FC<Props> = ({ alreadyAQRCode }) => {
-  const [test, setTest] = useState({ delay: 500, result: "No result" });
+  const [qrCamera, setQrCamera] = useState({ delay: 500, result: "No result" });
   const history = useHistory();
 
   return (
@@ -39,7 +39,7 @@ const AddItem: FC<Props> = ({ alreadyAQRCode }) => {
           mutation={createAdvertisement}
         />
       ) : (
-        <OpenCamera test={test} setTest={setTest} />
+        <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
       )}
       <div>
         <button type="button" onClick={() => history.goBack()}>

@@ -2,14 +2,11 @@
 import React, { FC, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
-<<<<<<< HEAD
 import QRCode from "../components/QRCodeContainer";
-=======
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import { GetAdvertisementQuery } from "../API";
 import { getAdvertisement } from "../graphql/queries";
->>>>>>> redirect to the detail page and render the right info
 
 const ItemImg = styled.img`
   width: 300px;
@@ -77,10 +74,6 @@ const ItemDetails: FC<ParamTypes> = () => {
         <p>{item.description}</p>
         <QRCode id={id} />
       </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> update again
       <div>
         <button onClick={() => history.goBack()}>Back</button>
         <button>Reserve</button>

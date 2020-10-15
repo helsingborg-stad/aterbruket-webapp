@@ -12,7 +12,7 @@ const ModalDiv = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: #d35098;
+  background-color: #ffa99b;
 `;
 
 const ContentWrapper = styled.div`
@@ -21,7 +21,7 @@ const ContentWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  border: 1px solid yellow;
+  border: 1px solid #1f3b56;
   flex-direction: column;
 `;
 

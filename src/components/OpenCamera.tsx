@@ -1,5 +1,21 @@
 import React, { FC } from "react";
 import QrReader from "react-qr-reader";
+import styled from "styled-components";
+
+const CameraContainer = styled.section`
+  text-align: center;
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    height: 100%;
+    margin: 11% 0;
+  }
+
+  @media only screen and (min-width: 601px) {
+    width: 50%;
+    height: 50%;
+    margin: 2% 0;
+  }
+`;
 
 interface ITest {
   delay: number;
@@ -29,7 +45,7 @@ const OpenCamera: FC<Props> = ({ test, setTest }) => {
   };
 
   return (
-    <div>
+    <CameraContainer>
       <QrReader
         delay={300}
         onError={handleError}
@@ -37,7 +53,7 @@ const OpenCamera: FC<Props> = ({ test, setTest }) => {
         style={{ width: "100%" }}
       />
       <p>{test.result}</p>
-    </div>
+    </CameraContainer>
   );
 };
 

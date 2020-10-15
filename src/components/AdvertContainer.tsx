@@ -26,6 +26,7 @@ const AdvertContainer = () => {
       {items.map((item: any) => (
         <Card
           key={item.id}
+          id={item.id}
           title={item.title}
           description={item.description}
           width={item.width}

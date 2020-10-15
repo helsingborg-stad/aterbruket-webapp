@@ -2,6 +2,7 @@
 import React, { FC } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
+import QRCode from "../components/QRCodeContainer";
 
 const ItemImg = styled.img`
   width: 300px;
@@ -60,6 +61,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           asperiores nostrum quibusdam consequuntur.
         </DescP>
       </DescArticle>
+      <QRCode id={id} />
       <div>
         <button onClick={() => history.goBack()}>Back</button>
         <button>Reserve</button>

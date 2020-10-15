@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 interface Props {
   title: string;
@@ -21,7 +22,7 @@ const CardDiv = styled.div`
 
 const Card = (props: Props) => {
   return (
-    <CardDiv id={props.id} onClick={() => console.log(props.id)}>
+    <CardDiv as={Link} to={`/item/${props.id}`} id={props.id}>
       <h2>{props.title}</h2>
 
       <p>{props.description}</p>

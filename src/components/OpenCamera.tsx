@@ -17,14 +17,14 @@ const CameraContainer = styled.section`
   }
 `;
 
-interface ITest {
+interface IQrCamera {
   delay: number;
   result: string;
 }
 
 interface Props {
-  test: ITest;
-  setTest: React.Dispatch<
+  qrCamera: IQrCamera;
+  setQrCamera: React.Dispatch<
     React.SetStateAction<{
       delay: number;
       result: string;
@@ -32,11 +32,11 @@ interface Props {
   >;
 }
 
-const OpenCamera: FC<Props> = ({ test, setTest }) => {
+const OpenCamera: FC<Props> = ({ qrCamera, setQrCamera }) => {
   const handleScan = (result: any): any => {
     if (result) {
       console.log(result);
-      setTest(result);
+      setQrCamera(result);
     }
   };
 
@@ -52,7 +52,7 @@ const OpenCamera: FC<Props> = ({ test, setTest }) => {
         onScan={handleScan}
         style={{ width: "100%" }}
       />
-      <p>{test.result}</p>
+      <p>{qrCamera.result}</p>
     </CameraContainer>
   );
 };

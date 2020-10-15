@@ -1,11 +1,19 @@
+import React, { FC, useEffect, useState } from "react";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
-import React, { FC, useEffect, useState } from "react";
+import styled from "styled-components";
 import { ListAdvertisementsQuery } from "../API";
 import { listAdvertisements } from "../graphql/queries";
 import Card from "./Card";
 
-const AdvertContainer = () => {
+const AdvertContainerDiv = styled.div`
+  width: 90%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const AdvertContainer: FC = () => {
   const [items, setItems] = useState([]) as any;
 
   const fetchItems = async () => {
@@ -22,7 +30,7 @@ const AdvertContainer = () => {
   }, []);
 
   return (
-    <ul>
+    <AdvertContainerDiv>
       {items.map((item: any) => (
         <Card
           key={item.id}
@@ -32,7 +40,7 @@ const AdvertContainer = () => {
           width={item.width}
         />
       ))}
-    </ul>
+    </AdvertContainerDiv>
   );
 };
 export default AdvertContainer;

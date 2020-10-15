@@ -47,7 +47,7 @@ const OpenCamera: FC<Props> = ({ qrCamera, setQrCamera }) => {
   return (
     <CameraContainer>
       <QrReader
-        delay={300}
+        delay={qrCamera.delay}
         onError={handleError}
         onScan={handleScan}
         style={{ width: "100%" }}

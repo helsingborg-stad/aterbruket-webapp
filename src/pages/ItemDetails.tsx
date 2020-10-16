@@ -2,9 +2,9 @@
 import React, { FC, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import QRCode from "../components/QRCodeContainer";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
+import QRCode from "../components/QRCodeContainer";
 import { GetAdvertisementQuery } from "../API";
 import { getAdvertisement } from "../graphql/queries";
 
@@ -15,9 +15,8 @@ const ItemImg = styled.img`
 `;
 
 const Table = styled.table`
-  border: 1px solid purple;
   width: 90%;
-  margin: 0 auto;
+  margin: 10px auto;
   td {
     text-align: left;
   }
@@ -65,13 +64,13 @@ const ItemDetails: FC<ParamTypes> = () => {
             <td>Brand:</td>
             <td>IKEA</td>
           </tr>
+          <tr>
+            <td>Description:</td>
+            <td>{item.description}</td>
+          </tr>
         </tbody>
       </Table>
       <div>
-        <p>
-          <strong>Description</strong>
-        </p>
-        <p>{item.description}</p>
         <QRCode id={id} />
       </div>
       <div>

@@ -15,19 +15,25 @@ const CardDiv = styled.div`
   margin-top: 10px;
   border-radius: 2px;
   box-sizing: border-box;
+  text-decoration: none;
+
   :active {
     opacity: 0.8;
   }
+
+  :visited {
+    color: black;
+  }
 `;
 
-const Card = (props: Props) => {
+const Card: FC<Props> = ({ id, title, description, width }: Props) => {
   return (
-    <CardDiv as={Link} to={`/item/${props.id}`} id={props.id}>
-      <h2>{props.title}</h2>
+    <CardDiv as={Link} to={`/item/${id}`} id={id}>
+      <h2>Title: {title}</h2>
 
-      <p>{props.description}</p>
+      <p>Description: {description}</p>
 
-      <p>{props.width}</p>
+      <p>Width: {width}</p>
     </CardDiv>
   );
 };

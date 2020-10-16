@@ -16,12 +16,11 @@ const ModalDiv = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  width: 80%;
-  height: 80%;
+  width: 90%;
+  height: 90%;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  border: 1px solid #1f3b56;
   flex-direction: column;
 `;
 

@@ -8,33 +8,32 @@ const fields = [
   {
     name: "title",
     dataType: "text",
-    fieldType: "input"
+    fieldType: "input",
   },
   {
     name: "width",
     dataType: "number",
-    fieldType: "input"
+    fieldType: "input",
   },
   {
     name: "description",
-    fieldType: "textarea"
-  }
+    fieldType: "textarea",
+  },
 ];
 
 type Props = {
   alreadyAQRCode: boolean;
 };
 
-const AddItem: FC<Props> = ({ alreadyAQRCode }) => {
+const AddItem: FC<Props> = ({ alreadyAQRCode }: Props) => {
   const [qrCamera, setQrCamera] = useState({ delay: 500, result: "No result" });
   const history = useHistory();
 
   return (
     <main>
-      Add Item
       {!alreadyAQRCode ? (
         <AdvertForm
-          initialValues={{ title: "Title", description: "", width: 0 }}
+          initialValues={{ title: "", description: "", width: null }}
           fields={fields}
           mutation={createAdvertisement}
         />
@@ -42,6 +41,7 @@ const AddItem: FC<Props> = ({ alreadyAQRCode }) => {
         <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
       )}
       <div>
+        <br />
         <button type="button" onClick={() => history.goBack()}>
           Go back
         </button>

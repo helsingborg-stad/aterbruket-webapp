@@ -2,9 +2,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
+import { Redirect } from "react-router-dom";
 import useForm from "../hooks/useForm";
 import { IFields } from "../interfaces/IForm";
-import { Redirect } from "react-router-dom";
 
 export default function Form(props: {
   initialValues: any;
@@ -25,6 +25,7 @@ export default function Form(props: {
           name={field.name}
           onChange={handleInputChange}
           value={values[field.name]}
+          placeholder={field.name}
         />
       );
     }
@@ -35,6 +36,7 @@ export default function Form(props: {
           name={field.name}
           onChange={handleInputChange}
           value={values[field.name]}
+          placeholder={field.name}
         />
       );
     }

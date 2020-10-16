@@ -4,7 +4,7 @@ import AdvertContainer from "../components/AdvertContainer";
 const Home: FC = () => {
   return (
     <main>
-      <h1>Home</h1>
+      <h3>All items</h3>
       <AdvertContainer />
     </main>
   );

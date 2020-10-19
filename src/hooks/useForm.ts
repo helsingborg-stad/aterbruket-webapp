@@ -19,7 +19,7 @@ const useForm = (initialValues: any, mutation: string) => {
       graphqlOperation(mutation, { input: values })
     );
 
-    console.log(typeof result.data.createAdvertisement.id);
+    console.log(result.data.createAdvertisement.id);
     if (result.data) {
       setRedirect(result.data.createAdvertisement.id);
     }

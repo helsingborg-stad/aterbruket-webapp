@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { useHistory } from "react-router-dom";
-import AdvertForm from "../components/Form";
+import Form from "../components/Form";
 import { createAdvertisement } from "../graphql/mutations";
 import OpenCamera from "../components/OpenCamera";
 
@@ -8,17 +8,17 @@ const fields = [
   {
     name: "title",
     dataType: "text",
-    fieldType: "input",
+    fieldType: "input"
   },
   {
     name: "width",
     dataType: "number",
-    fieldType: "input",
+    fieldType: "input"
   },
   {
     name: "description",
-    fieldType: "textarea",
-  },
+    fieldType: "textarea"
+  }
 ];
 
 type Props = {
@@ -32,7 +32,7 @@ const AddItem: FC<Props> = ({ alreadyAQRCode }: Props) => {
   return (
     <main>
       {!alreadyAQRCode ? (
-        <AdvertForm
+        <Form
           initialValues={{ title: "", description: "", width: null }}
           fields={fields}
           mutation={createAdvertisement}

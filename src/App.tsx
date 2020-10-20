@@ -9,6 +9,8 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
+import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
+import { Auth } from "aws-amplify";
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.minHeight}vh`};
@@ -32,7 +34,7 @@ const AppContainer = styled.div`
 const App: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [alreadyAQRCode, setAlreadyAQRCode] = useState(false);
-
+  
   return (
     <ThemeProvider theme={theme}>
       <AppContainer>
@@ -55,4 +57,4 @@ const App: FC = () => {
   );
 };
 
-export default App;
+export default withAuthenticator(App);

@@ -34,6 +34,7 @@ interface Props {
 
 const OpenCamera: FC<Props> = ({ qrCamera, setQrCamera }) => {
   const handleScan = (result: any): any => {
+    console.log(result);
     if (result) {
       console.log(result);
       setQrCamera(result);

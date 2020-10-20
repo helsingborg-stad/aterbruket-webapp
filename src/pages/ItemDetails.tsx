@@ -42,6 +42,8 @@ const ItemDetails: FC<ParamTypes> = () => {
     fetchItem();
   }, []);
 
+  console.log("QR * ", id);
+
   const history = useHistory();
   return (
     <main>

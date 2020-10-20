@@ -21,7 +21,7 @@ export default function QRCodeContainer(props: { id: string }) {
   //   fetchItems();
   // }, []);
 
-  console.log(props.id);
+  console.log("QR - ", props.id);
 
   return (
     <div>

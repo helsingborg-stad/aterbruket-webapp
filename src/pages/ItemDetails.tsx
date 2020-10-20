@@ -16,9 +16,21 @@ const ItemImg = styled.img`
 
 const Table = styled.table`
   width: 90%;
+  max-width: 500px;
   margin: 10px auto;
+  border-collapse: collapse;
+
   td {
     text-align: left;
+    padding: 10px;
+    border: none;
+    font-weight: 500;
+  }
+
+  td:nth-child(2) {
+    width: 70%;
+    border: none;
+    font-weight: 400;
   }
 `;
 
@@ -53,16 +65,52 @@ const ItemDetails: FC<ParamTypes> = () => {
       <Table>
         <tbody>
           <tr>
-            <td>Id number:</td>
+            <td>Category:</td>
+            <td>Table</td>
+          </tr>
+          <tr>
+            <td>Id:</td>
             <td>{id}</td>
           </tr>
           <tr>
-            <td>Measurement</td>
-            <td>20 x 30 x 10 cm</td>
+            <td>Height(cm):</td>
+            <td>200</td>
           </tr>
           <tr>
-            <td>Brand:</td>
-            <td>IKEA</td>
+            <td>Width (cm):</td>
+            <td>{item.width}</td>
+          </tr>
+          <tr>
+            <td>Depth (cm):</td>
+            <td>50</td>
+          </tr>
+          <tr>
+            <td>Color:</td>
+            <td>Grey</td>
+          </tr>
+
+          <tr>
+            <td>Material:</td>
+            <td>Wood</td>
+          </tr>
+          <tr>
+            <td>Item Condition:</td>
+            <td>Good</td>
+          </tr>
+          <tr>
+            <td>Areas of Usage:</td>
+            <td>Indoor office</td>
+          </tr>
+          <tr>
+            <td>LCA Value:</td>
+            <td>50</td>
+          </tr>
+          <tr>
+            <td>Pickup Address:</td>
+            <td>Drottningsgatan 10, Helsingborg</td>
+          </tr>
+          <tr>
+            <td>{/*geo tag*/}</td>
           </tr>
           <tr>
             <td>Description:</td>

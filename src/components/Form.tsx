@@ -2,20 +2,16 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
-import { Redirect } from "react-router-dom";
-import useForm from "../hooks/useForm";
+// import useForm from "../hooks/useForm";
 import { IFields } from "../interfaces/IForm";
 
 export default function Form(props: {
-  initialValues: any;
+  values: any;
   fields: IFields[];
   mutation: string;
+  handleInputChange: (event: React.ChangeEvent<any>) => void;
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }) {
-  const { values, handleInputChange, handleSubmit, redirect } = useForm(
-    props.initialValues,
-    props.mutation
-  );
-
   const fields = props.fields.map((field, index) => {
     if (field.fieldType === "input") {
       return (
@@ -23,8 +19,8 @@ export default function Form(props: {
           key={index}
           type={field.dataType}
           name={field.name}
-          onChange={handleInputChange}
-          value={values[field.name]}
+          onChange={props.handleInputChange}
+          value={props.values[field.name]}
           placeholder={field.name}
         />
       );
@@ -34,21 +30,17 @@ export default function Form(props: {
         <textarea
           key={index}
           name={field.name}
-          onChange={handleInputChange}
-          value={values[field.name]}
+          onChange={props.handleInputChange}
+          value={props.values[field.name]}
           placeholder={field.name}
         />
       );
     }
   });
 
-  if (redirect) {
-    return <Redirect to={`/item/${redirect}`} />;
-  }
-
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={props.handleSubmit}>
         {fields}
         <button type="submit">Submit</button>
       </form>

@@ -90,23 +90,23 @@ const ItemDetails: FC<ParamTypes> = () => {
           </tr>
 
           <tr>
-            <td>Material</td>
+            <td>Material:</td>
             <td>Wood</td>
           </tr>
           <tr>
-            <td>Item Condition</td>
+            <td>Item Condition:</td>
             <td>Good</td>
           </tr>
           <tr>
-            <td>Areas of Usage</td>
+            <td>Areas of Usage:</td>
             <td>Indoor office</td>
           </tr>
           <tr>
-            <td>LCA Value</td>
-            <td>*50%</td>
+            <td>LCA Value:</td>
+            <td>50</td>
           </tr>
           <tr>
-            <td>Pickup Address</td>
+            <td>Pickup Address:</td>
             <td>Drottningsgatan 10, Helsingborg</td>
           </tr>
           <tr>

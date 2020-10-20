@@ -37,7 +37,7 @@ const OpenCamera: FC<Props> = ({ qrCamera, setQrCamera }) => {
     console.log(result);
     if (result) {
       console.log(result);
-      setQrCamera(result);
+      setQrCamera({ ...qrCamera, result: result });
     }
   };
 
@@ -52,6 +52,7 @@ const OpenCamera: FC<Props> = ({ qrCamera, setQrCamera }) => {
         onError={handleError}
         onScan={handleScan}
         style={{ width: "100%" }}
+        showViewFinder={false}
       />
       <p>{qrCamera.result}</p>
     </CameraContainer>

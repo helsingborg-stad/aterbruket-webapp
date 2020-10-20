@@ -27,7 +27,7 @@ type Props = {
 };
 
 const AddItem: FC<Props> = ({ alreadyAQRCode }: Props) => {
-  const [qrCamera, setQrCamera] = useState({ delay: 500, result: "No result" });
+  const [qrCamera, setQrCamera] = useState({ delay: 500, result: "" });
   const history = useHistory();
   const { values, handleInputChange, handleSubmit, redirect } = useForm(
     { title: "", description: "", length: 0 },
@@ -35,6 +35,9 @@ const AddItem: FC<Props> = ({ alreadyAQRCode }: Props) => {
   );
   if (redirect) {
     return <Redirect to={`/item/${redirect}`} />;
+  }
+  if (qrCamera.result.length > 2) {
+    return <Redirect to={`/item/${qrCamera.result}`} />;
   }
   return (
     <main>

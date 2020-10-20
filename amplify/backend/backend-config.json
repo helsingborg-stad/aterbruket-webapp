@@ -16,5 +16,14 @@
         }
       }
     }
+  },
+  "function": {},
+  "auth": {
+    "aterbruketwebapp75287c9a": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
   }
 }

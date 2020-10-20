@@ -78,7 +78,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           </tr>
           <tr>
             <td>Width (cm):</td>
-            <td>100</td>
+            <td>{item.width}</td>
           </tr>
           <tr>
             <td>Depth (cm):</td>

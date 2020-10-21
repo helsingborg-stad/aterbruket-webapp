@@ -34,7 +34,7 @@ const AppContainer = styled.div`
 const App: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [alreadyAQRCode, setAlreadyAQRCode] = useState(false);
-  
+
   return (
     <ThemeProvider theme={theme}>
       <AppContainer>
@@ -57,4 +57,5 @@ const App: FC = () => {
   );
 };
 
-export default withAuthenticator(App);
+// export default withAuthenticator(App);
+export default App;

@@ -23,6 +23,14 @@
       "StackName": "amplify-aterbruketwebapp-dev-224145",
       "StackId": "arn:aws:cloudformation:eu-west-1:165945531802:stack/amplify-aterbruketwebapp-dev-224145/30a23310-074b-11eb-bbf3-0ae0d664c880",
       "AmplifyAppId": "d21bj89y0jdxx1"
+    },
+    "categories": {
+      "auth": {
+        "aterbruketwebapp75287c9a": {}
+      },
+      "function": {
+        "migrateUser": {}
+      }
     }
   },
   "esandbox": {

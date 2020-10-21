@@ -12,7 +12,7 @@ const fields = [
     fieldType: "input"
   },
   {
-    name: "width",
+    name: "length",
     dataType: "number",
     fieldType: "input"
   },

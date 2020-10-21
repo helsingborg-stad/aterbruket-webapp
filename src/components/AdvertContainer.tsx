@@ -31,15 +31,17 @@ const AdvertContainer: FC = () => {
 
   return (
     <AdvertContainerDiv>
-      {items.map((item: any) => (
-        <Card
-          key={item.id}
-          id={item.id}
-          title={item.title}
-          description={item.description}
-          width={item.width}
-        />
-      ))}
+      {items.map((item: any) =>
+        item.status === "available" ? (
+          <Card
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            description={item.description}
+            width={item.width}
+          />
+        ) : null
+      )}
     </AdvertContainerDiv>
   );
 };

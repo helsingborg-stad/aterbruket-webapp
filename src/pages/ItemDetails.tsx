@@ -54,9 +54,26 @@ const ItemDetails: FC<ParamTypes> = () => {
     fetchItem();
   }, []);
 
+  const onClickReservBtn = () => {
+    console.log("reserv btn clicked");
+    console.log("status", item.status);
+  };
+
   const history = useHistory();
   return (
     <main>
+      <br />
+      <div>
+        <button
+          onClick={() => {
+            onClickReservBtn();
+          }}
+        >
+          HAFFA
+        </button>
+        <button onClick={() => history.goBack()}>Tillbaka</button>
+      </div>
+
       <h1>{item.title}</h1>
       <ItemImg
         src="https://storage.googleapis.com/web-pro-nilo-kavehome/media/cache/c4/10/c410118add2b5cb169d71a0c20596f50.jpg"
@@ -120,10 +137,6 @@ const ItemDetails: FC<ParamTypes> = () => {
       </Table>
       <div>
         <QRCode id={id} />
-      </div>
-      <div>
-        <button onClick={() => history.goBack()}>Tillbaka</button>
-        <button>HAFFA</button>
       </div>
     </main>
   );

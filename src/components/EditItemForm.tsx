@@ -7,16 +7,19 @@ const fields = [
   {
     name: "title",
     dataType: "text",
-    fieldType: "input"
+    fieldType: "input",
+    disabled: true
   },
   {
     name: "length",
     dataType: "number",
-    fieldType: "input"
+    fieldType: "input",
+    disabled: false
   },
   {
     name: "description",
-    fieldType: "textarea"
+    fieldType: "textarea",
+    disabled: false
   }
 ];
 
@@ -34,8 +37,6 @@ const EditItemForm: FC<Props> = ({ setEditItem, item }) => {
     { title: item.title, description: item.description, length: item.length },
     createAdvertisement
   );
-  console.log(item.title);
-  console.log(values);
   return (
     <React.Fragment>
       <button onClick={() => setEditItem(false)}>X</button>

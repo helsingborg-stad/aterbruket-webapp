@@ -9,16 +9,19 @@ const fields = [
   {
     name: "title",
     dataType: "text",
-    fieldType: "input"
+    fieldType: "input",
+    disabled: false
   },
   {
     name: "length",
     dataType: "number",
-    fieldType: "input"
+    fieldType: "input",
+    disabled: false
   },
   {
     name: "description",
-    fieldType: "textarea"
+    fieldType: "textarea",
+    disabled: false
   }
 ];
 

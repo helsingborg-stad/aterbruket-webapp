@@ -1,14 +1,9 @@
 import { API, graphqlOperation } from "aws-amplify";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 
 const useForm = (initialValues: any, mutation: string) => {
   const [values, setValues] = useState(initialValues);
   const [redirect, setRedirect] = useState(false);
-
-  // initalValue -> {title: "", description: "", length: 0}
-  // value -> title: "", description: "", length: 0}
-  console.log("**** initialValues ", initialValues);
-  console.log("Values is -> ", values);
 
   const handleInputChange = (event: React.ChangeEvent<any>) => {
     const { target } = event;

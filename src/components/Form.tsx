@@ -13,6 +13,8 @@ export default function Form(props: {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }) {
   const fields = props.fields.map((field, index) => {
+    console.log(props);
+    console.log(field.name);
     if (field.fieldType === "input" || field.fieldType === "checkbox") {
       return (
         <input

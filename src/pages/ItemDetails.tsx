@@ -7,10 +7,7 @@ import { API } from "aws-amplify";
 import QRCode from "../components/QRCodeContainer";
 import { GetAdvertisementQuery } from "../API";
 import { getAdvertisement } from "../graphql/queries";
-
-import Form from "../components/Form";
-import useForm from "../hooks/useForm";
-import { createAdvertisement } from "../graphql/mutations";
+import EditItemForm from "../components/EditItemForm";
 
 const ItemImg = styled.img`
   width: 300px;
@@ -42,31 +39,10 @@ interface ParamTypes {
   id: string;
 }
 
-const fields = [
-  {
-    name: "title",
-    dataType: "text",
-    fieldType: "input"
-  },
-  {
-    name: "length",
-    dataType: "number",
-    fieldType: "input"
-  },
-  {
-    name: "description",
-    fieldType: "textarea"
-  }
-];
-
 const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
   const [item, setItem] = useState({}) as any;
   const [editItem, setEditItem] = useState(false);
-  const { values, handleInputChange, handleSubmit, redirect } = useForm(
-    { title: "", description: "", length: 0 },
-    createAdvertisement
-  );
 
   const fetchItem = async () => {
     const result = (await API.graphql(
@@ -76,25 +52,17 @@ const ItemDetails: FC<ParamTypes> = () => {
 
     setItem(advertItem);
   };
+
   useEffect(() => {
     fetchItem();
   }, []);
-
-  console.log("QR * ", id);
 
   const history = useHistory();
   return (
     <main>
       {editItem ? (
         <>
-          <button onClick={() => setEditItem(false)}>X</button>
-          <Form
-            values={values}
-            fields={fields}
-            mutation={createAdvertisement}
-            handleInputChange={handleInputChange}
-            handleSubmit={handleSubmit}
-          />
+          <EditItemForm setEditItem={setEditItem} item={item} />
         </>
       ) : (
         <>

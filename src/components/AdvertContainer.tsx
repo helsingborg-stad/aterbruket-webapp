@@ -21,7 +21,7 @@ const AdvertContainer: FC = () => {
       graphqlOperation(listAdvertisements)
     )) as GraphQLResult<ListAdvertisementsQuery>;
     const advertItems = result.data?.listAdvertisements?.items;
-
+    console.log(advertItems);
     setItems(advertItems);
   };
 

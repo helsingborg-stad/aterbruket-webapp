@@ -122,8 +122,8 @@ const ItemDetails: FC<ParamTypes> = () => {
         <QRCode id={id} />
       </div>
       <div>
-        <button onClick={() => history.goBack()}>Back</button>
-        <button>Reserve</button>
+        <button onClick={() => history.goBack()}>Tillbaka</button>
+        <button>HAFFA</button>
       </div>
     </main>
   );

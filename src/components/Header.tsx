@@ -1,6 +1,7 @@
 /* eslint-disable react/button-has-type */
 import React, { FC } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import ModalAddItemContent from "./ModalAddItemContent";
 
@@ -13,6 +14,13 @@ const HeaderDiv = styled.header`
 
   button {
     cursor: pointer;
+  }
+
+  a {
+    text-decoration: none;
+  }
+  a:visited {
+    color: black;
   }
 `;
 
@@ -32,7 +40,9 @@ const Header: FC<Props> = ({ modalOpen, setModalOpen, setAlreadyAQRCode }) => {
         />
       </Modal>
 
-      <h1>Återbruket</h1>
+      <Link to="/">
+        <h1>Haffa</h1>
+      </Link>
       <button
         onClick={() => {
           setModalOpen(true);

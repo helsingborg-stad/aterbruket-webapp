@@ -36,6 +36,11 @@
       "StackName": "amplify-aterbruketwebapp-esandbox-145645",
       "StackId": "arn:aws:cloudformation:eu-west-1:165945531802:stack/amplify-aterbruketwebapp-esandbox-145645/e3f72390-0a2e-11eb-bc13-0275bf88180c",
       "AmplifyAppId": "d21bj89y0jdxx1"
+    },
+    "categories": {
+      "auth": {
+        "aterbruketwebapp75287c9a": {}
+      }
     }
   },
   "asandbox": {

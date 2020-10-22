@@ -9,17 +9,17 @@ const fields = [
   {
     name: "title",
     dataType: "text",
-    fieldType: "input",
+    fieldType: "input"
   },
   {
     name: "width",
     dataType: "number",
-    fieldType: "input",
+    fieldType: "input"
   },
   {
     name: "description",
-    fieldType: "textarea",
-  },
+    fieldType: "textarea"
+  }
 ];
 
 type Props = {

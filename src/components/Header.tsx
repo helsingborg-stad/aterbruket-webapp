@@ -1,5 +1,6 @@
 /* eslint-disable react/button-has-type */
 import React, { FC } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
@@ -62,7 +63,13 @@ const Header: FC<Props> = ({ modalOpen, setModalOpen, setAlreadyAQRCode }) => {
       >
         Add Item
       </button>
+      <Link to="/profile/">
+        <button>
+          Profile
+        </button>
+      </Link>
     </HeaderDiv>
+    
   );
 };
 

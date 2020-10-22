@@ -14,7 +14,7 @@ export type CreateAdvertisementInput = {
 
 export enum ItemStatus {
   available = "available",
-  reservec = "reservec",
+  reserved = "reserved",
   pickedUp = "pickedUp",
   delivered = "delivered",
 }

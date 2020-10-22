@@ -10,7 +10,7 @@ type Advertisement @model {
 
 enum ItemStatus {
     available
-    reservec
+    reserved
     pickedUp
     delivered
 }

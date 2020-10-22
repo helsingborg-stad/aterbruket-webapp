@@ -5,11 +5,7 @@ import styled from "styled-components";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import QRCode from "../components/QRCodeContainer";
-import {
-  GetAdvertisementQuery,
-  UpdateAdvertisementInput,
-  ModelAdvertisementConditionInput
-} from "../API";
+import { GetAdvertisementQuery } from "../API";
 import { getAdvertisement } from "../graphql/queries";
 import { updateAdvertisement } from "../graphql/mutations";
 
@@ -71,7 +67,6 @@ const ItemDetails: FC<ParamTypes> = () => {
     );
 
     const advertItem = result.data?.updateAdvertisement;
-
     setItem(advertItem);
   };
 

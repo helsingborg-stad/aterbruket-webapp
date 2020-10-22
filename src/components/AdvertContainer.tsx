@@ -21,7 +21,7 @@ const AdvertContainer: FC = () => {
       graphqlOperation(listAdvertisements)
     )) as GraphQLResult<ListAdvertisementsQuery>;
     const advertItems = result.data?.listAdvertisements?.items;
-    console.log(advertItems);
+    console.log(result);
     setItems(advertItems);
   };
 
@@ -32,13 +32,16 @@ const AdvertContainer: FC = () => {
   return (
     <AdvertContainerDiv>
       {items.map((item: any) =>
-        item.status === "available" ? (
+        item.status === "available" ||
+        item.status === "reserved" ||
+        item.status === null ? (
           <Card
             key={item.id}
             id={item.id}
             title={item.title}
             description={item.description}
             width={item.width}
+            status={item.status}
           />
         ) : null
       )}

@@ -5,7 +5,11 @@ import styled from "styled-components";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import QRCode from "../components/QRCodeContainer";
-import { GetAdvertisementQuery, UpdateAdvertisementMutation } from "../API";
+import {
+  GetAdvertisementQuery,
+  UpdateAdvertisementInput,
+  ModelAdvertisementConditionInput
+} from "../API";
 import { getAdvertisement } from "../graphql/queries";
 import { updateAdvertisement } from "../graphql/mutations";
 
@@ -57,19 +61,21 @@ const ItemDetails: FC<ParamTypes> = () => {
   }, []);
 
   const updateItem = async () => {
-    const result = (await API.graphql(
-      graphqlOperation(updateAdvertisement, { id: id, status: "reserved" })
-    )) as GraphQLResult<UpdateAdvertisementMutation>;
+    const result: any = await API.graphql(
+      graphqlOperation(updateAdvertisement, {
+        input: {
+          id: id,
+          status: "reserved"
+        }
+      })
+    );
+
     const advertItem = result.data?.updateAdvertisement;
 
     setItem(advertItem);
-
-    console.log("ID", id);
   };
 
   const onClickReservBtn = () => {
-    console.log("reserv btn clicked");
-    console.log("status", item.status);
     updateItem();
     setReservedClicked(true);
   };

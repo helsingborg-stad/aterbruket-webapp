@@ -1,5 +1,5 @@
 import { API, graphqlOperation } from "aws-amplify";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 
 const useForm = (initialValues: any, mutation: string) => {
   const [values, setValues] = useState(initialValues);

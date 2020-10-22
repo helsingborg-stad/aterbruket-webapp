@@ -96,6 +96,11 @@ const ItemDetails: FC<ParamTypes> = () => {
             HAFFA
           </button>
           <button onClick={() => history.goBack()}>Tillbaka</button>
+          {reservedClicked && (
+            <p>
+              Du har haffat {item.title} statusen är: {item.status}
+            </p>
+          )}
           <h1>{item.title}</h1>
           <ItemImg
             src="https://storage.googleapis.com/web-pro-nilo-kavehome/media/cache/c4/10/c410118add2b5cb169d71a0c20596f50.jpg"

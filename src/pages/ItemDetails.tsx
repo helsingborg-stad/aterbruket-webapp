@@ -64,8 +64,8 @@ const ItemDetails: FC<ParamTypes> = () => {
       graphqlOperation(updateAdvertisement, {
         input: {
           id: id,
-          status: "reserved"
-        }
+          status: "reserved",
+        },
       })
     );
 

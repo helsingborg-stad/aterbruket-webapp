@@ -13,13 +13,14 @@ import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { Auth } from "aws-amplify";
 
 const AppContainer = styled.div`
-  min-height: ${(props) => `${props.theme.minHeight}vh`};
-  min-width: ${(props) => `${props.theme.minWidth}px`};
-  width: ${(props) => `${props.theme.width}vw`};
+  min-height: ${(props) => `${props.theme.appTheme.minHeight}vh`};
+  min-width: ${(props) => `${props.theme.appTheme.minWidth}px`};
+  width: ${(props) => `${props.theme.appTheme.width}vw`};
   padding: ${(props) =>
-    `${props.theme.padding[0]}rem ${props.theme.padding[1]}rem ${props.theme.padding[2]}rem ${props.theme.padding[3]}rem`};
-  box-sizing: ${(props) => props.theme.boxSizing};
-  background-color: ${(props) => props.theme.primaryColor};
+    `${props.theme.appTheme.padding[0]}rem ${props.theme.appTheme.padding[1]}rem ${props.theme.appTheme.padding[2]}rem ${props.theme.appTheme.padding[3]}rem`};
+  box-sizing: ${(props) => props.theme.appTheme.boxSizing};
+  background-color: ${(props) => props.theme.appTheme.primaryColor};
+  font-family: ${(props) => props.theme.appTheme.fontFamily};
   display: flex;
   flex-direction: column;
   align-items: center;

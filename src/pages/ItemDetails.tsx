@@ -1,3 +1,6 @@
+/* eslint-disable func-names */
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable react/button-has-type */
 import React, { FC, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
@@ -8,6 +11,9 @@ import QRCode from "../components/QRCodeContainer";
 import { GetAdvertisementQuery } from "../API";
 import { getAdvertisement } from "../graphql/queries";
 import EditItemForm from "../components/EditItemForm";
+
+import { loadMapApi } from "../utils/GoogleMapsUtils";
+import Map from "../components/Map";
 
 const ItemImg = styled.img`
   width: 300px;
@@ -35,6 +41,12 @@ const Table = styled.table`
   }
 `;
 
+const MapContainer = styled.div`
+  width: 80%;
+  height: 45vh;
+  border-radius: 5px;
+`;
+
 interface ParamTypes {
   id: string;
 }
@@ -42,11 +54,20 @@ interface ParamTypes {
 const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
   const [item, setItem] = useState({}) as any;
+  const [scripLoaded, setScriptLoaded] = useState(false);
+
+  // make sure script is loaded
+  useEffect(() => {
+    const googleMapScript = loadMapApi();
+    googleMapScript.addEventListener("load", function () {
+      setScriptLoaded(true);
+    });
+  }, []);
   const [editItem, setEditItem] = useState(false);
 
   const fetchItem = async () => {
     const result = (await API.graphql(
-      graphqlOperation(getAdvertisement, { id: id })
+      graphqlOperation(getAdvertisement, { id })
     )) as GraphQLResult<GetAdvertisementQuery>;
     const advertItem = result.data?.getAdvertisement;
 
@@ -116,18 +137,24 @@ const ItemDetails: FC<ParamTypes> = () => {
                 <td>50</td>
               </tr>
               <tr>
-                <td>Pickup Address:</td>
-                <td>Drottningsgatan 10, Helsingborg</td>
-              </tr>
-              <tr>
-                <td>{/*geo tag*/}</td>
-              </tr>
-              <tr>
                 <td>Description:</td>
                 <td>{item.description}</td>
               </tr>
+              <tr>
+                <td>Location:</td>
+                <td>{item.location}</td>
+              </tr>
             </tbody>
           </Table>
+
+          <MapContainer>
+            {scripLoaded && (
+              <Map
+                mapType={google.maps.MapTypeId.ROADMAP}
+                mapTypeControl={false}
+              />
+            )}
+          </MapContainer>
           <div>
             <QRCode id={id} />
           </div>

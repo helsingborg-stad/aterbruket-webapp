@@ -1,5 +1,7 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/button-has-type */
 import React, { FC } from "react";
-import Form from "../components/Form";
+import Form from "./Form";
 import useForm from "../hooks/useForm";
 import { createAdvertisement } from "../graphql/mutations";
 
@@ -8,19 +10,19 @@ const fields = [
     name: "title",
     dataType: "text",
     fieldType: "input",
-    disabled: true
+    disabled: true,
   },
   {
     name: "length",
     dataType: "number",
     fieldType: "input",
-    disabled: false
+    disabled: false,
   },
   {
     name: "description",
     fieldType: "textarea",
-    disabled: false
-  }
+    disabled: false,
+  },
 ];
 
 interface Props {
@@ -38,7 +40,7 @@ const EditItemForm: FC<Props> = ({ setEditItem, item }) => {
     createAdvertisement
   );
   return (
-    <React.Fragment>
+    <>
       <button onClick={() => setEditItem(false)}>X</button>
       <Form
         values={values}
@@ -47,7 +49,7 @@ const EditItemForm: FC<Props> = ({ setEditItem, item }) => {
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
       />
-    </React.Fragment>
+    </>
   );
 };
 

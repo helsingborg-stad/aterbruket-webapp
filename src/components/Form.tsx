@@ -1,3 +1,7 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
+/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -12,7 +16,7 @@ export default function Form(props: {
   handleInputChange: (event: React.ChangeEvent<any>) => void;
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }) {
-  const fields = props.fields.map((field, index) => {
+  const fields = props.fields.map((field, index: number) => {
     if (field.fieldType === "input" || field.fieldType === "checkbox") {
       return (
         <input

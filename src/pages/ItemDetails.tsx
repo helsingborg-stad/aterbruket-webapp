@@ -7,6 +7,7 @@ import { API } from "aws-amplify";
 import QRCode from "../components/QRCodeContainer";
 import { GetAdvertisementQuery } from "../API";
 import { getAdvertisement } from "../graphql/queries";
+import { updateAdvertisement } from "../graphql/mutations";
 import EditItemForm from "../components/EditItemForm";
 
 const ItemImg = styled.img`
@@ -42,6 +43,7 @@ interface ParamTypes {
 const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
   const [item, setItem] = useState({}) as any;
+  const [reservedClicked, setReservedClicked] = useState(false);
   const [editItem, setEditItem] = useState(false);
 
   const fetchItem = async () => {
@@ -57,6 +59,25 @@ const ItemDetails: FC<ParamTypes> = () => {
     fetchItem();
   }, []);
 
+  const updateItem = async () => {
+    const result: any = await API.graphql(
+      graphqlOperation(updateAdvertisement, {
+        input: {
+          id: id,
+          status: "reserved"
+        }
+      })
+    );
+
+    const advertItem = result.data?.updateAdvertisement;
+    setItem(advertItem);
+  };
+
+  const onClickReservBtn = () => {
+    updateItem();
+    setReservedClicked(true);
+  };
+
   const history = useHistory();
   return (
     <main>
@@ -67,6 +88,19 @@ const ItemDetails: FC<ParamTypes> = () => {
       ) : (
         <>
           <button onClick={() => setEditItem(true)}>Edit</button>
+          <button
+            onClick={() => {
+              onClickReservBtn();
+            }}
+          >
+            HAFFA
+          </button>
+          <button onClick={() => history.goBack()}>Tillbaka</button>
+          {reservedClicked && (
+            <p>
+              Du har haffat {item.title} statusen är: {item.status}
+            </p>
+          )}
           <h1>{item.title}</h1>
           <ItemImg
             src="https://storage.googleapis.com/web-pro-nilo-kavehome/media/cache/c4/10/c410118add2b5cb169d71a0c20596f50.jpg"

@@ -8,13 +8,12 @@ const useForm = (initialValues: any, mutation: string) => {
   const handleInputChange = (event: React.ChangeEvent<any>) => {
     const { target } = event;
     const { name, value } = target;
-    setValues({ ...values, [name]: value });
+    setValues({ ...values, [name]: value, status: "available" }); // status will be set to a default-value in the graphql schema later. But for now, let this be.
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setValues(initialValues);
-
     const result: any = await API.graphql(
       graphqlOperation(mutation, { input: values })
     );

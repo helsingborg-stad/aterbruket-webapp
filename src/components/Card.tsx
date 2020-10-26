@@ -7,6 +7,7 @@ interface Props {
   description: string;
   width: number;
   id: string;
+  status: string;
 }
 
 const CardDiv = styled.div`
@@ -26,10 +27,11 @@ const CardDiv = styled.div`
   }
 `;
 
-const Card: FC<Props> = ({ id, title, description, width }: Props) => {
+const Card: FC<Props> = ({ id, title, description, width, status }: Props) => {
   return (
     <CardDiv as={Link} to={`/item/${id}`} id={id}>
       <h2>Title: {title}</h2>
+      <p>STATUS IS: {status}</p>
 
       <p>Description: {description}</p>
 

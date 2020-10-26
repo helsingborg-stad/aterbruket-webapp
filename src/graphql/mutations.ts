@@ -14,6 +14,7 @@ export const createAdvertisement = /* GraphQL */ `
       height
       width
       length
+      status
       createdAt
       updatedAt
     }
@@ -31,6 +32,7 @@ export const updateAdvertisement = /* GraphQL */ `
       height
       width
       length
+      status
       createdAt
       updatedAt
     }
@@ -48,6 +50,7 @@ export const deleteAdvertisement = /* GraphQL */ `
       height
       width
       length
+      status
       createdAt
       updatedAt
     }

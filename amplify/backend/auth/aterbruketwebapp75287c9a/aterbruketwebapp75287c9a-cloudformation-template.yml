@@ -138,7 +138,11 @@ Resources:
     UpdateReplacePolicy: Retain
     Properties:
       UserPoolName: !If [ShouldNotCreateEnvResources, !Ref userPoolName, !Join ['',[!Ref userPoolName, '-', !Ref env]]]
-      
+      LambdaConfig:
+        UserMigration: !Sub
+          - arn:aws:lambda:${region}:${account}:function:migrateUser-${env}
+          - { region: !Ref "AWS::Region",  account: !Ref "AWS::AccountId"}
+
       Schema: 
         
         -

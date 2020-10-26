@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import Modal from "./Modal";
 import ModalAddItemContent from "./ModalAddItemContent";
+import { AmplifySignOut } from "@aws-amplify/ui-react";
 
 const HeaderDiv = styled.header`
   width: 100%;
@@ -41,6 +42,7 @@ const Header: FC<Props> = ({ modalOpen, setModalOpen, setAlreadyAQRCode }) => {
       >
         Add Item
       </button>
+      <AmplifySignOut />
     </HeaderDiv>
   );
 };

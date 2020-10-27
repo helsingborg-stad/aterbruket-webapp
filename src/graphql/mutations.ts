@@ -11,6 +11,7 @@ export const createAdvertisement = /* GraphQL */ `
       id
       title
       description
+      location
       height
       width
       length
@@ -28,6 +29,7 @@ export const updateAdvertisement = /* GraphQL */ `
       id
       title
       description
+      location
       height
       width
       length
@@ -45,6 +47,7 @@ export const deleteAdvertisement = /* GraphQL */ `
       id
       title
       description
+      location
       height
       width
       length

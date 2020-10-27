@@ -8,6 +8,7 @@ export const onCreateAdvertisement = /* GraphQL */ `
       id
       title
       description
+      location
       height
       width
       length
@@ -22,6 +23,7 @@ export const onUpdateAdvertisement = /* GraphQL */ `
       id
       title
       description
+      location
       height
       width
       length
@@ -36,6 +38,7 @@ export const onDeleteAdvertisement = /* GraphQL */ `
       id
       title
       description
+      location
       height
       width
       length

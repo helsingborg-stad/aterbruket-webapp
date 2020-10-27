@@ -34,7 +34,7 @@ type Props = {
 
 const ModalAddItemContent: FC<Props> = ({
   setModalOpen,
-  setAlreadyAQRCode
+  setAlreadyAQRCode,
 }) => (
   <>
     <ModalHeader>
@@ -72,9 +72,5 @@ const ModalAddItemContent: FC<Props> = ({
     </ContentDiv>
   </>
 );
-
-/* ModalAddItemContent.propTypes = {
-  setModalOpen: PropTypes.boolean.isRequired,
-}; */
 
 export default ModalAddItemContent;

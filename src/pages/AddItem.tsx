@@ -10,19 +10,25 @@ const fields = [
     name: "title",
     dataType: "text",
     fieldType: "input",
-    disabled: false
+    disabled: false,
   },
   {
     name: "length",
     dataType: "number",
     fieldType: "input",
-    disabled: false
+    disabled: false,
   },
   {
     name: "description",
     fieldType: "textarea",
-    disabled: false
-  }
+    disabled: false,
+  },
+  {
+    name: "location",
+    dataType: "text",
+    fieldType: "input",
+    disabled: false,
+  },
 ];
 
 type Props = {
@@ -33,7 +39,7 @@ const AddItem: FC<Props> = ({ alreadyAQRCode }: Props) => {
   const [qrCamera, setQrCamera] = useState({ delay: 500, result: "" });
   const history = useHistory();
   const { values, handleInputChange, handleSubmit, redirect } = useForm(
-    { title: "", description: "", length: 0 },
+    { title: "", description: "", length: 1, location: "" },
     createAdvertisement
   );
   if (redirect) {

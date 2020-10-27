@@ -17,7 +17,23 @@
       }
     }
   },
-  "function": {},
+  "function": {
+    "migrateADUser": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "aterbruketwebapp",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        }
+      ]
+    }
+  },
   "auth": {
     "aterbruketwebapp75287c9a": {
       "service": "Cognito",

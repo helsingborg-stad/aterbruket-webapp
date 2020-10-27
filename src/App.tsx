@@ -2,15 +2,14 @@
 import React, { FC, useState } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
-
+import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
+import { Auth } from "aws-amplify";
 import "./App.css";
 import theme from "./styles/theme";
 import Home from "./pages/Home";
 import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
-import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
-import { Auth } from "aws-amplify";
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.minHeight}vh`};

@@ -23,11 +23,10 @@
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
     "react-icons": "^3.11.0",
-    "react-modal": "^3.11.2",
+    "react-loader-spinner": "^3.1.14",
     "react-qr-reader": "^2.2.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
-    "react-spinners": "^0.9.0",
     "styled-components": "^5.2.0",
     "typescript": "^3.7.5"
   },
@@ -55,6 +54,8 @@
     ]
   },
   "devDependencies": {
+    "@types/googlemaps": "^3.40.1",
+    "@types/react-loader-spinner": "^3.1.1",
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
     "eslint-config-airbnb": "^18.2.0",

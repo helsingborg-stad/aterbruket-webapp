@@ -1,53 +1,78 @@
+/* eslint-disable no-console */
 import React, { FC } from "react";
-import Form from "../components/Form";
+import Form from "./Form";
 import useForm from "../hooks/useForm";
-import { createAdvertisement } from "../graphql/mutations";
+import { updateAdvertisement } from "../graphql/mutations";
 
 const fields = [
   {
     name: "title",
     dataType: "text",
     fieldType: "input",
-    disabled: true
+    disabled: false,
   },
   {
     name: "length",
     dataType: "number",
     fieldType: "input",
-    disabled: false
+    disabled: false,
   },
   {
     name: "description",
     fieldType: "textarea",
-    disabled: false
-  }
+    disabled: false,
+  },
 ];
 
 interface Props {
   item: {
+    id: number;
     title: string;
     description: string;
     length?: number;
   };
-  setEditItem: React.Dispatch<React.SetStateAction<boolean>>;
+  editItem: { editMode: boolean; update: boolean };
+  setEditItem: React.Dispatch<
+    React.SetStateAction<{ editMode: boolean; update: boolean }>
+  >;
+  closeEditformAndFetchItem: () => void;
 }
 
-const EditItemForm: FC<Props> = ({ setEditItem, item }) => {
-  const { values, handleInputChange, handleSubmit } = useForm(
-    { title: item.title, description: item.description, length: item.length },
-    createAdvertisement
+const EditItemForm: FC<Props> = ({
+  setEditItem,
+  editItem,
+  item,
+  closeEditformAndFetchItem,
+}: Props) => {
+  const { values, handleInputChange, handleSubmit, redirect } = useForm(
+    {
+      title: item.title,
+      description: item.description,
+      length: item.length,
+      id: item.id,
+    },
+    updateAdvertisement
   );
+
+  if (redirect) {
+    closeEditformAndFetchItem();
+  }
   return (
-    <React.Fragment>
-      <button onClick={() => setEditItem(false)}>X</button>
+    <>
+      <button
+        type="button"
+        onClick={() => setEditItem({ ...editItem, editMode: false })}
+      >
+        X
+      </button>
       <Form
         values={values}
         fields={fields}
-        mutation={createAdvertisement}
+        mutation={updateAdvertisement}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
       />
-    </React.Fragment>
+    </>
   );
 };
 

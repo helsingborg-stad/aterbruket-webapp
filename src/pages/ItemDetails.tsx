@@ -44,7 +44,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
   const [item, setItem] = useState({}) as any;
   const [reservedClicked, setReservedClicked] = useState(false);
-  const [editItem, setEditItem] = useState({ editMode: false, update: false });
+  const [editItem, setEditItem] = useState(false);
 
   const fetchItem = async () => {
     const result = (await API.graphql(
@@ -57,7 +57,7 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const closeEditformAndFetchItem = async () => {
     await fetchItem();
-    setEditItem({ ...editItem, editMode: false });
+    setEditItem(false);
   };
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const history = useHistory();
   return (
     <main>
-      {editItem.editMode ? (
+      {editItem ? (
         <>
           <EditItemForm
             setEditItem={setEditItem}
@@ -97,9 +97,7 @@ const ItemDetails: FC<ParamTypes> = () => {
         </>
       ) : (
         <>
-          <button onClick={() => setEditItem({ ...editItem, editMode: true })}>
-            Edit
-          </button>
+          <button onClick={() => setEditItem(true)}>Edit</button>
           <button
             onClick={() => {
               onClickReservBtn();

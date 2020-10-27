@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { API, graphqlOperation } from "aws-amplify";
 import React, { useState } from "react";
 
@@ -18,8 +19,14 @@ const useForm = (initialValues: any, mutation: string) => {
       graphqlOperation(mutation, { input: values })
     );
 
-    if (result.data) {
-      setRedirect(result.data.createAdvertisement.id);
+    if (result.data && values.id) {
+      console.log("db UPDATE ", result.data.updateAdvertisement);
+      return setRedirect(true);
+    }
+
+    if (result.data && !values.id) {
+      console.log("db CREATE ", result.data.createAdvertisement);
+      return setRedirect(result.data.createAdvertisement.id);
     }
   };
 

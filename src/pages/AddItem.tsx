@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 import React, { FC, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import Form from "../components/Form";
@@ -10,19 +11,19 @@ const fields = [
     name: "title",
     dataType: "text",
     fieldType: "input",
-    disabled: false
+    disabled: false,
   },
   {
     name: "length",
     dataType: "number",
     fieldType: "input",
-    disabled: false
+    disabled: false,
   },
   {
     name: "description",
     fieldType: "textarea",
-    disabled: false
-  }
+    disabled: false,
+  },
 ];
 
 type Props = {
@@ -36,6 +37,7 @@ const AddItem: FC<Props> = ({ alreadyAQRCode }: Props) => {
     { title: "", description: "", length: 0 },
     createAdvertisement
   );
+
   if (redirect) {
     return <Redirect to={`/item/${redirect}`} />;
   }
@@ -57,9 +59,7 @@ const AddItem: FC<Props> = ({ alreadyAQRCode }: Props) => {
       )}
       <div>
         <br />
-        <button type="button" onClick={() => history.goBack()}>
-          Go back
-        </button>
+        <button onClick={() => history.goBack()}>Go back</button>
       </div>
     </main>
   );

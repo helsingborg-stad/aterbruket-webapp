@@ -5,6 +5,7 @@ import styled from "styled-components";
 interface IMap {
   mapType: google.maps.MapTypeId;
   mapTypeControl: boolean;
+  location: string;
 }
 
 const MapDiv = styled.div`
@@ -16,16 +17,18 @@ const MapDiv = styled.div`
 type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
 
-const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false }: IMap) => {
+const Map: React.FC<IMap> = ({
+  mapType,
+  mapTypeControl = false,
+  location,
+}: IMap) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
-  const itemAddress = "HBG WORKS";
   const geocodeAddress = (
     geocoder: google.maps.Geocoder,
     resultsMap: google.maps.Map,
     address: string
   ) => {
-    // const address = `Stockholm`;
     geocoder.geocode({ address }, (results, status) => {
       if (status === "OK") {
         resultsMap.setCenter(results[0].geometry.location);
@@ -61,10 +64,10 @@ const Map: React.FC<IMap> = ({ mapType, mapTypeControl = false }: IMap) => {
         });
         setMap(myMap);
         const geocoder = new google.maps.Geocoder();
-        geocodeAddress(geocoder, myMap, itemAddress);
+        geocodeAddress(geocoder, myMap, location);
       }
     },
-    [mapType, mapTypeControl]
+    [location, mapType, mapTypeControl]
   );
 
   const defaultMapStart = useCallback((): void => {

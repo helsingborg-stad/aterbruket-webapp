@@ -39,7 +39,7 @@ const AddItem: FC<Props> = ({ alreadyAQRCode }: Props) => {
   const [qrCamera, setQrCamera] = useState({ delay: 500, result: "" });
   const history = useHistory();
   const { values, handleInputChange, handleSubmit, redirect } = useForm(
-    { title: "", description: "", length: 0, location: "" },
+    { title: "", description: "", length: 1, location: "" },
     createAdvertisement
   );
   if (redirect) {

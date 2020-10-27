@@ -31,10 +31,8 @@ interface Props {
     description: string;
     length?: number;
   };
-  editItem: { editMode: boolean; update: boolean };
-  setEditItem: React.Dispatch<
-    React.SetStateAction<{ editMode: boolean; update: boolean }>
-  >;
+  editItem: boolean;
+  setEditItem: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
 }
 
@@ -59,10 +57,7 @@ const EditItemForm: FC<Props> = ({
   }
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setEditItem({ ...editItem, editMode: false })}
-      >
+      <button type="button" onClick={() => setEditItem(false)}>
         X
       </button>
       <Form

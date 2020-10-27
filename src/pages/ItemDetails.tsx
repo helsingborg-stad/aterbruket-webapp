@@ -58,7 +58,6 @@ interface ParamTypes {
 const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
   const [item, setItem] = useState(false) as any;
-  const [scripLoaded, setScriptLoaded] = useState(false);
   const [editItem, setEditItem] = useState(false);
 
   const fetchItem = async () => {

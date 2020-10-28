@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable func-names */
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-named-as-default-member */
@@ -58,7 +59,7 @@ interface ParamTypes {
 const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
   const [item, setItem] = useState(false) as any;
-  const [scripLoaded, setScriptLoaded] = useState(false);
+  const [, setScriptLoaded] = useState(false);
   const [editItem, setEditItem] = useState(false);
 
   const fetchItem = async () => {

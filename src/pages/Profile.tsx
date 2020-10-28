@@ -47,15 +47,12 @@ export default function Profile() {
     }
 
     return (
-        <div>
-        <h1> {user.name} </h1>
-        <InformationWrapper>
-            <h3> Kontakt </h3>
-            {userInfo}
-        </InformationWrapper>
-
-        
-            
-        </div>
+        <main>
+            <h1> {user.name} </h1>
+            <InformationWrapper>
+                <h3> Kontakt </h3>
+                {userInfo}
+            </InformationWrapper>
+        </main>
     )
 }

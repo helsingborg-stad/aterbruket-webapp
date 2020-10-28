@@ -48,6 +48,9 @@
     "categories": {
       "auth": {
         "aterbruketwebapp75287c9a": {}
+      },
+      "function": {
+        "migrateADUser": {}
       }
     }
   },

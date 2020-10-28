@@ -53,7 +53,6 @@ const App: FC = () => {
             component={() => <AddItem alreadyAQRCode={alreadyAQRCode} />}
           />
           <Route
-            exact
             path="/profile"
             component={Profile}
           />

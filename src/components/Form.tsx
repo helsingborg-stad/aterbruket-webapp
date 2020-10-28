@@ -12,8 +12,8 @@ export default function Form(props: {
   handleInputChange: (event: React.ChangeEvent<any>) => void;
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }) {
-  const fields = props.fields.map((field, index) => {
-    if (field.fieldType === "input") {
+  const fields = props.fields.map((field: IFields, index: number) => {
+    if (field.fieldType === "input" || field.fieldType === "checkbox") {
       return (
         <input
           key={index}
@@ -22,6 +22,7 @@ export default function Form(props: {
           onChange={props.handleInputChange}
           value={props.values[field.name]}
           placeholder={field.name}
+          disabled={field.disabled}
         />
       );
     }

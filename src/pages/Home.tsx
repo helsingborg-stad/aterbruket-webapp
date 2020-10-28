@@ -4,7 +4,7 @@ import AdvertContainer from "../components/AdvertContainer";
 const Home: FC = () => {
   return (
     <main>
-      <h3>All items</h3>
+      <p>[Sökruta and filter goes here]</p>
       <AdvertContainer />
     </main>
   );

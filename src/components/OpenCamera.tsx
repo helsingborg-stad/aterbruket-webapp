@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { FC } from "react";
 import QrReader from "react-qr-reader";
 import styled from "styled-components";
@@ -32,11 +33,10 @@ interface Props {
   >;
 }
 
-const OpenCamera: FC<Props> = ({ qrCamera, setQrCamera }) => {
+const OpenCamera: FC<Props> = ({ qrCamera, setQrCamera }: Props) => {
   const handleScan = (result: any): any => {
     if (result) {
-      console.log(result);
-      setQrCamera(result);
+      setQrCamera({ ...qrCamera, result });
     }
   };
 
@@ -51,6 +51,7 @@ const OpenCamera: FC<Props> = ({ qrCamera, setQrCamera }) => {
         onError={handleError}
         onScan={handleScan}
         style={{ width: "100%" }}
+        showViewFinder={false}
       />
       <p>{qrCamera.result}</p>
     </CameraContainer>

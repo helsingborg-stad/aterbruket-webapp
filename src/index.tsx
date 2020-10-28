@@ -13,7 +13,7 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-const awsConfiguration = awsExports;
+const awsConfiguration: any = awsExports;
 awsConfiguration['authenticationFlowType'] = 'USER_PASSWORD_AUTH';
 
 Amplify.configure(awsConfiguration);

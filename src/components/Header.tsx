@@ -2,8 +2,6 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Modal from "./Modal";
-import ModalAddItemContent from "./ModalAddItemContent";
 
 const HeaderDiv = styled.header`
   width: ${(props) => `${props.theme.headerTheme.width}%`};
@@ -32,43 +30,20 @@ const HeaderDiv = styled.header`
   }
 `;
 
-type Props = {
-  modalOpen: boolean;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setAlreadyAQRCode: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const Header: FC<Props> = ({ modalOpen, setModalOpen, setAlreadyAQRCode }) => {
+const Header: FC = () => {
   return (
     <HeaderDiv>
-      <Modal modalOpen={modalOpen}>
-        <ModalAddItemContent
-          setModalOpen={setModalOpen}
-          setAlreadyAQRCode={setAlreadyAQRCode}
-        />
-      </Modal>
-
       <Link to="/">
         <h2>
-          Sånt du kan <br />
-          Haffa!
+          Haffa och var en <br />
+          miljöhjälte!
         </h2>
       </Link>
-      <button
-        onClick={() => {
-          setModalOpen(true);
-          setAlreadyAQRCode(false);
-        }}
-      >
-        Add Item
-      </button>
+
       <Link to="/profile/">
-        <button>
-          Profile
-        </button>
+        <button>Profile</button>
       </Link>
     </HeaderDiv>
-    
   );
 };
 

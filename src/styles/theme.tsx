@@ -58,8 +58,8 @@ const theme: DefaultTheme = {
   },
   cardTheme: {
     backgroundColor: "#ffffff",
-    titleColor: "#7a524a",
-    amountColor: "#dd6161",
+    titleColor: " #3D3D3D",
+    amountColor: "#6F9725",
     descColor: "#3d3d3d",
   },
 };

@@ -41,21 +41,24 @@ const App: FC = () => {
     <ThemeProvider theme={theme}>
       <AppContainer>
         <Router>
-          <Header
-            modalOpen={modalOpen}
-            setModalOpen={setModalOpen}
-            setAlreadyAQRCode={setAlreadyAQRCode}
+          <Header />
+          <Route
+            exact
+            path="/"
+            component={() => (
+              <Home
+                modalOpen={modalOpen}
+                setModalOpen={setModalOpen}
+                setAlreadyAQRCode={setAlreadyAQRCode}
+              />
+            )}
           />
-          <Route exact path="/" component={Home} />
           <Route
             exact
             path="/add"
             component={() => <AddItem alreadyAQRCode={alreadyAQRCode} />}
           />
-          <Route
-            path="/profile"
-            component={Profile}
-          />
+          <Route path="/profile" component={Profile} />
           <Route path="/item/:id" component={ItemDetails} />
         </Router>
       </AppContainer>

@@ -11,6 +11,7 @@ import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
 import { Auth } from "aws-amplify";
+import Profile from "./pages/Profile";
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.appTheme.minHeight}vh`};
@@ -50,6 +51,11 @@ const App: FC = () => {
             exact
             path="/add"
             component={() => <AddItem alreadyAQRCode={alreadyAQRCode} />}
+          />
+          <Route
+            exact
+            path="/profile"
+            component={Profile}
           />
           <Route path="/item/:id" component={ItemDetails} />
         </Router>

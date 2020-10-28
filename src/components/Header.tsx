@@ -2,7 +2,6 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import ModalAddItemContent from "./ModalAddItemContent";
 

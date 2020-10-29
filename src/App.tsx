@@ -10,15 +10,17 @@ import Home from "./pages/Home";
 import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
+import Profile from "./pages/Profile";
 
 const AppContainer = styled.div`
-  min-height: ${(props) => `${props.theme.minHeight}vh`};
-  min-width: ${(props) => `${props.theme.minWidth}px`};
-  width: ${(props) => `${props.theme.width}vw`};
+  min-height: ${(props) => `${props.theme.appTheme.minHeight}vh`};
+  min-width: ${(props) => `${props.theme.appTheme.minWidth}px`};
+  width: ${(props) => `${props.theme.appTheme.width}vw`};
   padding: ${(props) =>
-    `${props.theme.padding[0]}rem ${props.theme.padding[1]}rem ${props.theme.padding[2]}rem ${props.theme.padding[3]}rem`};
-  box-sizing: ${(props) => props.theme.boxSizing};
-  background-color: ${(props) => props.theme.primaryColor};
+    `${props.theme.appTheme.padding[0]}rem ${props.theme.appTheme.padding[1]}rem ${props.theme.appTheme.padding[2]}rem ${props.theme.appTheme.padding[3]}rem`};
+  box-sizing: ${(props) => props.theme.appTheme.boxSizing};
+  background-color: ${(props) => props.theme.appTheme.primaryColor};
+  font-family: ${(props) => props.theme.appTheme.fontFamily};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,10 +47,10 @@ const App: FC = () => {
           />
           <Route exact path="/" component={Home} />
           <Route
-            exact
             path="/add"
             component={() => <AddItem alreadyAQRCode={alreadyAQRCode} />}
           />
+          <Route path="/profile" component={Profile} />
           <Route path="/item/:id" component={ItemDetails} />
         </Router>
       </AppContainer>
@@ -56,5 +58,4 @@ const App: FC = () => {
   );
 };
 
-// export default withAuthenticator(App);
-export default App;
+export default withAuthenticator(App);

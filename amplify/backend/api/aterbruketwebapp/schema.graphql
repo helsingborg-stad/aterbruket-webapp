@@ -6,4 +6,12 @@ type Advertisement @model {
   height: Int
   width: Int
   length: Int
+  status: ItemStatus
+}
+
+enum ItemStatus {
+    available
+    reserved
+    pickedUp
+    delivered
 }

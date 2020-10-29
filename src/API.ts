@@ -10,7 +10,16 @@ export type CreateAdvertisementInput = {
   height?: number | null,
   width?: number | null,
   length?: number | null,
+  status?: ItemStatus | null,
 };
+
+export enum ItemStatus {
+  available = "available",
+  reserved = "reserved",
+  pickedUp = "pickedUp",
+  delivered = "delivered",
+}
+
 
 export type ModelAdvertisementConditionInput = {
   title?: ModelStringInput | null,
@@ -19,6 +28,7 @@ export type ModelAdvertisementConditionInput = {
   height?: ModelIntInput | null,
   width?: ModelIntInput | null,
   length?: ModelIntInput | null,
+  status?: ModelItemStatusInput | null,
   and?: Array< ModelAdvertisementConditionInput | null > | null,
   or?: Array< ModelAdvertisementConditionInput | null > | null,
   not?: ModelAdvertisementConditionInput | null,
@@ -76,6 +86,11 @@ export type ModelIntInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
+export type ModelItemStatusInput = {
+  eq?: ItemStatus | null,
+  ne?: ItemStatus | null,
+};
+
 export type UpdateAdvertisementInput = {
   id: string,
   title?: string | null,
@@ -84,6 +99,7 @@ export type UpdateAdvertisementInput = {
   height?: number | null,
   width?: number | null,
   length?: number | null,
+  status?: ItemStatus | null,
 };
 
 export type DeleteAdvertisementInput = {
@@ -98,6 +114,7 @@ export type ModelAdvertisementFilterInput = {
   height?: ModelIntInput | null,
   width?: ModelIntInput | null,
   length?: ModelIntInput | null,
+  status?: ModelItemStatusInput | null,
   and?: Array< ModelAdvertisementFilterInput | null > | null,
   or?: Array< ModelAdvertisementFilterInput | null > | null,
   not?: ModelAdvertisementFilterInput | null,
@@ -134,6 +151,7 @@ export type CreateAdvertisementMutation = {
     height: number | null,
     width: number | null,
     length: number | null,
+    status: ItemStatus | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -154,6 +172,7 @@ export type UpdateAdvertisementMutation = {
     height: number | null,
     width: number | null,
     length: number | null,
+    status: ItemStatus | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -174,6 +193,7 @@ export type DeleteAdvertisementMutation = {
     height: number | null,
     width: number | null,
     length: number | null,
+    status: ItemStatus | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -193,6 +213,7 @@ export type GetAdvertisementQuery = {
     height: number | null,
     width: number | null,
     length: number | null,
+    status: ItemStatus | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -216,6 +237,7 @@ export type ListAdvertisementsQuery = {
       height: number | null,
       width: number | null,
       length: number | null,
+      status: ItemStatus | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -233,6 +255,7 @@ export type OnCreateAdvertisementSubscription = {
     height: number | null,
     width: number | null,
     length: number | null,
+    status: ItemStatus | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -248,6 +271,7 @@ export type OnUpdateAdvertisementSubscription = {
     height: number | null,
     width: number | null,
     length: number | null,
+    status: ItemStatus | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -263,6 +287,7 @@ export type OnDeleteAdvertisementSubscription = {
     height: number | null,
     width: number | null,
     length: number | null,
+    status: ItemStatus | null,
     createdAt: string,
     updatedAt: string,
   } | null,

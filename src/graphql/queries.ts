@@ -12,6 +12,7 @@ export const getAdvertisement = /* GraphQL */ `
       height
       width
       length
+      status
       createdAt
       updatedAt
     }
@@ -32,6 +33,7 @@ export const listAdvertisements = /* GraphQL */ `
         height
         width
         length
+        status
         createdAt
         updatedAt
       }

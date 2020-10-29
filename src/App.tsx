@@ -35,6 +35,7 @@ const AppContainer = styled.div`
 const App: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [alreadyAQRCode, setAlreadyAQRCode] = useState(false);
+  const [qrCamera, setQrCamera] = useState({ delay: 500, result: "" });
 
   return (
     <ThemeProvider theme={theme}>
@@ -49,12 +50,20 @@ const App: FC = () => {
                 modalOpen={modalOpen}
                 setModalOpen={setModalOpen}
                 setAlreadyAQRCode={setAlreadyAQRCode}
+                qrCamera={qrCamera}
+                setQrCamera={setQrCamera}
               />
             )}
           />
           <Route
             path="/add"
-            component={() => <AddItem alreadyAQRCode={alreadyAQRCode} />}
+            component={() => (
+              <AddItem
+                alreadyAQRCode={alreadyAQRCode}
+                qrCamera={qrCamera}
+                setQrCamera={setQrCamera}
+              />
+            )}
           />
           <Route path="/profile" component={Profile} />
           <Route path="/item/:id" component={ItemDetails} />

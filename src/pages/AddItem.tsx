@@ -32,12 +32,27 @@ const fields = [
   },
 ];
 
-type Props = {
-  alreadyAQRCode: boolean;
-};
+interface IQrCamera {
+  delay: number;
+  result: string;
+}
 
-const AddItem: FC<Props> = ({ alreadyAQRCode }: Props) => {
-  const [qrCamera, setQrCamera] = useState({ delay: 500, result: "" });
+interface Props {
+  alreadyAQRCode: boolean;
+  qrCamera: IQrCamera;
+  setQrCamera: React.Dispatch<
+    React.SetStateAction<{
+      delay: number;
+      result: string;
+    }>
+  >;
+}
+
+const AddItem: FC<Props> = ({
+  alreadyAQRCode,
+  qrCamera,
+  setQrCamera,
+}: Props) => {
   const history = useHistory();
   const { values, handleInputChange, handleSubmit, redirect } = useForm(
     { title: "", description: "", length: 1, location: "" },

@@ -1,6 +1,6 @@
 /* eslint-disable react/button-has-type */
 import React, { FC } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const HeaderDiv = styled.header`
@@ -29,20 +29,38 @@ const HeaderDiv = styled.header`
     color: black;
   }
 `;
+const TabCtn = styled.div`
+  width: 100%;
+  background-color: #f8f8f8;
+
+  button {
+    border: none;
+    color: #707070;
+    background-color: transparent;
+    font-weight: 900;
+    padding: 5px;
+    margin-right: 50px;
+    :active,
+    :focus {
+      color: #205400;
+      border: none;
+      border-bottom: 2px solid #a0c855;
+      outline: none;
+    }
+  }
+`;
 
 const Header: FC = () => {
   return (
     <HeaderDiv>
-      <Link to="/">
-        <h2>
-          Haffa och var en <br />
-          miljöhjälte!
-        </h2>
-      </Link>
-
-      <Link to="/profile/">
-        <button>Profile</button>
-      </Link>
+      <h2>
+        Haffa och var en <br />
+        miljöhjälte!
+      </h2>
+      <TabCtn>
+        <button>INSPIRATION</button>
+        <button>KATEGORIER</button>
+      </TabCtn>
     </HeaderDiv>
   );
 };

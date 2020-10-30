@@ -16,6 +16,21 @@ export const createAdvertisement = /* GraphQL */ `
       width
       length
       status
+      category
+      material
+      condition
+      color
+      areaOfUse
+      images {
+        src
+        alt
+      }
+      quantity
+      department
+      instructions
+      contactPerson
+      email
+      phoneNumber
       createdAt
       updatedAt
     }
@@ -35,6 +50,21 @@ export const updateAdvertisement = /* GraphQL */ `
       width
       length
       status
+      category
+      material
+      condition
+      color
+      areaOfUse
+      images {
+        src
+        alt
+      }
+      quantity
+      department
+      instructions
+      contactPerson
+      email
+      phoneNumber
       createdAt
       updatedAt
     }
@@ -54,6 +84,21 @@ export const deleteAdvertisement = /* GraphQL */ `
       width
       length
       status
+      category
+      material
+      condition
+      color
+      areaOfUse
+      images {
+        src
+        alt
+      }
+      quantity
+      department
+      instructions
+      contactPerson
+      email
+      phoneNumber
       createdAt
       updatedAt
     }

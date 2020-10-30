@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable func-names */
@@ -100,7 +102,7 @@ const ItemDetails: FC<ParamTypes> = () => {
     const result: any = await API.graphql(
       graphqlOperation(updateAdvertisement, {
         input: {
-          id: id,
+          id,
           status: "reserved",
         },
       })
@@ -216,7 +218,6 @@ const ItemDetails: FC<ParamTypes> = () => {
       {editItem ? (
         <EditItemForm
           setEditItem={setEditItem}
-          editItem={editItem}
           item={item}
           closeEditformAndFetchItem={closeEditformAndFetchItem}
         />

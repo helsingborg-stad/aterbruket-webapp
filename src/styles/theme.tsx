@@ -29,6 +29,12 @@ interface DefaultTheme {
     amountColor: string;
     descColor: string;
   };
+  formTheme: {
+    // backgroundColor: string;
+    // titleColor: string;
+    // descColor: string;
+    backgroundColor: string;
+  };
 }
 
 const theme: DefaultTheme = {
@@ -61,6 +67,12 @@ const theme: DefaultTheme = {
     titleColor: " #3D3D3D",
     amountColor: "#6F9725",
     descColor: "#3d3d3d",
+  },
+  formTheme: {
+    // backgroundColor: "#ffffff",
+    // titleColor: "#7a524a",
+    // descColor: "#3d3d3d",
+    backgroundColor: "#F5F5F5",
   },
 };
 

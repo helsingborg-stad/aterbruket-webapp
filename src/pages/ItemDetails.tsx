@@ -22,6 +22,30 @@ import { loadMapApi } from "../utils/GoogleMapsUtils";
 import Map from "../components/Map";
 import CarouselComp from "../components/CarouselComp";
 
+const DivBtns = styled.div`
+  display: flex;
+  width: 90%;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  button {
+    border: 2px solid green;
+    outline: none;
+    width: 70px;
+    height: 30px;
+    background-color: white;
+    margin: 5px;
+    border-radius: 5px;
+  }
+
+  p {
+    color: grey;
+    margin: 0;
+    font-style: italic;
+    font-size: 0.8em;
+  }
+`;
+
 const ItemImg = styled.img`
   width: 300px;
   height: 300px;
@@ -120,15 +144,23 @@ const ItemDetails: FC<ParamTypes> = () => {
   const history = useHistory();
   const allDetails = (
     <>
-      <button onClick={() => setEditItem(true)}>Edit</button>
-      <button
-        onClick={() => {
-          onClickReservBtn();
-        }}
-      >
-        HAFFA
-      </button>
-      <button onClick={() => history.goBack()}>Tillbaka</button>
+      <DivBtns>
+        <button onClick={() => setEditItem(true)}>Edit</button>
+        <button onClick={() => history.goBack()}>Tillbaka</button>
+        {item.status === "available" || item.status === null ? (
+          <button
+            onClick={() => {
+              onClickReservBtn();
+            }}
+          >
+            HAFFA
+          </button>
+        ) : (
+          <p>
+            (Prylen har status: &quot;{item.status}&quot;. Gjordes av: [NAMN])
+          </p>
+        )}
+      </DivBtns>
       {reservedClicked && (
         <p>
           Du har haffat {item.title} statusen är: {item.status}
@@ -193,7 +225,6 @@ const ItemDetails: FC<ParamTypes> = () => {
           </tr>
         </tbody>
       </Table>
-
       <MapContainer>
         {item && item.location && (
           <Map

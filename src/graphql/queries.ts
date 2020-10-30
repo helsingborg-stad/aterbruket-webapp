@@ -13,6 +13,21 @@ export const getAdvertisement = /* GraphQL */ `
       width
       length
       status
+      category
+      material
+      condition
+      color
+      areaOfUse
+      images {
+        src
+        alt
+      }
+      quantity
+      department
+      instructions
+      contactPerson
+      email
+      phoneNumber
       createdAt
       updatedAt
     }
@@ -34,6 +49,21 @@ export const listAdvertisements = /* GraphQL */ `
         width
         length
         status
+        category
+        material
+        condition
+        color
+        areaOfUse
+        images {
+          src
+          alt
+        }
+        quantity
+        department
+        instructions
+        contactPerson
+        email
+        phoneNumber
         createdAt
         updatedAt
       }

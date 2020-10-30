@@ -7,11 +7,45 @@ type Advertisement @model {
   width: Int
   length: Int
   status: ItemStatus
+  category: ItemCategory
+  material: String
+  condition: ItemCondition
+  color: String
+  areaOfUse: ItemAreaOfUse
+  images: [ItemImages]
+  quantity: Int
+  department: String
+  instructions: String
+  contactPerson: String
+  email: String
+  phoneNumber: Int
 }
 
 enum ItemStatus {
-    available
-    reserved
-    pickedUp
-    delivered
+  available
+  reserved
+  pickedUp
+  delivered
+}
+
+enum ItemCategory {
+  bord
+  stol
+  skrivbord
+}
+
+enum ItemCondition {
+  new
+  good
+  worn
+}
+
+enum ItemAreaOfUse {
+  indoors
+  outside
+}
+
+type ItemImages {
+  src: String
+  alt: String
 }

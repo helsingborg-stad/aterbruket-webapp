@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/dot-notation */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import Amplify from "aws-amplify";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import Amplify from "aws-amplify";
 import awsExports from "./aws-exports";
 
 ReactDOM.render(
@@ -14,7 +16,7 @@ ReactDOM.render(
 );
 
 const awsConfiguration: any = awsExports;
-awsConfiguration['authenticationFlowType'] = 'USER_PASSWORD_AUTH';
+awsConfiguration["authenticationFlowType"] = "USER_PASSWORD_AUTH";
 
 Amplify.configure(awsConfiguration);
 // If you want your app to work offline and load faster, you can change

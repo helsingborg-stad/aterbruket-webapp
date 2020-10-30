@@ -10,7 +10,7 @@ import OpenCamera from "../components/OpenCamera";
 
 const AddBtn = styled.button`
   position: fixed;
-  bottom: 25px;
+  bottom: 10vh;
   background-color: #205400;
   color: white;
   display: flex;
@@ -18,7 +18,7 @@ const AddBtn = styled.button`
   border: 0;
   padding: 0px 0px 0px 12px;
   width: 90%;
-  height: 56px;
+  height: 50px;
   border-radius: 14.5px;
   box-shadow: 0px 0px 2px rgba(98, 98, 98, 0.18),
     0px 3px 2px rgba(98, 98, 98, 0.12), 0px 6px 8px rgba(98, 98, 98, 0.12),
@@ -44,7 +44,7 @@ const ScanBtn = styled.button`
     0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
   border-radius: 34.5px;
   position: absolute;
-  top: 170px;
+  top: 35vh;
   right: 30px;
   outline: none;
 

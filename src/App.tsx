@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
 import Profile from "./pages/Profile";
+import MenuBar from "./components/MenuBar";
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.appTheme.minHeight}vh`};
@@ -67,6 +68,7 @@ const App: FC = () => {
           />
           <Route path="/profile" component={Profile} />
           <Route path="/item/:id" component={ItemDetails} />
+          <MenuBar />
         </Router>
       </AppContainer>
     </ThemeProvider>

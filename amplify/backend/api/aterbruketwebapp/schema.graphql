@@ -19,6 +19,7 @@ type Advertisement @model {
   contactPerson: String
   email: String
   phoneNumber: Int
+  giverID: String
 }
 
 enum ItemStatus {

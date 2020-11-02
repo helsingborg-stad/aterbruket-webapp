@@ -5,7 +5,7 @@ import React, { FC } from "react";
 import Form from "./Form";
 import useForm from "../hooks/useForm";
 import { updateAdvertisement } from "../graphql/mutations";
-import { fieldsEditForm as fields } from "../util/utils";
+import { fieldsEditForm as fields } from "../utils/formUtils";
 
 interface Props {
   item: {

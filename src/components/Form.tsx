@@ -7,7 +7,7 @@
 import React from "react";
 import styled from "styled-components";
 import { IFields } from "../interfaces/IForm";
-import { options } from "../util/utils";
+import { options } from "../utils/formUtils";
 
 const FormContainerDiv = styled.div`
   width: 100%;
@@ -19,14 +19,20 @@ const FormContainerDiv = styled.div`
     display: flex;
     flex-direction: column;
   }
-
-  .allDiv {
+  section {
     background-color: ${(props) => props.theme.formTheme.backgroundColor};
     width: 350px;
     height: 56px;
     border-radius: 4.5px;
     padding: 16px 0px 16px 16px;
     margin: 8px 0px;
+    p {
+      margin-block-end: 0;
+      margin-block-start: 0;
+    }
+  }
+
+  .allDiv {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -42,9 +48,14 @@ const FormContainerDiv = styled.div`
       border-radius: 4.5px;
       border: none;
     }
+
+    .required {
+      font-style: italic;
+      color: red;
+      font-size: 10px;
+    }
   }
 `;
-
 export default function Form(props: {
   values: any;
   fields: IFields[];
@@ -55,17 +66,19 @@ export default function Form(props: {
   const fields = props.fields.map((field: IFields) => {
     if (field.fieldType === "input" && field.dataType !== "checkbox") {
       return (
-        <div className="allDiv" key={field.name}>
-          <label htmlFor={field.name}>{field.name}</label>
+        <section className="allDiv" key={field.name}>
+          {field.required && <span className="required">Required</span>}
+          <label htmlFor={field.name}>{field.title}</label>
           <input
             type={field.dataType}
             name={field.name}
             onChange={props.handleInputChange}
             value={props.values[field.name]}
-            placeholder={field.name}
+            placeholder={field.title}
             disabled={field.disabled}
+            required={field.required}
           />
-        </div>
+        </section>
       );
     }
     if (field.fieldType === "input" && field.dataType === "checkbox") {
@@ -84,35 +97,47 @@ export default function Form(props: {
         );
       });
       return (
-        <div className="allDiv" key={field.name}>
-          {checkboxInput}
-        </div>
+        <section key={field.name}>
+          <p>{field.title}</p>
+          <div className="allDiv">
+            {field.required && <span className="required">Required</span>}
+            {checkboxInput}
+          </div>
+        </section>
       );
     }
     if (field.fieldType === "textarea") {
       return (
-        <div className="allDiv" key={field.name}>
-          <label htmlFor={field.name}>{field.name}</label>
+        <section className="allDiv" key={field.name}>
+          {field.required && <span className="required">Required</span>}
+          <label htmlFor={field.name}>{field.title}</label>
           <textarea
             name={field.name}
             onChange={props.handleInputChange}
             value={props.values[field.name]}
-            placeholder={field.name}
+            placeholder={field.title}
+            required={field.required}
           />
-        </div>
+        </section>
       );
     }
     if (field.fieldType === "select") {
       return (
-        <div className="allDiv" key={field.name}>
+        <section className="allDiv" key={field.name}>
+          {field.required && <span className="required">Required</span>}
           <label htmlFor={field.name} key={field.name}>
-            Choose {field.name}:
+            {field.title}
           </label>
           <select
             name={field.name}
             id={field.name}
             onClick={props.handleInputChange}
+            defaultValue={props.values[field.name] || "select"}
+            required={field.required}
           >
+            <option value="select" disabled>
+              Välj ett alternativ
+            </option>
             {options[field.name].map((x: string) => {
               return (
                 <option value={x} key={x}>
@@ -121,7 +146,7 @@ export default function Form(props: {
               );
             })}
           </select>
-        </div>
+        </section>
       );
     }
   });

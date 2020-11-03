@@ -81,6 +81,10 @@ const MapContainer = styled.div`
   border-radius: 5px;
 `;
 
+const QRContainer = styled.div`
+  margin-bottom: 47px;
+`;
+
 interface ParamTypes {
   id: string;
 }
@@ -238,9 +242,9 @@ const ItemDetails: FC<ParamTypes> = () => {
           <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
         )}
       </MapContainer>
-      <div>
+      <QRContainer>
         <QRCode id={id} />
-      </div>
+      </QRContainer>
     </>
   );
 

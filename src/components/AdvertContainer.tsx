@@ -21,7 +21,7 @@ const AdvertContainerDiv = styled.div`
 `;
 
 const AdvertContainer = (props: { adverts: any[]; }) => {
-  console.log(props)
+  
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">

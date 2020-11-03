@@ -101,7 +101,7 @@ const Home: FC<Props> = ({
       graphqlOperation(listAdvertisements)
     )) as GraphQLResult<ListAdvertisementsQuery>;
     const advertItems = result.data?.listAdvertisements?.items;
-    console.log(advertItems)
+    
     setAdverts(advertItems);
   };
 

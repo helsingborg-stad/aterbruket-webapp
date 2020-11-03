@@ -28,7 +28,7 @@ export const getAdvertisement = /* GraphQL */ `
       contactPerson
       email
       phoneNumber
-      giverID
+      giver
       createdAt
       updatedAt
     }
@@ -65,7 +65,7 @@ export const listAdvertisements = /* GraphQL */ `
         contactPerson
         email
         phoneNumber
-        giverID
+        giver
         createdAt
         updatedAt
       }

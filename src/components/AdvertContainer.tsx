@@ -1,9 +1,5 @@
-import React, { FC, useEffect, useState } from "react";
-import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
-import { API } from "aws-amplify";
+import React from "react";
 import styled from "styled-components";
-import { ListAdvertisementsQuery } from "../API";
-import { listAdvertisements } from "../graphql/queries";
 import Card from "./Card";
 
 const AdvertContainerDiv = styled.div`
@@ -24,28 +20,14 @@ const AdvertContainerDiv = styled.div`
   }
 `;
 
-const AdvertContainer: FC = () => {
-  const [items, setItems] = useState([]) as any;
-
-  const fetchItems = async () => {
-    const result = (await API.graphql(
-      graphqlOperation(listAdvertisements)
-    )) as GraphQLResult<ListAdvertisementsQuery>;
-    const advertItems = result.data?.listAdvertisements?.items;
-
-    setItems(advertItems);
-  };
-
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
+const AdvertContainer = (props: { adverts: any[], title: string}) => {
+  
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">
-        <h3>Alla</h3>
+        <h3>{props.title}</h3>
       </div>
-      {items.map((item: any) =>
+      {props.adverts.map((item: any) =>
         item.status === "available" ||
         item.status === "reserved" ||
         item.status === null ? (

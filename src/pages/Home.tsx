@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 import { MdNewReleases } from "react-icons/md";
@@ -7,6 +7,10 @@ import AdvertContainer from "../components/AdvertContainer";
 import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
+import { API, graphqlOperation } from "aws-amplify";
+import { listAdvertisements } from "../graphql/queries";
+import { GraphQLResult } from "@aws-amplify/api";
+import { ListAdvertisementsQuery } from "../API";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -90,10 +94,28 @@ const Home: FC<Props> = ({
   setQrCamera,
 }: Props) => {
   const [showQRCamera, setShowQRCamera] = useState(false);
+  const [adverts, setAdverts] = useState([]) as any;
+
+  const fetchAdverts = async () => {
+    const result = (await API.graphql(
+      graphqlOperation(listAdvertisements)
+    )) as GraphQLResult<ListAdvertisementsQuery>;
+    const advertItems = result.data?.listAdvertisements?.items;
+    console.log(advertItems)
+    setAdverts(advertItems);
+  };
+
+  useEffect(() => {
+    fetchAdverts();
+  }, [])
 
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
+
+  
+
+
   return (
     <main>
       {showQRCamera ? (
@@ -117,7 +139,7 @@ const Home: FC<Props> = ({
             </div>
           </ScanBtn>
           <p>[Sökruta and filter goes here]</p>
-          <AdvertContainer />
+          <AdvertContainer adverts={adverts}/>
           <AddBtn
             type="button"
             onClick={() => {

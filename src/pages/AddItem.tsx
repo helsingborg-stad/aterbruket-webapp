@@ -1,11 +1,12 @@
 /* eslint-disable react/button-has-type */
-import React, { FC, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import Form from "../components/Form";
 import useForm from "../hooks/useForm";
 import { createAdvertisement } from "../graphql/mutations";
 import OpenCamera from "../components/OpenCamera";
 import { fieldsForm as fields } from "../util/utils";
+import {UserContext} from "../contexts/UserContext";
 
 interface IQrCamera {
   delay: number;
@@ -29,6 +30,7 @@ const AddItem: FC<Props> = ({
   setQrCamera,
 }: Props) => {
   const history = useHistory();
+  const user: any = useContext(UserContext)
   const { values, handleInputChange, handleSubmit, redirect } = useForm(
     {
       title: "",
@@ -48,6 +50,7 @@ const AddItem: FC<Props> = ({
       contactPerson: "",
       email: "",
       phoneNumber: 0,
+      giver: user.attributes.sub
     },
     createAdvertisement
   );

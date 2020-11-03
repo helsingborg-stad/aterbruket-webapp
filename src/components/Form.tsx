@@ -131,7 +131,7 @@ export default function Form(props: {
           <select
             name={field.name}
             id={field.name}
-            onClick={props.handleInputChange}
+            onChange={props.handleInputChange}
             defaultValue={props.values[field.name] || "select"}
             required={field.required}
           >

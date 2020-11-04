@@ -1,8 +1,12 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
+import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
+import { API } from "aws-amplify";
 import styled from "styled-components";
-import { MdNewReleases } from "react-icons/md";
+import { MdNewReleases, MdSearch, MdTune } from "react-icons/md";
 import { ImQrcode } from "react-icons/im";
+import { listAdvertisements } from "../graphql/queries";
+import { ListAdvertisementsQuery } from "../API";
 import AdvertContainer from "../components/AdvertContainer";
 import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
@@ -44,7 +48,7 @@ const ScanBtn = styled.button`
     0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
   border-radius: 34.5px;
   position: absolute;
-  top: 35vh;
+  top: 32vh;
   right: 30px;
   outline: none;
 
@@ -62,6 +66,53 @@ const ScanBtn = styled.button`
     color: white;
     padding: 2px;
     border-radius: 4px;
+  }
+`;
+
+const SearchFilterDiv = styled.div`
+  width: 90%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .searchWrapper {
+    position: relative;
+
+    #searchIcon {
+      position: absolute;
+      top: 47px;
+      left: 20px;
+      color: #50811b;
+      font-size: 16px;
+    }
+
+    #searchInput {
+      width: 240px;
+      height: 25px;
+      margin: 30px 0;
+      padding: 12px 0px 12px 40px;
+      display: flex;
+      align-items: flex-start;
+      border-radius: 17.5px;
+      border: none;
+      background-color: #f5f5f5;
+    }
+  }
+
+  #filterBtn {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80px;
+    line-height: 16px;
+    font-size: 16px;
+    border: none;
+    background-color: transparent;
+
+    #filterIcon {
+      color: #50811b;
+      font-size: 18px;
+    }
   }
 `;
 interface IQrCamera {
@@ -90,6 +141,29 @@ const Home: FC<Props> = ({
   setQrCamera,
 }: Props) => {
   const [showQRCamera, setShowQRCamera] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  const updateSearch = (event: React.ChangeEvent<any>) => {
+    const { target } = event;
+    const { value } = target;
+    setSearchValue(value);
+    // console.log(value);
+  };
+
+  const [items, setItems] = useState([]) as any;
+
+  const fetchItems = async () => {
+    const result = (await API.graphql(
+      graphqlOperation(listAdvertisements)
+    )) as GraphQLResult<ListAdvertisementsQuery>;
+    const advertItems = result.data?.listAdvertisements?.items;
+
+    setItems(advertItems);
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
@@ -116,8 +190,22 @@ const Home: FC<Props> = ({
               <ImQrcode />
             </div>
           </ScanBtn>
-          <p>[Sökruta and filter goes here]</p>
-          <AdvertContainer />
+          <SearchFilterDiv>
+            <div className="searchWrapper">
+              <MdSearch id="searchIcon" />
+              <input
+                id="searchInput"
+                type="text"
+                placeholder="Sök"
+                onChange={updateSearch}
+              />
+            </div>
+
+            <button type="button" id="filterBtn">
+              Filter <MdTune id="filterIcon" />
+            </button>
+          </SearchFilterDiv>
+          <AdvertContainer items={items} searchValue={searchValue} />
           <AddBtn
             type="button"
             onClick={() => {

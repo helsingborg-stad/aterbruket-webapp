@@ -29,7 +29,6 @@ export default function Profile() {
     useEffect(() => {
         Auth.currentAuthenticatedUser().then((authenticatedUser) => {
             setUser(authenticatedUser.attributes);
-            console.log(authenticatedUser);
         })
     }, [])
 

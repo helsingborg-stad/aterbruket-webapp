@@ -3,5 +3,6 @@ export interface IFields {
   dataType?: string;
   fieldType: string | number;
   disabled: boolean;
-  value?: any;
+  required?: boolean;
+  title: string;
 }

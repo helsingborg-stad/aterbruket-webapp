@@ -5,7 +5,7 @@ import Form from "../components/Form";
 import useForm from "../hooks/useForm";
 import { createAdvertisement } from "../graphql/mutations";
 import OpenCamera from "../components/OpenCamera";
-import { fieldsForm as fields } from "../util/utils";
+import { fieldsForm as fields } from "../utils/formUtils";
 
 interface IQrCamera {
   delay: number;

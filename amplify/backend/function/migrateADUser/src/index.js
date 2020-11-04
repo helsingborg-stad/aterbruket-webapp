@@ -34,13 +34,19 @@ function createUser(username, password, user, callback) {
 		params.UserAttributes.push({ Name: 'custom:department', Value: user.department })
 	}
 
-	if (user.mobile) {
+	/* if (user.mobile) {
 		params.UserAttributes.push({ Name: 'phone_number', Value: user.mobile })
-	}
+	} */
 
+	const userParams = {
+		GroupName: "user",
+		UserPoolId: process.env.USER_POOL_ID,
+		Username: username
+	};
 	var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
+	cognitoidentityserviceprovider.adminAddUserToGroup(userParams).promise()
 
-	cognitoidentityserviceprovider.adminCreateUser(params, function(err, data) {
+	cognitoidentityserviceprovider.adminCreateUser(params, function (err, data) {
 		if (err) {
 			console.log('Failed to Create migrating user in User Pool: ' + username);
 			console.log(err)
@@ -59,7 +65,7 @@ function createUser(username, password, user, callback) {
 				AuthParameters: { USERNAME: username, PASSWORD: password }
 			};
 
-			cognitoidentityserviceprovider.adminInitiateAuth(params, function(signin_err, data) {
+			cognitoidentityserviceprovider.adminInitiateAuth(params, function (signin_err, data) {
 				if (signin_err) {
 					console.log('Failed to sign in migrated user: ' + username);
 					console.log(signin_err, signin_err.stack);
@@ -85,7 +91,7 @@ function createUser(username, password, user, callback) {
 						},
 						Session: data.Session
 					};
-					cognitoidentityserviceprovider.adminRespondToAuthChallenge(params, function(err, data) {
+					cognitoidentityserviceprovider.adminRespondToAuthChallenge(params, function (err, data) {
 						if (err) console.log(err, err.stack); // an error occurred
 						else { // successful response
 							console.log('Successful response from RespondToAuthChallenge: ' + username);
@@ -100,7 +106,7 @@ function createUser(username, password, user, callback) {
 }
 
 
-exports.handler = function(event, context, callback) {
+exports.handler = function (event, context, callback) {
 	console.log(event)
 	var username = event.userName;
 	var password = event.request.password;
@@ -109,7 +115,7 @@ exports.handler = function(event, context, callback) {
 	//Check to see if the user exists in the User Pool using AdminGetUser()
 	var params = { UserPoolId: USER_POOL_ID, Username: username };
 
-	cognitoidentityserviceprovider.adminGetUser(params, function(lookup_err, data) {
+	cognitoidentityserviceprovider.adminGetUser(params, function (lookup_err, data) {
 		console.log(lookup_err)
 		if (lookup_err && lookup_err.code === "UserNotFoundException") {
 			// User does not exist in the User Pool, try to migrate
@@ -123,15 +129,13 @@ exports.handler = function(event, context, callback) {
 				method: 'POST'
 			};
 
-
-
-			var req = http.request(options, function(response) {
+			var req = http.request(options, function (response) {
 				var str = ''
-				response.on('data', function(chunk) {
+				response.on('data', function (chunk) {
 					str += chunk;
 				});
 
-				response.on('end', function() {
+				response.on('end', function () {
 
 					console.log("-------")
 					console.log(str)
@@ -153,10 +157,6 @@ exports.handler = function(event, context, callback) {
 			//This is the data we are posting, it needs to be a string or a buffer
 			req.write(JSON.stringify({ username: username, password: password }));
 			req.end();
-
-
-
-
 		}
 		else {
 			//User exists in the User Pool, so tell the app not to retry sign-in

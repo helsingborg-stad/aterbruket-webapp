@@ -1,17 +1,18 @@
-import React, { FC, useEffect, useState } from "react";
-import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
-import { API } from "aws-amplify";
+import React, { FC } from "react";
 import styled from "styled-components";
-import { ListAdvertisementsQuery } from "../API";
-import { listAdvertisements } from "../graphql/queries";
 import Card from "./Card";
+
+interface IAdvet {
+  items: any;
+  searchValue: string;
+}
 
 const AdvertContainerDiv = styled.div`
   width: 90%;
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 120px;
+  margin-bottom: 50px;
 
   .allaDiv {
     width: 100%;
@@ -24,37 +25,31 @@ const AdvertContainerDiv = styled.div`
   }
 `;
 
-const AdvertContainer: FC = () => {
-  const [items, setItems] = useState([]) as any;
-
-  const fetchItems = async () => {
-    const result = (await API.graphql(
-      graphqlOperation(listAdvertisements)
-    )) as GraphQLResult<ListAdvertisementsQuery>;
-    const advertItems = result.data?.listAdvertisements?.items;
-
-    setItems(advertItems);
-  };
-
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
+const AdvertContainer: FC<IAdvet> = ({ items, searchValue }: IAdvet) => {
+  const filteredItems = items.filter((item: any) => {
+    return (
+      item.title.toLowerCase().indexOf(searchValue.toLocaleLowerCase()) !==
+        -1 ||
+      item.description
+        .toLowerCase()
+        .indexOf(searchValue.toLocaleLowerCase()) !== -1
+    );
+  });
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">
         <h3>Alla</h3>
       </div>
-      {items.map((item: any) =>
-        item.status === "available" ||
-        item.status === "reserved" ||
-        item.status === null ? (
+      {filteredItems.map((filteredItem: any) =>
+        filteredItem.status === "available" ||
+        filteredItem.status === "reserved" ||
+        filteredItem.status === null ? (
           <Card
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            description={item.description}
-            status={item.status}
+            key={filteredItem.id}
+            id={filteredItem.id}
+            title={filteredItem.title}
+            description={filteredItem.description}
+            status={filteredItem.status}
           />
         ) : null
       )}

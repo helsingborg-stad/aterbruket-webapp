@@ -81,6 +81,10 @@ const MapContainer = styled.div`
   border-radius: 5px;
 `;
 
+const QRContainer = styled.div`
+  margin-bottom: 47px;
+`;
+
 interface ParamTypes {
   id: string;
 }
@@ -175,52 +179,52 @@ const ItemDetails: FC<ParamTypes> = () => {
       <Table>
         <tbody>
           <tr>
-            <td>Category:</td>
-            <td>Table</td>
+            <td>Kategori/Typ av möbel:</td>
+            <td>{item.category}</td>
           </tr>
           <tr>
             <td>Id:</td>
             <td>{id}</td>
           </tr>
           <tr>
-            <td>Height(cm):</td>
-            <td>200</td>
+            <td>Höjd:</td>
+            <td>{item.height} cm</td>
           </tr>
           <tr>
-            <td>Width (cm):</td>
-            <td>{item.width}</td>
+            <td>Bredd:</td>
+            <td>{item.width} cm</td>
           </tr>
           <tr>
-            <td>Depth (cm):</td>
-            <td>50</td>
+            <td>Djup:</td>
+            <td>{item.length} cm</td>
           </tr>
           <tr>
-            <td>Color:</td>
-            <td>Grey</td>
+            <td>Färg:</td>
+            <td>{item.color}</td>
           </tr>
 
           <tr>
             <td>Material:</td>
-            <td>Wood</td>
+            <td>{item.material}</td>
           </tr>
           <tr>
-            <td>Item Condition:</td>
-            <td>Good</td>
+            <td>Skick:</td>
+            <td>{item.condition}</td>
           </tr>
           <tr>
-            <td>Areas of Usage:</td>
-            <td>Indoor office</td>
+            <td>Användningsområde:</td>
+            <td>{item.areaOfUse}</td>
           </tr>
           <tr>
-            <td>LCA Value:</td>
+            <td>Klimatpåverkan:</td>
             <td>50</td>
           </tr>
           <tr>
-            <td>Description:</td>
+            <td>Beskrivning:</td>
             <td>{item.description}</td>
           </tr>
           <tr>
-            <td>Location:</td>
+            <td>Hämtas på:</td>
             <td>{item.location}</td>
           </tr>
         </tbody>
@@ -238,9 +242,9 @@ const ItemDetails: FC<ParamTypes> = () => {
           <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
         )}
       </MapContainer>
-      <div>
+      <QRContainer>
         <QRCode id={id} />
-      </div>
+      </QRContainer>
     </>
   );
 

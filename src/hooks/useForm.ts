@@ -20,7 +20,6 @@ const useForm = (initialValues: any, mutation: string) => {
     const result: any = await API.graphql(
       graphqlOperation(mutation, { input: values })
     );
-    console.log("values", values);
 
     if (result.data && values.id) {
       console.log("db UPDATE ", result.data.updateAdvertisement);

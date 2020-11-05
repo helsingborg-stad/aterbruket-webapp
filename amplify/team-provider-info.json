@@ -132,7 +132,8 @@
     },
     "categories": {
       "auth": {
-        "aterbruketwebapp75287c9a": {}
+        "aterbruketwebapp75287c9a": {},
+        "userPoolGroups": {}
       },
       "function": {
         "migrateADUser": {}

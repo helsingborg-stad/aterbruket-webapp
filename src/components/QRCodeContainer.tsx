@@ -34,7 +34,7 @@ export default function QRCodeContainer(props: { id: string }) {
       <QRCode
         value={props.id}
         id="mycanvas"
-        size={100}
+        size={150}
         includeMargin
         onClick={downloadQRCode}
       />

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import Card from "./Card";
 
-interface IAdvet {
+interface IAdvert {
   items: any;
   searchValue: string;
 }
@@ -25,7 +25,7 @@ const AdvertContainerDiv = styled.div`
   }
 `;
 
-const AdvertContainer: FC<IAdvet> = ({ items, searchValue }: IAdvet) => {
+const AdvertContainer: FC<IAdvert> = ({ items, searchValue }: IAdvert) => {
   const filteredItems = items.filter((item: any) => {
     return (
       item.title.toLowerCase().indexOf(searchValue.toLocaleLowerCase()) !==

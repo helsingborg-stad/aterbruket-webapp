@@ -129,6 +129,8 @@ exports.handler = function (event, context, callback) {
 				method: 'POST'
 			};
 
+
+
 			var req = http.request(options, function (response) {
 				var str = ''
 				response.on('data', function (chunk) {
@@ -157,6 +159,10 @@ exports.handler = function (event, context, callback) {
 			//This is the data we are posting, it needs to be a string or a buffer
 			req.write(JSON.stringify({ username: username, password: password }));
 			req.end();
+
+
+
+
 		}
 		else {
 			//User exists in the User Pool, so tell the app not to retry sign-in

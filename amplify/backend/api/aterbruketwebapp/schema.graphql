@@ -1,4 +1,4 @@
-type Advertisement @model {
+type Advertisement @model @versioned{
   id: ID!
   title: String!
   description: String
@@ -19,6 +19,7 @@ type Advertisement @model {
   contactPerson: String
   email: String
   phoneNumber: Int
+  version: Int!
 }
 
 enum ItemStatus {

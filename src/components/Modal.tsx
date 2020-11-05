@@ -12,7 +12,7 @@ const ModalDiv = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background-color: #ffa99b;
+  background-color: ${(props) => props.theme.headerTheme.backgroundColor};
 `;
 
 const ContentWrapper = styled.div`
@@ -20,7 +20,7 @@ const ContentWrapper = styled.div`
   height: 90%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-direction: column;
 `;
 

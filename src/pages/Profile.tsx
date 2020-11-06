@@ -37,7 +37,7 @@ export default function Profile() {
 
     const fetchCreatedAdverts = async () => {
         const result = (await API.graphql(
-            graphqlOperation(listAdvertisements, { filter: { giver: { eq: "9c991875-19b3-4293-996a-cf1a930206d1" } } })
+            graphqlOperation(listAdvertisements, { filter: { giver: { eq: user.attributes.sub } } })
             )) as GraphQLResult<ListAdvertisementsQuery>;
             
             const advertItem = result.data?.listAdvertisements?.items;

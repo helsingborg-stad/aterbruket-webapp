@@ -200,7 +200,7 @@ const ItemDetails: FC<ParamTypes> = () => {
 
           <tr>
             <td>Material:</td>
-            <td>{item.material}</td>
+            {/* <td>{item.materials}</td> */}
           </tr>
           <tr>
             <td>Skick:</td>
@@ -208,11 +208,11 @@ const ItemDetails: FC<ParamTypes> = () => {
           </tr>
           <tr>
             <td>Användningsområde:</td>
-            <td>{item.areaOfUse}</td>
+            {/* <td>{item.areaOfUse}</td> */}
           </tr>
           <tr>
             <td>Klimatpåverkan:</td>
-            <td>50</td>
+            <td>{item.climateImpact}</td>
           </tr>
           <tr>
             <td>Beskrivning:</td>

@@ -6,7 +6,7 @@ import useForm from "../hooks/useForm";
 import { createAdvertisement } from "../graphql/mutations";
 import OpenCamera from "../components/OpenCamera";
 import { fieldsForm as fields } from "../utils/formUtils";
-import {UserContext} from "../contexts/UserContext";
+import { UserContext } from "../contexts/UserContext";
 
 interface IQrCamera {
   delay: number;
@@ -30,9 +30,14 @@ const AddItem: FC<Props> = ({
   setQrCamera,
 }: Props) => {
   const history = useHistory();
-  const user: any = useContext(UserContext)
-  console.log(user)
-  const { values, handleInputChange, handleSubmit, redirect } = useForm(
+  const user: any = useContext(UserContext);
+  const {
+    values,
+    handleInputChange,
+    handleSubmit,
+    handleCheckboxChange,
+    redirect,
+  } = useForm(
     {
       title: "",
       category: "",
@@ -41,9 +46,14 @@ const AddItem: FC<Props> = ({
       width: 0,
       length: 0,
       color: "",
-      material: "",
       condition: "",
-      areaOfUse: "",
+      areaOfUse: { indoors: false, outside: false },
+      material: {
+        metal: false,
+        plastic: false,
+        other: false,
+        wood: false,
+      },
       description: "",
       department: "",
       location: "",
@@ -51,7 +61,8 @@ const AddItem: FC<Props> = ({
       contactPerson: "",
       email: "",
       phoneNumber: 0,
-      giver: user.attributes.sub
+      giver: user.attributes.sub,
+      climateImpact: 0,
     },
     createAdvertisement
   );
@@ -71,6 +82,7 @@ const AddItem: FC<Props> = ({
           mutation={createAdvertisement}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
+          handleCheckboxChange={handleCheckboxChange}
         />
       ) : (
         <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />

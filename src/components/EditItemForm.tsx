@@ -7,6 +7,18 @@ import useForm from "../hooks/useForm";
 import { updateAdvertisement } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
 
+interface IareaOfUse {
+  indoors: boolean;
+  outside: boolean;
+}
+
+interface Imaterial {
+  metal: boolean;
+  plastic: boolean;
+  other: boolean;
+  wood: boolean;
+}
+
 interface Props {
   item: {
     id: number;
@@ -17,9 +29,9 @@ interface Props {
     width?: number;
     length?: number;
     color?: string;
-    material?: string;
+    material?: Imaterial | any;
     condition?: string;
-    areaOfUse?: string;
+    areaOfUse?: IareaOfUse | any;
     description?: string;
     department?: string;
     location?: string;
@@ -27,6 +39,7 @@ interface Props {
     contactPerson?: string;
     email?: string;
     phoneNumber?: number;
+    climateImpact: number;
   };
   setEditItem: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
@@ -37,7 +50,13 @@ const EditItemForm: FC<Props> = ({
   item,
   closeEditformAndFetchItem,
 }: Props) => {
-  const { values, handleInputChange, handleSubmit, redirect } = useForm(
+  const {
+    values,
+    handleInputChange,
+    handleSubmit,
+    handleCheckboxChange,
+    redirect,
+  } = useForm(
     {
       id: item.id,
       title: item.title,
@@ -47,9 +66,17 @@ const EditItemForm: FC<Props> = ({
       width: item.width,
       length: item.length,
       color: item.color,
-      material: item.material,
+      material: {
+        metal: item.material[0].metal,
+        plastic: item.material[0].plastic,
+        other: item.material[0].other,
+        wood: item.material[0].wood,
+      },
       condition: item.condition,
-      areaOfUse: item.areaOfUse,
+      areaOfUse: {
+        indoors: item.areaOfUse[0].indoors,
+        outside: item.areaOfUse[0].outside,
+      },
       description: item.description,
       department: item.department,
       location: item.location,
@@ -57,6 +84,7 @@ const EditItemForm: FC<Props> = ({
       contactPerson: item.contactPerson,
       email: item.email,
       phoneNumber: item.phoneNumber,
+      climateImpact: item.climateImpact,
     },
     updateAdvertisement
   );
@@ -75,6 +103,7 @@ const EditItemForm: FC<Props> = ({
         mutation={updateAdvertisement}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
+        handleCheckboxChange={handleCheckboxChange}
       />
     </>
   );

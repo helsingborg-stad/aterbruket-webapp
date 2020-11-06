@@ -9,8 +9,8 @@ import { UserContext } from "../contexts/UserContext";
 
 export default function Profile() {
   const user: any = useContext(UserContext);
-
   const [adverts, setAdverts] = useState([{}]) as any;
+       
   const InformationFrame = styled.header`
     padding: 24px;
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.04)),
@@ -43,7 +43,9 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    fetchCreatedAdverts();
+    if(user.attributes.sub){
+        fetchCreatedAdverts();
+      }  
   }, [user]);
 
   const userInfo = [];

@@ -31,6 +31,7 @@ const AddItem: FC<Props> = ({
 }: Props) => {
   const history = useHistory();
   const user: any = useContext(UserContext)
+  console.log(user)
   const { values, handleInputChange, handleSubmit, redirect } = useForm(
     {
       title: "",

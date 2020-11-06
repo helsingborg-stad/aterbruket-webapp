@@ -1,13 +1,18 @@
-import React from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import Card from "./Card";
+
+interface IAdvert {
+  items: any;
+  searchValue: any;
+}
 
 const AdvertContainerDiv = styled.div`
   width: 90%;
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 120px;
+  margin-bottom: 50px;
 
   .allaDiv {
     width: 100%;
@@ -20,23 +25,36 @@ const AdvertContainerDiv = styled.div`
   }
 `;
 
-const AdvertContainer = (props: { adverts: any[], title: string}) => {
-  
+const AdvertContainer: FC<IAdvert> = ({ items, searchValue }: IAdvert) => {
+  let filteredItems = [];
+  if(searchValue) {
+    filteredItems = items.filter((item: any) => {
+      return (
+        item.title.toLowerCase().indexOf(searchValue.toLocaleLowerCase()) !==
+          -1 ||
+        item.description
+          .toLowerCase()
+          .indexOf(searchValue.toLocaleLowerCase()) !== -1
+      );
+    });
+  } else {
+    filteredItems = items;
+  }
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">
-        <h3>{props.title}</h3>
+        <h3>All</h3>
       </div>
-      {props.adverts.map((item: any) =>
-        item.status === "available" ||
-        item.status === "reserved" ||
-        item.status === null ? (
+      {filteredItems.map((filteredItem: any) =>
+        filteredItem.status === "available" ||
+        filteredItem.status === "reserved" ||
+        filteredItem.status === null ? (
           <Card
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            description={item.description}
-            status={item.status}
+            key={filteredItem.id}
+            id={filteredItem.id}
+            title={filteredItem.title}
+            description={filteredItem.description}
+            status={filteredItem.status}
           />
         ) : null
       )}

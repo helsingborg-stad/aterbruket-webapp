@@ -7,9 +7,8 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable react/button-has-type */
 import React, { FC, useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import ReactDOM, { useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
-
 import styled from "styled-components";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
@@ -79,10 +78,6 @@ const MapContainer = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-`;
-
-const QRContainer = styled.div`
-  margin-bottom: 47px;
 `;
 
 interface ParamTypes {
@@ -242,9 +237,8 @@ const ItemDetails: FC<ParamTypes> = () => {
           <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
         )}
       </MapContainer>
-      <QRContainer>
-        <QRCode id={id} />
-      </QRContainer>
+
+      <QRCode id={id} />
     </>
   );
 

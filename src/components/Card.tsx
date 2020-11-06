@@ -91,7 +91,7 @@ const Card: FC<Props> = ({ id, title, description, status }: Props) => {
       <div className="infoDiv">
         <h3>Title: {title}</h3>
         <h4>xx stycken</h4>
-        <p>STATUS IS: {status}</p>
+        <p>Status: {status}</p>
         <p>Description: {description}</p>
       </div>
     </CardDiv>

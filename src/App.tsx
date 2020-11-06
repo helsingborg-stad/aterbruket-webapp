@@ -12,7 +12,7 @@ import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
 import Profile from "./pages/Profile";
 import MenuBar from "./components/MenuBar";
-import {UserContext} from "./contexts/UserContext";
+import { UserContext } from "./contexts/UserContext";
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.appTheme.minHeight}vh`};
@@ -39,51 +39,51 @@ const App: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [alreadyAQRCode, setAlreadyAQRCode] = useState(false);
   const [qrCamera, setQrCamera] = useState({ delay: 500, result: "" });
-  const [user, setUser] = useState({attributes: {}}) as any;
+  const [user, setUser] = useState({ attributes: {} }) as any;
 
   useEffect(() => {
     Auth.currentAuthenticatedUser().then((user) => {
       setUser(user);
-    })
-  }, [])
+    });
+  }, []);
 
   return (
     <UserContext.Provider value={user}>
-    <ThemeProvider theme={theme}>
-      <AppContainer>
-        <Router>
-          <Header />
-          <UserContext.Provider value={user}>
-          <Route
-            exact
-            path="/"
-            component={() => (
-              <Home
-                modalOpen={modalOpen}
-                setModalOpen={setModalOpen}
-                setAlreadyAQRCode={setAlreadyAQRCode}
-                qrCamera={qrCamera}
-                setQrCamera={setQrCamera}
+      <ThemeProvider theme={theme}>
+        <AppContainer>
+          <Router>
+            <Header />
+            <UserContext.Provider value={user}>
+              <Route
+                exact
+                path="/"
+                component={() => (
+                  <Home
+                    modalOpen={modalOpen}
+                    setModalOpen={setModalOpen}
+                    setAlreadyAQRCode={setAlreadyAQRCode}
+                    qrCamera={qrCamera}
+                    setQrCamera={setQrCamera}
+                  />
+                )}
               />
-            )}
-          />
-          <Route
-            path="/add"
-            component={() => (
-              <AddItem
-                alreadyAQRCode={alreadyAQRCode}
-                qrCamera={qrCamera}
-                setQrCamera={setQrCamera}
+              <Route
+                path="/add"
+                component={() => (
+                  <AddItem
+                    alreadyAQRCode={alreadyAQRCode}
+                    qrCamera={qrCamera}
+                    setQrCamera={setQrCamera}
+                  />
+                )}
               />
-            )}
-          />
-          <Route path="/profile" component={Profile} />
-          <Route path="/item/:id" component={ItemDetails} />
-          </UserContext.Provider>
-          <MenuBar />
-        </Router>
-      </AppContainer>
-    </ThemeProvider>
+              <Route path="/profile" component={Profile} />
+              <Route path="/item/:id" component={ItemDetails} />
+            </UserContext.Provider>
+            <MenuBar />
+          </Router>
+        </AppContainer>
+      </ThemeProvider>
     </UserContext.Provider>
   );
 };

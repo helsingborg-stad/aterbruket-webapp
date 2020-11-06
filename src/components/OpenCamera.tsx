@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
-/* eslint-disable react/prop-types */
+
 import React, { FC } from "react";
 import QrReader from "react-qr-reader";
 import styled from "styled-components";

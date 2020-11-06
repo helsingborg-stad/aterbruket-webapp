@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -64,7 +62,7 @@ type Props = {
 const ModalAddItemContent: FC<Props> = ({
   setModalOpen,
   setAlreadyAQRCode,
-}) => (
+}: Props) => (
   <>
     <ModalHeader>
       <h2>Lägg till en annons</h2>

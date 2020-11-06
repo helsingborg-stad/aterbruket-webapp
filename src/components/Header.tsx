@@ -1,6 +1,4 @@
-/* eslint-disable react/button-has-type */
 import React, { FC } from "react";
-// import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const HeaderDiv = styled.header`
@@ -58,8 +56,8 @@ const Header: FC = () => {
         miljöhjälte!
       </h2>
       <TabCtn>
-        <button>INSPIRATION</button>
-        <button>KATEGORIER</button>
+        <button type="button">INSPIRATION</button>
+        <button type="button">KATEGORIER</button>
       </TabCtn>
     </HeaderDiv>
   );

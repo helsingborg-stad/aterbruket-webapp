@@ -27,7 +27,7 @@ const AdvertContainerDiv = styled.div`
 
 const AdvertContainer: FC<IAdvert> = ({ items, searchValue }: IAdvert) => {
   let filteredItems = [];
-  if(searchValue) {
+  if (searchValue) {
     filteredItems = items.filter((item: any) => {
       return (
         item.title.toLowerCase().indexOf(searchValue.toLocaleLowerCase()) !==

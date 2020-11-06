@@ -5,4 +5,13 @@ export interface IFields {
   disabled: boolean;
   required?: boolean;
   title: string;
+  option?: IOption[];
+  swe?: string[] | undefined;
+  eng?: string[] | undefined;
+}
+
+interface IOption {
+  name: string;
+  swe?: string[] | undefined;
+  eng?: string[] | undefined;
 }

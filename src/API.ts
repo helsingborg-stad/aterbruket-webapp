@@ -12,10 +12,10 @@ export type CreateAdvertisementInput = {
   length?: number | null,
   status?: ItemStatus | null,
   category?: ItemCategory | null,
-  material?: string | null,
+  material?: Array< ItemAMaterialInput | null > | null,
   condition?: ItemCondition | null,
   color?: string | null,
-  areaOfUse?: ItemAreaOfUse | null,
+  areaOfUse?: Array< ItemAreaOfUseInput | null > | null,
   images?: Array< ItemImagesInput | null > | null,
   quantity?: number | null,
   department?: string | null,
@@ -24,6 +24,7 @@ export type CreateAdvertisementInput = {
   email?: string | null,
   phoneNumber?: number | null,
   giver?: string | null,
+  climateImpact?: number | null,
 };
 
 export enum ItemStatus {
@@ -35,11 +36,21 @@ export enum ItemStatus {
 
 
 export enum ItemCategory {
-  bord = "bord",
-  stol = "stol",
-  skrivbord = "skrivbord",
+  table = "table",
+  chair = "chair",
+  desk = "desk",
+  officeChair = "officeChair",
+  raiseAndLowerableDesk = "raiseAndLowerableDesk",
+  other = "other",
 }
 
+
+export type ItemAMaterialInput = {
+  wood?: boolean | null,
+  plastic?: boolean | null,
+  metal?: boolean | null,
+  other?: boolean | null,
+};
 
 export enum ItemCondition {
   new = "new",
@@ -48,11 +59,10 @@ export enum ItemCondition {
 }
 
 
-export enum ItemAreaOfUse {
-  indoors = "indoors",
-  outside = "outside",
-}
-
+export type ItemAreaOfUseInput = {
+  indoors?: boolean | null,
+  outside?: boolean | null,
+};
 
 export type ItemImagesInput = {
   src?: string | null,
@@ -68,10 +78,8 @@ export type ModelAdvertisementConditionInput = {
   length?: ModelIntInput | null,
   status?: ModelItemStatusInput | null,
   category?: ModelItemCategoryInput | null,
-  material?: ModelStringInput | null,
   condition?: ModelItemConditionInput | null,
   color?: ModelStringInput | null,
-  areaOfUse?: ModelItemAreaOfUseInput | null,
   quantity?: ModelIntInput | null,
   department?: ModelStringInput | null,
   instructions?: ModelStringInput | null,
@@ -79,6 +87,7 @@ export type ModelAdvertisementConditionInput = {
   email?: ModelStringInput | null,
   phoneNumber?: ModelIntInput | null,
   giver?: ModelStringInput | null,
+  climateImpact?: ModelIntInput | null,
   and?: Array< ModelAdvertisementConditionInput | null > | null,
   or?: Array< ModelAdvertisementConditionInput | null > | null,
   not?: ModelAdvertisementConditionInput | null,
@@ -151,11 +160,6 @@ export type ModelItemConditionInput = {
   ne?: ItemCondition | null,
 };
 
-export type ModelItemAreaOfUseInput = {
-  eq?: ItemAreaOfUse | null,
-  ne?: ItemAreaOfUse | null,
-};
-
 export type UpdateAdvertisementInput = {
   id: string,
   title?: string | null,
@@ -166,10 +170,10 @@ export type UpdateAdvertisementInput = {
   length?: number | null,
   status?: ItemStatus | null,
   category?: ItemCategory | null,
-  material?: string | null,
+  material?: Array< ItemAMaterialInput | null > | null,
   condition?: ItemCondition | null,
   color?: string | null,
-  areaOfUse?: ItemAreaOfUse | null,
+  areaOfUse?: Array< ItemAreaOfUseInput | null > | null,
   images?: Array< ItemImagesInput | null > | null,
   quantity?: number | null,
   department?: string | null,
@@ -178,6 +182,7 @@ export type UpdateAdvertisementInput = {
   email?: string | null,
   phoneNumber?: number | null,
   giver?: string | null,
+  climateImpact?: number | null,
 };
 
 export type DeleteAdvertisementInput = {
@@ -194,10 +199,8 @@ export type ModelAdvertisementFilterInput = {
   length?: ModelIntInput | null,
   status?: ModelItemStatusInput | null,
   category?: ModelItemCategoryInput | null,
-  material?: ModelStringInput | null,
   condition?: ModelItemConditionInput | null,
   color?: ModelStringInput | null,
-  areaOfUse?: ModelItemAreaOfUseInput | null,
   quantity?: ModelIntInput | null,
   department?: ModelStringInput | null,
   instructions?: ModelStringInput | null,
@@ -205,6 +208,7 @@ export type ModelAdvertisementFilterInput = {
   email?: ModelStringInput | null,
   phoneNumber?: ModelIntInput | null,
   giver?: ModelStringInput | null,
+  climateImpact?: ModelIntInput | null,
   and?: Array< ModelAdvertisementFilterInput | null > | null,
   or?: Array< ModelAdvertisementFilterInput | null > | null,
   not?: ModelAdvertisementFilterInput | null,
@@ -243,10 +247,20 @@ export type CreateAdvertisementMutation = {
     length: number | null,
     status: ItemStatus | null,
     category: ItemCategory | null,
-    material: string | null,
+    material:  Array< {
+      __typename: "ItemAMaterial",
+      wood: boolean | null,
+      plastic: boolean | null,
+      metal: boolean | null,
+      other: boolean | null,
+    } | null > | null,
     condition: ItemCondition | null,
     color: string | null,
-    areaOfUse: ItemAreaOfUse | null,
+    areaOfUse:  Array< {
+      __typename: "ItemAreaOfUse",
+      indoors: boolean | null,
+      outside: boolean | null,
+    } | null > | null,
     images:  Array< {
       __typename: "ItemImages",
       src: string | null,
@@ -259,6 +273,7 @@ export type CreateAdvertisementMutation = {
     email: string | null,
     phoneNumber: number | null,
     giver: string | null,
+    climateImpact: number | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -281,10 +296,20 @@ export type UpdateAdvertisementMutation = {
     length: number | null,
     status: ItemStatus | null,
     category: ItemCategory | null,
-    material: string | null,
+    material:  Array< {
+      __typename: "ItemAMaterial",
+      wood: boolean | null,
+      plastic: boolean | null,
+      metal: boolean | null,
+      other: boolean | null,
+    } | null > | null,
     condition: ItemCondition | null,
     color: string | null,
-    areaOfUse: ItemAreaOfUse | null,
+    areaOfUse:  Array< {
+      __typename: "ItemAreaOfUse",
+      indoors: boolean | null,
+      outside: boolean | null,
+    } | null > | null,
     images:  Array< {
       __typename: "ItemImages",
       src: string | null,
@@ -297,6 +322,7 @@ export type UpdateAdvertisementMutation = {
     email: string | null,
     phoneNumber: number | null,
     giver: string | null,
+    climateImpact: number | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -319,10 +345,20 @@ export type DeleteAdvertisementMutation = {
     length: number | null,
     status: ItemStatus | null,
     category: ItemCategory | null,
-    material: string | null,
+    material:  Array< {
+      __typename: "ItemAMaterial",
+      wood: boolean | null,
+      plastic: boolean | null,
+      metal: boolean | null,
+      other: boolean | null,
+    } | null > | null,
     condition: ItemCondition | null,
     color: string | null,
-    areaOfUse: ItemAreaOfUse | null,
+    areaOfUse:  Array< {
+      __typename: "ItemAreaOfUse",
+      indoors: boolean | null,
+      outside: boolean | null,
+    } | null > | null,
     images:  Array< {
       __typename: "ItemImages",
       src: string | null,
@@ -335,6 +371,7 @@ export type DeleteAdvertisementMutation = {
     email: string | null,
     phoneNumber: number | null,
     giver: string | null,
+    climateImpact: number | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -356,10 +393,20 @@ export type GetAdvertisementQuery = {
     length: number | null,
     status: ItemStatus | null,
     category: ItemCategory | null,
-    material: string | null,
+    material:  Array< {
+      __typename: "ItemAMaterial",
+      wood: boolean | null,
+      plastic: boolean | null,
+      metal: boolean | null,
+      other: boolean | null,
+    } | null > | null,
     condition: ItemCondition | null,
     color: string | null,
-    areaOfUse: ItemAreaOfUse | null,
+    areaOfUse:  Array< {
+      __typename: "ItemAreaOfUse",
+      indoors: boolean | null,
+      outside: boolean | null,
+    } | null > | null,
     images:  Array< {
       __typename: "ItemImages",
       src: string | null,
@@ -372,6 +419,7 @@ export type GetAdvertisementQuery = {
     email: string | null,
     phoneNumber: number | null,
     giver: string | null,
+    climateImpact: number | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -397,10 +445,20 @@ export type ListAdvertisementsQuery = {
       length: number | null,
       status: ItemStatus | null,
       category: ItemCategory | null,
-      material: string | null,
+      material:  Array< {
+        __typename: "ItemAMaterial",
+        wood: boolean | null,
+        plastic: boolean | null,
+        metal: boolean | null,
+        other: boolean | null,
+      } | null > | null,
       condition: ItemCondition | null,
       color: string | null,
-      areaOfUse: ItemAreaOfUse | null,
+      areaOfUse:  Array< {
+        __typename: "ItemAreaOfUse",
+        indoors: boolean | null,
+        outside: boolean | null,
+      } | null > | null,
       images:  Array< {
         __typename: "ItemImages",
         src: string | null,
@@ -413,6 +471,7 @@ export type ListAdvertisementsQuery = {
       email: string | null,
       phoneNumber: number | null,
       giver: string | null,
+      climateImpact: number | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -432,10 +491,20 @@ export type OnCreateAdvertisementSubscription = {
     length: number | null,
     status: ItemStatus | null,
     category: ItemCategory | null,
-    material: string | null,
+    material:  Array< {
+      __typename: "ItemAMaterial",
+      wood: boolean | null,
+      plastic: boolean | null,
+      metal: boolean | null,
+      other: boolean | null,
+    } | null > | null,
     condition: ItemCondition | null,
     color: string | null,
-    areaOfUse: ItemAreaOfUse | null,
+    areaOfUse:  Array< {
+      __typename: "ItemAreaOfUse",
+      indoors: boolean | null,
+      outside: boolean | null,
+    } | null > | null,
     images:  Array< {
       __typename: "ItemImages",
       src: string | null,
@@ -448,6 +517,7 @@ export type OnCreateAdvertisementSubscription = {
     email: string | null,
     phoneNumber: number | null,
     giver: string | null,
+    climateImpact: number | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -465,10 +535,20 @@ export type OnUpdateAdvertisementSubscription = {
     length: number | null,
     status: ItemStatus | null,
     category: ItemCategory | null,
-    material: string | null,
+    material:  Array< {
+      __typename: "ItemAMaterial",
+      wood: boolean | null,
+      plastic: boolean | null,
+      metal: boolean | null,
+      other: boolean | null,
+    } | null > | null,
     condition: ItemCondition | null,
     color: string | null,
-    areaOfUse: ItemAreaOfUse | null,
+    areaOfUse:  Array< {
+      __typename: "ItemAreaOfUse",
+      indoors: boolean | null,
+      outside: boolean | null,
+    } | null > | null,
     images:  Array< {
       __typename: "ItemImages",
       src: string | null,
@@ -481,6 +561,7 @@ export type OnUpdateAdvertisementSubscription = {
     email: string | null,
     phoneNumber: number | null,
     giver: string | null,
+    climateImpact: number | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -498,10 +579,20 @@ export type OnDeleteAdvertisementSubscription = {
     length: number | null,
     status: ItemStatus | null,
     category: ItemCategory | null,
-    material: string | null,
+    material:  Array< {
+      __typename: "ItemAMaterial",
+      wood: boolean | null,
+      plastic: boolean | null,
+      metal: boolean | null,
+      other: boolean | null,
+    } | null > | null,
     condition: ItemCondition | null,
     color: string | null,
-    areaOfUse: ItemAreaOfUse | null,
+    areaOfUse:  Array< {
+      __typename: "ItemAreaOfUse",
+      indoors: boolean | null,
+      outside: boolean | null,
+    } | null > | null,
     images:  Array< {
       __typename: "ItemImages",
       src: string | null,
@@ -514,6 +605,7 @@ export type OnDeleteAdvertisementSubscription = {
     email: string | null,
     phoneNumber: number | null,
     giver: string | null,
+    climateImpact: number | null,
     createdAt: string,
     updatedAt: string,
   } | null,

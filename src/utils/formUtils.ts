@@ -1,9 +1,16 @@
 // eslint-disable-next-line import/prefer-default-export
-export const options: { [key: string]: string[] } = {
-  areaOfUse: ["indoors", "outside"],
-  category: ["bord", "stol", "skrivbord"],
-  condition: ["new", "good", "worn"],
-};
+// export const options: { [key: string]: string[] } = {
+//   areaOfUse: ["indoors", "outside"],
+//   category: [
+//     "table",
+//     "desk",
+//     "raiseAndLowerableDesk",
+//     "officeChair",
+//     "chair",
+//     "other",
+//   ],
+//   condition: ["new", "good", "worn"],
+// };
 
 export const fieldsForm = [
   // {
@@ -26,6 +33,22 @@ export const fieldsForm = [
     disabled: false,
     required: true,
     title: "Typ av möbel",
+    swe: [
+      "Bord",
+      "Skrivbord",
+      "Höj och sänkbart skrivbord",
+      "Kontorsstol",
+      "Stol",
+      "Övrigt",
+    ],
+    eng: [
+      "table",
+      "desk",
+      "raiseAndLowerableDesk",
+      "officeChair",
+      "chair",
+      "other",
+    ],
   },
 
   {
@@ -65,10 +88,32 @@ export const fieldsForm = [
   },
   {
     name: "material",
-    dataType: "text",
+    dataType: "checkbox",
     fieldType: "input",
     disabled: false,
     title: "Material",
+    option: [
+      {
+        name: "wood",
+        swe: ["Trä"],
+        eng: ["wood"],
+      },
+      {
+        name: "plastic",
+        swe: ["Plast"],
+        eng: ["plastic"],
+      },
+      {
+        name: "metal",
+        swe: ["Metall"],
+        eng: ["metal"],
+      },
+      {
+        name: "other",
+        swe: ["Annat"],
+        eng: ["other"],
+      },
+    ],
   },
   {
     name: "condition",
@@ -76,14 +121,28 @@ export const fieldsForm = [
     disabled: false,
     required: true,
     title: "Skick",
+    swe: ["Ny", "Bra", "Sliten"],
+    eng: ["new", "good", "worn"],
   },
   {
     name: "areaOfUse",
     dataType: "checkbox",
+    title: "Användningsområde",
     fieldType: "input",
     disabled: false,
     required: true,
-    title: "Användningsområde",
+    option: [
+      {
+        name: "indoors",
+        swe: ["Inne"],
+        eng: ["indoors"],
+      },
+      {
+        name: "outside",
+        swe: ["ute"],
+        eng: ["outside"],
+      },
+    ],
   },
   {
     name: "description",
@@ -156,8 +215,23 @@ export const fieldsEditForm = [
     disabled: false,
     required: true,
     title: "Typ av möbel",
+    swe: [
+      "Bord",
+      "Skrivbord",
+      "Höj och sänkbart skrivbord",
+      "Kontorsstol",
+      "Stol",
+      "Övrigt",
+    ],
+    eng: [
+      "table",
+      "desk",
+      "raiseAndLowerableDesk",
+      "officeChair",
+      "chair",
+      "other",
+    ],
   },
-
   {
     name: "quantity",
     dataType: "number",
@@ -195,10 +269,32 @@ export const fieldsEditForm = [
   },
   {
     name: "material",
-    dataType: "text",
+    dataType: "checkbox",
     fieldType: "input",
     disabled: false,
     title: "Material",
+    option: [
+      {
+        name: "wood",
+        swe: ["Trä"],
+        eng: ["wood"],
+      },
+      {
+        name: "plastic",
+        swe: ["Plast"],
+        eng: ["plastic"],
+      },
+      {
+        name: "metal",
+        swe: ["Metall"],
+        eng: ["metal"],
+      },
+      {
+        name: "other",
+        swe: ["Annat"],
+        eng: ["other"],
+      },
+    ],
   },
   {
     name: "condition",
@@ -206,14 +302,28 @@ export const fieldsEditForm = [
     disabled: false,
     required: true,
     title: "Skick",
+    swe: ["Ny", "Bra", "Sliten"],
+    eng: ["new", "good", "worn"],
   },
   {
     name: "areaOfUse",
     dataType: "checkbox",
+    title: "Användningsområde",
     fieldType: "input",
     disabled: false,
     required: true,
-    title: "Användningsområde",
+    option: [
+      {
+        name: "indoors",
+        swe: ["Inne"],
+        eng: ["indoors"],
+      },
+      {
+        name: "outside",
+        swe: ["ute"],
+        eng: ["outside"],
+      },
+    ],
   },
   {
     name: "description",

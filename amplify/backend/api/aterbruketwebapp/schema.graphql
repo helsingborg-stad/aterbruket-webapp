@@ -8,10 +8,10 @@ type Advertisement @model {
   length: Int
   status: ItemStatus
   category: ItemCategory
-  material: String
+  material: [ItemAMaterial]
   condition: ItemCondition
   color: String
-  areaOfUse: ItemAreaOfUse
+  areaOfUse: [ItemAreaOfUse]
   images: [ItemImages]
   quantity: Int
   department: String
@@ -20,6 +20,7 @@ type Advertisement @model {
   email: String
   phoneNumber: Int
   giver: String
+  climateImpact: Int
 }
 
 enum ItemStatus {
@@ -30,9 +31,19 @@ enum ItemStatus {
 }
 
 enum ItemCategory {
-  bord
-  stol
-  skrivbord
+  table
+  chair
+  desk
+  officeChair
+  raiseAndLowerableDesk
+  other
+}
+
+type ItemAMaterial {
+  wood: Boolean
+  plastic: Boolean
+  metal: Boolean
+  other: Boolean
 }
 
 enum ItemCondition {
@@ -41,9 +52,9 @@ enum ItemCondition {
   worn
 }
 
-enum ItemAreaOfUse {
-  indoors
-  outside
+type ItemAreaOfUse {
+  indoors: Boolean
+  outside: Boolean
 }
 
 type ItemImages {

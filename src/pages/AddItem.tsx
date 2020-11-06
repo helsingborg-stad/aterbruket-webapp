@@ -31,8 +31,13 @@ const AddItem: FC<Props> = ({
 }: Props) => {
   const history = useHistory();
   const user: any = useContext(UserContext);
-  console.log(user);
-  const { values, handleInputChange, handleSubmit, redirect } = useForm(
+  const {
+    values,
+    handleInputChange,
+    handleSubmit,
+    handleCheckboxChange,
+    redirect,
+  } = useForm(
     {
       title: "",
       category: "",
@@ -41,9 +46,14 @@ const AddItem: FC<Props> = ({
       width: 0,
       length: 0,
       color: "",
-      material: "",
       condition: "",
-      areaOfUse: "",
+      areaOfUse: { indoors: false, outside: false },
+      material: {
+        metal: false,
+        plastic: false,
+        other: false,
+        wood: false,
+      },
       description: "",
       department: "",
       location: "",
@@ -52,6 +62,7 @@ const AddItem: FC<Props> = ({
       email: "",
       phoneNumber: 0,
       giver: user.attributes.sub,
+      climateImpact: 0,
     },
     createAdvertisement
   );
@@ -71,6 +82,7 @@ const AddItem: FC<Props> = ({
           mutation={createAdvertisement}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
+          handleCheckboxChange={handleCheckboxChange}
         />
       ) : (
         <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />

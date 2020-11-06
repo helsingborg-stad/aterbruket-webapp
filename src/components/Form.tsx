@@ -7,13 +7,14 @@
 import React from "react";
 import styled from "styled-components";
 import { IFields } from "../interfaces/IForm";
-import { options } from "../utils/formUtils";
+// import { options } from "../utils/formUtils";
 
 const FormContainerDiv = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 150px;
 
   form {
     display: flex;
@@ -61,6 +62,7 @@ export default function Form(props: {
   fields: IFields[];
   mutation: string;
   handleInputChange: (event: React.ChangeEvent<any>) => void;
+  handleCheckboxChange: (event: React.ChangeEvent<any>, data: any) => void;
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }) {
   const fields = props.fields.map((field: IFields) => {
@@ -82,16 +84,17 @@ export default function Form(props: {
       );
     }
     if (field.fieldType === "input" && field.dataType === "checkbox") {
-      const checkboxInput = options[field.name].map((x: string) => {
+      const data = field.option ? field.option : [];
+      const checkboxInput = data.map((x: any) => {
         return (
-          <React.Fragment key={x}>
-            <label htmlFor={field.name}>{x}</label>
+          <React.Fragment key={x.name}>
+            <label htmlFor={x.name}>{x.swe ? x.swe[0] : x.name}</label>
             <input
               type={field.dataType}
-              name={field.name}
-              onChange={props.handleInputChange}
-              value={x}
-              disabled={field.disabled}
+              name={x.name}
+              onChange={(e) => props.handleCheckboxChange(e, field.name)}
+              checked={props.values[field.name][x.name]}
+              disabled={x.disabled}
             />
           </React.Fragment>
         );
@@ -122,6 +125,7 @@ export default function Form(props: {
       );
     }
     if (field.fieldType === "select") {
+      const data = field.eng ? field.eng : [];
       return (
         <section className="allDiv" key={field.name}>
           {field.required && <span className="required">Required</span>}
@@ -132,16 +136,18 @@ export default function Form(props: {
             name={field.name}
             id={field.name}
             onChange={props.handleInputChange}
-            defaultValue={props.values[field.name] || "select"}
+            defaultValue={
+              props.values[field.name] ? props.values[field.name] : "select"
+            }
             required={field.required}
           >
             <option value="select" disabled>
               Välj ett alternativ
             </option>
-            {options[field.name].map((x: string) => {
+            {data.map((x: string, idx: number) => {
               return (
                 <option value={x} key={x}>
-                  {x}
+                  {field.swe ? field.swe[idx] : x}
                 </option>
               );
             })}

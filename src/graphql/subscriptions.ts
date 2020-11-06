@@ -14,10 +14,18 @@ export const onCreateAdvertisement = /* GraphQL */ `
       length
       status
       category
-      material
+      material {
+        wood
+        plastic
+        metal
+        other
+      }
       condition
       color
-      areaOfUse
+      areaOfUse {
+        indoors
+        outside
+      }
       images {
         src
         alt
@@ -29,6 +37,7 @@ export const onCreateAdvertisement = /* GraphQL */ `
       email
       phoneNumber
       giver
+      climateImpact
       createdAt
       updatedAt
     }
@@ -46,10 +55,18 @@ export const onUpdateAdvertisement = /* GraphQL */ `
       length
       status
       category
-      material
+      material {
+        wood
+        plastic
+        metal
+        other
+      }
       condition
       color
-      areaOfUse
+      areaOfUse {
+        indoors
+        outside
+      }
       images {
         src
         alt
@@ -61,6 +78,7 @@ export const onUpdateAdvertisement = /* GraphQL */ `
       email
       phoneNumber
       giver
+      climateImpact
       createdAt
       updatedAt
     }
@@ -78,10 +96,18 @@ export const onDeleteAdvertisement = /* GraphQL */ `
       length
       status
       category
-      material
+      material {
+        wood
+        plastic
+        metal
+        other
+      }
       condition
       color
-      areaOfUse
+      areaOfUse {
+        indoors
+        outside
+      }
       images {
         src
         alt
@@ -93,6 +119,7 @@ export const onDeleteAdvertisement = /* GraphQL */ `
       email
       phoneNumber
       giver
+      climateImpact
       createdAt
       updatedAt
     }

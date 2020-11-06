@@ -1,11 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable func-names */
-/* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-named-as-default-member */
-/* eslint-disable react/button-has-type */
+
 import React, { FC, useState, useEffect } from "react";
 import ReactDOM, { useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
@@ -140,17 +138,22 @@ const ItemDetails: FC<ParamTypes> = () => {
     setReservedClicked(true);
   };
 
+  console.log(item); // keep this for debugging purpose for the map by now
+
   const history = useHistory();
   const allDetails = (
     <>
       <DivBtns>
-        <button onClick={() => setEditItem(true)}>Edit</button>
-        <button onClick={() => history.goBack()}>Tillbaka</button>
+        <button onClick={() => setEditItem(true)} type="button">
+          Edit
+        </button>
+
         {item.status === "available" || item.status === null ? (
           <button
             onClick={() => {
               onClickReservBtn();
             }}
+            type="button"
           >
             HAFFA
           </button>

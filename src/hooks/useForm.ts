@@ -17,6 +17,7 @@ const useForm = (initialValues: any, mutation: string) => {
     event.preventDefault();
 
     setValues(initialValues);
+    console.log(values)
     const result: any = await API.graphql(
       graphqlOperation(mutation, { input: values })
     );

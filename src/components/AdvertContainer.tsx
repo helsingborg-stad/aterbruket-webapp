@@ -4,7 +4,7 @@ import Card from "./Card";
 
 interface IAdvert {
   items: any;
-  searchValue: string;
+  searchValue: any;
 }
 
 const AdvertContainerDiv = styled.div`
@@ -26,19 +26,24 @@ const AdvertContainerDiv = styled.div`
 `;
 
 const AdvertContainer: FC<IAdvert> = ({ items, searchValue }: IAdvert) => {
-  const filteredItems = items.filter((item: any) => {
-    return (
-      item.title.toLowerCase().indexOf(searchValue.toLocaleLowerCase()) !==
-        -1 ||
-      item.description
-        .toLowerCase()
-        .indexOf(searchValue.toLocaleLowerCase()) !== -1
-    );
-  });
+  let filteredItems = [];
+  if (searchValue) {
+    filteredItems = items.filter((item: any) => {
+      return (
+        item.title.toLowerCase().indexOf(searchValue.toLocaleLowerCase()) !==
+          -1 ||
+        item.description
+          .toLowerCase()
+          .indexOf(searchValue.toLocaleLowerCase()) !== -1
+      );
+    });
+  } else {
+    filteredItems = items;
+  }
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">
-        <h3>Alla</h3>
+        <h3>All</h3>
       </div>
       {filteredItems.map((filteredItem: any) =>
         filteredItem.status === "available" ||

@@ -31,6 +31,7 @@ export const createAdvertisement = /* GraphQL */ `
       contactPerson
       email
       phoneNumber
+      giver
       createdAt
       updatedAt
     }
@@ -65,6 +66,7 @@ export const updateAdvertisement = /* GraphQL */ `
       contactPerson
       email
       phoneNumber
+      giver
       createdAt
       updatedAt
     }
@@ -99,6 +101,7 @@ export const deleteAdvertisement = /* GraphQL */ `
       contactPerson
       email
       phoneNumber
+      giver
       createdAt
       updatedAt
     }

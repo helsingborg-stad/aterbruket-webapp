@@ -12,6 +12,7 @@ import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
 
+
 const AddBtn = styled.button`
   position: fixed;
   bottom: 10vh;
@@ -168,6 +169,10 @@ const Home: FC<Props> = ({
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
+
+  
+
+
   return (
     <main>
       {showQRCamera ? (

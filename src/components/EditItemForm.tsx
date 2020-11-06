@@ -1,6 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/button-has-type */
-/* eslint-disable no-console */
 import React, { FC } from "react";
 import Form from "./Form";
 import useForm from "../hooks/useForm";

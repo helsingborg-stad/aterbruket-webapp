@@ -38,6 +38,7 @@ export const onCreateAdvertisement = /* GraphQL */ `
       phoneNumber
       giver
       climateImpact
+      reservedBy
       createdAt
       updatedAt
     }
@@ -79,6 +80,7 @@ export const onUpdateAdvertisement = /* GraphQL */ `
       phoneNumber
       giver
       climateImpact
+      reservedBy
       createdAt
       updatedAt
     }
@@ -120,6 +122,7 @@ export const onDeleteAdvertisement = /* GraphQL */ `
       phoneNumber
       giver
       climateImpact
+      reservedBy
       createdAt
       updatedAt
     }

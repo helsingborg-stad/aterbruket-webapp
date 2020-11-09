@@ -139,6 +139,20 @@ const ItemDetails: FC<ParamTypes> = () => {
     updateItem();
   };
 
+  const mapingObject = (obj: any) => {
+    let str = "";
+    Object.entries(obj[0]).forEach(([key, value]) => {
+      if (value) {
+        if (str.length === 0) {
+          str = `${str} ${key}`;
+        } else {
+          str = `${str}, ${key}`;
+        }
+      }
+    });
+    return <td key={str}>{str}</td>;
+  };
+
   console.log(item); // keep this for debugging purpose for the map by now
 
   const history = useHistory();
@@ -200,7 +214,7 @@ const ItemDetails: FC<ParamTypes> = () => {
 
           <tr>
             <td>Material:</td>
-            {/* <td>{item.materials}</td> */}
+            {item.material ? mapingObject(item.material) : <td> </td>}
           </tr>
           <tr>
             <td>Skick:</td>
@@ -208,7 +222,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           </tr>
           <tr>
             <td>Användningsområde:</td>
-            {/* <td>{item.areaOfUse}</td> */}
+            {item.areaOfUse ? mapingObject(item.areaOfUse) : <td> </td>}
           </tr>
           <tr>
             <td>Klimatpåverkan:</td>

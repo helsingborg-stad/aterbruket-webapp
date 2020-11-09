@@ -40,6 +40,7 @@ const AddItem: FC<Props> = ({
   } = useForm(
     {
       title: "",
+      status: "available",
       category: "",
       quantity: 0,
       height: 0,

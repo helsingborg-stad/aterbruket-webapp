@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/no-named-as-default-member */
 
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useContext } from "react";
 import ReactDOM, { useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
@@ -18,6 +18,7 @@ import EditItemForm from "../components/EditItemForm";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
 import Map from "../components/Map";
 import CarouselComp from "../components/CarouselComp";
+import { UserContext } from "../contexts/UserContext";
 
 const DivBtns = styled.div`
   display: flex;
@@ -86,9 +87,9 @@ const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [item, setItem] = useState({}) as any;
-  const [reservedClicked, setReservedClicked] = useState(false);
   const [editItem, setEditItem] = useState(false);
   const [showCarousel, setShowCarousel] = useState(false);
+  const user: any = useContext(UserContext);
 
   const fetchItem = async () => {
     const result = (await API.graphql(
@@ -125,6 +126,7 @@ const ItemDetails: FC<ParamTypes> = () => {
         input: {
           id,
           status: "reserved",
+          reservedBy: user.attributes.sub,
         },
       })
     );
@@ -135,7 +137,6 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const onClickReservBtn = () => {
     updateItem();
-    setReservedClicked(true);
   };
 
   const mapingObject = (obj: any) => {
@@ -173,15 +174,11 @@ const ItemDetails: FC<ParamTypes> = () => {
           </button>
         ) : (
           <p>
-            (Prylen har status: &quot;{item.status}&quot;. Gjordes av: [NAMN])
+            (Prylen har status: &quot;{item.status}&quot;. Gjordes av:{" "}
+            {user.attributes.name})
           </p>
         )}
       </DivBtns>
-      {reservedClicked && (
-        <p>
-          Du har haffat {item.title} statusen är: {item.status}
-        </p>
-      )}
       <h1>{item.title}</h1>
       <ItemImg
         src="https://storage.googleapis.com/web-pro-nilo-kavehome/media/cache/c4/10/c410118add2b5cb169d71a0c20596f50.jpg"

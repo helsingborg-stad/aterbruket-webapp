@@ -41,6 +41,7 @@ export const createAdvertisement = /* GraphQL */ `
       phoneNumber
       giver
       climateImpact
+      reservedBy
       createdAt
       updatedAt
     }
@@ -85,6 +86,7 @@ export const updateAdvertisement = /* GraphQL */ `
       phoneNumber
       giver
       climateImpact
+      reservedBy
       createdAt
       updatedAt
     }
@@ -129,6 +131,7 @@ export const deleteAdvertisement = /* GraphQL */ `
       phoneNumber
       giver
       climateImpact
+      reservedBy
       createdAt
       updatedAt
     }

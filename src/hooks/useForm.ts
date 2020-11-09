@@ -2,10 +2,22 @@
 import { API, graphqlOperation } from "aws-amplify";
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
+import { createAdvert } from "../graphql/mutations";
+
+const recreateInitial = async (mutation: any, values: any)  => {
+  delete values.createdAt
+  delete values.updatedAt
+  values.version = values.revisions + 1
+  console.log('test', values)
+  await API.graphql(
+    graphqlOperation(mutation, { input: values })
+  );
+}
 
 const useForm = (initialValues: any, mutation: string) => {
   const [values, setValues] = useState(initialValues);
   const [redirect, setRedirect] = useState(false);
+  const [result, setResult] = useState({}) as any;
 
   const handleInputChange = (event: React.ChangeEvent<any>) => {
     const { target } = event;
@@ -15,22 +27,25 @@ const useForm = (initialValues: any, mutation: string) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    
     setValues(initialValues);
-    console.log(values)
     const result: any = await API.graphql(
       graphqlOperation(mutation, { input: values })
     );
 
+    
     if (result.data && values.id) {
-      console.log("db UPDATE ", result.data.updateAdvertisement);
+      recreateInitial(createAdvert, initialValues)
+      console.log("db UPDATE ", result.data.updateAdvert);
       return setRedirect(true);
     }
 
+    setResult(result.data.createAdvert);
+
     if (result.data && !values.id) {
-      console.log("db CREATE ", result.data.createAdvertisement);
-      sendEmail(result.data.createAdvertisement);
-      return setRedirect(result.data.createAdvertisement.id);
+      console.log("db CREATE ", result.data.createAdvert);
+      //sendEmail(result.data.createAdvertisement);
+      return setRedirect(result.data.createAdvert.id);
     }
   };
 
@@ -65,6 +80,7 @@ const useForm = (initialValues: any, mutation: string) => {
     redirect,
     handleInputChange,
     handleSubmit,
+    result
   };
 };
 

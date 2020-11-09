@@ -3,10 +3,11 @@ import React, { FC, useContext, useEffect, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import Form from "../components/Form";
 import useForm from "../hooks/useForm";
-import { createAdvertisement } from "../graphql/mutations";
+import { createAdvert, createAdvertisement } from "../graphql/mutations";
 import OpenCamera from "../components/OpenCamera";
 import { fieldsForm as fields } from "../utils/formUtils";
 import {UserContext} from "../contexts/UserContext";
+import { API, graphqlOperation } from "aws-amplify";
 
 interface IQrCamera {
   delay: number;
@@ -31,8 +32,7 @@ const AddItem: FC<Props> = ({
 }: Props) => {
   const history = useHistory();
   const user: any = useContext(UserContext)
-  console.log(user)
-  const { values, handleInputChange, handleSubmit, redirect } = useForm(
+  const { values, handleInputChange, handleSubmit, redirect, result } = useForm(
     {
       title: "",
       category: "",
@@ -51,9 +51,11 @@ const AddItem: FC<Props> = ({
       contactPerson: "",
       email: "",
       phoneNumber: 0,
-      giver: user.attributes.sub
+      giver: user.attributes.sub,
+      revisions: 0,
+      version: 0
     },
-    createAdvertisement
+    createAdvert
   );
 
   if (redirect) {

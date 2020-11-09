@@ -13,8 +13,8 @@ import styled from "styled-components";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import QRCode from "../components/QRCodeContainer";
-import { GetAdvertisementQuery } from "../API";
-import { getAdvertisement } from "../graphql/queries";
+import { GetAdvertQuery } from "../API";
+import { getAdvert } from "../graphql/queries";
 import { updateAdvertisement } from "../graphql/mutations";
 import EditItemForm from "../components/EditItemForm";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
@@ -94,9 +94,10 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const fetchItem = async () => {
     const result = (await API.graphql(
-      graphqlOperation(getAdvertisement, { id })
-    )) as GraphQLResult<GetAdvertisementQuery>;
-    const advertItem = result.data?.getAdvertisement;
+      graphqlOperation(getAdvert, { id, version:0 })
+    )) as GraphQLResult<GetAdvertQuery>;
+    const advertItem = result.data?.getAdvert;
+    console.log(advertItem)
     setItem(advertItem);
   };
 

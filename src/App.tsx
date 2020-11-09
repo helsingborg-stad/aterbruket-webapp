@@ -12,6 +12,7 @@ import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
 import Profile from "./pages/Profile";
 import MenuBar from "./components/MenuBar";
+import Admin from "./pages/Admin";
 import { UserContext } from "./contexts/UserContext";
 
 const AppContainer = styled.div`
@@ -79,6 +80,7 @@ const App: FC = () => {
               />
               <Route path="/profile" component={Profile} />
               <Route path="/item/:id" component={ItemDetails} />
+              <Route path="/admin" component={Admin} />
             </UserContext.Provider>
             <MenuBar />
           </Router>

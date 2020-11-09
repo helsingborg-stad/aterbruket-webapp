@@ -1,11 +1,9 @@
-import API, { GraphQLResult } from "@aws-amplify/api";
-import { graphqlOperation } from "aws-amplify";
-import React, { useContext, useEffect, useState, useCallback, FC } from "react";
+import React, { useEffect, useState, FC } from "react";
+import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
+import { API } from "aws-amplify";
 import styled from "styled-components";
-import { ListAdvertisementsQuery } from "../API";
-import AdvertContainer from "../components/AdvertContainer";
 import { listAdvertisements } from "../graphql/queries";
-import { UserContext } from "../contexts/UserContext";
+import { ListAdvertisementsQuery } from "../API";
 
 const InformationFrame = styled.header`
   padding: 24px;
@@ -26,47 +24,39 @@ const InformationContainer = styled.div`
 `;
 
 const Admin: FC = () => {
-  const user: any = useContext(UserContext);
-  const [adverts, setAdverts] = useState([{}]) as any;
+  //   const [items, setItems] = useState({}) as any;
+  //   let newcategories = [];
+  const categories: string[] = [
+    "table",
+    "chair",
+    "desk",
+    "officeChair",
+    "raiseAndLowerableDesk",
+    "other",
+  ];
 
-  // Fetch and replace placeholder
-
-  const fetchCreatedAdverts = useCallback(async () => {
-    const result = (await API.graphql(
-      graphqlOperation(listAdvertisements, {
-        filter: { giver: { eq: user.attributes.sub } },
-      })
-    )) as GraphQLResult<ListAdvertisementsQuery>;
-
-    const advertItem = result.data?.listAdvertisements?.items;
-    setAdverts(advertItem);
-  }, [user.attributes.sub]);
-
-  useEffect(() => {
-    if (user.attributes.sub) {
-      fetchCreatedAdverts();
-    }
-  }, [fetchCreatedAdverts, user]);
-
-  const userKeys = Object.keys(user.attributes);
-  const userInfo = userKeys.map((key) => {
-    return (
-      <div key={key}>
-        <InformationHeader>{key}</InformationHeader>
-        <InformationFrame>{user.attributes[key]}</InformationFrame>
-      </div>
-    );
+  categories.map((category: any) => {
+    console.log(category);
+    // return({catname: category, amount: 0}​)
   });
+
+  //   const fetchItems = async () => {
+  //     const result = (await API.graphql(
+  //       graphqlOperation(listAdvertisements)
+  //     )) as GraphQLResult<ListAdvertisementsQuery>;
+  //     const advertItems = result.data?.listAdvertisements?.items;
+
+  //     setItems(advertItems);
+  //   };
+
+  //   useEffect(() => {
+  //     fetchItems();
+  //   }, []);
 
   return (
     <main>
       <h1> Admin </h1>
-      <InformationContainer>
-        <h3> Kontakt </h3>
-        {userInfo}
-
-        <AdvertContainer searchValue={false} items={adverts} />
-      </InformationContainer>
+      {/* <p>Vilken kategori är mest populär {statistics.popularCategory}</p> */}
     </main>
   );
 };

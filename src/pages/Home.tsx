@@ -170,9 +170,6 @@ const Home: FC<Props> = ({
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
 
-  
-
-
   return (
     <main>
       {showQRCamera ? (

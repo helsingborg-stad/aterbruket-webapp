@@ -80,7 +80,7 @@ const App: FC = () => {
               <Route path="/profile" component={Profile} />
               <Route path="/item/:id" component={ItemDetails} />
             </UserContext.Provider>
-            <MenuBar />
+            <MenuBar setQrCamera={setQrCamera} qrCamera={qrCamera} />
           </Router>
         </AppContainer>
       </ThemeProvider>

@@ -32,7 +32,7 @@ const useForm = (initialValues: any, mutation: string) => {
 
     const result: any = await API.graphql(
       graphqlOperation(mutation, {
-        input: { ...values, climateImpact: lca, status: "available" }, // status will be set to a default-value in the graphql schema later. But for now, let this be.
+        input: { ...values, climateImpact: lca }, // status will be set to a default-value in the graphql schema later. But for now, let this be.
       })
     );
 

@@ -20,6 +20,7 @@ interface Props {
   item: {
     id: number;
     title: string;
+    status: string;
     category?: string;
     quantity?: number;
     height?: number;
@@ -57,6 +58,7 @@ const EditItemForm: FC<Props> = ({
     {
       id: item.id,
       title: item.title,
+      status: item.status,
       category: item.category,
       quantity: item.quantity,
       height: item.height,

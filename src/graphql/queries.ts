@@ -101,7 +101,6 @@ export const getAdvert = /* GraphQL */ `
       phoneNumber
       giver
       version
-      revisions
       createdAt
       updatedAt
     }
@@ -150,7 +149,6 @@ export const listAdverts = /* GraphQL */ `
         phoneNumber
         giver
         version
-        revisions
         createdAt
         updatedAt
       }

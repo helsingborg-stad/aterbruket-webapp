@@ -138,7 +138,6 @@ export const createAdvert = /* GraphQL */ `
       phoneNumber
       giver
       version
-      revisions
       createdAt
       updatedAt
     }
@@ -175,7 +174,6 @@ export const updateAdvert = /* GraphQL */ `
       phoneNumber
       giver
       version
-      revisions
       createdAt
       updatedAt
     }
@@ -212,7 +210,6 @@ export const deleteAdvert = /* GraphQL */ `
       phoneNumber
       giver
       version
-      revisions
       createdAt
       updatedAt
     }

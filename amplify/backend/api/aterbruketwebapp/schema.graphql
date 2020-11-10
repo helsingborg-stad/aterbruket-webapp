@@ -45,7 +45,6 @@ type Advert @model @key(fields: [ "id", "version" ]){
   phoneNumber: Int
   giver: String
   version: Int!
-  revisions: Int!
 }
 
 enum ItemStatus {

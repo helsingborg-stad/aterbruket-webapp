@@ -105,10 +105,30 @@ const Admin: FC = () => {
     console.log(groups);
 
     groups.forEach((group: any) => {
+      const cateAmount = {
+        table: 0,
+        desk: 0,
+        raiseAndLowerableDesk: 0,
+        officeChair: 0,
+        chair: 0,
+        other: 0,
+      } as any;
+
       console.log("group", group);
       const itemsInGroup = group.items;
       console.log("itemsInGroup", itemsInGroup);
 
+      itemsInGroup.forEach((i: any) => {
+        if (i.category in cateAmount) {
+          console.log(i.category);
+          cateAmount[i.category] += 1;
+        } else {
+          console.log(i.category);
+          cateAmount[i.category] = 1;
+        }
+      });
+      group.categoryAmount = cateAmount;
+      setStatusGroup(groups);
       // if (item.category in category) {
       //   setCategory((category[item.category] += 1));
       // } else {
@@ -119,7 +139,7 @@ const Admin: FC = () => {
 
     mostCommonWord();
   };
-
+  console.log("statusGroups", statusGroup);
   // filter out different status group
   const filterStatus = (advertItems: any) => {
     const newStatusGroup = [

@@ -25,6 +25,8 @@ const InformationContainer = styled.div`
 `;
 
 const Admin: FC = () => {
+  /* ******** my old code  just keep temporary ***** */
+
   // const [items, setItems] = useState({}) as any;
   // //   let newcategories = [];
 
@@ -67,11 +69,15 @@ const Admin: FC = () => {
   //   });
   // }
   // const [items, setItems] = useState({}) as any;
+
+  /* ******** above is my old code ***** */
+
   const [category, setCategory] = useState({}) as any;
-  const [statistics, setStatistics] = useState({
-    popularCategory: "",
-    popularCategoryNumber: 0,
-  }) as any;
+  const [statusGroup, setStatusGroup] = useState([]) as any;
+  const [statistics, setStatistics] = useState([
+    { option: "available", most: "", mostNum: 0, least: "", leastNum: 0 },
+    { option: "reserved", most: "", mostNum: 0, least: "", leastNum: 0 },
+  ]) as any;
 
   const mostCommonWord = () => {
     let maxValue = 0 as any;
@@ -94,17 +100,43 @@ const Admin: FC = () => {
     });
   };
 
-  const countingCategorys = (advertItems: any) => {
-    console.log(advertItems);
-    advertItems.map((item: any) => {
-      if (item.category in category) {
-        setCategory((category[item.category] += 1));
-      } else {
-        setCategory((category[item.category] = 1));
-      }
+  // the following function need to be altered to count the items's category amout in different status group
+  const countingCategorys = (groups: any) => {
+    console.log(groups);
+
+    groups.forEach((group: any) => {
+      console.log("group", group);
+      const itemsInGroup = group.items;
+      console.log("itemsInGroup", itemsInGroup);
+
+      // if (item.category in category) {
+      //   setCategory((category[item.category] += 1));
+      // } else {
+      //   setCategory((category[item.category] = 1));
+      // }
     });
-    console.log(category);
+    console.log("cat", category);
+
     mostCommonWord();
+  };
+
+  // filter out different status group
+  const filterStatus = (advertItems: any) => {
+    const newStatusGroup = [
+      { option: "available", items: [] as any },
+      { option: "reserved", items: [] as any },
+    ];
+    advertItems.forEach((i: any) => {
+      const index = newStatusGroup.findIndex(
+        (group) => group.option === i.status
+      );
+      console.log(index);
+
+      newStatusGroup[index].items.push(i);
+    });
+    console.log("filtered", newStatusGroup);
+
+    countingCategorys(newStatusGroup);
   };
 
   const fetchItems = async () => {
@@ -112,7 +144,8 @@ const Admin: FC = () => {
       graphqlOperation(listAdvertisements)
     )) as GraphQLResult<ListAdvertisementsQuery>;
     const advertItems = result.data?.listAdvertisements?.items;
-    countingCategorys(advertItems);
+    filterStatus(advertItems);
+    // countingCategorys(advertItems);
     // setItems(advertItems);
   };
 

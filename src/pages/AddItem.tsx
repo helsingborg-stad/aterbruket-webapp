@@ -3,7 +3,7 @@ import React, { FC, useContext, useEffect, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import Form from "../components/Form";
 import useForm from "../hooks/useForm";
-import { createAdvert, createAdvertisement } from "../graphql/mutations";
+import { createAdvert } from "../graphql/mutations";
 import OpenCamera from "../components/OpenCamera";
 import { fieldsForm as fields } from "../utils/formUtils";
 import {UserContext} from "../contexts/UserContext";
@@ -52,7 +52,6 @@ const AddItem: FC<Props> = ({
       email: "",
       phoneNumber: 0,
       giver: user.attributes.sub,
-      revisions: 0,
       version: 0
     },
     createAdvert
@@ -70,7 +69,7 @@ const AddItem: FC<Props> = ({
         <Form
           values={values}
           fields={fields}
-          mutation={createAdvertisement}
+          mutation={createAdvert}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
         />

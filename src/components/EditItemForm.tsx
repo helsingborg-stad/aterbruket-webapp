@@ -4,7 +4,7 @@
 import React, { FC } from "react";
 import Form from "./Form";
 import useForm from "../hooks/useForm";
-import { createAdvert, updateAdvert, updateAdvertisement } from "../graphql/mutations";
+import { createAdvert, updateAdvert } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
 import { API, graphqlOperation } from "aws-amplify";
 
@@ -28,7 +28,6 @@ interface Props {
     contactPerson?: string;
     email?: string;
     phoneNumber?: number;
-    revisions: number;
     version: number;
   };
   setEditItem: React.Dispatch<React.SetStateAction<boolean>>;
@@ -60,8 +59,7 @@ const EditItemForm: FC<Props> = ({
       contactPerson: item.contactPerson,
       email: item.email,
       phoneNumber: item.phoneNumber,
-      version: 0,
-      revisions: item.revisions + 1
+      version: 0
     },
     updateAdvert
   );

@@ -7,8 +7,8 @@ import { createAdvert } from "../graphql/mutations";
 const recreateInitial = async (mutation: any, values: any)  => {
   delete values.createdAt
   delete values.updatedAt
-  values.version = values.revisions + 1
-  console.log('test', values)
+  values.version = values.version + 1
+  
   await API.graphql(
     graphqlOperation(mutation, { input: values })
   );
@@ -27,7 +27,6 @@ const useForm = (initialValues: any, mutation: string) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
     setValues(initialValues);
     const result: any = await API.graphql(
       graphqlOperation(mutation, { input: values })
@@ -44,7 +43,7 @@ const useForm = (initialValues: any, mutation: string) => {
 
     if (result.data && !values.id) {
       console.log("db CREATE ", result.data.createAdvert);
-      //sendEmail(result.data.createAdvertisement);
+      sendEmail(result.data.createAdvert);
       return setRedirect(result.data.createAdvert.id);
     }
   };

@@ -18,7 +18,6 @@ const QRCodeCont = styled.div`
 export default function QRCodeContainer(props: { id: string }) {
   const downloadQRCode = () => {
     const canvas: HTMLElement | null = document.getElementById("mycanvas");
-    console.log(canvas);
     if (canvas !== null) {
       const image = (canvas as HTMLCanvasElement).toDataURL("image/png");
       const downloadLink = document.createElement("a");

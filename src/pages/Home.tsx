@@ -5,8 +5,8 @@ import { API } from "aws-amplify";
 import styled from "styled-components";
 import { MdNewReleases, MdSearch, MdTune } from "react-icons/md";
 import { ImQrcode } from "react-icons/im";
-import { listAdvertisements } from "../graphql/queries";
-import { ListAdvertisementsQuery } from "../API";
+import { listAdvertisements, listAdverts } from "../graphql/queries";
+import { ListAdvertisementsQuery, ListAdvertsQuery } from "../API";
 import AdvertContainer from "../components/AdvertContainer";
 import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
@@ -148,16 +148,15 @@ const Home: FC<Props> = ({
     const { target } = event;
     const { value } = target;
     setSearchValue(value);
-    // console.log(value);
   };
 
   const [items, setItems] = useState([]) as any;
 
   const fetchItems = async () => {
     const result = (await API.graphql(
-      graphqlOperation(listAdvertisements)
-    )) as GraphQLResult<ListAdvertisementsQuery>;
-    const advertItems = result.data?.listAdvertisements?.items;
+      graphqlOperation(listAdverts, {filter: {version: {eq: 0}}})
+    )) as GraphQLResult<ListAdvertsQuery>;
+    const advertItems = result.data?.listAdverts?.items;
 
     setItems(advertItems);
   };
@@ -169,9 +168,6 @@ const Home: FC<Props> = ({
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
-
-  
-
 
   return (
     <main>

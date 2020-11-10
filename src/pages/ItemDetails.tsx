@@ -15,7 +15,7 @@ import { API } from "aws-amplify";
 import QRCode from "../components/QRCodeContainer";
 import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
-import { updateAdvertisement } from "../graphql/mutations";
+import { updateAdvert, updateAdvertisement } from "../graphql/mutations";
 import EditItemForm from "../components/EditItemForm";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
 import Map from "../components/Map";
@@ -94,10 +94,9 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const fetchItem = async () => {
     const result = (await API.graphql(
-      graphqlOperation(getAdvert, { id, version:0 })
+      graphqlOperation(getAdvert, { id, version: 0})
     )) as GraphQLResult<GetAdvertQuery>;
     const advertItem = result.data?.getAdvert;
-    console.log(advertItem)
     setItem(advertItem);
   };
 
@@ -124,7 +123,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   }, []);
   const updateItem = async () => {
     const result: any = await API.graphql(
-      graphqlOperation(updateAdvertisement, {
+      graphqlOperation(updateAdvert, {
         input: {
           id,
           status: "reserved",
@@ -132,7 +131,7 @@ const ItemDetails: FC<ParamTypes> = () => {
       })
     );
 
-    const advertItem = result.data?.updateAdvertisement;
+    const advertItem = result.data?.updateAdvert;
     setItem(advertItem);
   };
 

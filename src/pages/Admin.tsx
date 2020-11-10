@@ -43,6 +43,21 @@ const Admin: FC = () => {
     return { most: maxKey, mostNum: maxValue };
   };
 
+  const minCommonCategory = (obj: any) => {
+    let maxValue = Infinity as any;
+    let maxKey = "";
+
+    Object.entries(obj).forEach((entry) => {
+      const [key, value] = entry;
+
+      if (obj[key] < maxValue) {
+        maxValue = value;
+        maxKey = key;
+      }
+    });
+    return { min: maxKey, minNum: maxValue };
+  };
+
   const countingCategorys = (groups: any) => {
     groups.forEach((group: any) => {
       const cateAmount = {
@@ -66,7 +81,10 @@ const Admin: FC = () => {
       });
       eachGroup.categoryAmount = cateAmount;
       const mostComon = mostCommonCategory(cateAmount);
+      const minComon = minCommonCategory(cateAmount);
 
+      eachGroup.min = minComon.min;
+      eachGroup.minNum = minComon.minNum;
       eachGroup.most = mostComon.most;
       eachGroup.mostNum = mostComon.mostNum;
     });
@@ -105,6 +123,28 @@ const Admin: FC = () => {
   return (
     <main>
       <h1> Admin </h1>
+
+      {statusGroup.map((statGroup: any) => {
+        console.log(statGroup);
+        return (
+          <div key={statGroup.option}>
+            <InformationHeader>{statGroup.option}</InformationHeader>
+            <InformationFrame>
+              Mest populär kategori: {statGroup.most}
+            </InformationFrame>
+            <InformationFrame>
+              Annonser: {statGroup.mostNum} stycken
+            </InformationFrame>
+            <InformationFrame>
+              Impopulära kategori: {statGroup.min}
+            </InformationFrame>
+            <InformationFrame>
+              Annonser: {statGroup.minNum} stycken
+            </InformationFrame>
+          </div>
+        );
+      })}
+
       <p>Denna kategorin är populärast ,både reserverade och tillgängliga </p>
       <p>
         Denna kategorin är minst populärast ,både reserverade och tillgängliga

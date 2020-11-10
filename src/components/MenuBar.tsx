@@ -31,15 +31,33 @@ const MenuDiv = styled.div`
     }
   }
 `;
+interface IQrCamera {
+  delay: number;
+  result: string;
+}
 
-const MenuBar: FC = () => {
+type Props = {
+  qrCamera: IQrCamera;
+  setQrCamera: React.Dispatch<
+    React.SetStateAction<{
+      delay: number;
+      result: string;
+    }>
+  >;
+};
+
+const MenuBar: FC<Props> = ({ setQrCamera, qrCamera }: Props) => {
   return (
     <MenuDiv>
-      <Link className="link" to="/">
+      <Link
+        className="link"
+        to="/"
+        onClick={() => setQrCamera({ ...qrCamera, result: "" })}
+      >
         <MdHome className="icon" />
         Hem
       </Link>
-      <Link className="link" to="/">
+      <Link className="link" to="/haffat">
         <MdCloud className="icon" />
         Haffat
       </Link>

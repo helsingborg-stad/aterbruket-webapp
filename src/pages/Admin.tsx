@@ -28,7 +28,7 @@ const Admin: FC = () => {
   const [statusGroup, setStatusGroup] = useState([]) as any;
   console.log("statusGroup ", statusGroup);
 
-  const mostCommonWord = (obj: any) => {
+  const mostCommonCategory = (obj: any) => {
     let maxValue = 0 as any;
     let maxKey = "";
 
@@ -65,7 +65,7 @@ const Admin: FC = () => {
         }
       });
       eachGroup.categoryAmount = cateAmount;
-      const mostComon = mostCommonWord(cateAmount);
+      const mostComon = mostCommonCategory(cateAmount);
 
       eachGroup.most = mostComon.most;
       eachGroup.mostNum = mostComon.mostNum;
@@ -105,10 +105,14 @@ const Admin: FC = () => {
   return (
     <main>
       <h1> Admin </h1>
+      <p>Denna kategorin är populärast ,både reserverade och tillgängliga </p>
       <p>
-        {/* Den kategori som är populärast är {statistics.popularCategory}:{" "}
-        {statistics.popularCategoryNumber} */}
+        Denna kategorin är minst populärast ,både reserverade och tillgängliga
       </p>
+
+      <p>Denna kategorin är mest reserverad av alla återbrukade artiklar</p>
+      <p>Denna kategorin är minst reserverad av alla återbrukade artiklar</p>
+      <p>Hur många objekt bokas men hämtas inte (2 weeks)</p>
     </main>
   );
 };

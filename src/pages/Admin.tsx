@@ -79,11 +79,12 @@ const Admin: FC = () => {
     { option: "reserved", most: "", mostNum: 0, least: "", leastNum: 0 },
   ]) as any;
 
-  const mostCommonWord = () => {
+  const mostCommonWord = (cats: any) => {
+    console.log("cats", cats);
     let maxValue = 0 as any;
     let maxKey = "";
 
-    Object.entries(category).forEach((entry) => {
+    Object.entries(cats).forEach((entry) => {
       const [key, value] = entry;
 
       console.log(key, value);
@@ -115,7 +116,8 @@ const Admin: FC = () => {
       } as any;
 
       console.log("group", group);
-      const itemsInGroup = group.items;
+      const eachGroup = group;
+      const itemsInGroup = eachGroup.items;
       console.log("itemsInGroup", itemsInGroup);
 
       itemsInGroup.forEach((i: any) => {
@@ -127,17 +129,11 @@ const Admin: FC = () => {
           cateAmount[i.category] = 1;
         }
       });
-      group.categoryAmount = cateAmount;
-      setStatusGroup(groups);
-      // if (item.category in category) {
-      //   setCategory((category[item.category] += 1));
-      // } else {
-      //   setCategory((category[item.category] = 1));
-      // }
+      eachGroup.categoryAmount = cateAmount;
     });
-    console.log("cat", category);
+    setStatusGroup(groups);
 
-    mostCommonWord();
+    console.log("cat", category);
   };
   console.log("statusGroups", statusGroup);
   // filter out different status group
@@ -165,8 +161,6 @@ const Admin: FC = () => {
     )) as GraphQLResult<ListAdvertisementsQuery>;
     const advertItems = result.data?.listAdvertisements?.items;
     filterStatus(advertItems);
-    // countingCategorys(advertItems);
-    // setItems(advertItems);
   };
 
   useEffect(() => {

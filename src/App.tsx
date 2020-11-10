@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import AddItem from "./pages/AddItem";
 import ItemDetails from "./pages/ItemDetails";
 import Profile from "./pages/Profile";
+import Haffat from "./pages/Haffat";
 import MenuBar from "./components/MenuBar";
 import { UserContext } from "./contexts/UserContext";
 
@@ -77,6 +78,7 @@ const App: FC = () => {
                   />
                 )}
               />
+              <Route path="/haffat" component={Haffat} />
               <Route path="/profile" component={Profile} />
               <Route path="/item/:id" component={ItemDetails} />
             </UserContext.Provider>

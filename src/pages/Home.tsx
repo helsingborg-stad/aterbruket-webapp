@@ -12,7 +12,6 @@ import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
 
-
 const AddBtn = styled.button`
   position: fixed;
   bottom: 10vh;
@@ -116,6 +115,27 @@ const SearchFilterDiv = styled.div`
     }
   }
 `;
+
+const TabCtn = styled.div`
+  width: 100%;
+  background-color: #f8f8f8;
+
+  button {
+    border: none;
+    color: #707070;
+    background-color: transparent;
+    font-weight: 900;
+    padding: 10px;
+    margin-left: 30px;
+    :active,
+    :focus {
+      color: #205400;
+      border: none;
+      border-bottom: 2px solid #a0c855;
+      outline: none;
+    }
+  }
+`;
 interface IQrCamera {
   delay: number;
   result: string;
@@ -192,6 +212,10 @@ const Home: FC<Props> = ({
               <ImQrcode />
             </div>
           </ScanBtn>
+          <TabCtn>
+            <button type="button">INSPIRATION</button>
+            <button type="button">KATEGORIER</button>
+          </TabCtn>
           <SearchFilterDiv>
             <div className="searchWrapper">
               <MdSearch id="searchIcon" />
@@ -207,7 +231,11 @@ const Home: FC<Props> = ({
               Filter <MdTune id="filterIcon" />
             </button>
           </SearchFilterDiv>
-          <AdvertContainer items={items} searchValue={searchValue} />
+          <AdvertContainer
+            items={items}
+            searchValue={searchValue}
+            itemsFrom="home"
+          />
           <AddBtn
             type="button"
             onClick={() => {

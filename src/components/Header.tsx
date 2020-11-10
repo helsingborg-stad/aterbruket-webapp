@@ -27,26 +27,7 @@ const HeaderDiv = styled.header`
     color: black;
   }
 `;
-const TabCtn = styled.div`
-  width: 100%;
-  background-color: #f8f8f8;
 
-  button {
-    border: none;
-    color: #707070;
-    background-color: transparent;
-    font-weight: 900;
-    padding: 5px;
-    margin-right: 50px;
-    :active,
-    :focus {
-      color: #205400;
-      border: none;
-      border-bottom: 2px solid #a0c855;
-      outline: none;
-    }
-  }
-`;
 
 const Header: FC = () => {
   return (
@@ -55,18 +36,9 @@ const Header: FC = () => {
         Haffa och var en <br />
         miljöhjälte!
       </h2>
-      <TabCtn>
-        <button type="button">INSPIRATION</button>
-        <button type="button">KATEGORIER</button>
-      </TabCtn>
+      
     </HeaderDiv>
   );
 };
 
 export default Header;
-
-// This doesn't work right now, but let it be down here for a second.
-/* 
- {window.location.pathname === "/add" ? null : (
-        <button onClick={() => setModalOpen(true)}>Add Item</button>
-      )} */

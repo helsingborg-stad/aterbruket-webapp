@@ -64,8 +64,11 @@ const Profile: FC = () => {
       <InformationContainer>
         <h3> Kontakt </h3>
         {userInfo}
-        <p>Tillagda av mig:</p>
-        <AdvertContainer searchValue={false} items={adverts} />
+        <AdvertContainer
+          searchValue={false}
+          items={adverts}
+          itemsFrom="profile"
+        />
       </InformationContainer>
     </main>
   );

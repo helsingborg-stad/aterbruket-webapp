@@ -159,19 +159,20 @@ const ItemDetails: FC<ParamTypes> = () => {
   const allDetails = (
     <>
       <DivBtns>
-        <button onClick={() => setEditItem(true)} type="button">
-          Edit
-        </button>
-
         {item.status === "available" || item.status === null ? (
-          <button
-            onClick={() => {
-              onClickReservBtn();
-            }}
-            type="button"
-          >
-            HAFFA
-          </button>
+          <>
+            <button
+              onClick={() => {
+                onClickReservBtn();
+              }}
+              type="button"
+            >
+              HAFFA
+            </button>
+            <button onClick={() => setEditItem(true)} type="button">
+              Edit
+            </button>
+          </>
         ) : (
           <p>
             (Prylen har status: &quot;{item.status}&quot;. Gjordes av:{" "}

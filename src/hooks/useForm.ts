@@ -84,21 +84,3 @@ const useForm = (initialValues: any, mutation: string) => {
 };
 
 export default useForm;
-
-/*  const sendEmail = (event: React.ChangeEvent<any>) => {
-    emailjs
-      .sendForm(
-        "default_service",
-        "template_x2baaln",
-        event.target,
-        "user_fuL69kKfoqD8lVmx7NjdK"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
-  }; */

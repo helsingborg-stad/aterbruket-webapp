@@ -3,8 +3,8 @@ import { graphqlOperation } from "aws-amplify";
 import React, { useContext, useEffect, useState, useCallback, FC } from "react";
 import styled from "styled-components";
 import AdvertContainer from "../components/AdvertContainer";
-import { ListAdvertisementsQuery } from "../API";
-import { listAdvertisements } from "../graphql/queries";
+import { ListAdvertisementsQuery, ListAdvertsQuery } from "../API";
+import { listAdvertisements, listAdverts } from "../graphql/queries";
 import { UserContext } from "../contexts/UserContext";
 
 const Haffat: FC = () => {
@@ -13,11 +13,11 @@ const Haffat: FC = () => {
 
   const fetchReservedAdverts = useCallback(async () => {
     const result = (await API.graphql(
-      graphqlOperation(listAdvertisements, {
+      graphqlOperation(listAdverts, {
         filter: { reservedBy: { eq: user.attributes.sub } },
       })
-    )) as GraphQLResult<ListAdvertisementsQuery>;
-    const advertItem = result.data?.listAdvertisements?.items;
+    )) as GraphQLResult<ListAdvertsQuery>;
+    const advertItem = result.data?.listAdverts?.items;
     setReservedItems(advertItem);
   }, [user.attributes.sub]);
 

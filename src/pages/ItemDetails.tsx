@@ -3,6 +3,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/no-named-as-default-member */
+/* global google */
 
 import React, { FC, useState, useEffect, useContext } from "react";
 import ReactDOM, { useParams, useHistory } from "react-router-dom";

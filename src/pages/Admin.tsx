@@ -72,32 +72,28 @@ const Admin: FC = () => {
 
   /* ******** above is my old code ***** */
 
-  const [category, setCategory] = useState({}) as any;
   const [statusGroup, setStatusGroup] = useState([]) as any;
   const [statistics, setStatistics] = useState([
     { option: "available", most: "", mostNum: 0, least: "", leastNum: 0 },
     { option: "reserved", most: "", mostNum: 0, least: "", leastNum: 0 },
   ]) as any;
 
-  const mostCommonWord = () => {
+  const mostCommonWord = (obj: any) => {
     let maxValue = 0 as any;
     let maxKey = "";
+    console.log(obj);
 
-    Object.entries(category).forEach((entry) => {
+    Object.entries(obj).forEach((entry) => {
       const [key, value] = entry;
 
-      console.log(key, value);
-      if (category[key] > maxValue) {
+      // console.log(key, value);
+      if (obj[key] > maxValue) {
         maxValue = value;
         maxKey = key;
       }
       console.log(maxKey, maxValue);
-      return setStatistics({
-        ...statistics,
-        popularCategory: maxKey,
-        popularCategoryNumber: maxValue,
-      });
     });
+    return { most: maxKey, mostNum: maxValue };
   };
 
   // the following function need to be altered to count the items's category amout in different status group
@@ -114,30 +110,20 @@ const Admin: FC = () => {
         other: 0,
       } as any;
 
-      console.log("group", group);
       const itemsInGroup = group.items;
-      console.log("itemsInGroup", itemsInGroup);
 
       itemsInGroup.forEach((i: any) => {
         if (i.category in cateAmount) {
-          console.log(i.category);
           cateAmount[i.category] += 1;
         } else {
-          console.log(i.category);
           cateAmount[i.category] = 1;
         }
       });
       group.categoryAmount = cateAmount;
-      setStatusGroup(groups);
-      // if (item.category in category) {
-      //   setCategory((category[item.category] += 1));
-      // } else {
-      //   setCategory((category[item.category] = 1));
-      // }
+      const mostComon = mostCommonWord(cateAmount);
+      // console.log(mostComon);
+      setStatusGroup(...groups);
     });
-    console.log("cat", category);
-
-    mostCommonWord();
   };
   console.log("statusGroups", statusGroup);
   // filter out different status group
@@ -145,13 +131,13 @@ const Admin: FC = () => {
     const newStatusGroup = [
       { option: "available", items: [] as any },
       { option: "reserved", items: [] as any },
+      { option: "pickedUp", items: [] as any },
+      { option: "delivered", items: [] as any },
     ];
     advertItems.forEach((i: any) => {
       const index = newStatusGroup.findIndex(
         (group) => group.option === i.status
       );
-      console.log(index);
-
       newStatusGroup[index].items.push(i);
     });
     console.log("filtered", newStatusGroup);

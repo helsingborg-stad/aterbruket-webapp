@@ -12,7 +12,6 @@ import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
 
-
 const AddBtn = styled.button`
   position: fixed;
   bottom: 10vh;

@@ -1,24 +1,4 @@
-// eslint-disable-next-line import/prefer-default-export
-// export const options: { [key: string]: string[] } = {
-//   areaOfUse: ["indoors", "outside"],
-//   category: [
-//     "table",
-//     "desk",
-//     "raiseAndLowerableDesk",
-//     "officeChair",
-//     "chair",
-//     "other",
-//   ],
-//   condition: ["new", "good", "worn"],
-// };
-
 export const fieldsForm = [
-  // {
-  //   name: "images",
-  //   dataType: "image",
-  //   fieldType: "input",
-  //   disabled: false,
-  // },
   {
     name: "title",
     dataType: "text",
@@ -195,12 +175,6 @@ export const fieldsForm = [
 ];
 
 export const fieldsEditForm = [
-  // {
-  //   name: "images",
-  //   dataType: "image",
-  //   fieldType: "input",
-  //   disabled: false,
-  // },
   {
     name: "title",
     dataType: "text",

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState, FC } from "react";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
@@ -24,34 +25,51 @@ const InformationContainer = styled.div`
 `;
 
 const Admin: FC = () => {
-  //   const [items, setItems] = useState({}) as any;
+  const [items, setItems] = useState({}) as any;
   //   let newcategories = [];
+
+  const fetchItems = async () => {
+    const result = (await API.graphql(
+      graphqlOperation(listAdvertisements)
+    )) as GraphQLResult<ListAdvertisementsQuery>;
+    const advertItems = result.data?.listAdvertisements?.items;
+
+    setItems(advertItems);
+  };
+
+  console.log("items", items);
+
+  // Step 1 make each categories into an object and add key "amount"
+
   const categories: string[] = [
     "table",
-    "chair",
     "desk",
-    "officeChair",
     "raiseAndLowerableDesk",
+    "officeChair",
+    "chair",
     "other",
   ];
 
-  categories.map((category: any) => {
-    console.log(category);
-    // return({catname: category, amount: 0}​)
+  let newCategories = categories.map((category, idx) => {
+    return {
+      cateName: category,
+      amount: 0,
+    };
   });
 
-  //   const fetchItems = async () => {
-  //     const result = (await API.graphql(
-  //       graphqlOperation(listAdvertisements)
-  //     )) as GraphQLResult<ListAdvertisementsQuery>;
-  //     const advertItems = result.data?.listAdvertisements?.items;
+  console.log("new categories", newCategories);
 
-  //     setItems(advertItems);
-  //   };
+  // Step 2, loop through items in the database and check category and count amount in each category in the new Categories array
 
-  //   useEffect(() => {
-  //     fetchItems();
-  //   }, []);
+  if (items[0]) {
+    const categories = items.map((item: any, idx: number) => {
+      return item.category;
+    });
+  }
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
   return (
     <main>

@@ -59,7 +59,7 @@ const Admin: FC = () => {
     fetchItems();
   }, []);
 
-  const showHowDays = (item: any) => {
+  const showDays = (item: any) => {
     const createdAt = Date.parse(item.createdAt);
     const convertedCreatedAt = new Date(createdAt);
     const today = new Date();
@@ -67,6 +67,10 @@ const Admin: FC = () => {
     const diffInDays = diffInTime / (1000 * 3600 * 24);
     return Math.round(diffInDays);
   };
+
+  let count = 0;
+  let notPickedUpItems = [] as any;
+  console.log(notPickedUpItems);
 
   return (
     <main>
@@ -76,25 +80,28 @@ const Admin: FC = () => {
         return (
           <div key={statGroup.option}>
             <InformationHeader>{statGroup.option}</InformationHeader>
-            <InformationFrame>
-              Mest populär kategori: {statGroup.most}
-              {statGroup.option === "available" &&
-                statGroup.items.map((item: any) => {
-                  const x = showHowDays(item);
-                  console.log(
-                    `Item id:${item.id} have been available in ${x} days`
-                  );
-                })}
-            </InformationFrame>
-            <InformationFrame>
-              Annonser: {statGroup.mostNum} stycken
-            </InformationFrame>
-            <InformationFrame>
-              Impopulära kategori: {statGroup.min}
-            </InformationFrame>
-            <InformationFrame>
-              Annonser: {statGroup.minNum} stycken
-            </InformationFrame>
+            Mest populär kategori: {statGroup.most}
+            {/* {statGroup.option === "available" &&
+              statGroup.items.map((item: any) => {
+                const x = showDays(item);
+                console.log(
+                  `Item id:${item.id} have been available in ${x} days`
+                );
+              })} */}
+            {statGroup.option === "reserved" &&
+              statGroup.items.map((item: any) => {
+                const x = showDays(item);
+                console.log(
+                  `Item id:${item.id} have been reserved in ${x} days`
+                );
+                if (x > 14) {
+                  count += 1;
+                  notPickedUpItems.push(item);
+                }
+                console.log(
+                  `there is ${count} items that have been reserved but not picked up yet. `
+                );
+              })}
           </div>
         );
       })}

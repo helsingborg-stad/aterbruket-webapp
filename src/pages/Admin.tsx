@@ -27,7 +27,29 @@ const InformationContainer = styled.div`
 
 const Admin: FC = () => {
   const [statusGroup, setStatusGroup] = useState([]) as any;
-  console.log("statusGroup ", statusGroup);
+  console.log("statusGroup ", statusGroup[0]);
+
+  // visa antalet dagar itemsen har stått där
+  // antalet dagar sedan skapade
+
+  const showHowDays = () => {
+    if (statusGroup[0]) {
+      let createdAt = Date.parse(statusGroup[0].items[0].createdAt); // pars to number
+      let convertedCreatedAt = new Date(createdAt); // convert createdAT to date obj
+      console.log("String from item ", statusGroup[0].items[0].createdAt); // string
+      console.log("Converted number from item ", createdAt);
+      console.log("D ", convertedCreatedAt); // object
+      let today = new Date();
+      const diffInTime = today.getTime() - convertedCreatedAt.getTime();
+      const diffInDays = diffInTime / (1000 * 3600 * 24);
+      console.log("Today", today); // obj
+      console.log("Diff Time ", diffInTime);
+      console.log("Diff in Days is ", diffInDays);
+      console.log("Diff in Days is ", Math.round(diffInDays));
+    }
+  };
+
+  showHowDays();
 
   const filterStatus = (advertItems: any) => {
     const newStatusGroup = [
@@ -64,7 +86,6 @@ const Admin: FC = () => {
       <h1> Admin </h1>
 
       {statusGroup.map((statGroup: any) => {
-        console.log(statGroup);
         return (
           <div key={statGroup.option}>
             <InformationHeader>{statGroup.option}</InformationHeader>

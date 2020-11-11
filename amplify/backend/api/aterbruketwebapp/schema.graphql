@@ -24,6 +24,34 @@ type Advertisement @model {
   reservedBy: String
 }
 
+type Advert @model @key(fields: [ "id", "version" ]){
+  id: ID!
+  title: String!
+  description: String
+  location: String
+  height: Int
+  width: Int
+  length: Int
+  status: ItemStatus
+  category: ItemCategory
+  material: [ItemAMaterial]
+  condition: ItemCondition
+  color: String
+  areaOfUse: [ItemAreaOfUse]
+  images: [ItemImages]
+  quantity: Int
+  department: String
+  instructions: String
+  contactPerson: String
+  email: String
+  phoneNumber: Int
+  giver: String
+  version: Int!
+  climateImpact: Int
+  reservedBy: String
+  revisions: Int
+}
+
 enum ItemStatus {
   available
   reserved

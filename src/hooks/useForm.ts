@@ -3,10 +3,22 @@ import { API, graphqlOperation } from "aws-amplify";
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
 import HandleClimatImpact from "./HandleClimatImpact";
+import { createAdvert } from "../graphql/mutations";
+
+const recreateInitial = async (mutation: any, values: any)  => {
+  delete values.createdAt
+  delete values.updatedAt
+  values.version = values.revisions + 1
+  
+  await API.graphql(
+    graphqlOperation(mutation, { input: values })
+  );
+}
 
 const useForm = (initialValues: any, mutation: string) => {
   const [values, setValues] = useState(initialValues);
   const [redirect, setRedirect] = useState(false);
+  const [result, setResult] = useState({}) as any;
 
   const handleCheckboxChange = (event: React.ChangeEvent<any>, parent: any) => {
     const { target } = event;
@@ -30,21 +42,26 @@ const useForm = (initialValues: any, mutation: string) => {
     event.preventDefault();
     const lca = await HandleClimatImpact(values);
 
+    setValues(initialValues);
     const result: any = await API.graphql(
       graphqlOperation(mutation, {
         input: { ...values, climateImpact: lca }, // status will be set to a default-value in the graphql schema later. But for now, let this be.
       })
     );
 
+    
     if (result.data && values.id) {
-      console.log("db UPDATE ", result.data.updateAdvertisement);
+      recreateInitial(createAdvert, initialValues)
+      console.log("db UPDATE ", result.data.updateAdvert);
       return setRedirect(true);
     }
 
+    setResult(result.data.createAdvert);
+
     if (result.data && !values.id) {
-      console.log("db CREATE ", result.data.createAdvertisement);
-      sendEmail(result.data.createAdvertisement);
-      return setRedirect(result.data.createAdvertisement.id);
+      console.log("db CREATE ", result.data.createAdvert);
+      sendEmail(result.data.createAdvert);
+      return setRedirect(result.data.createAdvert.id);
     }
   };
 
@@ -80,6 +97,7 @@ const useForm = (initialValues: any, mutation: string) => {
     handleInputChange,
     handleSubmit,
     handleCheckboxChange,
+    result
   };
 };
 

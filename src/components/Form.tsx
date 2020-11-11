@@ -69,7 +69,7 @@ export default function Form(props: {
     if (field.fieldType === "input" && field.dataType !== "checkbox") {
       return (
         <section className="allDiv" key={field.name}>
-          {field.required && <span className="required">Required</span>}
+          {field.required && <span className="required">obligatorisk</span>}
           <label htmlFor={field.name}>{field.title}</label>
           <input
             type={field.dataType}
@@ -103,7 +103,7 @@ export default function Form(props: {
         <section key={field.name}>
           <p>{field.title}</p>
           <div className="allDiv">
-            {field.required && <span className="required">Required</span>}
+            {field.required && <span className="required">obligatorisk</span>}
             {checkboxInput}
           </div>
         </section>
@@ -112,7 +112,7 @@ export default function Form(props: {
     if (field.fieldType === "textarea") {
       return (
         <section className="allDiv" key={field.name}>
-          {field.required && <span className="required">Required</span>}
+          {field.required && <span className="required">obligatorisk</span>}
           <label htmlFor={field.name}>{field.title}</label>
           <textarea
             name={field.name}
@@ -128,7 +128,7 @@ export default function Form(props: {
       const data = field.eng ? field.eng : [];
       return (
         <section className="allDiv" key={field.name}>
-          {field.required && <span className="required">Required</span>}
+          {field.required && <span className="required">obligatorisk</span>}
           <label htmlFor={field.name} key={field.name}>
             {field.title}
           </label>

@@ -2,9 +2,9 @@ import API, { GraphQLResult } from "@aws-amplify/api";
 import { graphqlOperation } from "aws-amplify";
 import React, { useContext, useEffect, useState, useCallback, FC } from "react";
 import styled from "styled-components";
-import { ListAdvertisementsQuery } from "../API";
+import { ListAdvertisementsQuery, ListAdvertsQuery } from "../API";
 import AdvertContainer from "../components/AdvertContainer";
-import { listAdvertisements } from "../graphql/queries";
+import { listAdvertisements, listAdverts } from "../graphql/queries";
 import { UserContext } from "../contexts/UserContext";
 
 const InformationFrame = styled.header`
@@ -33,12 +33,12 @@ const Profile: FC = () => {
 
   const fetchCreatedAdverts = useCallback(async () => {
     const result = (await API.graphql(
-      graphqlOperation(listAdvertisements, {
-        filter: { giver: { eq: user.attributes.sub } },
+      graphqlOperation(listAdverts, {
+        filter: { and: [{giver: { eq: user.attributes.sub }}, {version: { eq: 0 }}] },
       })
-    )) as GraphQLResult<ListAdvertisementsQuery>;
+    )) as GraphQLResult<ListAdvertsQuery>;
 
-    const advertItem = result.data?.listAdvertisements?.items;
+    const advertItem = result.data?.listAdverts?.items;
     setAdverts(advertItem);
   }, [user.attributes.sub]);
 
@@ -64,8 +64,11 @@ const Profile: FC = () => {
       <InformationContainer>
         <h3> Kontakt </h3>
         {userInfo}
-        <p>Tillagda av mig:</p>
-        <AdvertContainer searchValue={false} items={adverts} />
+        <AdvertContainer
+          searchValue={false}
+          items={adverts}
+          itemsFrom="profile"
+        />
       </InformationContainer>
     </main>
   );

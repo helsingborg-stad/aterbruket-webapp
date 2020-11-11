@@ -11,9 +11,9 @@ import styled from "styled-components";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import QRCode from "../components/QRCodeContainer";
-import { GetAdvertisementQuery } from "../API";
-import { getAdvertisement } from "../graphql/queries";
-import { updateAdvertisement } from "../graphql/mutations";
+import { GetAdvertQuery } from "../API";
+import { getAdvert } from "../graphql/queries";
+import { createAdvert, updateAdvert, updateAdvertisement } from "../graphql/mutations";
 import EditItemForm from "../components/EditItemForm";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
 import Map from "../components/Map";
@@ -93,9 +93,9 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const fetchItem = async () => {
     const result = (await API.graphql(
-      graphqlOperation(getAdvertisement, { id })
-    )) as GraphQLResult<GetAdvertisementQuery>;
-    const advertItem = result.data?.getAdvertisement;
+      graphqlOperation(getAdvert, { id, version: 0})
+    )) as GraphQLResult<GetAdvertQuery>;
+    const advertItem = result.data?.getAdvert;
     setItem(advertItem);
   };
 
@@ -122,16 +122,25 @@ const ItemDetails: FC<ParamTypes> = () => {
   }, []);
   const updateItem = async () => {
     const result: any = await API.graphql(
-      graphqlOperation(updateAdvertisement, {
+      graphqlOperation(updateAdvert, {
         input: {
           id,
           status: "reserved",
           reservedBy: user.attributes.sub,
+          version: 0
         },
       })
     );
+    
+    item.version = item.revisions + 1
+    delete item.createdAt;
+    delete item.updatedAt;
+    console.log(item)
+    await API.graphql(
+      graphqlOperation(createAdvert, { input: item })
+    );
 
-    const advertItem = result.data?.updateAdvertisement;
+    const advertItem = result.data?.updateAdvert;
     setItem(advertItem);
   };
 
@@ -153,25 +162,24 @@ const ItemDetails: FC<ParamTypes> = () => {
     return <td key={str}>{str}</td>;
   };
 
-  console.log(item); // keep this for debugging purpose for the map by now
-
   const history = useHistory();
   const allDetails = (
     <>
       <DivBtns>
-        <button onClick={() => setEditItem(true)} type="button">
-          Edit
-        </button>
-
         {item.status === "available" || item.status === null ? (
-          <button
-            onClick={() => {
-              onClickReservBtn();
-            }}
-            type="button"
-          >
-            HAFFA
-          </button>
+          <>
+            <button
+              onClick={() => {
+                onClickReservBtn();
+              }}
+              type="button"
+            >
+              HAFFA
+            </button>
+            <button onClick={() => setEditItem(true)} type="button">
+              Edit
+            </button>
+          </>
         ) : (
           <p>
             (Prylen har status: &quot;{item.status}&quot;. Gjordes av:{" "}

@@ -1,8 +1,9 @@
 import React, { FC } from "react";
 import Form from "./Form";
 import useForm from "../hooks/useForm";
-import { updateAdvertisement } from "../graphql/mutations";
+import { createAdvert, updateAdvert } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
+import { API, graphqlOperation } from "aws-amplify";
 
 interface IareaOfUse {
   indoors: boolean;
@@ -38,6 +39,8 @@ interface Props {
     email?: string;
     phoneNumber?: number;
     climateImpact: number;
+    version: number;
+    revisions: number;
   };
   setEditItem: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
@@ -84,8 +87,10 @@ const EditItemForm: FC<Props> = ({
       email: item.email,
       phoneNumber: item.phoneNumber,
       climateImpact: item.climateImpact,
+      version: 0,
+      revisions: item.revisions + 1
     },
-    updateAdvertisement
+    updateAdvert
   );
 
   if (redirect) {
@@ -99,7 +104,7 @@ const EditItemForm: FC<Props> = ({
       <Form
         values={values}
         fields={fields}
-        mutation={updateAdvertisement}
+        mutation={updateAdvert}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
         handleCheckboxChange={handleCheckboxChange}

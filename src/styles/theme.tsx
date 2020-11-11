@@ -49,7 +49,7 @@ const theme: DefaultTheme = {
   },
   headerTheme: {
     width: 100, // %
-    height: 262, // px
+    height: 220, // px
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",

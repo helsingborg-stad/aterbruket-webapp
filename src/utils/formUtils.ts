@@ -1,24 +1,4 @@
-// eslint-disable-next-line import/prefer-default-export
-// export const options: { [key: string]: string[] } = {
-//   areaOfUse: ["indoors", "outside"],
-//   category: [
-//     "table",
-//     "desk",
-//     "raiseAndLowerableDesk",
-//     "officeChair",
-//     "chair",
-//     "other",
-//   ],
-//   condition: ["new", "good", "worn"],
-// };
-
 export const fieldsForm = [
-  // {
-  //   name: "images",
-  //   dataType: "image",
-  //   fieldType: "input",
-  //   disabled: false,
-  // },
   {
     name: "title",
     dataType: "text",
@@ -150,39 +130,23 @@ export const fieldsForm = [
     disabled: false,
     title: "Beskrivning",
   },
-  {
-    name: "department",
-    dataType: "text",
-    fieldType: "input",
-    disabled: false,
-    title: "Avdelning",
-  },
-  {
-    name: "location",
-    dataType: "text",
-    fieldType: "input",
-    disabled: false,
-    required: true,
-    title: "Adress",
-  },
-  {
-    name: "instructions",
-    fieldType: "textarea",
-    disabled: false,
-    title: "Instruktioner vid hämtning",
-  },
+
   {
     name: "contactPerson",
     dataType: "text",
     fieldType: "input",
     disabled: false,
-    title: "Kontaktperson vid hämtning",
+    required: true,
+
+    title: "Kontaktperson",
   },
   {
     name: "email",
     dataType: "email",
     fieldType: "input",
     disabled: false,
+    required: true,
+
     title: "Email till kontaktperson",
   },
   {
@@ -191,16 +155,31 @@ export const fieldsForm = [
     fieldType: "input",
     disabled: false,
     title: "Telefonnummer till kontaktperson",
+  },
+  {
+    name: "department",
+    dataType: "text",
+    fieldType: "input",
+    disabled: false,
+    required: true,
+    title: "Avdelning",
+  },
+  {
+    name: "location",
+    dataType: "text",
+    fieldType: "input",
+    disabled: false,
+    title: "Adress",
+  },
+  {
+    name: "instructions",
+    fieldType: "textarea",
+    disabled: false,
+    title: "Instruktioner vid hämtning",
   },
 ];
 
 export const fieldsEditForm = [
-  // {
-  //   name: "images",
-  //   dataType: "image",
-  //   fieldType: "input",
-  //   disabled: false,
-  // },
   {
     name: "title",
     dataType: "text",
@@ -331,39 +310,21 @@ export const fieldsEditForm = [
     disabled: false,
     title: "Beskrivning",
   },
-  {
-    name: "department",
-    dataType: "text",
-    fieldType: "input",
-    disabled: false,
-    title: "Avdelning",
-  },
-  {
-    name: "location",
-    dataType: "text",
-    fieldType: "input",
-    disabled: false,
-    required: true,
-    title: "Adress",
-  },
-  {
-    name: "instructions",
-    fieldType: "textarea",
-    disabled: false,
-    title: "Instruktioner vid hämtning",
-  },
+
   {
     name: "contactPerson",
     dataType: "text",
     fieldType: "input",
     disabled: false,
-    title: "Kontaktperson vid hämtning",
+    required: true,
+    title: "Kontaktperson",
   },
   {
     name: "email",
     dataType: "email",
     fieldType: "input",
     disabled: false,
+    required: true,
     title: "Email till kontaktperson",
   },
   {
@@ -372,5 +333,26 @@ export const fieldsEditForm = [
     fieldType: "input",
     disabled: false,
     title: "Telefonnummer till kontaktperson",
+  },
+  {
+    name: "department",
+    dataType: "text",
+    fieldType: "input",
+    disabled: false,
+    required: true,
+    title: "Avdelning",
+  },
+  {
+    name: "location",
+    dataType: "text",
+    fieldType: "input",
+    disabled: false,
+    title: "Adress",
+  },
+  {
+    name: "instructions",
+    fieldType: "textarea",
+    disabled: false,
+    title: "Instruktioner vid hämtning",
   },
 ];

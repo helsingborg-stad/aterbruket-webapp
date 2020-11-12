@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { listAdvertisements } from "../graphql/queries";
 import { ListAdvertisementsQuery } from "../API";
 import CountingCategorys from "../hooks/CountingCategorys";
+// import DatePicker from "../components/DatePicker";
 
 const InformationFrame = styled.header`
   padding: 24px;
@@ -26,8 +27,8 @@ const InformationContainer = styled.div`
 `;
 
 const Admin: FC = () => {
-  const [statusGroup, setStatusGroup] = useState([]) as any;
-  console.log("statusGroup ", statusGroup[0]);
+  const [statusGroup, setStatusGroup] = useState([]) as any; // Alla grupperna
+  console.log("statusGroup ", statusGroup);
 
   const filterStatus = (advertItems: any) => {
     const newStatusGroup = [
@@ -70,24 +71,31 @@ const Admin: FC = () => {
 
   let count = 0;
   let notPickedUpItems = [] as any;
-  console.log(notPickedUpItems);
+  // console.log(notPickedUpItems);
 
   return (
     <main>
       <h1> Admin </h1>
+      {/* <DatePicker /> */}
 
       {statusGroup.map((statGroup: any) => {
         return (
           <div key={statGroup.option}>
             <InformationHeader>{statGroup.option}</InformationHeader>
-            Mest populär kategori: {statGroup.most}
-            {/* {statGroup.option === "available" &&
+            Mest populär kategori: {statGroup.most} {statGroup.mostNum}
+            {/* Visar hur länge alla object står.
+             *** Ska vi visa vilka items?
+             *** Ska vi bara visa X antal? */}
+            {statGroup.option === "available" &&
               statGroup.items.map((item: any) => {
                 const x = showDays(item);
                 console.log(
                   `Item id:${item.id} have been available in ${x} days`
                 );
-              })} */}
+              })}
+            {/* Visar hur länge alla object har varit reserverade OCH alla som varit det i över 14 dagar sparas i en array
+             *** Hur ska de sparas bäst för att renderas?
+             *** Hur ska vi visa vilka som inte har hämtats ut?  */}
             {statGroup.option === "reserved" &&
               statGroup.items.map((item: any) => {
                 const x = showDays(item);
@@ -105,15 +113,6 @@ const Admin: FC = () => {
           </div>
         );
       })}
-
-      <p>Denna kategorin är populärast ,både reserverade och tillgängliga </p>
-      <p>
-        Denna kategorin är minst populärast ,både reserverade och tillgängliga
-      </p>
-
-      <p>Denna kategorin är mest reserverad av alla återbrukade artiklar</p>
-      <p>Denna kategorin är minst reserverad av alla återbrukade artiklar</p>
-      <p>Hur många objekt bokas men hämtas inte (2 weeks)</p>
     </main>
   );
 };

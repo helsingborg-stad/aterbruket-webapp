@@ -46,7 +46,6 @@ const GroupDiv = styled.div`
   border: 0.5px solid #ececec;
   text-align: center;
 `;
-
 const Admin: FC = () => {
   const [statusGroup, setStatusGroup] = useState([]) as any;
   const [infoOption, setInfoOption] = useState("total");

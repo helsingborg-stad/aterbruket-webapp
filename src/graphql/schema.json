@@ -3993,6 +3993,7 @@
             "name" : "String",
             "ofType" : null
           },
+<<<<<<< HEAD
           "defaultValue" : null
         }, {
           "name" : "location",
@@ -4009,6 +4010,26 @@
           "type" : {
             "kind" : "SCALAR",
             "name" : "Int",
+=======
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelBooleanInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "ne",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Boolean",
+>>>>>>> wip/admin-view
             "ofType" : null
           },
           "defaultValue" : null
@@ -4017,20 +4038,33 @@
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
+<<<<<<< HEAD
             "name" : "Int",
+=======
+            "name" : "Boolean",
+>>>>>>> wip/admin-view
             "ofType" : null
           },
           "defaultValue" : null
         }, {
+<<<<<<< HEAD
           "name" : "length",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
             "name" : "Int",
+=======
+          "name" : "attributeExists",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Boolean",
+>>>>>>> wip/admin-view
             "ofType" : null
           },
           "defaultValue" : null
         }, {
+<<<<<<< HEAD
           "name" : "status",
           "description" : null,
           "type" : {
@@ -4041,6 +4075,29 @@
           "defaultValue" : null
         }, {
           "name" : "category",
+=======
+          "name" : "attributeType",
+          "description" : null,
+          "type" : {
+            "kind" : "ENUM",
+            "name" : "ModelAttributeTypes",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "ENUM",
+        "name" : "ModelSortDirection",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : [ {
+          "name" : "ASC",
+>>>>>>> wip/admin-view
           "description" : null,
           "type" : {
             "kind" : "ENUM",
@@ -4051,6 +4108,7 @@
         }, {
           "name" : "material",
           "description" : null,
+<<<<<<< HEAD
           "type" : {
             "kind" : "LIST",
             "name" : null,
@@ -4063,6 +4121,19 @@
           "defaultValue" : null
         }, {
           "name" : "condition",
+=======
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelFloatInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "ne",
+>>>>>>> wip/admin-view
           "description" : null,
           "type" : {
             "kind" : "ENUM",
@@ -4071,7 +4142,11 @@
           },
           "defaultValue" : null
         }, {
+<<<<<<< HEAD
           "name" : "color",
+=======
+          "name" : "eq",
+>>>>>>> wip/admin-view
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -4080,6 +4155,7 @@
           },
           "defaultValue" : null
         }, {
+<<<<<<< HEAD
           "name" : "areaOfUse",
           "description" : null,
           "type" : {
@@ -4120,16 +4196,105 @@
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
+=======
+          "name" : "le",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
             "ofType" : null
           },
           "defaultValue" : null
         }, {
+          "name" : "lt",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "ge",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+<<<<<<< HEAD
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "SCALAR",
+        "name" : "Float",
+        "description" : "Built-in Float",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "ENUM",
+        "name" : "ModelSortDirection",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : [ {
+          "name" : "ASC",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "DESC",
+          "description" : null,
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelBooleanInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "ne",
+=======
+        }, {
+          "name" : "gt",
+>>>>>>> wip/admin
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+>>>>>>> wip/admin-view
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+<<<<<<< HEAD
           "name" : "instructions",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
             "name" : "String",
             "ofType" : null
+=======
+          "name" : "between",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Float",
+              "ofType" : null
+            }
+>>>>>>> wip/admin-view
           },
           "defaultValue" : null
         }, {
@@ -4150,6 +4315,52 @@
             "ofType" : null
           },
           "defaultValue" : null
+<<<<<<< HEAD
+=======
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+<<<<<<< HEAD
+=======
+        "kind" : "SCALAR",
+        "name" : "Float",
+        "description" : "Built-in Float",
+        "fields" : null,
+        "inputFields" : null,
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+>>>>>>> wip/admin
+        "kind" : "OBJECT",
+        "name" : "__Schema",
+        "description" : "A GraphQL Introspection defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, the entry points for query, mutation, and subscription operations.",
+        "fields" : [ {
+          "name" : "types",
+          "description" : "A list of all types supported by this server.",
+          "args" : [ ],
+          "type" : {
+            "kind" : "NON_NULL",
+            "name" : null,
+            "ofType" : {
+              "kind" : "LIST",
+              "name" : null,
+              "ofType" : {
+                "kind" : "NON_NULL",
+                "name" : null,
+                "ofType" : {
+                  "kind" : "OBJECT",
+                  "name" : "__Type",
+                  "ofType" : null
+                }
+              }
+            }
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+>>>>>>> wip/admin-view
         }, {
           "name" : "phoneNumber",
           "description" : null,

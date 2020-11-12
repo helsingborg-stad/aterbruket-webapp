@@ -151,7 +151,7 @@ export const fieldsForm = [
   },
   {
     name: "phoneNumber",
-    dataType: "phone",
+    dataType: "tel",
     fieldType: "input",
     disabled: false,
     title: "Telefonnummer till kontaktperson",
@@ -329,7 +329,7 @@ export const fieldsEditForm = [
   },
   {
     name: "phoneNumber",
-    dataType: "phone",
+    dataType: "tel",
     fieldType: "input",
     disabled: false,
     title: "Telefonnummer till kontaktperson",

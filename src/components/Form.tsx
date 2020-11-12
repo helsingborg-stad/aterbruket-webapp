@@ -17,31 +17,36 @@ const FormContainerDiv = styled.div`
   margin-bottom: 150px;
 
   form {
+    width: 100%;
     display: flex;
     flex-direction: column;
+    align-items: center;
   }
   section {
     background-color: ${(props) => props.theme.formTheme.backgroundColor};
-    width: 350px;
+    width: 90%;
     height: 56px;
     border-radius: 4.5px;
-    padding: 16px 0px 16px 16px;
+    padding: 16px 5px 16px 16px;
     margin: 8px 0px;
     p {
       margin-block-end: 0;
       margin-block-start: 0;
     }
   }
+  .labelP {
+    color: ${(props) => props.theme.cardTheme.descColor};
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.005em;
+  }
 
   .allDiv {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     flex-direction: row-reverse;
-
-    label {
-      margin: 0px 8px;
-    }
 
     input,
     textarea,
@@ -49,11 +54,21 @@ const FormContainerDiv = styled.div`
       border-radius: 4.5px;
       border: none;
     }
-
-    .required {
-      font-style: italic;
-      color: red;
-      font-size: 10px;
+    .validationInfo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 5px;
+      .required {
+        font-style: italic;
+        color: red;
+        font-size: 10px;
+      }
+      .infoSpan {
+        color: grey;
+        font-style: italic;
+        font-size: 10px;
+      }
     }
   }
 `;
@@ -69,8 +84,17 @@ export default function Form(props: {
     if (field.fieldType === "input" && field.dataType !== "checkbox") {
       return (
         <section className="allDiv" key={field.name}>
-          {field.required && <span className="required">obligatorisk</span>}
-          <label htmlFor={field.name}>{field.title}</label>
+          <div className="validationInfo">
+            {field.required && <span className="required">obligatorisk</span>}
+            {field.name === "location" && (
+              <span className="infoSpan">ex, Drottninggatan 14</span>
+            )}
+            {(field.name === "width" ||
+              field.name === "height" ||
+              field.name === "length") && (
+              <span className="infoSpan">i cm</span>
+            )}
+          </div>
           <input
             type={field.dataType}
             name={field.name}
@@ -80,6 +104,9 @@ export default function Form(props: {
             disabled={field.disabled}
             required={field.required}
           />
+          <label htmlFor={field.name}>
+            <p className="labelP">{field.title}</p>
+          </label>
         </section>
       );
     }
@@ -88,22 +115,29 @@ export default function Form(props: {
       const checkboxInput = data.map((x: any) => {
         return (
           <React.Fragment key={x.name}>
-            <label htmlFor={x.name}>{x.swe ? x.swe[0] : x.name}</label>
-            <input
-              type={field.dataType}
-              name={x.name}
-              onChange={(e) => props.handleCheckboxChange(e, field.name)}
-              checked={props.values[field.name][x.name]}
-              disabled={x.disabled}
-            />
+            <div>
+              <label htmlFor={x.name}>
+                <p className="labelP">{x.swe ? x.swe[0] : x.name}</p>
+              </label>
+              <input
+                type={field.dataType}
+                name={x.name}
+                onChange={(e) => props.handleCheckboxChange(e, field.name)}
+                checked={props.values[field.name][x.name]}
+                disabled={x.disabled}
+              />
+            </div>
           </React.Fragment>
         );
       });
       return (
         <section key={field.name}>
-          <p>{field.title}</p>
+          <p className="labelP">{field.title}</p>
           <div className="allDiv">
-            {field.required && <span className="required">obligatorisk</span>}
+            <div className="validationInfo">
+              {field.required && <span className="required">obligatorisk</span>}
+              <span className="infoSpan">välj en eller flera</span>
+            </div>
             {checkboxInput}
           </div>
         </section>
@@ -112,15 +146,21 @@ export default function Form(props: {
     if (field.fieldType === "textarea") {
       return (
         <section className="allDiv" key={field.name}>
-          {field.required && <span className="required">obligatorisk</span>}
-          <label htmlFor={field.name}>{field.title}</label>
+          <div className="validationInfo">
+            {field.required && <span className="required">obligatorisk</span>}{" "}
+            <span className="infoSpan">max 200 tecken</span>
+          </div>
           <textarea
             name={field.name}
             onChange={props.handleInputChange}
             value={props.values[field.name]}
             placeholder={field.title}
             required={field.required}
+            maxLength={200}
           />
+          <label htmlFor={field.name}>
+            <p className="labelP">{field.title}</p>
+          </label>
         </section>
       );
     }
@@ -128,10 +168,10 @@ export default function Form(props: {
       const data = field.eng ? field.eng : [];
       return (
         <section className="allDiv" key={field.name}>
-          {field.required && <span className="required">obligatorisk</span>}
-          <label htmlFor={field.name} key={field.name}>
-            {field.title}
-          </label>
+          <div className="validationInfo">
+            {field.required && <span className="required">obligatorisk</span>}
+          </div>
+
           <select
             name={field.name}
             id={field.name}
@@ -152,6 +192,9 @@ export default function Form(props: {
               );
             })}
           </select>
+          <label htmlFor={field.name} key={field.name}>
+            <p className="labelP">{field.title}</p>
+          </label>
         </section>
       );
     }

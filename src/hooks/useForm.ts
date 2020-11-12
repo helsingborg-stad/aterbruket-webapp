@@ -5,15 +5,13 @@ import emailjs from "emailjs-com";
 import HandleClimatImpact from "./HandleClimatImpact";
 import { createAdvert } from "../graphql/mutations";
 
-const recreateInitial = async (mutation: any, values: any)  => {
-  delete values.createdAt
-  delete values.updatedAt
-  values.version = values.revisions + 1
-  
-  await API.graphql(
-    graphqlOperation(mutation, { input: values })
-  );
-}
+const recreateInitial = async (mutation: any, values: any) => {
+  delete values.createdAt;
+  delete values.updatedAt;
+  values.version = values.revisions + 1;
+
+  await API.graphql(graphqlOperation(mutation, { input: values }));
+};
 
 const useForm = (initialValues: any, mutation: string) => {
   const [values, setValues] = useState(initialValues);
@@ -34,7 +32,7 @@ const useForm = (initialValues: any, mutation: string) => {
     const { name, value } = target;
     setValues({
       ...values,
-      [name]: value,
+      [name]: value.trimStart(),
     });
   };
 
@@ -42,16 +40,15 @@ const useForm = (initialValues: any, mutation: string) => {
     event.preventDefault();
     const lca = await HandleClimatImpact(values);
 
-    setValues(initialValues);
     const result: any = await API.graphql(
       graphqlOperation(mutation, {
-        input: { ...values, climateImpact: lca }, // status will be set to a default-value in the graphql schema later. But for now, let this be.
+        input: { ...values, climateImpact: lca },
       })
     );
+    setValues(initialValues);
 
-    
     if (result.data && values.id) {
-      recreateInitial(createAdvert, initialValues)
+      recreateInitial(createAdvert, initialValues);
       console.log("db UPDATE ", result.data.updateAdvert);
       return setRedirect(true);
     }
@@ -83,10 +80,10 @@ const useForm = (initialValues: any, mutation: string) => {
       )
       .then(
         function (response) {
-          console.log("SUCCESS!", response.status, response.text);
+          console.log("SUCCESS sending email!", response.status, response.text);
         },
         function (error) {
-          console.log("FAILED...", error);
+          console.log("FAILED sending email", error);
         }
       );
   };
@@ -97,7 +94,7 @@ const useForm = (initialValues: any, mutation: string) => {
     handleInputChange,
     handleSubmit,
     handleCheckboxChange,
-    result
+    result,
   };
 };
 

@@ -43,7 +43,7 @@ const AddItem: FC<Props> = ({
       title: "",
       status: "available",
       category: "",
-      quantity: 0,
+      quantity: 1,
       height: 0,
       width: 0,
       length: 0,
@@ -66,7 +66,7 @@ const AddItem: FC<Props> = ({
       giver: user.attributes.sub,
       climateImpact: 0,
       version: 0,
-      revisions: 0
+      revisions: 0,
     },
     createAdvert
   );

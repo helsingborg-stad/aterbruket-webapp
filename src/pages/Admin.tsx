@@ -48,24 +48,6 @@ const GroupDiv = styled.div`
   border: 0.5px solid #ececec;
   text-align: center;
 `;
-// const InformationFrame = styled.header`
-//   padding: 24px;
-//   background: linear-gradient(0deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.04)),
-//     #ffffff;
-//   border-radius: 4.5px;
-// `;
-
-// const InformationHeader = styled.p`
-//   text-transform: uppercase;
-//   color: #0069b4;
-// `;
-
-// const InformationContainer = styled.div`
-//   width: 90%;
-//   height: 100vh;
-//   background: #fcfcfc;
-// `;
-
 const Admin: FC = () => {
   const [statusGroup, setStatusGroup] = useState([]) as any;
   const [infoOption, setInfoOption] = useState("total");
@@ -130,7 +112,6 @@ const Admin: FC = () => {
 
   return (
     <main>
-      {/* <DatePicker /> */}
       <h2> Admin </h2>
       <OptionDiv>
         {infoOptions.map((opt) => {
@@ -203,6 +184,7 @@ const Admin: FC = () => {
           );
         })}
       </InfoWrapper>
+      {/* <DatePicker /> */}
     </main>
   );
 };

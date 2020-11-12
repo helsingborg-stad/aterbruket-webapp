@@ -13,7 +13,11 @@ import { API } from "aws-amplify";
 import QRCode from "../components/QRCodeContainer";
 import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
-import { createAdvert, updateAdvert, updateAdvertisement } from "../graphql/mutations";
+import {
+  createAdvert,
+  updateAdvert,
+  updateAdvertisement,
+} from "../graphql/mutations";
 import EditItemForm from "../components/EditItemForm";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
 import Map from "../components/Map";
@@ -93,7 +97,7 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const fetchItem = async () => {
     const result = (await API.graphql(
-      graphqlOperation(getAdvert, { id, version: 0})
+      graphqlOperation(getAdvert, { id, version: 0 })
     )) as GraphQLResult<GetAdvertQuery>;
     const advertItem = result.data?.getAdvert;
     setItem(advertItem);
@@ -126,19 +130,18 @@ const ItemDetails: FC<ParamTypes> = () => {
         input: {
           id,
           status: "reserved",
-          reservedBy: user.attributes.sub,
-          version: 0
+          reservedBySub: user.attributes.sub,
+          reservedByName: user.attributes.name,
+          version: 0,
         },
       })
     );
-    
-    item.version = item.revisions + 1
+
+    item.version = item.revisions + 1;
     delete item.createdAt;
     delete item.updatedAt;
-    console.log(item)
-    await API.graphql(
-      graphqlOperation(createAdvert, { input: item })
-    );
+    console.log(item);
+    await API.graphql(graphqlOperation(createAdvert, { input: item }));
 
     const advertItem = result.data?.updateAdvert;
     setItem(advertItem);
@@ -183,7 +186,7 @@ const ItemDetails: FC<ParamTypes> = () => {
         ) : (
           <p>
             (Prylen har status: &quot;{item.status}&quot;. Gjordes av:{" "}
-            {user.attributes.name})
+            <span>{item.reservedByName}</span>)
           </p>
         )}
       </DivBtns>

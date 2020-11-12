@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { listAdvertisements } from "../graphql/queries";
 import { ListAdvertisementsQuery } from "../API";
 import CountingCategorys from "../hooks/CountingCategorys";
+// import DatePicker from "../components/DatePicker";
 
 const OptionDiv = styled.div`
   width: 100%;
@@ -70,27 +71,14 @@ const Admin: FC = () => {
   const [infoOption, setInfoOption] = useState("total");
   console.log("statusGroup ", statusGroup[0]);
 
-  // visa antalet dagar itemsen har stått där
-  // antalet dagar sedan skapade
-
-  const showHowDays = () => {
-    if (statusGroup[0]) {
-      const createdAt = Date.parse(statusGroup[0].items[0].createdAt); // pars to number
-      const convertedCreatedAt = new Date(createdAt); // convert createdAT to date obj
-      console.log("String from item ", statusGroup[0].items[0].createdAt); // string
-      console.log("Converted number from item ", createdAt);
-      console.log("D ", convertedCreatedAt); // object
-      const today = new Date();
-      const diffInTime = today.getTime() - convertedCreatedAt.getTime();
-      const diffInDays = diffInTime / (1000 * 3600 * 24);
-      console.log("Today", today); // obj
-      console.log("Diff Time ", diffInTime);
-      console.log("Diff in Days is ", diffInDays);
-      console.log("Diff in Days is ", Math.round(diffInDays));
-    }
+  const showDays = (item: any) => {
+    const createdAt = Date.parse(item.createdAt);
+    const convertedCreatedAt = new Date(createdAt);
+    const today = new Date();
+    const diffInTime = today.getTime() - convertedCreatedAt.getTime();
+    const diffInDays = diffInTime / (1000 * 3600 * 24);
+    return Math.round(diffInDays);
   };
-
-  showHowDays();
 
   const filterStatus = (advertItems: any) => {
     const newStatusGroup = [
@@ -137,9 +125,12 @@ const Admin: FC = () => {
       setInfoOption("least");
     }
   };
+  let count = 0;
+  let notPickedUpItems = [];
 
   return (
     <main>
+      {/* <DatePicker /> */}
       <h2> Admin </h2>
       <OptionDiv>
         {infoOptions.map((opt) => {
@@ -172,38 +163,46 @@ const Admin: FC = () => {
                   <h4>{group.minNum}</h4>
                 </div>
               ) : null}
+              <h4>Annat</h4>
+              {/* Visar hur länge alla object står.
+               *** Ska vi visa vilka items?
+               *** Ska vi bara visa X antal? */}
+              {group.option === "available" &&
+                group.items.map((item: any) => {
+                  const x = showDays(item);
+                  // console.log(
+                  //   `Item id:${item.id} have been available in ${x} days`
+                  // );
+                  return (
+                    <p key={item.id}>
+                      Item id: {item.id} have been available in {x} days
+                    </p>
+                  );
+                })}
+              {/* Visar hur länge alla object har varit reserverade OCH alla som varit det i över 14 dagar sparas i en array
+               *** Hur ska de sparas bäst för att renderas?
+               *** Hur ska vi visa vilka som inte har hämtats ut?  */}
+              {group.option === "reserved" &&
+                group.items.forEach((item: any) => {
+                  const x = showDays(item);
+                  console.log(
+                    `Item id:${item.id} have been reserved in ${x} days`
+                  );
+                  if (x > 14) {
+                    count += 1;
+                    notPickedUpItems.push(item);
+                  }
+                })}
+              {group.option === "reserved" && (
+                <p>
+                  there is {count} items that have been reserved but not picked
+                  up yet.
+                </p>
+              )}
             </GroupDiv>
           );
         })}
       </InfoWrapper>
-      {/* {statusGroup.map((statGroup: any) => {
-        return (
-          <div key={statGroup.option}>
-            <InformationHeader>{statGroup.option}</InformationHeader>
-            <InformationFrame>
-              Mest populär kategori: {statGroup.most}
-            </InformationFrame>
-            <InformationFrame>
-              Annonser: {statGroup.mostNum} stycken
-            </InformationFrame>
-            <InformationFrame>
-              Impopulära kategori: {statGroup.min}
-            </InformationFrame>
-            <InformationFrame>
-              Annonser: {statGroup.minNum} stycken
-            </InformationFrame>
-          </div>
-        );
-      })}
-
-      <p>Denna kategorin är populärast ,både reserverade och tillgängliga </p>
-      <p>
-        Denna kategorin är minst populärast ,både reserverade och tillgängliga
-      </p>
-
-      <p>Denna kategorin är mest reserverad av alla återbrukade artiklar</p>
-      <p>Denna kategorin är minst reserverad av alla återbrukade artiklar</p>
-      <p>Hur många objekt bokas men hämtas inte (2 weeks)</p> */}
     </main>
   );
 };

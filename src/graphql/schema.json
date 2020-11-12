@@ -450,17 +450,6 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "reservedBy",
-          "description" : null,
-          "args" : [ ],
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "isDeprecated" : false,
-          "deprecationReason" : null
-        }, {
           "name" : "createdAt",
           "description" : null,
           "args" : [ ],
@@ -955,15 +944,6 @@
           "type" : {
             "kind" : "INPUT_OBJECT",
             "name" : "ModelIntInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "reservedBy",
-          "description" : null,
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "ModelStringInput",
             "ofType" : null
           },
           "defaultValue" : null
@@ -1858,7 +1838,18 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
-          "name" : "reservedBy",
+          "name" : "reservedBySub",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "reservedByName",
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -2202,7 +2193,16 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "reservedBy",
+          "name" : "reservedBySub",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "reservedByName",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2703,15 +2703,6 @@
             "ofType" : null
           },
           "defaultValue" : null
-        }, {
-          "name" : "reservedBy",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
-            "ofType" : null
-          },
-          "defaultValue" : null
         } ],
         "interfaces" : null,
         "enumValues" : null,
@@ -2983,15 +2974,6 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "reservedBy",
-          "description" : null,
-          "type" : {
-            "kind" : "INPUT_OBJECT",
-            "name" : "ModelStringInput",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
           "name" : "and",
           "description" : null,
           "type" : {
@@ -3246,15 +3228,6 @@
           "type" : {
             "kind" : "SCALAR",
             "name" : "Int",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "reservedBy",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "String",
             "ofType" : null
           },
           "defaultValue" : null
@@ -3513,7 +3486,16 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "reservedBy",
+          "name" : "reservedBySub",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "reservedByName",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -3702,7 +3684,16 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "reservedBy",
+          "name" : "reservedBySub",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelStringInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "reservedByName",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -3991,7 +3982,16 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "reservedBy",
+          "name" : "reservedBySub",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "reservedByName",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",

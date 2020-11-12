@@ -21,7 +21,6 @@ type Advertisement @model {
   phoneNumber: Int
   giver: String
   climateImpact: Int
-  reservedBy: String
 }
 
 type Advert @model @key(fields: [ "id", "version" ]){
@@ -48,7 +47,8 @@ type Advert @model @key(fields: [ "id", "version" ]){
   giver: String
   version: Int!
   climateImpact: Int
-  reservedBy: String
+  reservedBySub: String
+  reservedByName: String
   revisions: Int
 }
 

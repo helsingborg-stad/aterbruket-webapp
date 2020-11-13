@@ -4,8 +4,8 @@ import React, { useEffect, useState, FC } from "react";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import styled from "styled-components";
-import { listAdvertisements } from "../graphql/queries";
-import { ListAdvertisementsQuery } from "../API";
+import { listAdverts } from "../graphql/queries";
+import { ListAdvertsQuery } from "../API";
 import CountingCategorys from "../hooks/CountingCategorys";
 
 const OptionDiv = styled.div`
@@ -71,9 +71,9 @@ const Admin: FC = () => {
 
   const fetchItems = async () => {
     const result = (await API.graphql(
-      graphqlOperation(listAdvertisements)
-    )) as GraphQLResult<ListAdvertisementsQuery>;
-    const advertItems = result.data?.listAdvertisements?.items;
+      graphqlOperation(listAdverts)
+    )) as GraphQLResult<ListAdvertsQuery>;
+    const advertItems = result.data?.listAdverts?.items;
     filterStatus(advertItems);
   };
 
@@ -119,7 +119,7 @@ const Admin: FC = () => {
             <GroupDiv key={group.option}>
               <h4>{group.option.toUpperCase()}</h4>
               {infoOption === "total" ? (
-                <h3> {group.items.length} styken</h3>
+                <h3> {group.items.length} stycken</h3>
               ) : infoOption === "most" ? (
                 <div>
                   <h4>

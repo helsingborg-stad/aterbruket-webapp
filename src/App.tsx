@@ -13,6 +13,7 @@ import ItemDetails from "./pages/ItemDetails";
 import Profile from "./pages/Profile";
 import Haffat from "./pages/Haffat";
 import MenuBar from "./components/MenuBar";
+import Admin from "./pages/Admin";
 import { UserContext } from "./contexts/UserContext";
 
 const AppContainer = styled.div`
@@ -81,6 +82,7 @@ const App: FC = () => {
               <Route path="/haffat" component={Haffat} />
               <Route path="/profile" component={Profile} />
               <Route path="/item/:id" component={ItemDetails} />
+              <Route path="/admin" component={Admin} />
             </UserContext.Provider>
             <MenuBar setQrCamera={setQrCamera} qrCamera={qrCamera} />
           </Router>

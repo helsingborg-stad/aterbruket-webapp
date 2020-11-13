@@ -71,7 +71,7 @@ const Admin: FC = () => {
 
   const fetchItems = async () => {
     const result = (await API.graphql(
-      graphqlOperation(listAdverts)
+      graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
     )) as GraphQLResult<ListAdvertsQuery>;
     const advertItems = result.data?.listAdverts?.items;
     filterStatus(advertItems);

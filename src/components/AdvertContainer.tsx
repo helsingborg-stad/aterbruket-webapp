@@ -64,6 +64,7 @@ const AdvertContainer: FC<IAdvert> = ({
               title={filteredItem.title}
               description={filteredItem.description}
               status={filteredItem.status}
+              quantity={filteredItem.quantity}
             />
           ) : null
         )}
@@ -77,6 +78,7 @@ const AdvertContainer: FC<IAdvert> = ({
               title={filteredItem.title}
               description={filteredItem.description}
               status={filteredItem.status}
+              quantity={filteredItem.quantity}
             />
           ) : null
         )}
@@ -92,6 +94,7 @@ const AdvertContainer: FC<IAdvert> = ({
               title={filteredItem.title}
               description={filteredItem.description}
               status={filteredItem.status}
+              quantity={filteredItem.quantity}
             />
           ) : null
         )}

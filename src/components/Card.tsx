@@ -7,11 +7,12 @@ interface Props {
   description: string;
   id: string;
   status: string;
+  quantity: number;
 }
 
 const CardDiv = styled.div`
   width: 100%;
-  height: 140px;
+  height: auto;
   background-color: ${(props) => props.theme.cardTheme.backgroundColor};
   margin-top: 10px;
   border-radius: 9.5px;
@@ -79,7 +80,13 @@ const CardDiv = styled.div`
   }
 `;
 
-const Card: FC<Props> = ({ id, title, description, status }: Props) => {
+const Card: FC<Props> = ({
+  id,
+  title,
+  description,
+  status,
+  quantity,
+}: Props) => {
   return (
     <CardDiv as={Link} to={`/item/${id}`} id={id}>
       <div className="picDiv">
@@ -90,7 +97,7 @@ const Card: FC<Props> = ({ id, title, description, status }: Props) => {
       </div>
       <div className="infoDiv">
         <h3>Title: {title}</h3>
-        <h4>xx stycken</h4>
+        <h4>{quantity} stycken</h4>
         <p>Status: {status}</p>
         <p>Description: {description}</p>
       </div>

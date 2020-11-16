@@ -3,7 +3,7 @@ import React, { FC, useContext, useEffect, useState } from "react";
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { withAuthenticator, AmplifySignOut } from "@aws-amplify/ui-react";
-import { Auth } from "aws-amplify";
+import { Auth, Storage } from "aws-amplify";
 import "./App.css";
 import theme from "./styles/theme";
 import Home from "./pages/Home";
@@ -15,6 +15,7 @@ import Haffat from "./pages/Haffat";
 import MenuBar from "./components/MenuBar";
 import Admin from "./pages/Admin";
 import { UserContext } from "./contexts/UserContext";
+import { v4 as uuidv4 } from "uuid";
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.appTheme.minHeight}vh`};

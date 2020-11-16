@@ -45,7 +45,7 @@ const AdvertContainer: FC<IAdvert> = ({
   } else {
     filteredItems = items;
   }
-
+ 
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">
@@ -53,7 +53,7 @@ const AdvertContainer: FC<IAdvert> = ({
         {itemsFrom === "haffat" && <h3>Alla mina haffade</h3>}
         {itemsFrom === "profile" && <h3>Alla mina tillagda</h3>}
       </div>
-
+      
       {itemsFrom === "home" &&
         filteredItems.map((filteredItem: any) =>
           filteredItem.status === "available" ||
@@ -65,6 +65,7 @@ const AdvertContainer: FC<IAdvert> = ({
               description={filteredItem.description}
               status={filteredItem.status}
               quantity={filteredItem.quantity}
+              imageKey={filteredItem.images[0].src}
             />
           ) : null
         )}
@@ -79,6 +80,7 @@ const AdvertContainer: FC<IAdvert> = ({
               description={filteredItem.description}
               status={filteredItem.status}
               quantity={filteredItem.quantity}
+              imageKey={filteredItem.images[0].src}
             />
           ) : null
         )}
@@ -95,6 +97,7 @@ const AdvertContainer: FC<IAdvert> = ({
               description={filteredItem.description}
               status={filteredItem.status}
               quantity={filteredItem.quantity}
+              imageKey={filteredItem.images[0].src}
             />
           ) : null
         )}

@@ -95,24 +95,23 @@ const ItemDetails: FC<ParamTypes> = () => {
   const [editItem, setEditItem] = useState(false);
   const [showCarousel, setShowCarousel] = useState(false);
   const user: any = useContext(UserContext);
-  const [image, setImage] = useState('') as any;
+  const [image, setImage] = useState("") as any;
 
   const fetchItem = async () => {
     const result = (await API.graphql(
       graphqlOperation(getAdvert, { id, version: 0 })
     )) as GraphQLResult<GetAdvertQuery>;
-    const advertItem:any = result.data?.getAdvert;
-    
+    const advertItem: any = result.data?.getAdvert;
+
     fetchImage(advertItem);
     setItem(advertItem);
   };
 
- const fetchImage = (item: any) => {
-  Storage.get(item.images[0].src)
-  .then((url: any) => {
-    setImage(url);
-  })
- }
+  const fetchImage = (item: any) => {
+    Storage.get(item.images[0].src).then((url: any) => {
+      setImage(url);
+    });
+  };
 
   const closeEditformAndFetchItem = async () => {
     await fetchItem();
@@ -134,7 +133,6 @@ const ItemDetails: FC<ParamTypes> = () => {
     return () => {
       googleMapScript.removeEventListener("load", cb);
     };
-    
   }, []);
   const updateItem = async () => {
     const result: any = await API.graphql(
@@ -152,14 +150,10 @@ const ItemDetails: FC<ParamTypes> = () => {
     item.version = item.revisions + 1;
     delete item.createdAt;
     delete item.updatedAt;
-  
-    await API.graphql(
-      graphqlOperation(createAdvert, { input: item })
-    );
+
+    await API.graphql(graphqlOperation(createAdvert, { input: item }));
 
     const advertItem = result.data?.updateAdvert;
-    
-    
   };
 
   const onClickReservBtn = () => {
@@ -207,13 +201,11 @@ const ItemDetails: FC<ParamTypes> = () => {
       </DivBtns>
       <h1>{item.title}</h1>
       {!image ? (
-          <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
-        ) : <ItemImg
-        src={image}
-        alt=""
-        onClick={() => setShowCarousel(true)}
-      />}
-      
+        <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
+      ) : (
+        <ItemImg src={image} alt="" onClick={() => setShowCarousel(true)} />
+      )}
+
       <Table>
         <tbody>
           <tr>

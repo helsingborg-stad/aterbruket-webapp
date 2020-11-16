@@ -97,6 +97,12 @@ const ItemDetails: FC<ParamTypes> = () => {
   const user: any = useContext(UserContext);
   const [image, setImage] = useState("") as any;
 
+  const fetchImage = (item: any) => {
+    Storage.get(item.images[0].src).then((url: any) => {
+      setImage(url);
+    });
+  };
+
   const fetchItem = async () => {
     const result = (await API.graphql(
       graphqlOperation(getAdvert, { id, version: 0 })
@@ -105,12 +111,6 @@ const ItemDetails: FC<ParamTypes> = () => {
 
     fetchImage(advertItem);
     setItem(advertItem);
-  };
-
-  const fetchImage = (item: any) => {
-    Storage.get(item.images[0].src).then((url: any) => {
-      setImage(url);
-    });
   };
 
   const closeEditformAndFetchItem = async () => {
@@ -135,7 +135,7 @@ const ItemDetails: FC<ParamTypes> = () => {
     };
   }, []);
   const updateItem = async () => {
-    const result: any = await API.graphql(
+    await API.graphql(
       graphqlOperation(updateAdvert, {
         input: {
           id,
@@ -152,8 +152,6 @@ const ItemDetails: FC<ParamTypes> = () => {
     delete item.updatedAt;
 
     await API.graphql(graphqlOperation(createAdvert, { input: item }));
-
-    const advertItem = result.data?.updateAdvert;
   };
 
   const onClickReservBtn = () => {

@@ -160,6 +160,21 @@
       "function": {
         "migrateADUser": {}
       }
+    },
+    "nonCFNdata": {
+      "function": {
+        "aterbruketwebapp10452931": {
+          "layerVersionMap": {
+            "1": {
+              "permissions": [
+                {
+                  "type": "private"
+                }
+              ]
+            }
+          }
+        }
+      }
     }
   }
 }

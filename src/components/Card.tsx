@@ -1,6 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { API, Storage } from "aws-amplify";
 
 interface Props {
   title: string;
@@ -8,6 +10,7 @@ interface Props {
   id: string;
   status: string;
   quantity: number;
+  imageKey: string;
 }
 
 const CardDiv = styled.div`
@@ -80,18 +83,22 @@ const CardDiv = styled.div`
   }
 `;
 
-const Card: FC<Props> = ({
-  id,
-  title,
-  description,
-  status,
-  quantity,
-}: Props) => {
+const Card: FC<Props> = ({ id, title, description, status, quantity, imageKey }: Props) => {
+  const [url, setURL] = useState(undefined) as any; 
+  const fetchImage = (): void => {
+    Storage.get(imageKey)
+    .then((url: any) => {
+      setURL(url)
+    })
+  }
+  useEffect(() => {
+    fetchImage()
+  }, [])
   return (
     <CardDiv as={Link} to={`/item/${id}`} id={id}>
       <div className="picDiv">
         <img
-          src="https://storage.googleapis.com/web-pro-nilo-kavehome/media/cache/c4/10/c410118add2b5cb169d71a0c20596f50.jpg"
+          src={url}
           alt=""
         />
       </div>

@@ -1,5 +1,12 @@
 export const fieldsForm = [
   {
+    name: "images",
+    dataType: "file",
+    fieldType: "input",
+    disabled: false,
+    title: "Bilder"
+  },
+  {
     name: "title",
     dataType: "text",
     fieldType: "input",

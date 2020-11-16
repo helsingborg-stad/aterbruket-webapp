@@ -4,17 +4,17 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
-import styled from "styled-components";
-import { IFields } from "../interfaces/IForm";
+import React from 'react';
+import styled from 'styled-components';
+import { IFields } from '../interfaces/IForm';
 // import { options } from "../utils/formUtils";
 
 const FormContainerDiv = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 150px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-bottom: 150px;
 
   form {
     width: 100%;
@@ -73,42 +73,49 @@ const FormContainerDiv = styled.div`
   }
 `;
 export default function Form(props: {
-  values: any;
-  fields: IFields[];
-  mutation: string;
-  handleInputChange: (event: React.ChangeEvent<any>) => void;
-  handleCheckboxChange: (event: React.ChangeEvent<any>, data: any) => void;
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
+	values: any;
+	fields: IFields[];
+	mutation: string;
+	handleInputChange: (event: React.ChangeEvent<any>) => void;
+	handleCheckboxChange: (event: React.ChangeEvent<any>, data: any) => void;
+	handleSubmit: (event: React.FormEvent<HTMLFormElement>) => Promise<void>;
 }) {
   const fields = props.fields.map((field: IFields) => {
     if (field.fieldType === "input" && field.dataType !== "checkbox") {
-      return (
-        <section className="allDiv" key={field.name}>
-          <div className="validationInfo">
-            {field.required && <span className="required">obligatorisk</span>}
-            {field.name === "location" && (
-              <span className="infoSpan">ex, Drottninggatan 14</span>
-            )}
-            {(field.name === "width" ||
-              field.name === "height" ||
-              field.name === "length") && (
-              <span className="infoSpan">i cm</span>
-            )}
-          </div>
-          <input
-            type={field.dataType}
-            name={field.name}
-            onChange={props.handleInputChange}
-            value={props.values[field.name]}
-            placeholder={field.title}
-            disabled={field.disabled}
-            required={field.required}
-          />
-          <label htmlFor={field.name}>
-            <p className="labelP">{field.title}</p>
-          </label>
-        </section>
-      );
+		const attributes: any = {
+			type: field.dataType,
+			name: field.name,
+			onChange: props.handleInputChange,
+			placeholder: field.title,
+			disabled: field.disabled,
+			required: field.required
+		};
+		
+		if (props.values[field.name] !== undefined) {
+			attributes.value = props.values[field.name];
+		}
+		
+		const dimensions = ["width", "height", "length"];
+
+		return (
+		<section className="allDiv" key={field.name}>
+			<div className="validationInfo">
+			{field.required && <span className="required">obligatorisk</span>}
+			{field.name === "location" && (
+				<span className="infoSpan">ex, Drottninggatan 14</span>
+			)}
+			{(dimensions.includes(field.name)) && (
+				<span className="infoSpan">i cm</span>
+			)}
+			</div>
+			<input
+			{...attributes}
+			/>
+			<label htmlFor={field.name}>
+			<p className="labelP">{field.title}</p>
+			</label>
+		</section>
+		);
     }
     if (field.fieldType === "input" && field.dataType === "checkbox") {
       const data = field.option ? field.option : [];
@@ -200,12 +207,12 @@ export default function Form(props: {
     }
   });
 
-  return (
-    <FormContainerDiv>
-      <form onSubmit={props.handleSubmit}>
-        {fields}
-        <button type="submit">Submit</button>
-      </form>
-    </FormContainerDiv>
-  );
+	return (
+		<FormContainerDiv>
+			<form onSubmit={props.handleSubmit}>
+				{fields}
+				<button type="submit">Submit</button>
+			</form>
+		</FormContainerDiv>
+	);
 }

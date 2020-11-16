@@ -107,7 +107,6 @@ function createUser(username, password, user, callback) {
 
 
 exports.handler = function (event, context, callback) {
-	console.log(event)
 	var username = event.userName;
 	var password = event.request.password;
 	var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
@@ -136,10 +135,6 @@ exports.handler = function (event, context, callback) {
 				});
 
 				response.on('end', function () {
-
-					console.log("-------")
-					console.log(str)
-					console.log("-------")
 					try {
 						var userObject = JSON.parse(str)
 

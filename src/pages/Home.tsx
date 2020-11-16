@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
-import { API } from "aws-amplify";
+import { API, Storage } from "aws-amplify";
 import styled from "styled-components";
 import { MdNewReleases, MdSearch, MdTune } from "react-icons/md";
 import { ImQrcode } from "react-icons/im";
@@ -171,15 +171,17 @@ const Home: FC<Props> = ({
   };
 
   const [items, setItems] = useState([]) as any;
+ 
 
   const fetchItems = async () => {
     const result = (await API.graphql(
       graphqlOperation(listAdverts, {filter: {version: {eq: 0}}})
     )) as GraphQLResult<ListAdvertsQuery>;
-    const advertItems = result.data?.listAdverts?.items;
-
+    const advertItems:any = result.data?.listAdverts?.items;
     setItems(advertItems);
   };
+
+  
 
   useEffect(() => {
     fetchItems();

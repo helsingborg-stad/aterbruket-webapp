@@ -7,7 +7,6 @@ import { createAdvert } from "../graphql/mutations";
 import OpenCamera from "../components/OpenCamera";
 import { fieldsForm as fields } from "../utils/formUtils";
 import {UserContext} from "../contexts/UserContext";
-import { API, graphqlOperation } from "aws-amplify";
 
 interface IQrCamera {
   delay: number;
@@ -60,8 +59,8 @@ const AddItem: FC<Props> = ({
       department: "",
       location: "",
       instructions: "",
-      contactPerson: user.attributes.name,
-      email: user.attributes.email,
+      contactPerson: "",
+      email: "",
       phoneNumber: 0,
       giver: user.attributes.sub,
       climateImpact: 0,

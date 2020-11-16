@@ -9,7 +9,7 @@ import ReactDOM, { useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
-import { API } from "aws-amplify";
+import { API, Storage } from "aws-amplify";
 import QRCode from "../components/QRCodeContainer";
 import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
@@ -90,14 +90,24 @@ const ItemDetails: FC<ParamTypes> = () => {
   const [editItem, setEditItem] = useState(false);
   const [showCarousel, setShowCarousel] = useState(false);
   const user: any = useContext(UserContext);
+  const [image, setImage] = useState('') as any;
 
   const fetchItem = async () => {
     const result = (await API.graphql(
       graphqlOperation(getAdvert, { id, version: 0})
     )) as GraphQLResult<GetAdvertQuery>;
-    const advertItem = result.data?.getAdvert;
+    const advertItem:any = result.data?.getAdvert;
+    
+    fetchImage(advertItem);
     setItem(advertItem);
   };
+
+ const fetchImage = (item: any) => {
+  Storage.get(item.images[0].src)
+  .then((url: any) => {
+    setImage(url);
+  })
+ }
 
   const closeEditformAndFetchItem = async () => {
     await fetchItem();
@@ -106,6 +116,10 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   useEffect(() => {
     fetchItem();
+    
+      
+  
+    
   }, []);
 
   useEffect(() => {
@@ -119,6 +133,7 @@ const ItemDetails: FC<ParamTypes> = () => {
     return () => {
       googleMapScript.removeEventListener("load", cb);
     };
+    
   }, []);
   const updateItem = async () => {
     const result: any = await API.graphql(
@@ -135,13 +150,14 @@ const ItemDetails: FC<ParamTypes> = () => {
     item.version = item.revisions + 1
     delete item.createdAt;
     delete item.updatedAt;
-    console.log(item)
+  
     await API.graphql(
       graphqlOperation(createAdvert, { input: item })
     );
 
     const advertItem = result.data?.updateAdvert;
-    setItem(advertItem);
+    
+    
   };
 
   const onClickReservBtn = () => {
@@ -188,11 +204,14 @@ const ItemDetails: FC<ParamTypes> = () => {
         )}
       </DivBtns>
       <h1>{item.title}</h1>
-      <ItemImg
-        src="https://storage.googleapis.com/web-pro-nilo-kavehome/media/cache/c4/10/c410118add2b5cb169d71a0c20596f50.jpg"
+      {!image ? (
+          <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
+        ) : <ItemImg
+        src={image}
         alt=""
         onClick={() => setShowCarousel(true)}
-      />
+      />}
+      
       <Table>
         <tbody>
           <tr>

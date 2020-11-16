@@ -42,12 +42,12 @@ interface Props {
     version: number;
     revisions: number;
   };
-  setEditItem: React.Dispatch<React.SetStateAction<boolean>>;
+  setRegive: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
 }
 
-const EditItemForm: FC<Props> = ({
-  setEditItem,
+const RegiveForm: FC<Props> = ({
+  setRegive,
   item,
   closeEditformAndFetchItem,
 }: Props) => {
@@ -61,7 +61,7 @@ const EditItemForm: FC<Props> = ({
     {
       id: item.id,
       title: item.title,
-      status: item.status,
+      status: "available",
       category: item.category,
       quantity: item.quantity,
       height: item.height,
@@ -98,7 +98,7 @@ const EditItemForm: FC<Props> = ({
   }
   return (
     <>
-      <button type="button" onClick={() => setEditItem(false)}>
+      <button type="button" onClick={() => setRegive(false)}>
         X
       </button>
       <Form
@@ -113,4 +113,4 @@ const EditItemForm: FC<Props> = ({
   );
 };
 
-export default EditItemForm;
+export default RegiveForm;

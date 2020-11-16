@@ -6,7 +6,7 @@ import useForm from "../hooks/useForm";
 import { createAdvert } from "../graphql/mutations";
 import OpenCamera from "../components/OpenCamera";
 import { fieldsForm as fields } from "../utils/formUtils";
-import {UserContext} from "../contexts/UserContext";
+import { UserContext } from "../contexts/UserContext";
 import { API, graphqlOperation } from "aws-amplify";
 
 interface IQrCamera {

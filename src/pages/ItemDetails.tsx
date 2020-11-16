@@ -24,6 +24,7 @@ import { loadMapApi } from "../utils/GoogleMapsUtils";
 import Map from "../components/Map";
 import CarouselComp from "../components/CarouselComp";
 import { UserContext } from "../contexts/UserContext";
+import RegiveForm from "../components/RegiveForm";
 
 const DivBtns = styled.div`
   display: flex;
@@ -39,6 +40,9 @@ const DivBtns = styled.div`
     background-color: white;
     margin: 5px;
     border-radius: 5px;
+  }
+  .regiveBtn {
+    width: 111px;
   }
 
   p {
@@ -93,6 +97,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [item, setItem] = useState({}) as any;
   const [editItem, setEditItem] = useState(false);
+  const [regive, setRegive] = useState(false);
   const [showCarousel, setShowCarousel] = useState(false);
   const user: any = useContext(UserContext);
   const [image, setImage] = useState("") as any;
@@ -116,6 +121,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const closeEditformAndFetchItem = async () => {
     await fetchItem();
     setEditItem(false);
+    setRegive(false);
   };
 
   useEffect(() => {
@@ -176,26 +182,43 @@ const ItemDetails: FC<ParamTypes> = () => {
   const allDetails = (
     <>
       <DivBtns>
-        {item.status === "available" || item.status === null ? (
-          <>
-            <button
-              onClick={() => {
-                onClickReservBtn();
-              }}
-              type="button"
-            >
-              HAFFA
-            </button>
-            <button onClick={() => setEditItem(true)} type="button">
-              Edit
-            </button>
-          </>
-        ) : (
+        {item.status === "reserved" && (
           <p>
             (Prylen har status: &quot;{item.status}&quot;. Gjordes av:{" "}
             <span>{item.reservedByName}</span>)
           </p>
         )}
+        {item.status === "available" && (
+          <button
+            onClick={() => {
+              onClickReservBtn();
+            }}
+            type="button"
+          >
+            HAFFA
+          </button>
+        )}
+        {item.status === "available" && item.giver === user.attributes.sub && (
+          <>
+            <button onClick={() => setEditItem(true)} type="button">
+              Edit
+            </button>
+          </>
+        )}
+        {item.status === "reserved" &&
+          item.reservedBySub === user.attributes.sub && (
+            <>
+              <button
+                className="regiveBtn"
+                onClick={() => {
+                  setRegive(true);
+                }}
+                type="button"
+              >
+                Annonsera igen
+              </button>
+            </>
+          )}
       </DivBtns>
       <h1>{item.title}</h1>
       {!image ? (
@@ -280,6 +303,12 @@ const ItemDetails: FC<ParamTypes> = () => {
       {editItem ? (
         <EditItemForm
           setEditItem={setEditItem}
+          item={item}
+          closeEditformAndFetchItem={closeEditformAndFetchItem}
+        />
+      ) : regive ? (
+        <RegiveForm
+          setRegive={setRegive}
           item={item}
           closeEditformAndFetchItem={closeEditformAndFetchItem}
         />

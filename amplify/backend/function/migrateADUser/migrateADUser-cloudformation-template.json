@@ -76,8 +76,8 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-aterbruketwebapp-annabox-134822-deployment",
-          "S3Key": "amplify-builds/migrateADUser-6d37495a4d4d33393348-build.zip"
+          "S3Bucket": "amplify-aterbruketwebapp-ericbox-121222-deployment",
+          "S3Key": "amplify-builds/migrateADUser-474c3876534e6d4e4448-build.zip"
         }
       }
     },

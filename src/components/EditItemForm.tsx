@@ -24,9 +24,9 @@ interface Props {
     status: string;
     category?: string;
     quantity?: number;
-    height?: number;
-    width?: number;
-    length?: number;
+    height?: string;
+    width?: string;
+    length?: string;
     color?: string;
     material?: Imaterial | any;
     condition?: string;
@@ -37,7 +37,7 @@ interface Props {
     instructions?: string;
     contactPerson?: string;
     email?: string;
-    phoneNumber?: number;
+    phoneNumber?: string;
     climateImpact: number;
     version: number;
     revisions: number;

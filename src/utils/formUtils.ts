@@ -4,7 +4,8 @@ export const fieldsForm = [
     dataType: "file",
     fieldType: "input",
     disabled: false,
-    title: "Bilder"
+    required: true,
+    title: "Bilder",
   },
   {
     name: "title",
@@ -47,21 +48,21 @@ export const fieldsForm = [
   },
   {
     name: "height",
-    dataType: "number",
+    dataType: "text",
     fieldType: "input",
     disabled: false,
     title: "Höjd",
   },
   {
     name: "width",
-    dataType: "number",
+    dataType: "text",
     fieldType: "input",
     disabled: false,
     title: "Bredd",
   },
   {
     name: "length",
-    dataType: "number",
+    dataType: "text",
     fieldType: "input",
     disabled: false,
     title: "Djup",
@@ -126,7 +127,7 @@ export const fieldsForm = [
       },
       {
         name: "outside",
-        swe: ["ute"],
+        swe: ["Ute"],
         eng: ["outside"],
       },
     ],
@@ -153,12 +154,11 @@ export const fieldsForm = [
     fieldType: "input",
     disabled: false,
     required: true,
-
     title: "Email till kontaktperson",
   },
   {
     name: "phoneNumber",
-    dataType: "tel",
+    dataType: "text",
     fieldType: "input",
     disabled: false,
     title: "Telefonnummer till kontaktperson",
@@ -176,6 +176,7 @@ export const fieldsForm = [
     dataType: "text",
     fieldType: "input",
     disabled: false,
+    required: true,
     title: "Adress",
   },
   {
@@ -227,21 +228,21 @@ export const fieldsEditForm = [
   },
   {
     name: "height",
-    dataType: "number",
+    dataType: "text",
     fieldType: "input",
     disabled: false,
     title: "Höjd",
   },
   {
     name: "width",
-    dataType: "number",
+    dataType: "text",
     fieldType: "input",
     disabled: false,
     title: "Bredd",
   },
   {
     name: "length",
-    dataType: "number",
+    dataType: "text",
     fieldType: "input",
     disabled: false,
     title: "Djup",
@@ -306,7 +307,7 @@ export const fieldsEditForm = [
       },
       {
         name: "outside",
-        swe: ["ute"],
+        swe: ["Ute"],
         eng: ["outside"],
       },
     ],
@@ -336,7 +337,7 @@ export const fieldsEditForm = [
   },
   {
     name: "phoneNumber",
-    dataType: "tel",
+    dataType: "text",
     fieldType: "input",
     disabled: false,
     title: "Telefonnummer till kontaktperson",
@@ -354,6 +355,7 @@ export const fieldsEditForm = [
     dataType: "text",
     fieldType: "input",
     disabled: false,
+    required: true,
     title: "Adress",
   },
   {

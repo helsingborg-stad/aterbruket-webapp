@@ -7,26 +7,25 @@ import { createAdvert } from "../graphql/mutations";
 import { v4 as uuidv4 } from "uuid";
 
 const recreateInitial = async (mutation: any, values: any) => {
-  delete values.createdAt
-  delete values.updatedAt
-  values.version = values.revisions + 1
+  delete values.createdAt;
+  delete values.updatedAt;
+  values.version = values.revisions + 1;
 
-  await API.graphql(
-    graphqlOperation(mutation, { input: values })
-  );
-}
+  await API.graphql(graphqlOperation(mutation, { input: values }));
+};
 
 function upload(file: any) {
-
   Storage.put(file.uuid, file, {
     progressCallback(progress: any) {
       console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
     },
   })
     .then((result: any) => {
-      return { src: result.key, alt: file.name }
+      return { src: result.key, alt: file.name };
     })
-    .catch((err) => { return err });
+    .catch((err) => {
+      return err;
+    });
 }
 
 const useForm = (initialValues: any, mutation: string) => {
@@ -38,7 +37,7 @@ const useForm = (initialValues: any, mutation: string) => {
   const handleCheckboxChange = (event: React.ChangeEvent<any>, parent: any) => {
     const { target } = event;
     const value = target.type === "checkbox" ? target.checked : target.value;
-    
+
     setValues({
       ...values,
       [parent]: { ...values[parent], [target.name]: value },
@@ -49,9 +48,9 @@ const useForm = (initialValues: any, mutation: string) => {
     const { target } = event;
     let { name, value } = target;
     if (target.files) {
-      target.files[0].uuid = uuidv4(); 
+      target.files[0].uuid = uuidv4();
       setFile(target.files[0]);
-      
+
       return;
     }
 
@@ -59,14 +58,12 @@ const useForm = (initialValues: any, mutation: string) => {
       ...values,
       [name]: value.trimStart(),
     });
-
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    
-    if(file) {
+    if (file) {
       upload(file);
-      values.images = {src: file.uuid, alt: file.name}
+      values.images = { src: file.uuid, alt: file.name };
     }
 
     event.preventDefault();

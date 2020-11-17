@@ -25,6 +25,7 @@ import Map from "../components/Map";
 import CarouselComp from "../components/CarouselComp";
 import { UserContext } from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
+import showDays from "../hooks/showDays";
 
 const DivBtns = styled.div`
   display: flex;
@@ -268,12 +269,20 @@ const ItemDetails: FC<ParamTypes> = () => {
           </tr>
           <tr>
             <td>Klimatpåverkan:</td>
-            <td>{item.climateImpact}</td>
+            <td>
+              {item.climateImpact} kg CO<sub>2</sub>e
+            </td>
           </tr>
           <tr>
             <td>Beskrivning:</td>
             <td>{item.description}</td>
           </tr>
+          {item.status === "available" && (
+            <tr>
+              <td>Har varit tillgänglig i:</td>
+              <td>{showDays(item.createdAt)} dagar</td>
+            </tr>
+          )}
           <tr>
             <td>Hämtas på:</td>
             <td>{item.location}</td>

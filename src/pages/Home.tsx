@@ -5,12 +5,13 @@ import { API, Storage } from "aws-amplify";
 import styled from "styled-components";
 import { MdNewReleases, MdSearch, MdTune } from "react-icons/md";
 import { ImQrcode } from "react-icons/im";
-import { listAdvertisements, listAdverts } from "../graphql/queries";
-import { ListAdvertisementsQuery, ListAdvertsQuery } from "../API";
+import { listAdverts } from "../graphql/queries";
+import { ListAdvertsQuery } from "../API";
 import AdvertContainer from "../components/AdvertContainer";
 import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
+import FilterMenu from "./FilterMenu";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -163,6 +164,7 @@ const Home: FC<Props> = ({
 }: Props) => {
   const [showQRCamera, setShowQRCamera] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const updateSearch = (event: React.ChangeEvent<any>) => {
     const { target } = event;
@@ -171,17 +173,14 @@ const Home: FC<Props> = ({
   };
 
   const [items, setItems] = useState([]) as any;
- 
 
   const fetchItems = async () => {
     const result = (await API.graphql(
-      graphqlOperation(listAdverts, {filter: {version: {eq: 0}}})
+      graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
     )) as GraphQLResult<ListAdvertsQuery>;
-    const advertItems:any = result.data?.listAdverts?.items;
+    const advertItems: any = result.data?.listAdverts?.items;
     setItems(advertItems);
   };
-
-  
 
   useEffect(() => {
     fetchItems();
@@ -228,9 +227,14 @@ const Home: FC<Props> = ({
               />
             </div>
 
-            <button type="button" id="filterBtn">
+            <button
+              onClick={() => setIsOpen(true)}
+              type="button"
+              id="filterBtn"
+            >
               Filter <MdTune id="filterIcon" />
             </button>
+            <FilterMenu setIsOpen={setIsOpen} isOpen={isOpen} />
           </SearchFilterDiv>
           <AdvertContainer
             items={items}

@@ -6,7 +6,7 @@
 /* global google */
 
 import React, { FC, useState, useEffect, useContext } from "react";
-import ReactDOM, { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
@@ -14,11 +14,7 @@ import { API, Storage } from "aws-amplify";
 import QRCode from "../components/QRCodeContainer";
 import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
-import {
-  createAdvert,
-  updateAdvert,
-  updateAdvertisement,
-} from "../graphql/mutations";
+import { createAdvert, updateAdvert } from "../graphql/mutations";
 import EditItemForm from "../components/EditItemForm";
 import { loadMapApi } from "../utils/GoogleMapsUtils";
 import Map from "../components/Map";

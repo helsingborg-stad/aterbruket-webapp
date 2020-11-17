@@ -3,8 +3,8 @@ import { graphqlOperation } from "aws-amplify";
 import React, { useContext, useEffect, useState, useCallback, FC } from "react";
 import styled from "styled-components";
 import AdvertContainer from "../components/AdvertContainer";
-import { ListAdvertisementsQuery, ListAdvertsQuery } from "../API";
-import { listAdvertisements, listAdverts } from "../graphql/queries";
+import { ListAdvertsQuery } from "../API";
+import { listAdverts } from "../graphql/queries";
 import { UserContext } from "../contexts/UserContext";
 
 const Haffat: FC = () => {

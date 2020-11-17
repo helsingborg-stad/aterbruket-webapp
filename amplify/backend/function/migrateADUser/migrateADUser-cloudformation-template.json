@@ -76,8 +76,13 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
+<<<<<<< HEAD
           "S3Bucket": "amplify-aterbruketwebapp-ericbox-121222-deployment",
           "S3Key": "amplify-builds/migrateADUser-536a5438575072547853-build.zip"
+=======
+          "S3Bucket": "amplify-aterbruketwebapp-annabox-134822-deployment",
+          "S3Key": "amplify-builds/migrateADUser-3031337545354673527a-build.zip"
+>>>>>>> feature/validate-form
         }
       }
     },

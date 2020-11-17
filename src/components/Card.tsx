@@ -103,10 +103,10 @@ const Card: FC<Props> = ({ id, title, description, status, quantity, imageKey }:
         />
       </div>
       <div className="infoDiv">
-        <h3>Title: {title}</h3>
+        <h3>{title}</h3>
         <h4>{quantity} stycken</h4>
         <p>Status: {status}</p>
-        <p>Description: {description}</p>
+        <p>Beskrivning: {description}</p>
       </div>
     </CardDiv>
   );

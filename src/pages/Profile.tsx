@@ -2,9 +2,9 @@ import API, { GraphQLResult } from "@aws-amplify/api";
 import { graphqlOperation } from "aws-amplify";
 import React, { useContext, useEffect, useState, useCallback, FC } from "react";
 import styled from "styled-components";
-import { ListAdvertisementsQuery, ListAdvertsQuery } from "../API";
+import { ListAdvertsQuery } from "../API";
 import AdvertContainer from "../components/AdvertContainer";
-import { listAdvertisements, listAdverts } from "../graphql/queries";
+import { listAdverts } from "../graphql/queries";
 import { UserContext } from "../contexts/UserContext";
 
 const InformationFrame = styled.header`
@@ -34,7 +34,9 @@ const Profile: FC = () => {
   const fetchCreatedAdverts = useCallback(async () => {
     const result = (await API.graphql(
       graphqlOperation(listAdverts, {
-        filter: { and: [{giver: { eq: user.attributes.sub }}, {version: { eq: 0 }}] },
+        filter: {
+          and: [{ giver: { eq: user.attributes.sub } }, { version: { eq: 0 } }],
+        },
       })
     )) as GraphQLResult<ListAdvertsQuery>;
 

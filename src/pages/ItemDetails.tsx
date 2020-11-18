@@ -127,6 +127,10 @@ const ItemDetails: FC<ParamTypes> = () => {
   }, []);
 
   useEffect(() => {
+    fetchItem();
+  }, [item]);
+
+  useEffect(() => {
     const googleMapScript = loadMapApi();
 
     const cb = () => {

@@ -35,6 +35,7 @@ const AppContainer = styled.div`
     flex-direction: column;
     align-items: center;
     margin-bottom: 65px;
+    index: -1000;
   }
 `;
 

@@ -1,15 +1,40 @@
-import React, { FC } from "react";
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { FC, useEffect } from "react";
 import styled from "styled-components";
 import { MdCancel } from "react-icons/md";
 
+const Mask = styled.label`
+  background-color: rgba(187, 186, 186, 0.509);
+  border: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: block;
+  height: 100%;
+  box-sizing: border-box;
+
+  &:focus-within {
+    box-shadow: inset 0px 0px 0px 4px cyan;
+  }
+  &-btn {
+    border: none;
+    width: 1px;
+    height: 1px;
+    margin-left: -20px;
+  }
+`;
+
 const FilterCtn = styled.div`
   display: ${({ className }) => (className === "show" ? "block" : "none")};
-  position: absolute;
+  position: fixed;
   bottom: 0;
-  z-index: 2;
+  left: 0;
+  z-index: 100;
   width: 100%;
   height: 98vh;
-  background-color: #fcfcfc;
+  background-color: grey;
   border-radius: 15px 15px 0 0;
   box-shadow: 0px 0px 1px black;
   overflow: scroll;
@@ -24,7 +49,6 @@ const FilterHeader = styled.div`
   position: fixed;
   top: 2vh;
   background-color: #fcfcfc;
-  z-index: 0;
 
   .pageTitle {
     margin: 0 16px;
@@ -54,15 +78,14 @@ const FilterHeader = styled.div`
 const FilterBody = styled.div`
   width: 90%;
   height: 800px;
-  background-color: #fcfcfc;
+  background-color: yellow;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-coten: center;
 
   margin-top: 120px;
-  z-index: -1;
-  border-radius: 15px 15px 0 0;
+  z-index: 1;
   padding: 16px;
 
   button {
@@ -97,7 +120,17 @@ interface Props {
   isOpen: boolean;
 }
 
+const FLITER_OPEN_CLASS = "openFilter";
+
 const FilterMenu: FC<Props> = ({ isOpen, setIsOpen }: Props) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add(FLITER_OPEN_CLASS);
+    }
+
+    return () => document.body.classList.remove(FLITER_OPEN_CLASS);
+  }, [isOpen]);
+
   const closeFilter = (e: any) => {
     e.stopPropagation();
     setIsOpen(false);

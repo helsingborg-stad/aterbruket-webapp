@@ -11,7 +11,8 @@ import AdvertContainer from "../components/AdvertContainer";
 import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
-import FilterMenu from "./FilterMenu";
+import FilterMenu from "../components/FilterMenu";
+import FocusLock from "react-focus-lock";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -234,6 +235,7 @@ const Home: FC<Props> = ({
             >
               Filter <MdTune id="filterIcon" />
             </button>
+
             <FilterMenu setIsOpen={setIsOpen} isOpen={isOpen} />
           </SearchFilterDiv>
           <AdvertContainer

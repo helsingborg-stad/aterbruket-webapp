@@ -32,7 +32,7 @@ const DivBtns = styled.div`
   button {
     border: 2px solid green;
     outline: none;
-    width: 70px;
+    width: 100px;
     height: 30px;
     background-color: white;
     margin: 5px;
@@ -137,12 +137,12 @@ const ItemDetails: FC<ParamTypes> = () => {
       googleMapScript.removeEventListener("load", cb);
     };
   }, []);
-  const updateItem = async () => {
+  const updateItem = async (newStatus: string) => {
     await API.graphql(
       graphqlOperation(updateAdvert, {
         input: {
           id,
-          status: "reserved",
+          status: newStatus,
           reservedBySub: user.attributes.sub,
           reservedByName: user.attributes.name,
           version: 0,
@@ -158,7 +158,11 @@ const ItemDetails: FC<ParamTypes> = () => {
   };
 
   const onClickReservBtn = () => {
-    updateItem();
+    updateItem("reserved");
+  };
+
+  const onClickPickUpBtn = () => {
+    updateItem("pickedUp");
   };
 
   const mapingObject = (obj: any) => {
@@ -179,7 +183,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const allDetails = (
     <>
       <DivBtns>
-        {item.status === "reserved" && (
+        {(item.status === "reserved" || item.status === "pickedUp") && (
           <p>
             (Prylen har status: &quot;{item.status}&quot;. Gjordes av:{" "}
             <span>{item.reservedByName}</span>)
@@ -203,6 +207,20 @@ const ItemDetails: FC<ParamTypes> = () => {
           </>
         )}
         {item.status === "reserved" &&
+          item.reservedBySub === user.attributes.sub && (
+            <>
+              <button
+                onClick={() => {
+                  onClickPickUpBtn();
+                }}
+                type="button"
+              >
+                Hämta ut
+              </button>
+            </>
+          )}
+
+        {item.status === "pickedUp" &&
           item.reservedBySub === user.attributes.sub && (
             <>
               <button

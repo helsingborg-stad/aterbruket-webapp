@@ -50,7 +50,7 @@ const useForm = (initialValues: any, mutation: string) => {
     if (target.files) {
       target.files[0].uuid = uuidv4();
       setFile(target.files[0]);
-
+      
       return;
     }
 
@@ -123,6 +123,7 @@ const useForm = (initialValues: any, mutation: string) => {
     handleSubmit,
     handleCheckboxChange,
     result,
+    file
   };
 };
 

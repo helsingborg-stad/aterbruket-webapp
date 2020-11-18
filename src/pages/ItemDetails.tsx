@@ -102,6 +102,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
       setImage(url);
+      console.log("item.images[0]", item.images[0]);
     });
   };
 
@@ -318,7 +319,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           closeEditformAndFetchItem={closeEditformAndFetchItem}
         />
       ) : showCarousel ? (
-        <CarouselComp setShowCarousel={setShowCarousel} />
+        <CarouselComp setShowCarousel={setShowCarousel} image={image} />
       ) : (
         allDetails
       )}

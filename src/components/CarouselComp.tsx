@@ -37,9 +37,11 @@ const CarouselWrapper = styled.div`
 
 type Props = {
   setShowCarousel: React.Dispatch<React.SetStateAction<boolean>>;
+  image: string;
 };
 
-const CarouselComp: FC<Props> = ({ setShowCarousel }: Props) => {
+const CarouselComp: FC<Props> = ({ setShowCarousel, image }: Props) => {
+  console.log("image i carusel", image);
   return (
     <CarouselWrapper>
       <button
@@ -60,19 +62,17 @@ const CarouselComp: FC<Props> = ({ setShowCarousel }: Props) => {
       >
         <div className="imgDiv">
           <img
-            src="https://storage.googleapis.com/web-pro-nilo-kavehome/media/cache/c4/10/c410118add2b5cb169d71a0c20596f50.jpg"
+            src="https://www.fully.com/media/catalog/product/cache/0403c939416b062257652d84420a5735/b/a/bamboo_curve_new_visual.jpg"
             alt=""
           />
         </div>
         <div className="imgDiv">
-          <img
-            src="https://i.pinimg.com/originals/10/c3/98/10c3987a6e929335135bf4dae89ac212.jpg"
-            alt=""
-          />
+          <img src={image} alt="" />
         </div>
+
         <div className="imgDiv">
           <img
-            src="https://www.officestock.com.au/assets/full/cdkpedestal.jpg?20181003095800"
+            src="https://www.kinnarps.se/contentassets/3f8885420d58434da4bfb1289215d5c8/frisbee-feed_560x745.jpg?preset=product-card"
             alt=""
           />
         </div>

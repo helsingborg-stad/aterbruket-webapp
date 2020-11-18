@@ -110,10 +110,10 @@ const useForm = (initialValues: any, mutation: string) => {
       )
       .then(
         function (response) {
-          console.log("SUCCESS sending email!", response.status, response.text);
+          //console.log("SUCCESS sending email!", response.status, response.text);
         },
         function (error) {
-          console.log("FAILED sending email", error);
+          //console.log("FAILED sending email", error);
         }
       );
   };

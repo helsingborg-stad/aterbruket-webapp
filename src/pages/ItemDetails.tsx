@@ -98,11 +98,13 @@ const ItemDetails: FC<ParamTypes> = () => {
   const [showCarousel, setShowCarousel] = useState(false);
   const user: any = useContext(UserContext);
   const [image, setImage] = useState("") as any;
-
+  const [recentlyUpdated, setRecentlyUpdated] = useState(false);
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
       setImage(url);
-      console.log("item.images[0]", item.images[0]);
+
+      item.images[0].url = url;
+      setItem(item);
     });
   };
 
@@ -142,8 +144,9 @@ const ItemDetails: FC<ParamTypes> = () => {
       googleMapScript.removeEventListener("load", cb);
     };
   }, []);
+
   const updateItem = async (newStatus: string) => {
-    await API.graphql(
+    const result = await API.graphql(
       graphqlOperation(updateAdvert, {
         input: {
           id,
@@ -151,14 +154,15 @@ const ItemDetails: FC<ParamTypes> = () => {
           reservedBySub: user.attributes.sub,
           reservedByName: user.attributes.name,
           version: 0,
+          revisions: item.revisions + 1
         },
       })
-    );
+    ) as any;
 
-    item.version = item.revisions + 1;
     delete item.createdAt;
     delete item.updatedAt;
-
+    item.version = result.data.updateAdvert.revisions + 1;
+    
     await API.graphql(graphqlOperation(createAdvert, { input: item }));
   };
 

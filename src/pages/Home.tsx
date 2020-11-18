@@ -12,7 +12,6 @@ import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
 import FilterMenu from "../components/FilterMenu";
-import FocusLock from "react-focus-lock";
 
 const AddBtn = styled.button`
   position: fixed;

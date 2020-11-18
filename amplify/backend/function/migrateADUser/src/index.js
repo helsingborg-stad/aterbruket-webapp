@@ -8,7 +8,7 @@ AWS.config.update({ region: process.env.REGION });
 
 console.log('Loading event');
 
-function createUser(username, password, user, callback) {
+function createUser(username, password, user, callback, context, event) {
 	//Create the user with AdminCreateUser()
 	var params = {
 		UserPoolId: process.env.USER_POOL_ID,
@@ -23,7 +23,7 @@ function createUser(username, password, user, callback) {
 	};
 
 	if (user.streetaddress) {
-		params.UserAttributes.push({ Name: 'custom:address', Value: user.streetaddress })
+		params.UserAttributes.push({ Name: 'address', Value: user.streetaddress })
 	}
 
 	if (user.postalcode) {
@@ -44,7 +44,7 @@ function createUser(username, password, user, callback) {
 		Username: username
 	};
 	var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
-	cognitoidentityserviceprovider.adminAddUserToGroup(userParams).promise()
+	//cognitoidentityserviceprovider.adminAddUserToGroup(userParams).promise()
 
 	cognitoidentityserviceprovider.adminCreateUser(params, function (err, data) {
 		if (err) {
@@ -76,7 +76,7 @@ function createUser(username, password, user, callback) {
 
 					//Confirm the challenge name is NEW_PASSWORD_REQUIRED
 					if (data.ChallengeName !== "NEW_PASSWORD_REQUIRED") {
-						// unexpected challenge name - log and exit
+						// unexpeADMIN_NO_SRP_AUTHrcted challenge name - log and exit
 						console.log("Unexpected challenge name after adminInitiateAuth (" + data.ChallengeName + "), migrating user created, but password not set");
 
 					}
@@ -91,12 +91,18 @@ function createUser(username, password, user, callback) {
 						},
 						Session: data.Session
 					};
+					
 					cognitoidentityserviceprovider.adminRespondToAuthChallenge(params, function (err, data) {
 						if (err) console.log(err, err.stack); // an error occurred
 						else { // successful response
 							console.log('Successful response from RespondToAuthChallenge: ' + username);
-							callback(null, "RETRY")
-							return;
+							
+				            event.response.messageAction = "SUPPRESS";
+				            event.response.finalUserStatus = "CONFIRMED";
+				            
+				            return context.succeed(event);
+				            
+							
 						}
 					});
 				}
@@ -109,56 +115,37 @@ function createUser(username, password, user, callback) {
 exports.handler = function (event, context, callback) {
 	var username = event.userName;
 	var password = event.request.password;
-	var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
 
-	//Check to see if the user exists in the User Pool using AdminGetUser()
-	var params = { UserPoolId: USER_POOL_ID, Username: username };
+	console.log("User does not exist in User Pool, attempting migration: " + username);
 
-	cognitoidentityserviceprovider.adminGetUser(params, function (lookup_err, data) {
-		console.log(lookup_err)
-		if (lookup_err && lookup_err.code === "UserNotFoundException") {
-			// User does not exist in the User Pool, try to migrate
-			console.log("User does not exist in User Pool, attempting migration: " + username);
+	var options = {
+		host: 'intranat.helsingborg.se',
+		path: '/ad-api/user/get/' + username,
+		method: 'POST'
+	};
 
-			var options = {
-				host: 'intranat.helsingborg.se',
-				path: '/ad-api/user/get/' + username,
-				//since we are listening on a custom port, we need to specify it by hand
-				//This is what changes the request to a POST request
-				method: 'POST'
-			};
+	var req = http.request(options, function (response) {
+		var str = ''
+		response.on('data', function (chunk) {
+			str += chunk;
+		});
 
-			var req = http.request(options, function (response) {
-				var str = ''
-				response.on('data', function (chunk) {
-					str += chunk;
-				});
+		response.on('end', function () {
 
-				response.on('end', function () {
-					try {
-						var userObject = JSON.parse(str)
+			try {
+				var userObject = JSON.parse(str)
 
-						if ('displayname' in userObject[0]) {
-							createUser(username, password, userObject[0], callback)
-						}
-					}
-					catch (e) {
-						console.log(e)
-
-					}
-
-				});
-			});
-			//This is the data we are posting, it needs to be a string or a buffer
-			req.write(JSON.stringify({ username: username, password: password }));
-			req.end();
-		}
-		else {
-			//User exists in the User Pool, so tell the app not to retry sign-in
-			console.log("User exists in User Pool so no migration: " + username);
-			callback(null, "NO_RETRY");
-			return;
-		}
+				if ('displayname' in userObject[0]) {
+					createUser(username, password, userObject[0], callback, context, event)
+				}
+			}
+			catch (e) {
+				console.log(e)
+			}
+		});
 	});
+	//This is the data we are posting, it needs to be a string or a buffer
+	req.write(JSON.stringify({ username: username, password: password }));
+	req.end();
 
 };

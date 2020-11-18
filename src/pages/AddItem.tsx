@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { FC, useContext } from "react";
 import { Redirect, useHistory } from "react-router-dom";
+import { API, graphqlOperation } from "aws-amplify";
 import Form from "../components/Form";
 import useForm from "../hooks/useForm";
 import { createAdvert } from "../graphql/mutations";
@@ -43,9 +44,9 @@ const AddItem: FC<Props> = ({
       status: "available",
       category: "",
       quantity: 1,
-      height: 0,
-      width: 0,
-      length: 0,
+      height: "",
+      width: "",
+      length: "",
       color: "",
       condition: "",
       areaOfUse: { indoors: false, outside: false },
@@ -59,9 +60,9 @@ const AddItem: FC<Props> = ({
       department: "",
       location: "",
       instructions: "",
-      contactPerson: "",
-      email: "",
-      phoneNumber: 0,
+      contactPerson: user.attributes.name,
+      email: user.attributes.email,
+      phoneNumber: "",
       giver: user.attributes.sub,
       climateImpact: 0,
       version: 0,

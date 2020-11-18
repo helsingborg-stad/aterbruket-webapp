@@ -3,29 +3,6 @@ import React, { FC, useEffect } from "react";
 import styled from "styled-components";
 import { MdCancel } from "react-icons/md";
 
-const Mask = styled.label`
-  background-color: rgba(187, 186, 186, 0.509);
-  border: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  display: block;
-  height: 100%;
-  box-sizing: border-box;
-
-  &:focus-within {
-    box-shadow: inset 0px 0px 0px 4px cyan;
-  }
-  &-btn {
-    border: none;
-    width: 1px;
-    height: 1px;
-    margin-left: -20px;
-  }
-`;
-
 const FilterCtn = styled.div`
   display: ${({ className }) => (className === "show" ? "block" : "none")};
   position: fixed;
@@ -34,9 +11,9 @@ const FilterCtn = styled.div`
   z-index: 100;
   width: 100%;
   height: 98vh;
-  background-color: grey;
+  background-color: #fcfcfc;
   border-radius: 15px 15px 0 0;
-  box-shadow: 0px 0px 1px black;
+  box-shadow: 0px 0px 2px black;
   overflow: scroll;
 `;
 
@@ -47,7 +24,7 @@ const FilterHeader = styled.div`
   align-items: center;
   border-radius: 15px 15px 0 0;
   position: fixed;
-  top: 2vh;
+  top: 1.8vh;
   background-color: #fcfcfc;
 
   .pageTitle {
@@ -77,14 +54,13 @@ const FilterHeader = styled.div`
 
 const FilterBody = styled.div`
   width: 90%;
-  height: 800px;
-  background-color: yellow;
+  background-color: #fcfcfc;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-coten: center;
-
   margin-top: 120px;
+  margin-bottom: 20px;
   z-index: 1;
   padding: 16px;
 
@@ -154,7 +130,25 @@ const FilterMenu: FC<Props> = ({ isOpen, setIsOpen }: Props) => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
           cum corrupti blanditiis excepturi, illum dolore fugiat consequuntur
           explicabo, laborum soluta exercitationem, totam amet omnis ab vel modi
-          optio suscipit atque.
+          optio suscipit atque. Lorem ipsum dolor sit, amet consectetur
+          adipisicing elit. Odio explicabo aut hic quod rerum accusamus
+          repellendus natus eum ex id voluptatibus facilis distinctio, provident
+          quo soluta laudantium, blanditiis ipsa quisquam. Lorem ipsum dolor,
+          sit amet consectetur adipisicing elit. Eveniet facere itaque magnam
+          dolore ab beatae corrupti asperiores, velit vitae vero, excepturi
+          mollitia in placeat soluta doloribus iusto sint harum ea.
+        </p>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+          cum corrupti blanditiis excepturi, illum dolore fugiat consequuntur
+          explicabo, laborum soluta exercitationem, totam amet omnis ab vel modi
+          optio suscipit atque. Lorem ipsum dolor sit, amet consectetur
+          adipisicing elit. Odio explicabo aut hic quod rerum accusamus
+          repellendus natus eum ex id voluptatibus facilis distinctio, provident
+          quo soluta laudantium, blanditiis ipsa quisquam. Lorem ipsum dolor,
+          sit amet consectetur adipisicing elit. Eveniet facere itaque magnam
+          dolore ab beatae corrupti asperiores, velit vitae vero, excepturi
+          mollitia in placeat soluta doloribus iusto sint harum ea.
         </p>
         <button className="saveBtn" type="button">
           Spara

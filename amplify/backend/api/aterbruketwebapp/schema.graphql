@@ -1,36 +1,12 @@
-type Advertisement @model {
-  id: ID!
-  title: String!
-  description: String
-  location: String
-  height: Int
-  width: Int
-  length: Int
-  status: ItemStatus
-  category: ItemCategory
-  material: [ItemAMaterial]
-  condition: ItemCondition
-  color: String
-  areaOfUse: [ItemAreaOfUse]
-  images: [ItemImages]
-  quantity: Int
-  department: String
-  instructions: String
-  contactPerson: String
-  email: String
-  phoneNumber: Int
-  giver: String
-  climateImpact: Int
-}
 
 type Advert @model @key(fields: [ "id", "version" ]){
   id: ID!
   title: String!
   description: String
   location: String
-  height: Int
-  width: Int
-  length: Int
+  height: String
+  width: String
+  length: String
   status: ItemStatus
   category: ItemCategory
   material: [ItemAMaterial]
@@ -43,7 +19,7 @@ type Advert @model @key(fields: [ "id", "version" ]){
   instructions: String
   contactPerson: String
   email: String
-  phoneNumber: Int
+  phoneNumber: String
   giver: String
   version: Int!
   climateImpact: Int

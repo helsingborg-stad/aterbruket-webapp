@@ -21,6 +21,7 @@ import Map from "../components/Map";
 import CarouselComp from "../components/CarouselComp";
 import { UserContext } from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
+import showDays from "../hooks/showDays";
 
 const DivBtns = styled.div`
   display: flex;
@@ -31,7 +32,7 @@ const DivBtns = styled.div`
   button {
     border: 2px solid green;
     outline: none;
-    width: 70px;
+    width: 100px;
     height: 30px;
     background-color: white;
     margin: 5px;
@@ -101,6 +102,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
       setImage(url);
+      console.log("item.images[0]", item.images[0]);
     });
   };
 
@@ -125,6 +127,10 @@ const ItemDetails: FC<ParamTypes> = () => {
   }, []);
 
   useEffect(() => {
+    fetchItem();
+  }, [item]);
+
+  useEffect(() => {
     const googleMapScript = loadMapApi();
 
     const cb = () => {
@@ -136,12 +142,12 @@ const ItemDetails: FC<ParamTypes> = () => {
       googleMapScript.removeEventListener("load", cb);
     };
   }, []);
-  const updateItem = async () => {
+  const updateItem = async (newStatus: string) => {
     await API.graphql(
       graphqlOperation(updateAdvert, {
         input: {
           id,
-          status: "reserved",
+          status: newStatus,
           reservedBySub: user.attributes.sub,
           reservedByName: user.attributes.name,
           version: 0,
@@ -157,7 +163,11 @@ const ItemDetails: FC<ParamTypes> = () => {
   };
 
   const onClickReservBtn = () => {
-    updateItem();
+    updateItem("reserved");
+  };
+
+  const onClickPickUpBtn = () => {
+    updateItem("pickedUp");
   };
 
   const mapingObject = (obj: any) => {
@@ -178,7 +188,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const allDetails = (
     <>
       <DivBtns>
-        {item.status === "reserved" && (
+        {(item.status === "reserved" || item.status === "pickedUp") && (
           <p>
             (Prylen har status: &quot;{item.status}&quot;. Gjordes av:{" "}
             <span>{item.reservedByName}</span>)
@@ -202,6 +212,20 @@ const ItemDetails: FC<ParamTypes> = () => {
           </>
         )}
         {item.status === "reserved" &&
+          item.reservedBySub === user.attributes.sub && (
+            <>
+              <button
+                onClick={() => {
+                  onClickPickUpBtn();
+                }}
+                type="button"
+              >
+                Hämta ut
+              </button>
+            </>
+          )}
+
+        {item.status === "pickedUp" &&
           item.reservedBySub === user.attributes.sub && (
             <>
               <button
@@ -264,12 +288,20 @@ const ItemDetails: FC<ParamTypes> = () => {
           </tr>
           <tr>
             <td>Klimatpåverkan:</td>
-            <td>{item.climateImpact}</td>
+            <td>
+              {item.climateImpact} kg CO<sub>2</sub>e
+            </td>
           </tr>
           <tr>
             <td>Beskrivning:</td>
             <td>{item.description}</td>
           </tr>
+          {item.status === "available" && (
+            <tr>
+              <td>Har varit tillgänglig i:</td>
+              <td>{showDays(item.createdAt)} dagar</td>
+            </tr>
+          )}
           <tr>
             <td>Hämtas på:</td>
             <td>{item.location}</td>
@@ -309,7 +341,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           closeEditformAndFetchItem={closeEditformAndFetchItem}
         />
       ) : showCarousel ? (
-        <CarouselComp setShowCarousel={setShowCarousel} />
+        <CarouselComp setShowCarousel={setShowCarousel} image={image} />
       ) : (
         allDetails
       )}

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useContext } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
 import Form from "../components/Form";
@@ -8,13 +8,6 @@ import { createAdvert } from "../graphql/mutations";
 import OpenCamera from "../components/OpenCamera";
 import { fieldsForm as fields } from "../utils/formUtils";
 import { UserContext } from "../contexts/UserContext";
-import styled from "styled-components";
-
-const ItemImg = styled.img`
-  width: 300px;
-  height: 300px;
-  margin: 0;
-`;
 
 interface IQrCamera {
   delay: number;
@@ -45,8 +38,6 @@ const AddItem: FC<Props> = ({
     handleSubmit,
     handleCheckboxChange,
     redirect,
-    result,
-    file
   } = useForm(
     {
       title: "",
@@ -80,14 +71,6 @@ const AddItem: FC<Props> = ({
     createAdvert
   );
 
-  const [imageURL, setImageURL] = useState('')
-
-  useEffect(() => {
-    if(file) {
-      setImageURL(URL.createObjectURL(file))
-    }
-  }, [file])
-
   if (redirect) {
     return <Redirect to={`/item/${redirect}`} />;
   }
@@ -96,7 +79,6 @@ const AddItem: FC<Props> = ({
   }
   return (
     <main>
-      {file && <ItemImg src={imageURL}/>}
       {!alreadyAQRCode ? (
         <Form
           values={values}

@@ -2,9 +2,9 @@
 import { API, graphqlOperation, Storage } from "aws-amplify";
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
+import { v4 as uuidv4 } from "uuid";
 import HandleClimatImpact from "./HandleClimatImpact";
 import { createAdvert } from "../graphql/mutations";
-import { v4 as uuidv4 } from "uuid";
 
 const recreateInitial = async (mutation: any, values: any) => {
   delete values.createdAt;
@@ -48,12 +48,13 @@ const useForm = (initialValues: any, mutation: string) => {
     const { target } = event;
     let { name, value } = target;
     if (target.files) {
+      console.log("target.files", target.files);
       target.files[0].uuid = uuidv4();
       setFile(target.files[0]);
+      console.log("target.files[0]", target.files[0]);
 
       return;
     }
-
     setValues({
       ...values,
       [name]: value.trimStart(),
@@ -64,6 +65,7 @@ const useForm = (initialValues: any, mutation: string) => {
     if (file) {
       upload(file);
       values.images = { src: file.uuid, alt: file.name };
+      console.log("values.images", values.images);
     }
 
     event.preventDefault();

@@ -1,9 +1,16 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Form from "./Form";
 import useForm from "../hooks/useForm";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
 import { API, graphqlOperation } from "aws-amplify";
+import styled from "styled-components";
+
+const ItemImg = styled.img`
+  width: 300px;
+  height: 300px;
+  margin: 0;
+`;
 
 interface IareaOfUse {
   indoors: boolean;
@@ -41,6 +48,7 @@ interface Props {
     climateImpact: number;
     version: number;
     revisions: number;
+    images: [{url:string}];
   };
   setEditItem: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
@@ -57,6 +65,8 @@ const EditItemForm: FC<Props> = ({
     handleSubmit,
     handleCheckboxChange,
     redirect,
+    result,
+    file
   } = useForm(
     {
       id: item.id,
@@ -93,6 +103,15 @@ const EditItemForm: FC<Props> = ({
     updateAdvert
   );
 
+  const [imageURL, setImageURL] =  useState(item.images[0].url)
+
+  useEffect(() => {
+    if(file) {
+
+      setImageURL(URL.createObjectURL(file))
+    }
+  }, [file])
+
   if (redirect) {
     closeEditformAndFetchItem();
   }
@@ -101,6 +120,8 @@ const EditItemForm: FC<Props> = ({
       <button type="button" onClick={() => setEditItem(false)}>
         X
       </button>
+    
+      <ItemImg src={imageURL}/>
       <Form
         values={values}
         fields={fields}

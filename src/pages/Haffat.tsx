@@ -14,7 +14,7 @@ const Haffat: FC = () => {
   const fetchReservedAdverts = useCallback(async () => {
     const result = (await API.graphql(
       graphqlOperation(listAdverts, {
-        filter: { reservedBySub: { eq: user.attributes.sub } },
+        filter: {and: [{ reservedBySub: { eq: user.attributes.sub } }, { version: { eq: 0 } }]}
       })
     )) as GraphQLResult<ListAdvertsQuery>;
     const advertItem = result.data?.listAdverts?.items;

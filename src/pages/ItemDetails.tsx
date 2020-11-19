@@ -98,7 +98,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const [showCarousel, setShowCarousel] = useState(false);
   const user: any = useContext(UserContext);
   const [image, setImage] = useState("") as any;
-  const [recentlyUpdated, setRecentlyUpdated] = useState(false);
+  const [itemUpdated, setItemUpdated] = useState(false);
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
       setImage(url);
@@ -124,11 +124,8 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   useEffect(() => {
     fetchItem();
-  }, []);
-
-  useEffect(() => {
-    fetchItem();
-  }, [item]);
+    setItemUpdated(false)
+  }, [itemUpdated]);
 
   useEffect(() => {
     const googleMapScript = loadMapApi();
@@ -156,6 +153,8 @@ const ItemDetails: FC<ParamTypes> = () => {
         },
       })
     ) as any;
+
+    setItemUpdated(true)
 
     delete item.createdAt;
     delete item.updatedAt;

@@ -139,7 +139,7 @@ const ItemDetails: FC<ParamTypes> = () => {
     };
   }, []);
   const updateItem = async (newStatus: string) => {
-    await API.graphql(
+    const result = await API.graphql(
       graphqlOperation(updateAdvert, {
         input: {
           id,
@@ -147,15 +147,17 @@ const ItemDetails: FC<ParamTypes> = () => {
           reservedBySub: user.attributes.sub,
           reservedByName: user.attributes.name,
           version: 0,
+          revisions: item.revisions + 1
         },
       })
-    );
+    ) as any;
 
     setItemUpdated(true)
 
     delete item.createdAt;
     delete item.updatedAt;
-
+    item.version = result.data.updateAdvert.revisions + 1;
+    
     await API.graphql(graphqlOperation(createAdvert, { input: item }));
   };
 

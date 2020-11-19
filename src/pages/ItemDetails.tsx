@@ -99,9 +99,12 @@ const ItemDetails: FC<ParamTypes> = () => {
   const user: any = useContext(UserContext);
   const [image, setImage] = useState("") as any;
   const [itemUpdated, setItemUpdated] = useState(false);
+  
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
       setImage(url);
+      item.images[0].url = url;
+      setItem(item);
     });
   };
 

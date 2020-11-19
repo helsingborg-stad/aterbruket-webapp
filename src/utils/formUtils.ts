@@ -188,6 +188,14 @@ export const fieldsForm = [
 ];
 
 export const fieldsEditForm = [
+  {	
+    name: "images",	
+    dataType: "file",	
+    fieldType: "input",	
+    disabled: false,	
+    required: true,	
+    title: "Bilder",	
+  },
   {
     name: "title",
     dataType: "text",

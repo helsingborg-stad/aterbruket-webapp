@@ -32,7 +32,6 @@ enum ItemStatus {
   available
   reserved
   pickedUp
-  delivered
 }
 
 enum ItemCategory {

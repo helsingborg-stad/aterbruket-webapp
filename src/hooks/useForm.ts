@@ -124,6 +124,7 @@ const useForm = (initialValues: any, mutation: string) => {
     handleSubmit,
     handleCheckboxChange,
     result,
+    file
   };
 };
 

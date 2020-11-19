@@ -35,7 +35,6 @@ export enum ItemStatus {
   available = "available",
   reserved = "reserved",
   pickedUp = "pickedUp",
-  delivered = "delivered",
 }
 
 

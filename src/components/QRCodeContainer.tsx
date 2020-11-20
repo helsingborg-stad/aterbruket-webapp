@@ -63,7 +63,7 @@ interface IProps {
 
 const QRCodeContainer: FC<IProps> = ({ id }: IProps) => {
   const downloadLabel = () => {
-    const doc = new jsPDF("l", "px", "a4", true);
+    const doc = new jsPDF("l", "px", [265, 121], true);
 
     const pdfDiv: any | null = document.getElementById("labelDiv");
     console.log(doc);
@@ -71,29 +71,46 @@ const QRCodeContainer: FC<IProps> = ({ id }: IProps) => {
     if (pdfDiv !== null) {
       doc.html(pdfDiv, {
         callback: function (doc) {
-          doc.save("sample-file.pdf");
+          doc.save(`${id}.pdf`);
         },
       });
     }
   };
   return (
     <QRCodeCont>
-      <button type="button" id="downloadBtn" onClick={downloadLabel}>
-        Spara som PDF
-      </button>
+     <p className="pDownload">
+        Klicka på etiketten nedan för att ladda ner den som PDF
+      </p>
       <div
+        onClick={downloadLabel}
         className="labelDiv"
         id="labelDiv"
-        style={{ width: "265px", height: "121px", margin: "10px" }}
+        style={{
+          width: "265px",
+          height: "121px",
+          padding: "5px",
+        }}
       >
-        <p className="pTop">
+        <p
+          className="pTop"
+          style={{ fontSize: "20px", margin: "2px 0px 0px 10px" }}
+        >
           DEN HÄR KAN DU <strong>HAFFA</strong>
         </p>
-        <p>
+        <p style={{ fontSize: "11px", margin: "2px 0px 0px 10px" }}>
           <strong>Återbruka, dela, cirkulera mera</strong> i Helsingborg.
         </p>
-        <p>Scanna QR-koden och bidra till en mer hållbar värld.</p>
-        <div className="qrAndLogoDiv">
+        <p style={{ fontSize: "9px", margin: "2px 0px 0px 10px" }}>
+          Scanna QR-koden och bidra till en mer hållbar värld.
+        </p>
+        <div
+          className="qrAndLogoDiv"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            padding: "7px 16px 7px 16px",
+          }}
+        >
           <QRCode value={id} id="mycanvas" size={50} />
           <img
             src={HBGLogo}
@@ -104,9 +121,7 @@ const QRCodeContainer: FC<IProps> = ({ id }: IProps) => {
           />
         </div>
       </div>
-      <p className="pDownload">
-        Klicka på etiketten ovan för att ladda ner den
-      </p>
+     
     </QRCodeCont>
   );
 };

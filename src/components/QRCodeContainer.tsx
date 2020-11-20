@@ -98,12 +98,12 @@ const QRCodeContainer: FC<IProps> = ({ id }: IProps) => {
             padding: "7px 16px 7px 16px",
           }}
         >
-          <QRCode value={id} id="mycanvas" size={50} />
+          <QRCode value={id} id="mycanvas" size={45} />
           <img
             src={HBGLogo}
             alt="Helsingborg logga"
-            width="46"
-            height="48"
+            width="auto"
+            height="45"
             style={{ paddingLeft: "130px" }}
           />
         </div>

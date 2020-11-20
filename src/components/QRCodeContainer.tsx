@@ -48,19 +48,6 @@ interface IProps {
   id: string;
 }
 
-/* const downloadQRCode = () => {
-    const canvas: HTMLElement | null = document.getElementById("mycanvas");
-    if (canvas !== null) {
-      const image = (canvas as HTMLCanvasElement).toDataURL("image/png");
-      const downloadLink = document.createElement("a");
-      downloadLink.href = image;
-      downloadLink.download = `${id}.png`;
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-    }
-  }; */
-
 const QRCodeContainer: FC<IProps> = ({ id }: IProps) => {
   const downloadLabel = () => {
     const doc = new jsPDF("l", "px", [265, 121], true);
@@ -78,7 +65,7 @@ const QRCodeContainer: FC<IProps> = ({ id }: IProps) => {
   };
   return (
     <QRCodeCont>
-     <p className="pDownload">
+      <p className="pDownload">
         Klicka på etiketten nedan för att ladda ner den som PDF
       </p>
       <div
@@ -121,7 +108,6 @@ const QRCodeContainer: FC<IProps> = ({ id }: IProps) => {
           />
         </div>
       </div>
-     
     </QRCodeCont>
   );
 };

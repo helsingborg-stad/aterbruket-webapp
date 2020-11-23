@@ -54,6 +54,7 @@ const ItemImg = styled.img`
   width: 300px;
   height: 300px;
   margin: 0;
+  border-radius: 9.5px 0 0 9.5px;
 `;
 
 const Table = styled.table`
@@ -98,11 +99,13 @@ const ItemDetails: FC<ParamTypes> = () => {
   const [showCarousel, setShowCarousel] = useState(false);
   const user: any = useContext(UserContext);
   const [image, setImage] = useState("") as any;
-
+  const [itemUpdated, setItemUpdated] = useState(false);
+  
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
       setImage(url);
-      console.log("item.images[0]", item.images[0]);
+      item.images[0].url = url;
+      setItem(item);
     });
   };
 
@@ -124,11 +127,8 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   useEffect(() => {
     fetchItem();
-  }, []);
-
-  useEffect(() => {
-    fetchItem();
-  }, [item]);
+    setItemUpdated(false)
+  }, [itemUpdated]);
 
   useEffect(() => {
     const googleMapScript = loadMapApi();
@@ -143,7 +143,7 @@ const ItemDetails: FC<ParamTypes> = () => {
     };
   }, []);
   const updateItem = async (newStatus: string) => {
-    await API.graphql(
+    const result = await API.graphql(
       graphqlOperation(updateAdvert, {
         input: {
           id,
@@ -151,14 +151,17 @@ const ItemDetails: FC<ParamTypes> = () => {
           reservedBySub: user.attributes.sub,
           reservedByName: user.attributes.name,
           version: 0,
+          revisions: item.revisions + 1
         },
       })
-    );
+    ) as any;
 
-    item.version = item.revisions + 1;
+    setItemUpdated(true)
+
     delete item.createdAt;
     delete item.updatedAt;
-
+    item.version = result.data.updateAdvert.revisions + 1;
+    
     await API.graphql(graphqlOperation(createAdvert, { input: item }));
   };
 
@@ -184,7 +187,6 @@ const ItemDetails: FC<ParamTypes> = () => {
     return <td key={str}>{str}</td>;
   };
 
-  const history = useHistory();
   const allDetails = (
     <>
       <DivBtns>

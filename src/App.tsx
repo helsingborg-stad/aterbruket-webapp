@@ -13,8 +13,10 @@ import ItemDetails from "./pages/ItemDetails";
 import Profile from "./pages/Profile";
 import Haffat from "./pages/Haffat";
 import MenuBar from "./components/MenuBar";
-import Admin from "./pages/Admin";
 import { UserContext } from "./contexts/UserContext";
+import PersonalInfo from "./components/PersonalInfo";
+import Statics from "./components/Statics";
+import MyAdverts from "./components/MyAdverts";
 import { v4 as uuidv4 } from "uuid";
 
 const AppContainer = styled.div`
@@ -81,9 +83,11 @@ const App: FC = () => {
                 )}
               />
               <Route path="/haffat" component={Haffat} />
-              <Route path="/profile" component={Profile} />
+              <Route exact path="/profile" component={Profile} />
+              <Route path="/profile/personal-info" component={PersonalInfo} />
+              <Route path="/profile/statics" component={Statics} />
+              <Route path="/profile/myadverts" component={MyAdverts} />
               <Route path="/item/:id" component={ItemDetails} />
-              <Route path="/admin" component={Admin} />
             </UserContext.Provider>
             <MenuBar setQrCamera={setQrCamera} qrCamera={qrCamera} />
           </Router>

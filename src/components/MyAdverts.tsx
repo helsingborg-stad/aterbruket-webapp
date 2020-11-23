@@ -1,41 +1,42 @@
 import API, { GraphQLResult } from "@aws-amplify/api";
 import { graphqlOperation } from "aws-amplify";
-import React, { useContext, useEffect, useState, useCallback, FC } from "react";
-import styled from "styled-components";
-import AdvertContainer from "../components/AdvertContainer";
+import React, { FC, useContext, useEffect, useState, useCallback } from "react";
+import AdvertContainer from "./AdvertContainer";
 import { ListAdvertsQuery } from "../API";
 import { listAdverts } from "../graphql/queries";
 import { UserContext } from "../contexts/UserContext";
 
-const Haffat: FC = () => {
+const MyAdverts: FC = () => {
   const user: any = useContext(UserContext);
-  const [reservedItems, setReservedItems] = useState([{}]) as any;
+  const [adverts, setAdverts] = useState([{}]) as any;
 
-  const fetchReservedAdverts = useCallback(async () => {
+  const fetchCreatedAdverts = useCallback(async () => {
     const result = (await API.graphql(
       graphqlOperation(listAdverts, {
-        filter: {and: [{ reservedBySub: { eq: user.attributes.sub } }, { version: { eq: 0 } }]}
+        filter: {
+          and: [{ giver: { eq: user.attributes.sub } }, { version: { eq: 0 } }],
+        },
       })
     )) as GraphQLResult<ListAdvertsQuery>;
+
     const advertItem = result.data?.listAdverts?.items;
-    setReservedItems(advertItem);
+    setAdverts(advertItem);
   }, [user.attributes.sub]);
 
   useEffect(() => {
     if (user.attributes.sub) {
-      fetchReservedAdverts();
+      fetchCreatedAdverts();
     }
-  }, [fetchReservedAdverts, user]);
-
+  }, [user]);
   return (
     <main>
       <AdvertContainer
+        items={adverts}
         searchValue={false}
-        items={reservedItems}
-        itemsFrom="haffat"
+        itemsFrom="profile"
       />
     </main>
   );
 };
 
-export default Haffat;
+export default MyAdverts;

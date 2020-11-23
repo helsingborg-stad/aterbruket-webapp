@@ -66,6 +66,14 @@ const Profile: FC = () => {
       <InformationContainer>
         <h3> Kontakt </h3>
         {userInfo}
+        <div>
+          <InformationHeader>DEPARTMENT</InformationHeader>
+          {!user["custom:department"] ? (
+            <InformationFrame>Kan inte hitta avdelning..</InformationFrame>
+          ) : (
+            <InformationFrame>{user["custom:department"]}</InformationFrame>
+          )}
+        </div>
         <AdvertContainer
           searchValue={false}
           items={adverts}

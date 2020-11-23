@@ -1,7 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { MdCancel } from "react-icons/md";
+import FilterCheckbox from "../components/FilterCheckbox";
+import { fieldsForm } from "../utils/formUtils";
 
 const FilterCtn = styled.div`
   display: ${({ className }) => (className === "show" ? "block" : "none")};
@@ -94,11 +96,24 @@ const FilterBody = styled.div`
 interface Props {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isOpen: boolean;
+  setFilterValueUpdated: React.Dispatch<React.SetStateAction<boolean>>;
+  filterValue: any;
+  setFilterValue: React.Dispatch<React.SetStateAction<any>>;
+  filterValueUpdated: boolean;
 }
 
 const FLITER_OPEN_CLASS = "openFilter";
 
-const FilterMenu: FC<Props> = ({ isOpen, setIsOpen }: Props) => {
+const FilterMenu: FC<Props> = ({
+  isOpen,
+  setIsOpen,
+  setFilterValueUpdated,
+  setFilterValue,
+  filterValueUpdated,
+  filterValue,
+}: Props) => {
+  const [saveValues, setSaveValues] = useState({});
+
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add(FLITER_OPEN_CLASS);
@@ -110,6 +125,34 @@ const FilterMenu: FC<Props> = ({ isOpen, setIsOpen }: Props) => {
   const closeFilter = (e: any) => {
     e.stopPropagation();
     setIsOpen(false);
+  };
+
+  const handleSaveFilter = () => {
+    let array: any = [];
+    Object.entries(saveValues).forEach((entry: any) => {
+      const [key, value] = entry;
+
+      Object.keys(value).forEach((innerKey: string) => {
+        if (value[innerKey] === true) {
+          const addNewGroue = { [key]: { eq: innerKey } };
+          array.push(addNewGroue);
+        }
+      });
+    });
+    setFilterValue({
+      ...filterValue,
+      or: [...filterValue.or.concat(array)],
+    });
+    setIsOpen(false);
+    setFilterValueUpdated(!filterValueUpdated);
+    array = [];
+  };
+  const handleCancelFilter = () => {
+    setFilterValue({
+      ...filterValue,
+      or: [],
+    });
+    setSaveValues({});
   };
 
   return (
@@ -125,35 +168,22 @@ const FilterMenu: FC<Props> = ({ isOpen, setIsOpen }: Props) => {
         <h1 className="pageTitle">Filtrera</h1>
       </FilterHeader>
       <FilterBody>
+        <FilterCheckbox
+          setSaveValues={setSaveValues}
+          group={fieldsForm[2]}
+          saveValues={saveValues}
+        />
+        <FilterCheckbox
+          setSaveValues={setSaveValues}
+          group={fieldsForm[9]}
+          saveValues={saveValues}
+        />
         {/* all the small filtering components, the following p tag is just for showing how it looks like, can be removed when component is added */}
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-          cum corrupti blanditiis excepturi, illum dolore fugiat consequuntur
-          explicabo, laborum soluta exercitationem, totam amet omnis ab vel modi
-          optio suscipit atque. Lorem ipsum dolor sit, amet consectetur
-          adipisicing elit. Odio explicabo aut hic quod rerum accusamus
-          repellendus natus eum ex id voluptatibus facilis distinctio, provident
-          quo soluta laudantium, blanditiis ipsa quisquam. Lorem ipsum dolor,
-          sit amet consectetur adipisicing elit. Eveniet facere itaque magnam
-          dolore ab beatae corrupti asperiores, velit vitae vero, excepturi
-          mollitia in placeat soluta doloribus iusto sint harum ea.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-          cum corrupti blanditiis excepturi, illum dolore fugiat consequuntur
-          explicabo, laborum soluta exercitationem, totam amet omnis ab vel modi
-          optio suscipit atque. Lorem ipsum dolor sit, amet consectetur
-          adipisicing elit. Odio explicabo aut hic quod rerum accusamus
-          repellendus natus eum ex id voluptatibus facilis distinctio, provident
-          quo soluta laudantium, blanditiis ipsa quisquam. Lorem ipsum dolor,
-          sit amet consectetur adipisicing elit. Eveniet facere itaque magnam
-          dolore ab beatae corrupti asperiores, velit vitae vero, excepturi
-          mollitia in placeat soluta doloribus iusto sint harum ea.
-        </p>
-        <button className="saveBtn" type="button">
+
+        <button className="saveBtn" type="button" onClick={handleSaveFilter}>
           Spara
         </button>
-        <button className="resetBtn" type="button">
+        <button className="resetBtn" type="button" onClick={handleCancelFilter}>
           Avbryt/ Nollställ
         </button>
       </FilterBody>

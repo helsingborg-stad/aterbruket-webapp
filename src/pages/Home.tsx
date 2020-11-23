@@ -165,22 +165,42 @@ const Home: FC<Props> = ({
   const [showQRCamera, setShowQRCamera] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-
   const updateSearch = (event: React.ChangeEvent<any>) => {
     const { target } = event;
     const { value } = target;
     setSearchValue(value);
   };
-
   const [items, setItems] = useState([]) as any;
+  const [filterValueUpdated, setFilterValueUpdated] = useState(false);
+  const [filterValue, setFilterValue] = useState({
+    version: { eq: 0 },
+    or: [],
+  }) as any;
 
   const fetchItems = async () => {
-    const result = (await API.graphql(
-      graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
-    )) as GraphQLResult<ListAdvertsQuery>;
+    let result;
+    if (filterValue.or.length > 0) {
+      result = (await API.graphql(
+        graphqlOperation(listAdverts, { filter: filterValue })
+      )) as GraphQLResult<ListAdvertsQuery>;
+    } else {
+      result = (await API.graphql(
+        graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
+      )) as GraphQLResult<ListAdvertsQuery>;
+    }
+
     const advertItems: any = result.data?.listAdverts?.items;
     setItems(advertItems);
+
+    setFilterValue({
+      ...filterValue,
+      or: [],
+    });
   };
+
+  useEffect(() => {
+    fetchItems();
+  }, [filterValueUpdated]);
 
   useEffect(() => {
     fetchItems();
@@ -235,7 +255,15 @@ const Home: FC<Props> = ({
               Filter <MdTune id="filterIcon" />
             </button>
 
-            <FilterMenu setIsOpen={setIsOpen} isOpen={isOpen} />
+            <FilterMenu
+              setIsOpen={setIsOpen}
+              isOpen={isOpen}
+              // fetchItems={fetchItems}
+              filterValueUpdated={filterValueUpdated}
+              setFilterValueUpdated={setFilterValueUpdated}
+              filterValue={filterValue}
+              setFilterValue={setFilterValue}
+            />
           </SearchFilterDiv>
           <AdvertContainer
             items={items}

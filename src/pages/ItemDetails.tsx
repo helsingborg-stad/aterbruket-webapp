@@ -54,6 +54,7 @@ const ItemImg = styled.img`
   width: 300px;
   height: 300px;
   margin: 0;
+  border-radius: 9.5px 0 0 9.5px;
 `;
 
 const Table = styled.table`
@@ -186,7 +187,6 @@ const ItemDetails: FC<ParamTypes> = () => {
     return <td key={str}>{str}</td>;
   };
 
-  const history = useHistory();
   const allDetails = (
     <>
       <DivBtns>

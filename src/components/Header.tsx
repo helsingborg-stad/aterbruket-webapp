@@ -1,5 +1,8 @@
+/* eslint-disable no-nested-ternary */
 import React, { FC } from "react";
 import styled from "styled-components";
+import { useLocation, Link } from "react-router-dom";
+import { RiArrowLeftSLine } from "react-icons/ri";
 
 const HeaderDiv = styled.header`
   width: ${(props) => `${props.theme.headerTheme.width}%`};
@@ -19,24 +22,52 @@ const HeaderDiv = styled.header`
     font-size: ${(props) => `${props.theme.headerTheme.fontSize}px`};
     line-height: ${(props) => `${props.theme.headerTheme.lineHeight}%`};
   }
+`;
 
-  a {
-    text-decoration: none;
+const MenuLink = styled(Link)`
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  line-height: 20px;
+  font-size: 20px;
+  padding: 0;
+  color: #205400;
+
+  p {
+    margin-left: 10px;
   }
-  a:visited {
-    color: black;
+
+  .icon {
+    font-size: 22px;
   }
 `;
 
-
 const Header: FC = () => {
+  const location = useLocation();
+  const path = location.pathname.slice(1);
+  const subPath = location.pathname.slice(9);
+
   return (
     <HeaderDiv>
+      {subPath === "personal-info" ||
+      subPath === "myadverts" ||
+      subPath === "statics" ? (
+        <MenuLink to="/profile">
+          <RiArrowLeftSLine className="icon" />
+          <p>Meny</p>
+        </MenuLink>
+      ) : null}
       <h2>
-        Haffa och var en <br />
-        miljöhjälte!
+        {subPath === "personal-info"
+          ? "Kontaktuppgifter"
+          : subPath === "myadverts"
+          ? "Mina annonser"
+          : subPath === "statics"
+          ? "Haffa statics"
+          : path === "haffat"
+          ? "Grejer du Haffat!"
+          : "Haffa och var en miljöhjälte!"}
       </h2>
-      
     </HeaderDiv>
   );
 };

@@ -67,7 +67,7 @@ const MenuBar: FC<Props> = ({ setQrCamera, qrCamera }: Props) => {
       </Link>
       <Link className="link" to="/profile">
         <MdPerson className="icon" />
-        Profil
+        Profile
       </Link>
     </MenuDiv>
   );

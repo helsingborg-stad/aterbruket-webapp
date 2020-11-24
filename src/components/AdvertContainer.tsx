@@ -49,9 +49,8 @@ const AdvertContainer: FC<IAdvert> = ({
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">
-        {itemsFrom === "home" && <h3>Alla</h3>}
-        {itemsFrom === "haffat" && <h3>Alla mina haffade</h3>}
-        {itemsFrom === "profile" && <h3>Alla mina tillagda</h3>}
+        {itemsFrom === "home" && <h3>Alla möbler</h3>}
+        {itemsFrom === "haffat" && <h3>Saker att hämta</h3>}
       </div>
 
       {itemsFrom === "home" &&

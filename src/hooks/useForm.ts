@@ -46,7 +46,7 @@ const useForm = (initialValues: any, mutation: string) => {
 
   const handleInputChange = async (event: React.ChangeEvent<any>) => {
     const { target } = event;
-    let { name, value } = target;
+    const { name, value } = target;
     if (target.files) {
       console.log("target.files", target.files);
       target.files[0].uuid = uuidv4();
@@ -91,7 +91,7 @@ const useForm = (initialValues: any, mutation: string) => {
     }
   };
 
- /*  const sendEmail = (data: any) => {
+  /*  const sendEmail = (data: any) => {
     const templateParams = {
       id: data.id,
       contactPerson: data.contactPerson,
@@ -124,7 +124,7 @@ const useForm = (initialValues: any, mutation: string) => {
     handleSubmit,
     handleCheckboxChange,
     result,
-    file
+    file,
   };
 };
 

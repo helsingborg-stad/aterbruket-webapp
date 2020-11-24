@@ -1,85 +1,49 @@
-import API, { GraphQLResult } from "@aws-amplify/api";
-import { graphqlOperation } from "aws-amplify";
-import React, { useContext, useEffect, useState, useCallback, FC } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
-import { ListAdvertsQuery } from "../API";
-import AdvertContainer from "../components/AdvertContainer";
-import { listAdverts } from "../graphql/queries";
-import { UserContext } from "../contexts/UserContext";
+import { RiArrowRightSLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
-const InformationFrame = styled.header`
-  padding: 24px;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.04)),
-    #ffffff;
-  border-radius: 4.5px;
-`;
+const OptionLink = styled(Link)`
+  width: 100%;
+  height: 60px;
+  display: flex;
+  font-weight: 500;
+  font-size: 24px;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 16px;
+  background-color: #e1e9db;
+  color: #205400;
+  text-decoration: none;
+  border: 1px solid grey;
 
-const InformationHeader = styled.p`
-  text-transform: uppercase;
-  color: #0069b4;
-`;
-
-const InformationContainer = styled.div`
-  width: 90%;
-  height: 100vh;
-  background: #fcfcfc;
+  :active,
+  :focus {
+    color: #80b14a;
+  }
 `;
 
 const Profile: FC = () => {
-  const user: any = useContext(UserContext);
-  const [adverts, setAdverts] = useState([{}]) as any;
+  const menuOptions = [
+    {
+      option: "personal-info",
+      title: "Kontaktuppgifter",
+    },
+    { option: "myadverts", title: "Mina annonser" },
 
-  // Fetch and replace placeholder
-
-  const fetchCreatedAdverts = useCallback(async () => {
-    const result = (await API.graphql(
-      graphqlOperation(listAdverts, {
-        filter: {
-          and: [{ giver: { eq: user.attributes.sub } }, { version: { eq: 0 } }],
-        },
-      })
-    )) as GraphQLResult<ListAdvertsQuery>;
-
-    const advertItem = result.data?.listAdverts?.items;
-    setAdverts(advertItem);
-  }, [user.attributes.sub]);
-
-  useEffect(() => {
-    if (user.attributes.sub) {
-      fetchCreatedAdverts();
-    }
-  }, [fetchCreatedAdverts, user]);
-
-  const userKeys = Object.keys(user.attributes);
-  const userInfo = userKeys.map((key) => {
-    return (
-      <div key={key}>
-        <InformationHeader>{key}</InformationHeader>
-        <InformationFrame>{user.attributes[key]}</InformationFrame>
-      </div>
-    );
-  });
+    { option: "statics", title: "Haffa statics" },
+  ];
 
   return (
     <main>
-      <h1> {user.attributes.name} </h1>
-      <InformationContainer>
-        <h3> Kontakt </h3>
-        {userInfo}
-        <div>
-          <InformationHeader>DEPARTMENT</InformationHeader>
-          {!user["custom:department"] ? (
-            <InformationFrame>Kan inte hitta avdelning..</InformationFrame>
-          ) : (
-            <InformationFrame>{user["custom:department"]}</InformationFrame>
-          )}
-        </div>
-        <AdvertContainer
-          searchValue={false}
-          items={adverts}
-          itemsFrom="profile"
-        />
-      </InformationContainer>
+      {menuOptions.map((opt: any) => {
+        return (
+          <OptionLink to={`/profile/${opt.option}`} key={opt.option}>
+            <p>{opt.title}</p> <RiArrowRightSLine />
+          </OptionLink>
+        );
+      })}
     </main>
   );
 };

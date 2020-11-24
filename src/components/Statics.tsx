@@ -99,7 +99,7 @@ const Admin: FC = () => {
 
   return (
     <main>
-      <h2> Admin </h2>
+      <h2> Haffa Statics </h2>
       <OptionDiv>
         {infoOptions.map((opt) => {
           return (

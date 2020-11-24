@@ -43,6 +43,7 @@ const CardDiv = styled.div`
       height: 100%;
       align-self: stretch;
       object-fit: cover;
+      border-radius: 9.5px 0 0 9.5px;
     }
   }
 
@@ -83,24 +84,27 @@ const CardDiv = styled.div`
   }
 `;
 
-const Card: FC<Props> = ({ id, title, description, status, quantity, imageKey }: Props) => {
-  const [url, setURL] = useState(undefined) as any; 
+const Card: FC<Props> = ({
+  id,
+  title,
+  description,
+  status,
+  quantity,
+  imageKey,
+}: Props) => {
+  const [url, setURL] = useState(undefined) as any;
   const fetchImage = (): void => {
-    Storage.get(imageKey)
-    .then((url: any) => {
-      setURL(url)
-    })
-  }
+    Storage.get(imageKey).then((url: any) => {
+      setURL(url);
+    });
+  };
   useEffect(() => {
-    fetchImage()
-  }, [])
+    fetchImage();
+  }, []);
   return (
     <CardDiv as={Link} to={`/item/${id}`} id={id}>
       <div className="picDiv">
-        <img
-          src={url}
-          alt=""
-        />
+        <img src={url} alt="" />
       </div>
       <div className="infoDiv">
         <h3>{title}</h3>

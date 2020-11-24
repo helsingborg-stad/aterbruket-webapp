@@ -46,7 +46,7 @@ const AddItem: FC<Props> = ({
     handleCheckboxChange,
     redirect,
     result,
-    file
+    file,
   } = useForm(
     {
       title: "",
@@ -66,11 +66,11 @@ const AddItem: FC<Props> = ({
         wood: false,
       },
       description: "",
-      department: "",
+      department: user["custom:department"] ? user["custom:department"] : "",
       location: "",
       instructions: "",
-      contactPerson: user.attributes.name,
-      email: user.attributes.email,
+      contactPerson: user.attributes.name ? user.attributes.name : "",
+      email: user.attributes.email ? user.attributes.email : "",
       phoneNumber: "",
       giver: user.attributes.sub,
       climateImpact: 0,
@@ -80,13 +80,13 @@ const AddItem: FC<Props> = ({
     createAdvert
   );
 
-  const [imageURL, setImageURL] = useState('')
+  const [imageURL, setImageURL] = useState("");
 
   useEffect(() => {
-    if(file) {
-      setImageURL(URL.createObjectURL(file))
+    if (file) {
+      setImageURL(URL.createObjectURL(file));
     }
-  }, [file])
+  }, [file]);
 
   if (redirect) {
     return <Redirect to={`/item/${redirect}`} />;
@@ -96,7 +96,7 @@ const AddItem: FC<Props> = ({
   }
   return (
     <main>
-      {file && <ItemImg src={imageURL}/>}
+      {file && <ItemImg src={imageURL} />}
       {!alreadyAQRCode ? (
         <Form
           values={values}

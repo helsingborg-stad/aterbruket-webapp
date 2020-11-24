@@ -38,7 +38,15 @@ const PersonalInfo: FC = () => {
   return (
     <main>
       <h2> {user.attributes.name} </h2>
-      <InformationContainer>{userInfo}</InformationContainer>
+      <InformationContainer>
+        {userInfo}
+        <InformationHeader>DEPARTMENT</InformationHeader>
+        {!user["custom:department"] ? (
+          <InformationFrame>Kan inte hitta avdelning..</InformationFrame>
+        ) : (
+          <InformationFrame>{user["custom:department"]}</InformationFrame>
+        )}
+      </InformationContainer>
     </main>
   );
 };

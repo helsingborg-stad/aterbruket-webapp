@@ -104,7 +104,6 @@ const ItemDetails: FC<ParamTypes> = () => {
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
       setImage(url);
-      item.images[0].url = url;
       setItem(item);
     });
   };
@@ -337,6 +336,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           setEditItem={setEditItem}
           item={item}
           closeEditformAndFetchItem={closeEditformAndFetchItem}
+          image={image}
         />
       ) : regive ? (
         <RegiveForm

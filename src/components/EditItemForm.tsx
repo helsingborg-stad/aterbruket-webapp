@@ -51,12 +51,14 @@ interface Props {
   };
   setEditItem: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
+  image: string
 }
 
 const EditItemForm: FC<Props> = ({
   setEditItem,
   item,
   closeEditformAndFetchItem,
+  image
 }: Props) => {
   const {
     values,
@@ -102,7 +104,7 @@ const EditItemForm: FC<Props> = ({
     updateAdvert
   );
 
-  const [imageURL, setImageURL] =  useState(item.images[0].url)	
+  const [imageURL, setImageURL] =  useState(image)	
 
   useEffect(() => {	
     if(file) {	

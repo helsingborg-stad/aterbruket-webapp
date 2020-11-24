@@ -16,8 +16,8 @@ import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
 import EditItemForm from "../components/EditItemForm";
-import { loadMapApi } from "../utils/GoogleMapsUtils";
-import Map from "../components/Map";
+// import { loadMapApi } from "../utils/GoogleMapsUtils";
+// import Map from "../components/Map";
 import CarouselComp from "../components/CarouselComp";
 import { UserContext } from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
@@ -76,15 +76,15 @@ const Table = styled.table`
     font-weight: 400;
   }
 `;
-
-const MapContainer = styled.div`
-  width: 80%;
-  height: 45vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-`;
+/* comment out map for debugging purpose  */
+// const MapContainer = styled.div`
+//   width: 80%;
+//   height: 45vh;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   border-radius: 5px;
+// `;
 
 interface ParamTypes {
   id: string;
@@ -100,7 +100,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const user: any = useContext(UserContext);
   const [image, setImage] = useState("") as any;
   const [itemUpdated, setItemUpdated] = useState(false);
-  
+
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
       setImage(url);
@@ -130,18 +130,20 @@ const ItemDetails: FC<ParamTypes> = () => {
     setItemUpdated(false);
   }, [itemUpdated]);
 
-  useEffect(() => {
-    const googleMapScript = loadMapApi();
+  /* comment out map for debugging purpose  */
+  // useEffect(() => {
+  //   const googleMapScript = loadMapApi();
 
-    const cb = () => {
-      setScriptLoaded(true);
-    };
-    googleMapScript.addEventListener("load", cb);
+  //   const cb = () => {
+  //     setScriptLoaded(true);
+  //   };
+  //   googleMapScript.addEventListener("load", cb);
 
-    return () => {
-      googleMapScript.removeEventListener("load", cb);
-    };
-  }, []);
+  //   return () => {
+  //     googleMapScript.removeEventListener("load", cb);
+  //   };
+  // }, []);
+
   const updateItem = async (newStatus: string) => {
     const result = (await API.graphql(
       graphqlOperation(updateAdvert, {
@@ -310,7 +312,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           </tr>
         </tbody>
       </Table>
-      <MapContainer>
+      {/* <MapContainer>
         {item && item.location && (
           <Map
             mapType={google.maps.MapTypeId.ROADMAP}
@@ -322,7 +324,7 @@ const ItemDetails: FC<ParamTypes> = () => {
         {!item.location && (
           <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
         )}
-      </MapContainer>
+      </MapContainer> */}
 
       <QRCode id={id} />
     </>

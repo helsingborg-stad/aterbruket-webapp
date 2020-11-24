@@ -49,7 +49,7 @@ const ScanBtn = styled.button`
     0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
   border-radius: 34.5px;
   position: absolute;
-  top: 32vh;
+  top: 27vh;
   right: 30px;
   outline: none;
 

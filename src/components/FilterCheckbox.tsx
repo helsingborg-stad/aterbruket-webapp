@@ -36,8 +36,8 @@ const InputGroup = styled.div`
 const GroupCtn = styled.div`
    {
     width: 350px;
-    height: 416px;
-    margin-bottom: 48px;
+    height: 100%;
+    margin-bottom: 3px;
   }
 `;
 

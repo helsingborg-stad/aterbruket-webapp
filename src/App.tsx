@@ -22,7 +22,7 @@ import { v4 as uuidv4 } from "uuid";
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.appTheme.minHeight}vh`};
   min-width: ${(props) => `${props.theme.appTheme.minWidth}px`};
-  width: ${(props) => `${props.theme.appTheme.width}vw`};
+  width: ${(props) => `${props.theme.appTheme.width}%`};
   padding: ${(props) =>
     `${props.theme.appTheme.padding[0]}rem ${props.theme.appTheme.padding[1]}rem ${props.theme.appTheme.padding[2]}rem ${props.theme.appTheme.padding[3]}rem`};
   box-sizing: ${(props) => props.theme.appTheme.boxSizing};

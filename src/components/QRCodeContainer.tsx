@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import QRCode from "qrcode.react";
 import styled from "styled-components";
-import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import HBGLogo from "../pics/HBG_logo_staende_SV.jpg";
 
@@ -36,6 +35,7 @@ const QRCodeCont = styled.div`
     font-style: italic;
     font-size: 0.8em;
     text-align: center;
+    margin-bottom: 8px;
   }
   img {
     width: 46px;

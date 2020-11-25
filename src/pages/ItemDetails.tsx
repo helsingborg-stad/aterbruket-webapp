@@ -60,9 +60,17 @@ const ImgDiv = styled.div`
 
 const ItemImg = styled.img`
   max-height: 300px;
+  max-width: 100%;
   margin: 0;
   border-radius: 9.5px;
   object-fit: contain;
+`;
+
+const Line = styled.div`
+   {
+    width: 96%;
+    border-top: 3px dashed #f5f5f5;
+  }
 `;
 
 const Table = styled.table`
@@ -370,6 +378,8 @@ const ItemDetails: FC<ParamTypes> = () => {
           <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
         )}
       </MapContainer> */}
+
+      <Line />
 
       <QRCode id={id} />
     </>

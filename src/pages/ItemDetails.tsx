@@ -50,11 +50,18 @@ const DivBtns = styled.div`
   }
 `;
 
-const ItemImg = styled.img`
+const ImgDiv = styled.div`
   width: 300px;
   height: 300px;
+  display: flex;
+  justify-content: center;
+`;
+
+const ItemImg = styled.img`
+  max-width: 100%;
+  max-height: 300px;
   margin: 0;
-  border-radius: 9.5px 0 0 9.5px;
+  border-radius: 9.5px;
 `;
 
 const Table = styled.table`
@@ -100,7 +107,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const user: any = useContext(UserContext);
   const [image, setImage] = useState("") as any;
   const [itemUpdated, setItemUpdated] = useState(false);
-  
+
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
       setImage(url);
@@ -246,7 +253,9 @@ const ItemDetails: FC<ParamTypes> = () => {
       {!image ? (
         <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
       ) : (
-        <ItemImg src={image} alt="" onClick={() => setShowCarousel(true)} />
+        <ImgDiv>
+          <ItemImg src={image} alt="" onClick={() => setShowCarousel(true)} />
+        </ImgDiv>
       )}
 
       <Table>

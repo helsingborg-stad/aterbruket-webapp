@@ -4,6 +4,7 @@ import useForm from "../hooks/useForm";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
 import styled from "styled-components";	
+import Loader from "react-loader-spinner";
 
 const ItemImg = styled.img`	
   width: 300px;	
@@ -67,7 +68,8 @@ const EditItemForm: FC<Props> = ({
     handleCheckboxChange,
     redirect,
     result,
-    file
+    file,
+    fileUploading
   } = useForm(
     {
       id: item.id,
@@ -113,15 +115,17 @@ const EditItemForm: FC<Props> = ({
     }	
   }, [file])
 
-  if (redirect) {
+  if (redirect && !fileUploading) {
+    console.log(fileUploading)
     closeEditformAndFetchItem();
   }
   return (
     <>
-      <button type="button" onClick={() => setEditItem(false)}>
+      
+      
+      {!redirect ? <button type="button" onClick={() => setEditItem(false)}>
         X
-      </button>
-      <ItemImg src={imageURL}/>
+      </button> && <ItemImg src={imageURL}/> && 
       <Form
         values={values}
         fields={fields}
@@ -129,7 +133,7 @@ const EditItemForm: FC<Props> = ({
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
         handleCheckboxChange={handleCheckboxChange}
-      />
+      /> : <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />}
     </>
   );
 };

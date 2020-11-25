@@ -4,6 +4,7 @@ import useForm from "../hooks/useForm";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
 import { API, graphqlOperation } from "aws-amplify";
+import Loader from "react-loader-spinner";
 
 interface IareaOfUse {
   indoors: boolean;
@@ -57,6 +58,9 @@ const RegiveForm: FC<Props> = ({
     handleSubmit,
     handleCheckboxChange,
     redirect,
+    result,
+    file,
+    fileUploading
   } = useForm(
     {
       id: item.id,
@@ -93,14 +97,14 @@ const RegiveForm: FC<Props> = ({
     updateAdvert
   );
 
-  if (redirect) {
+  if (redirect && !fileUploading) {
     closeEditformAndFetchItem();
   }
   return (
     <>
-      <button type="button" onClick={() => setRegive(false)}>
+      {!redirect && <button type="button" onClick={() => setRegive(false)}>
         X
-      </button>
+      </button> &&
       <Form
         values={values}
         fields={fields}
@@ -108,7 +112,8 @@ const RegiveForm: FC<Props> = ({
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
         handleCheckboxChange={handleCheckboxChange}
-      />
+      />}
+      {redirect && <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />}
     </>
   );
 };

@@ -11,8 +11,8 @@ import { UserContext } from "../contexts/UserContext";
 import styled from "styled-components";
 
 const ItemImg = styled.img`
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   margin: 0;
 `;
 

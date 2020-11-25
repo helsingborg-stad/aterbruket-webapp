@@ -182,7 +182,12 @@ const ItemDetails: FC<ParamTypes> = () => {
         el.option.map((op: any) => {
           if (op.eng[0] === word) {
             sweWord = op.swe[0];
-            console.log(sweWord);
+          }
+        });
+      } else if (el.name === cat && el.swe) {
+        el.eng.map((op: any, idx: number) => {
+          if (op === word) {
+            sweWord = el.swe[idx];
           }
         });
       }
@@ -194,8 +199,6 @@ const ItemDetails: FC<ParamTypes> = () => {
     Object.entries(obj[0]).forEach(([key, value]) => {
       if (value) {
         const sweWord = translate(key, cat);
-
-        console.log(sweWord);
         if (str.length === 0) {
           str = `${str} ${sweWord}`;
         } else {
@@ -272,7 +275,11 @@ const ItemDetails: FC<ParamTypes> = () => {
         <tbody>
           <tr>
             <td>Kategori/Typ av möbel:</td>
-            <td>{item.category}</td>
+            <td>
+              {item.category
+                ? translate(item.category, "category")
+                : item.category}
+            </td>
           </tr>
           <tr>
             <td>Id:</td>
@@ -305,7 +312,11 @@ const ItemDetails: FC<ParamTypes> = () => {
           </tr>
           <tr>
             <td>Skick:</td>
-            <td>{item.condition}</td>
+            <td>
+              {item.condition
+                ? translate(item.condition, "condition")
+                : item.condition}
+            </td>
           </tr>
           <tr>
             <td>Användningsområde:</td>

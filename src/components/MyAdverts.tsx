@@ -29,7 +29,7 @@ const MyAdverts: FC = () => {
     }
   }, [user]);
   return (
-    <main>
+    <main style={{ marginTop: "60px" }}>
       <AdvertContainer
         items={adverts}
         searchValue={false}

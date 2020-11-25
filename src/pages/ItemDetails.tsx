@@ -22,6 +22,7 @@ import CarouselComp from "../components/CarouselComp";
 import { UserContext } from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
+import { fieldsForm } from "../utils/formUtils";
 
 const DivBtns = styled.div`
   display: flex;
@@ -50,11 +51,18 @@ const DivBtns = styled.div`
   }
 `;
 
-const ItemImg = styled.img`
+const ImgDiv = styled.div`
   width: 300px;
   height: 300px;
+  display: flex;
+  justify-content: center;
+`;
+
+const ItemImg = styled.img`
+  max-height: 300px;
   margin: 0;
-  border-radius: 9.5px 0 0 9.5px;
+  border-radius: 9.5px;
+  object-fit: contain;
 `;
 
 const Table = styled.table`
@@ -173,15 +181,35 @@ const ItemDetails: FC<ParamTypes> = () => {
   const onClickPickUpBtn = () => {
     updateItem("pickedUp");
   };
+  const translate = (word: string, cat: any) => {
+    let sweWord = "";
 
-  const mapingObject = (obj: any) => {
+    fieldsForm.find((el) => {
+      if (el.name === cat && el.option) {
+        el.option.map((op: any) => {
+          if (op.eng[0] === word) {
+            sweWord = op.swe[0];
+          }
+        });
+      } else if (el.name === cat && el.swe) {
+        el.eng.map((op: any, idx: number) => {
+          if (op === word) {
+            sweWord = el.swe[idx];
+          }
+        });
+      }
+    });
+    return sweWord;
+  };
+  const mapingObject = (obj: any, cat: string) => {
     let str = "";
     Object.entries(obj[0]).forEach(([key, value]) => {
       if (value) {
+        const sweWord = translate(key, cat);
         if (str.length === 0) {
-          str = `${str} ${key}`;
+          str = `${str} ${sweWord}`;
         } else {
-          str = `${str}, ${key}`;
+          str = `${str}, ${sweWord}`;
         }
       }
     });
@@ -247,14 +275,20 @@ const ItemDetails: FC<ParamTypes> = () => {
       {!image ? (
         <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
       ) : (
-        <ItemImg src={image} alt="" onClick={() => setShowCarousel(true)} />
+        <ImgDiv>
+          <ItemImg src={image} alt="" onClick={() => setShowCarousel(true)} />
+        </ImgDiv>
       )}
 
       <Table>
         <tbody>
           <tr>
             <td>Kategori/Typ av möbel:</td>
-            <td>{item.category}</td>
+            <td>
+              {item.category
+                ? translate(item.category, "category")
+                : item.category}
+            </td>
           </tr>
           <tr>
             <td>Id:</td>
@@ -279,15 +313,27 @@ const ItemDetails: FC<ParamTypes> = () => {
 
           <tr>
             <td>Material:</td>
-            {item.material ? mapingObject(item.material) : <td> </td>}
+            {item.material ? (
+              mapingObject(item.material, "material")
+            ) : (
+              <td> </td>
+            )}
           </tr>
           <tr>
             <td>Skick:</td>
-            <td>{item.condition}</td>
+            <td>
+              {item.condition
+                ? translate(item.condition, "condition")
+                : item.condition}
+            </td>
           </tr>
           <tr>
             <td>Användningsområde:</td>
-            {item.areaOfUse ? mapingObject(item.areaOfUse) : <td> </td>}
+            {item.areaOfUse ? (
+              mapingObject(item.areaOfUse, "areaOfUse")
+            ) : (
+              <td> </td>
+            )}
           </tr>
           <tr>
             <td>Klimatpåverkan:</td>

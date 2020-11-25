@@ -12,8 +12,8 @@ import styled from "styled-components";
 import Loader from "react-loader-spinner";
 
 const ItemImg = styled.img`
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   margin: 0;
 `;
 

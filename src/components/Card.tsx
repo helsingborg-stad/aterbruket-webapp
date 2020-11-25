@@ -15,7 +15,8 @@ interface Props {
 
 const CardDiv = styled.div`
   width: 100%;
-  height: 180px;
+  max-height: 350px;
+  min-height: 170px;
   background-color: ${(props) => props.theme.cardTheme.backgroundColor};
   margin-top: 10px;
   border-radius: 9.5px;

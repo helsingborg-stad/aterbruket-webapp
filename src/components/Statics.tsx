@@ -145,7 +145,7 @@ const Admin: FC = () => {
                       ? "Övrigt"
                       : null}
                   </h4>
-                  <h4>{group.mostNum} styken</h4>
+                  <h4>{group.mostNum} stycken</h4>
                 </div>
               ) : infoOption === "least" ? (
                 <div>
@@ -165,7 +165,7 @@ const Admin: FC = () => {
                       ? "Övrigt"
                       : null}
                   </h4>
-                  <h4>{group.minNum} styken</h4>
+                  <h4>{group.minNum} stycken</h4>
                 </div>
               ) : null}
             </GroupDiv>

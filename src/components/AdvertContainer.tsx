@@ -10,6 +10,7 @@ interface IAdvert {
 
 const AdvertContainerDiv = styled.div`
   width: 90%;
+  max-width: 700px;
   display: flex;
   align-items: center;
   flex-direction: column;

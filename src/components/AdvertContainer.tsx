@@ -52,6 +52,7 @@ const AdvertContainer: FC<IAdvert> = ({
       <div className="allaDiv">
         {itemsFrom === "home" && <h3>Alla möbler</h3>}
         {itemsFrom === "haffat" && <h3>Saker att hämta</h3>}
+        {itemsFrom === "profile" && <h3>Mina annonser</h3>}
       </div>
 
       {itemsFrom === "home" &&

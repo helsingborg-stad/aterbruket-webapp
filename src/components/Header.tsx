@@ -61,11 +61,13 @@ const Header: FC = () => {
         {subPath === "personal-info"
           ? "Kontaktuppgifter"
           : subPath === "myadverts"
-          ? "Mina annonser"
+          ? "Dina grejer som kan Haffas!"
           : subPath === "statics"
-          ? "Haffa statics"
+          ? "Haffa statistik"
           : path === "haffat"
           ? "Grejer du Haffat!"
+          : path === "message"
+          ? "Din Haffa-meddelanden (kommer i senare version...)"
           : "Haffa och var en miljöhjälte!"}
       </h2>
     </HeaderDiv>

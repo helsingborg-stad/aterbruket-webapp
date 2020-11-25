@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const OptionsDiv = styled.div`
   width: 90%;
   max-width: 700px;
+  margin-top: 60px;
 `;
 
 const OptionLink = styled(Link)`
@@ -46,15 +47,16 @@ const Profile: FC = () => {
 
   return (
     <main>
-      {menuOptions.map((opt: any) => {
-        return (
-          <OptionsDiv>
+      {" "}
+      <OptionsDiv>
+        {menuOptions.map((opt: any) => {
+          return (
             <OptionLink to={`/profile/${opt.option}`} key={opt.option}>
               <p>{opt.title}</p> <RiArrowRightSLine />
             </OptionLink>
-          </OptionsDiv>
-        );
-      })}
+          );
+        })}{" "}
+      </OptionsDiv>
     </main>
   );
 };

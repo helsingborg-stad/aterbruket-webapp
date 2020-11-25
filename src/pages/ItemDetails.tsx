@@ -58,10 +58,10 @@ const ImgDiv = styled.div`
 `;
 
 const ItemImg = styled.img`
-  max-width: 100%;
   max-height: 300px;
   margin: 0;
   border-radius: 9.5px;
+  object-fit: contain;
 `;
 
 const Table = styled.table`

@@ -6,7 +6,7 @@ import { RiArrowLeftSLine } from "react-icons/ri";
 
 const HeaderDiv = styled.header`
   width: ${(props) => `${props.theme.headerTheme.width}%`};
-  height: ${(props) => `${props.theme.headerTheme.height}px`};
+  height: ${(props) => `${props.theme.headerTheme.height}vh`};
   display: ${(props) => props.theme.headerTheme.display};
   flex-direction: ${(props) => props.theme.headerTheme.flexDirection};
   align-items: ${(props) => props.theme.headerTheme.alignItems};
@@ -31,10 +31,10 @@ const MenuLink = styled(Link)`
   line-height: 20px;
   font-size: 20px;
   padding: 0;
-  color: #205400;
+  color: grey;
 
   p {
-    margin-left: 10px;
+    margin-left: 5px;
   }
 
   .icon {
@@ -61,11 +61,13 @@ const Header: FC = () => {
         {subPath === "personal-info"
           ? "Kontaktuppgifter"
           : subPath === "myadverts"
-          ? "Mina annonser"
+          ? "Dina grejer som kan Haffas!"
           : subPath === "statics"
-          ? "Haffa statics"
+          ? "Haffa statistik"
           : path === "haffat"
           ? "Grejer du Haffat!"
+          : path === "message"
+          ? "Din Haffa-meddelanden (kommer i senare version...)"
           : "Haffa och var en miljöhjälte!"}
       </h2>
     </HeaderDiv>

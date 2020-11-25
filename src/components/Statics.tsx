@@ -11,7 +11,7 @@ import CountingCategorys from "../hooks/CountingCategorys";
 const OptionDiv = styled.div`
   width: 100%;
   text-align: center;
-  margin-bottom: 5px;
+  margin: 10px;
   button {
     border: none;
     margin: 2px;
@@ -38,13 +38,21 @@ const InfoWrapper = styled.div`
 `;
 
 const GroupDiv = styled.div`
-  width: 49.2%;
+  width: 90%;
+  max-width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 0.5px solid #ececec;
+  border-radius: 20px;
   text-align: center;
+  margin: 5px;
+  background-color: rgb(247, 247, 247);
+
+  .groupTitle {
+    margin-bottom: 0;
+  }
 `;
 const Admin: FC = () => {
   const [statusGroup, setStatusGroup] = useState([]) as any;
@@ -56,7 +64,6 @@ const Admin: FC = () => {
       { option: "available", items: [] as any },
       { option: "reserved", items: [] as any },
       { option: "pickedUp", items: [] as any },
-      { option: "delivered", items: [] as any },
     ];
     advertItems.forEach((i: any) => {
       const index = newStatusGroup.findIndex(
@@ -99,12 +106,12 @@ const Admin: FC = () => {
 
   return (
     <main>
-      <h2> Haffa Statics </h2>
       <OptionDiv>
         {infoOptions.map((opt) => {
           return (
             <button
               onClick={() => infoOptionControl(opt.key)}
+              className={opt.key}
               key={opt.key}
               type="button"
             >
@@ -117,9 +124,9 @@ const Admin: FC = () => {
         {statusGroup.map((group: any) => {
           return (
             <GroupDiv key={group.option}>
-              <h4>{group.option.toUpperCase()}</h4>
+              <h4 className="groupTitle">{group.option.toUpperCase()}</h4>
               {infoOption === "total" ? (
-                <h3> {group.items.length} stycken</h3>
+                <h4> {group.items.length} stycken</h4>
               ) : infoOption === "most" ? (
                 <div>
                   <h4>

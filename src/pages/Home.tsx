@@ -23,6 +23,7 @@ const AddBtn = styled.button`
   border: 0;
   padding: 0px 0px 0px 12px;
   width: 90%;
+  max-width: 700px;
   height: 50px;
   border-radius: 14.5px;
   box-shadow: 0px 0px 2px rgba(98, 98, 98, 0.18),
@@ -72,6 +73,7 @@ const ScanBtn = styled.button`
 
 const SearchFilterDiv = styled.div`
   width: 90%;
+  max-width: 600px;
   display: flex;
   justify-content: space-around;
   align-items: center;

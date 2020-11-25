@@ -3,20 +3,30 @@ import styled from "styled-components";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
+const OptionsDiv = styled.div`
+  width: 90%;
+  max-width: 700px;
+  margin-top: 60px;
+`;
+
 const OptionLink = styled(Link)`
   width: 100%;
-  height: 60px;
   display: flex;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 18px;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
   padding: 0 16px;
+  margin-top: 10px;
   background-color: #e1e9db;
   color: #205400;
   text-decoration: none;
-  border: 1px solid grey;
+  height: 50px;
+  border-radius: 14.5px;
+  box-shadow: 0px 0px 2px rgba(98, 98, 98, 0.18),
+    0px 3px 2px rgba(98, 98, 98, 0.12), 0px 6px 8px rgba(98, 98, 98, 0.12),
+    0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
 
   :active,
   :focus {
@@ -37,13 +47,15 @@ const Profile: FC = () => {
 
   return (
     <main>
-      {menuOptions.map((opt: any) => {
-        return (
-          <OptionLink to={`/profile/${opt.option}`} key={opt.option}>
-            <p>{opt.title}</p> <RiArrowRightSLine />
-          </OptionLink>
-        );
-      })}
+      <OptionsDiv>
+        {menuOptions.map((opt: any) => {
+          return (
+            <OptionLink to={`/profile/${opt.option}`} key={opt.option}>
+              <p>{opt.title}</p> <RiArrowRightSLine />
+            </OptionLink>
+          );
+        })}
+      </OptionsDiv>
     </main>
   );
 };

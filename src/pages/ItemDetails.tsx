@@ -16,12 +16,13 @@ import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
 import EditItemForm from "../components/EditItemForm";
-import { loadMapApi } from "../utils/GoogleMapsUtils";
-import Map from "../components/Map";
+// import { loadMapApi } from "../utils/GoogleMapsUtils";
+// import Map from "../components/Map";
 import CarouselComp from "../components/CarouselComp";
 import { UserContext } from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
+import { fieldsForm } from "../utils/formUtils";
 
 const DivBtns = styled.div`
   display: flex;
@@ -58,10 +59,17 @@ const ImgDiv = styled.div`
 `;
 
 const ItemImg = styled.img`
+<<<<<<< HEAD
   max-height: 300px;
   margin: 0;
   border-radius: 9.5px;
   object-fit: contain;
+=======
+  max-width: 100%;
+  max-height: 300px;
+  margin: 0;
+  border-radius: 9.5px;
+>>>>>>> develop
 `;
 
 const Table = styled.table`
@@ -83,15 +91,15 @@ const Table = styled.table`
     font-weight: 400;
   }
 `;
-
-const MapContainer = styled.div`
-  width: 80%;
-  height: 45vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-`;
+/* comment out map for debugging purpose  */
+// const MapContainer = styled.div`
+//   width: 80%;
+//   height: 45vh;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   border-radius: 5px;
+// `;
 
 interface ParamTypes {
   id: string;
@@ -111,7 +119,6 @@ const ItemDetails: FC<ParamTypes> = () => {
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
       setImage(url);
-      item.images[0].url = url;
       setItem(item);
     });
   };
@@ -137,18 +144,20 @@ const ItemDetails: FC<ParamTypes> = () => {
     setItemUpdated(false);
   }, [itemUpdated]);
 
-  useEffect(() => {
-    const googleMapScript = loadMapApi();
+  /* comment out map for debugging purpose  */
+  // useEffect(() => {
+  //   const googleMapScript = loadMapApi();
 
-    const cb = () => {
-      setScriptLoaded(true);
-    };
-    googleMapScript.addEventListener("load", cb);
+  //   const cb = () => {
+  //     setScriptLoaded(true);
+  //   };
+  //   googleMapScript.addEventListener("load", cb);
 
-    return () => {
-      googleMapScript.removeEventListener("load", cb);
-    };
-  }, []);
+  //   return () => {
+  //     googleMapScript.removeEventListener("load", cb);
+  //   };
+  // }, []);
+
   const updateItem = async (newStatus: string) => {
     const result = (await API.graphql(
       graphqlOperation(updateAdvert, {
@@ -179,15 +188,35 @@ const ItemDetails: FC<ParamTypes> = () => {
   const onClickPickUpBtn = () => {
     updateItem("pickedUp");
   };
+  const translate = (word: string, cat: any) => {
+    let sweWord = "";
 
-  const mapingObject = (obj: any) => {
+    fieldsForm.find((el) => {
+      if (el.name === cat && el.option) {
+        el.option.map((op: any) => {
+          if (op.eng[0] === word) {
+            sweWord = op.swe[0];
+          }
+        });
+      } else if (el.name === cat && el.swe) {
+        el.eng.map((op: any, idx: number) => {
+          if (op === word) {
+            sweWord = el.swe[idx];
+          }
+        });
+      }
+    });
+    return sweWord;
+  };
+  const mapingObject = (obj: any, cat: string) => {
     let str = "";
     Object.entries(obj[0]).forEach(([key, value]) => {
       if (value) {
+        const sweWord = translate(key, cat);
         if (str.length === 0) {
-          str = `${str} ${key}`;
+          str = `${str} ${sweWord}`;
         } else {
-          str = `${str}, ${key}`;
+          str = `${str}, ${sweWord}`;
         }
       }
     });
@@ -262,7 +291,11 @@ const ItemDetails: FC<ParamTypes> = () => {
         <tbody>
           <tr>
             <td>Kategori/Typ av möbel:</td>
-            <td>{item.category}</td>
+            <td>
+              {item.category
+                ? translate(item.category, "category")
+                : item.category}
+            </td>
           </tr>
           <tr>
             <td>Id:</td>
@@ -287,15 +320,27 @@ const ItemDetails: FC<ParamTypes> = () => {
 
           <tr>
             <td>Material:</td>
-            {item.material ? mapingObject(item.material) : <td> </td>}
+            {item.material ? (
+              mapingObject(item.material, "material")
+            ) : (
+              <td> </td>
+            )}
           </tr>
           <tr>
             <td>Skick:</td>
-            <td>{item.condition}</td>
+            <td>
+              {item.condition
+                ? translate(item.condition, "condition")
+                : item.condition}
+            </td>
           </tr>
           <tr>
             <td>Användningsområde:</td>
-            {item.areaOfUse ? mapingObject(item.areaOfUse) : <td> </td>}
+            {item.areaOfUse ? (
+              mapingObject(item.areaOfUse, "areaOfUse")
+            ) : (
+              <td> </td>
+            )}
           </tr>
           <tr>
             <td>Klimatpåverkan:</td>
@@ -319,7 +364,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           </tr>
         </tbody>
       </Table>
-      <MapContainer>
+      {/* <MapContainer>
         {item && item.location && (
           <Map
             mapType={google.maps.MapTypeId.ROADMAP}
@@ -331,7 +376,7 @@ const ItemDetails: FC<ParamTypes> = () => {
         {!item.location && (
           <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
         )}
-      </MapContainer>
+      </MapContainer> */}
 
       <QRCode id={id} />
     </>
@@ -344,6 +389,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           setEditItem={setEditItem}
           item={item}
           closeEditformAndFetchItem={closeEditformAndFetchItem}
+          image={image}
         />
       ) : regive ? (
         <RegiveForm

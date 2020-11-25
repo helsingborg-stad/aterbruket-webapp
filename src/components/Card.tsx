@@ -15,7 +15,7 @@ interface Props {
 
 const CardDiv = styled.div`
   width: 100%;
-  height: auto;
+  height: 180px;
   background-color: ${(props) => props.theme.cardTheme.backgroundColor};
   margin-top: 10px;
   border-radius: 9.5px;
@@ -54,6 +54,7 @@ const CardDiv = styled.div`
     flex-direction: column;
     align-items: flex-start;
     padding: 24px 0px 0px 24px;
+    box-sizing: border-box;
     align-self: center;
   }
   h3,
@@ -82,6 +83,15 @@ const CardDiv = styled.div`
     line-height: 150%;
     letter-spacing: 0.005em;
   }
+
+  p.desc {
+    width: 80%;
+    height: 50px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 `;
 
 const Card: FC<Props> = ({
@@ -101,6 +111,7 @@ const Card: FC<Props> = ({
   useEffect(() => {
     fetchImage();
   }, []);
+
   return (
     <CardDiv as={Link} to={`/item/${id}`} id={id}>
       <div className="picDiv">
@@ -110,7 +121,7 @@ const Card: FC<Props> = ({
         <h3>{title}</h3>
         <h4>{quantity} stycken</h4>
         <p>Status: {status}</p>
-        <p>Beskrivning: {description}</p>
+        <p className="desc">Beskrivning: {description}</p>
       </div>
     </CardDiv>
   );

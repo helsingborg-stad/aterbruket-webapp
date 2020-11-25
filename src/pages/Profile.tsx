@@ -47,7 +47,6 @@ const Profile: FC = () => {
 
   return (
     <main>
-      {" "}
       <OptionsDiv>
         {menuOptions.map((opt: any) => {
           return (
@@ -55,7 +54,7 @@ const Profile: FC = () => {
               <p>{opt.title}</p> <RiArrowRightSLine />
             </OptionLink>
           );
-        })}{" "}
+        })}
       </OptionsDiv>
     </main>
   );

@@ -22,6 +22,7 @@ import CarouselComp from "../components/CarouselComp";
 import { UserContext } from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
+import { fieldsForm } from "../utils/formUtils";
 
 const DivBtns = styled.div`
   display: flex;
@@ -173,15 +174,32 @@ const ItemDetails: FC<ParamTypes> = () => {
   const onClickPickUpBtn = () => {
     updateItem("pickedUp");
   };
+  const translate = (word: string, cat: any) => {
+    let sweWord = "";
 
-  const mapingObject = (obj: any) => {
+    fieldsForm.find((el) => {
+      if (el.name === cat && el.option) {
+        el.option.map((op: any) => {
+          if (op.eng[0] === word) {
+            sweWord = op.swe[0];
+            console.log(sweWord);
+          }
+        });
+      }
+    });
+    return sweWord;
+  };
+  const mapingObject = (obj: any, cat: string) => {
     let str = "";
     Object.entries(obj[0]).forEach(([key, value]) => {
       if (value) {
+        const sweWord = translate(key, cat);
+
+        console.log(sweWord);
         if (str.length === 0) {
-          str = `${str} ${key}`;
+          str = `${str} ${sweWord}`;
         } else {
-          str = `${str}, ${key}`;
+          str = `${str}, ${sweWord}`;
         }
       }
     });
@@ -279,7 +297,11 @@ const ItemDetails: FC<ParamTypes> = () => {
 
           <tr>
             <td>Material:</td>
-            {item.material ? mapingObject(item.material) : <td> </td>}
+            {item.material ? (
+              mapingObject(item.material, "material")
+            ) : (
+              <td> </td>
+            )}
           </tr>
           <tr>
             <td>Skick:</td>
@@ -287,7 +309,11 @@ const ItemDetails: FC<ParamTypes> = () => {
           </tr>
           <tr>
             <td>Användningsområde:</td>
-            {item.areaOfUse ? mapingObject(item.areaOfUse) : <td> </td>}
+            {item.areaOfUse ? (
+              mapingObject(item.areaOfUse, "areaOfUse")
+            ) : (
+              <td> </td>
+            )}
           </tr>
           <tr>
             <td>Klimatpåverkan:</td>

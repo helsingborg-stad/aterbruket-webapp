@@ -389,6 +389,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           setRegive={setRegive}
           item={item}
           closeEditformAndFetchItem={closeEditformAndFetchItem}
+          image={image}
         />
       ) : showCarousel ? (
         <CarouselComp setShowCarousel={setShowCarousel} image={image} />

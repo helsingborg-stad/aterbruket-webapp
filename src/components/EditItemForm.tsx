@@ -122,18 +122,19 @@ const EditItemForm: FC<Props> = ({
   return (
     <>
       
-      
-      {!redirect ? <button type="button" onClick={() => setEditItem(false)}>
+      {!redirect && <ItemImg src={imageURL}/>}
+      {!redirect && <button type="button" onClick={() => setEditItem(false)}>
         X
-      </button> && <ItemImg src={imageURL}/> && 
-      <Form
+      </button>}
+      {!redirect && <Form
         values={values}
         fields={fields}
         mutation={updateAdvert}
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
         handleCheckboxChange={handleCheckboxChange}
-      /> : <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />}
+      />}
+      {redirect && <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />}
     </>
   );
 };

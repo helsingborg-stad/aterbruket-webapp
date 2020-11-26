@@ -1,10 +1,17 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Form from "./Form";
 import useForm from "../hooks/useForm";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
 import { API, graphqlOperation } from "aws-amplify";
 import Loader from "react-loader-spinner";
+import styled from "styled-components";
+
+const ItemImg = styled.img`	
+  width: 300px;	
+  height: 300px;	
+  margin: 0;	
+`;
 
 interface IareaOfUse {
   indoors: boolean;
@@ -45,12 +52,14 @@ interface Props {
   };
   setRegive: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
+  image: string
 }
 
 const RegiveForm: FC<Props> = ({
   setRegive,
   item,
   closeEditformAndFetchItem,
+  image
 }: Props) => {
   const {
     values,
@@ -61,6 +70,7 @@ const RegiveForm: FC<Props> = ({
     result,
     file,
     fileUploading
+    
   } = useForm(
     {
       id: item.id,
@@ -97,6 +107,15 @@ const RegiveForm: FC<Props> = ({
     updateAdvert
   );
 
+  const [imageURL, setImageURL] =  useState(image)
+  useEffect(() => {	
+    if(file) {	
+      setImageURL(URL.createObjectURL(file))	
+      console.log(imageURL)
+    }	
+  }, [file])
+
+    console.log(image)
   if (redirect && !fileUploading) {
     closeEditformAndFetchItem();
   }
@@ -104,8 +123,9 @@ const RegiveForm: FC<Props> = ({
     <>
       {!redirect && <button type="button" onClick={() => setRegive(false)}>
         X
-      </button> &&
-      <Form
+      </button>}
+      {!redirect && <ItemImg src={image} />}
+      {!redirect && <Form
         values={values}
         fields={fields}
         mutation={updateAdvert}

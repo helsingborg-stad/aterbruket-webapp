@@ -51,16 +51,16 @@ const AddItem: FC<Props> = ({
     fileUploading
   } = useForm(
     {
-      title: "Fisk",
+      title: "",
       status: "available",
-      category: "table",
+      category: "",
       quantity: 1,
       height: "",
       width: "",
       length: "",
       color: "",
-      condition: "good",
-      areaOfUse: { indoors: false, outside: true },
+      condition: "",
+      areaOfUse: { indoors: false, outside: false },
       material: {
         metal: false,
         plastic: false,
@@ -69,7 +69,7 @@ const AddItem: FC<Props> = ({
       },
       description: "",
       department: user.attributes["custom:department"] ? user.attributes["custom:department"] : "",
-      location: "HBG WORKS",
+      location: "",
       instructions: "",
       contactPerson: user.attributes.name ? user.attributes.name : "",
       email: user.attributes.email ? user.attributes.email : "",

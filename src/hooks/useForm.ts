@@ -87,12 +87,12 @@ const useForm = (initialValues: any, mutation: string) => {
 
     if (result.data && !values.id) {
       // console.log("db CREATE ", result.data.createAdvert);
-      //sendEmail(result.data.createAdvert);
+      sendEmail(result.data.createAdvert);
       return setRedirect(result.data.createAdvert.id);
     }
   };
 
-  /*  const sendEmail = (data: any) => {
+   const sendEmail = (data: any) => {
     const templateParams = {
       id: data.id,
       contactPerson: data.contactPerson,
@@ -104,9 +104,9 @@ const useForm = (initialValues: any, mutation: string) => {
     emailjs
       .send(
         "default_service",
-        "template_slykgia",
+        "template_1963w14",
         templateParams,
-        "user_nGtt95bDVTNyRyXq3porD"
+        "user_0j0AeosY13dKx5C4zQ3jp"
       )
       .then(
         function (response) {
@@ -116,7 +116,7 @@ const useForm = (initialValues: any, mutation: string) => {
           console.log("FAILED sending email", error);
         }
       );
-  }; */
+  };
 
   return {
     values,

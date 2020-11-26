@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { API, Storage } from "aws-amplify";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+
 
 interface Props {
   title: string;
@@ -46,6 +49,12 @@ const CardDiv = styled.div`
       object-fit: cover;
       border-radius: 9.5px 0 0 9.5px;
     }
+  }
+
+  .picDiv > span{
+    
+
+    display:initial!important;
   }
 
   .infoDiv {
@@ -95,6 +104,9 @@ const CardDiv = styled.div`
   }
 `;
 
+
+
+
 const Card: FC<Props> = ({
   id,
   title,
@@ -116,7 +128,11 @@ const Card: FC<Props> = ({
   return (
     <CardDiv as={Link} to={`/item/${id}`} id={id}>
       <div className="picDiv">
-        <img src={url} alt="" />
+        <LazyLoadImage
+        alt={'image'}
+        effect="blur"
+        src={url}
+        />
       </div>
       <div className="infoDiv">
         <h3>{title}</h3>

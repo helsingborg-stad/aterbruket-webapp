@@ -57,7 +57,7 @@ const GroupDiv = styled.div`
 const Admin: FC = () => {
   const [statusGroup, setStatusGroup] = useState([]) as any;
   const [infoOption, setInfoOption] = useState("total");
-  console.log("statusGroup ", statusGroup[0]);
+  // console.log("statusGroup ", statusGroup[0]);
 
   const filterStatus = (advertItems: any) => {
     const newStatusGroup = [

@@ -78,14 +78,14 @@ const useForm = (initialValues: any, mutation: string) => {
 
     if (result.data && values.id) {
       recreateInitial(createAdvert, initialValues);
-      console.log("db UPDATE ", result.data.updateAdvert);
+      // console.log("db UPDATE ", result.data.updateAdvert);
       return setRedirect(true);
     }
 
     setResult(result.data.createAdvert);
 
     if (result.data && !values.id) {
-      console.log("db CREATE ", result.data.createAdvert);
+      // console.log("db CREATE ", result.data.createAdvert);
       //sendEmail(result.data.createAdvert);
       return setRedirect(result.data.createAdvert.id);
     }

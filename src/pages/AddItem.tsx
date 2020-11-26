@@ -95,16 +95,19 @@ const AddItem: FC<Props> = ({
   }, [file]);
 
   if (redirect && !fileUploading) {
+    console.log(alreadyAQRCode)
     return <Redirect to={`/item/${redirect}`} />;
   }
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
+
+
   return (
     <main>
       
       {!redirect && file && <ItemImg src={imageURL} />}
-      {!redirect && !alreadyAQRCode ? (
+      {!redirect && !alreadyAQRCode && (
         <Form
           values={values}
           fields={fields}
@@ -113,9 +116,9 @@ const AddItem: FC<Props> = ({
           handleSubmit={handleSubmit}
           handleCheckboxChange={handleCheckboxChange}
         />
-      ) : (
-        <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
       )}
+
+      {alreadyAQRCode && !redirect && (<OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />)}
 
       {fileUploading && redirect && <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />}
     </main>

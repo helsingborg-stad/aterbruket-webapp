@@ -53,6 +53,7 @@ const FormContainerDiv = styled.div`
     select {
       border-radius: 4.5px;
       border: none;
+      font-size: 16px;
     }
     .validationInfo {
       display: flex;

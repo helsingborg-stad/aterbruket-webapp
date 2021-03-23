@@ -14,25 +14,14 @@ const recreateInitial = async (mutation: any, values: any) => {
   await API.graphql(graphqlOperation(mutation, { input: values }));
 };
 
-function upload(file: any) {
-  Storage.put(file.uuid, file, {
-    progressCallback(progress: any) {
-      console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
-    },
-  })
-    .then((result: any) => {
-      return { src: result.key, alt: file.name };
-    })
-    .catch((err) => {
-      return err;
-    });
-}
+
 
 const useForm = (initialValues: any, mutation: string) => {
   const [values, setValues] = useState(initialValues);
   const [redirect, setRedirect] = useState(false);
   const [result, setResult] = useState({}) as any;
   const [file, setFile] = useState(false) as any;
+  const [fileUploading, setFileUploading] = useState(false);
 
   const handleCheckboxChange = (event: React.ChangeEvent<any>, parent: any) => {
     const { target } = event;
@@ -44,6 +33,17 @@ const useForm = (initialValues: any, mutation: string) => {
     });
   };
 
+  const upload = (file: any) => {
+    Storage.put(file.uuid, file)
+      .then((result: any) => {
+        setFileUploading(false)
+        return { src: result.key, alt: file.name };
+      })
+      .catch((err) => {
+        return err;
+      });
+  }
+
   const handleInputChange = async (event: React.ChangeEvent<any>) => {
     const { target } = event;
     const { name, value } = target;
@@ -51,6 +51,7 @@ const useForm = (initialValues: any, mutation: string) => {
       console.log("target.files", target.files);
       target.files[0].uuid = uuidv4();
       setFile(target.files[0]);
+      setFileUploading(true)
       console.log("target.files[0]", target.files[0]);
 
       return;
@@ -125,6 +126,7 @@ const useForm = (initialValues: any, mutation: string) => {
     handleCheckboxChange,
     result,
     file,
+    fileUploading
   };
 };
 

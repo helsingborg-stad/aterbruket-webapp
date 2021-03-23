@@ -9,6 +9,7 @@ import OpenCamera from "../components/OpenCamera";
 import { fieldsForm as fields } from "../utils/formUtils";
 import { UserContext } from "../contexts/UserContext";
 import styled from "styled-components";
+import Loader from "react-loader-spinner";
 
 const ItemImg = styled.img`
   width: 200px;
@@ -47,18 +48,19 @@ const AddItem: FC<Props> = ({
     redirect,
     result,
     file,
+    fileUploading
   } = useForm(
     {
-      title: "",
+      title: "Fisk",
       status: "available",
-      category: "",
+      category: "table",
       quantity: 1,
       height: "",
       width: "",
       length: "",
       color: "",
-      condition: "",
-      areaOfUse: { indoors: false, outside: false },
+      condition: "good",
+      areaOfUse: { indoors: false, outside: true },
       material: {
         metal: false,
         plastic: false,
@@ -66,8 +68,8 @@ const AddItem: FC<Props> = ({
         wood: false,
       },
       description: "",
-      department: user["custom:department"] ? user["custom:department"] : "",
-      location: "",
+      department: user.attributes["custom:department"] ? user.attributes["custom:department"] : "",
+      location: "HBG WORKS",
       instructions: "",
       contactPerson: user.attributes.name ? user.attributes.name : "",
       email: user.attributes.email ? user.attributes.email : "",
@@ -83,12 +85,16 @@ const AddItem: FC<Props> = ({
   const [imageURL, setImageURL] = useState("");
 
   useEffect(() => {
+    
+  }, [fileUploading])
+
+  useEffect(() => {
     if (file) {
       setImageURL(URL.createObjectURL(file));
     }
   }, [file]);
 
-  if (redirect) {
+  if (redirect && !fileUploading) {
     return <Redirect to={`/item/${redirect}`} />;
   }
   if (qrCamera.result.length > 2) {
@@ -96,8 +102,9 @@ const AddItem: FC<Props> = ({
   }
   return (
     <main>
-      {file && <ItemImg src={imageURL} />}
-      {!alreadyAQRCode ? (
+      
+      {!redirect && file && <ItemImg src={imageURL} />}
+      {!redirect && !alreadyAQRCode ? (
         <Form
           values={values}
           fields={fields}
@@ -109,6 +116,8 @@ const AddItem: FC<Props> = ({
       ) : (
         <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
       )}
+
+      {fileUploading && redirect && <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />}
     </main>
   );
 };

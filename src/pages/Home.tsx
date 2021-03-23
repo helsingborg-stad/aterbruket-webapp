@@ -78,6 +78,10 @@ const SearchFilterDiv = styled.div`
   justify-content: space-around;
   align-items: center;
 
+  input{
+    font-size: 16px;
+  }
+
   .searchWrapper {
     position: relative;
 

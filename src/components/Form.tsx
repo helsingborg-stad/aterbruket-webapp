@@ -25,35 +25,13 @@ const FormContainerDiv = styled.div`
   section {
     background-color: ${(props) => props.theme.formTheme.backgroundColor};
     width: 90%;
-    height: 56px;
+    height: 110px;
     border-radius: 4.5px;
-    padding: 16px 5px 16px 16px;
+    padding: 4px 16px 4px 16px;
     margin: 8px 0px;
     p {
       margin-block-end: 0;
       margin-block-start: 0;
-    }
-  }
-  .labelP {
-    color: ${(props) => props.theme.cardTheme.descColor};
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 150%;
-    letter-spacing: 0.005em;
-  }
-
-  .allDiv {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row-reverse;
-
-    input,
-    textarea,
-    select {
-      border-radius: 4.5px;
-      border: none;
-      font-size: 16px;
     }
     .validationInfo {
       display: flex;
@@ -63,13 +41,42 @@ const FormContainerDiv = styled.div`
       .required {
         font-style: italic;
         color: red;
-        font-size: 10px;
+        font-size: 14px;
       }
       .infoSpan {
         color: grey;
         font-style: italic;
-        font-size: 10px;
+        font-size: 14px;
       }
+    }
+  }
+  .checkboxDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .labelP {
+    color: ${(props) => props.theme.cardTheme.descColor};
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.005em;
+    padding-bottom: 2px;
+  }
+
+  .allDiv {
+    display: flex;
+    //align-items: center;
+    justify-content: space-around;
+    flex-direction: column-reverse;
+
+    input,
+    textarea,
+    select {
+      border-radius: 4.5px;
+      border: none;
+      font-size: 16px;
+      height: 2em;
     }
   }
 `;
@@ -113,8 +120,7 @@ export default function Form(props: {
             )}
             {field.name === "phoneNumber" && (
               <span className="infoSpan">
-                ange endast siffror <br />
-                ex, 0701234567
+                ange endast siffror ex, 0701234567
               </span>
             )}
           </div>
@@ -148,12 +154,10 @@ export default function Form(props: {
       return (
         <section key={field.name}>
           <p className="labelP">{field.title}</p>
-          <div className="allDiv">
-            <div className="validationInfo">
-              {field.required && <span className="required">obligatorisk</span>}
-              <span className="infoSpan">välj en eller flera</span>
-            </div>
-            {checkboxInput}
+          <div className="checkboxDiv">{checkboxInput}</div>
+          <div className="validationInfo">
+            {field.required && <span className="required">obligatorisk</span>}
+            <span className="infoSpan">välj en eller flera</span>
           </div>
         </section>
       );

@@ -299,10 +299,6 @@ const ItemDetails: FC<ParamTypes> = () => {
             </td>
           </tr>
           <tr>
-            <td>Id:</td>
-            <td>{id}</td>
-          </tr>
-          <tr>
             <td>Höjd:</td>
             <td>{item.height} cm</td>
           </tr>

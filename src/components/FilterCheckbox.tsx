@@ -59,6 +59,7 @@ const FilterCheckbox: FC<Props> = ({
   ) => {
     const { target } = e;
     const value = target.type === "checkbox" ? target.checked : target.value;
+    // eslint-disable-next-line no-console
 
     setSaveValues({
       ...saveValues,

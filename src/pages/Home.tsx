@@ -178,6 +178,8 @@ const Home: FC<Props> = ({
   };
   const [items, setItems] = useState([]) as any;
   const [filterValueUpdated, setFilterValueUpdated] = useState(false);
+  const [conditionValues, setConditionValues] = useState([]);
+
   const [filterValue, setFilterValue] = useState({
     version: { eq: 0 },
     or: [],
@@ -189,6 +191,10 @@ const Home: FC<Props> = ({
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: filterValue })
       )) as GraphQLResult<ListAdvertsQuery>;
+
+      console.log("resultdata", result.data?.listAdverts?.items);
+
+      const copyResult = result.data?.listAdverts?.items;
     } else {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
@@ -269,6 +275,8 @@ const Home: FC<Props> = ({
               setFilterValueUpdated={setFilterValueUpdated}
               filterValue={filterValue}
               setFilterValue={setFilterValue}
+              conditionValues={conditionValues}
+              setConditionValues={setConditionValues}
             />
           </SearchFilterDiv>
           <AdvertContainer

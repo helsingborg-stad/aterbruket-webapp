@@ -20,7 +20,7 @@ const MenuDiv = styled.div`
     text-decoration: none;
     flex-grow: 1;
     color: #a3a3a3;
-    font-size: 10px;
+    font-size: 16px;
 
     .icon {
       font-size: 18px;

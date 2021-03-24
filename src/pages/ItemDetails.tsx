@@ -47,7 +47,7 @@ const DivBtns = styled.div`
     color: grey;
     margin: 0;
     font-style: italic;
-    font-size: 0.8em;
+    font-size: 16px;
   }
 `;
 

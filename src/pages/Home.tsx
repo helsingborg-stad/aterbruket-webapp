@@ -187,21 +187,51 @@ const Home: FC<Props> = ({
 
   const fetchItems = async () => {
     let result;
+    let filteredResult: any;
     if (filterValue.or.length > 0) {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: filterValue })
       )) as GraphQLResult<ListAdvertsQuery>;
 
-      console.log("resultdata", result.data?.listAdverts?.items);
+      // console.log("resultdata", result.data?.listAdverts?.items);
 
-      const copyResult = result.data?.listAdverts?.items;
+      const copyItems: any = result.data?.listAdverts?.items;
+
+      if (copyItems.length > 0 && conditionValues.length > 0) {
+        console.log("conditionValues yes", conditionValues);
+
+        filteredResult = conditionValues.map((conditionValue) => {
+          return copyItems.filter(
+            (item: any) => item.condition === conditionValue
+          );
+        });
+
+        // conditionValues.forEach(
+        //   (eachCondition: any) =>
+        //     (filteredResult = copyItems.filter((item: any) => {
+        //       item.condition === eachCondition;
+        //     }))
+        // );
+        // console.log("filteredResult", filteredResult);
+      }
     } else {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
       )) as GraphQLResult<ListAdvertsQuery>;
     }
 
-    const advertItems: any = result.data?.listAdverts?.items;
+    let advertItems: any;
+    console.log("filteredResult", filteredResult);
+    if (
+      conditionValues.length > 0 &&
+      filteredResult !== undefined &&
+      advertItems !== undefined
+    ) {
+      advertItems = filteredResult.data?.listAdverts?.items;
+    } else {
+      advertItems = result.data?.listAdverts?.items;
+    }
+
     setItems(advertItems);
 
     setFilterValue({

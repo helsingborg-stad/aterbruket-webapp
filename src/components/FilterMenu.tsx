@@ -148,16 +148,15 @@ const FilterMenu: FC<Props> = ({
           if (key === "category") {
             categories.push(addNewGroupe);
           } else if (key === "condition") {
-            conditions.push(Object.keys(value)[0]);
-            console.log("conditions", conditions);
+            conditions = [...Object.keys(value)];
           }
 
           // array.push(addNewGroupe);
         }
       });
     });
-
-    setConditionValues([...conditions]);
+    console.log("conditions", conditions);
+    setConditionValues(conditions);
     // setFilterValue({
     //   ...filterValue,
     //   or: [...filterValue.or.concat(array)],

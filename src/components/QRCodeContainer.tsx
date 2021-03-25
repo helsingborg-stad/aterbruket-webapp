@@ -20,7 +20,7 @@ const QRCodeCont = styled.div`
   }
   p {
     margin: 2px 0px 0px 10px;
-    font-size: 16px;
+    font-size: 11px;
   }
   .pTop {
     font-size: 20px;
@@ -33,7 +33,7 @@ const QRCodeCont = styled.div`
   .pDownload {
     color: grey;
     font-style: italic;
-    font-size: 16px;
+    font-size: 0.8em;
     text-align: center;
     margin-bottom: 8px;
   }

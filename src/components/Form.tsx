@@ -41,12 +41,12 @@ const FormContainerDiv = styled.div`
       .required {
         font-style: italic;
         color: red;
-        font-size: 16px;
+        font-size: 14px;
       }
       .infoSpan {
         color: grey;
         font-style: italic;
-        font-size: 16px;
+        font-size: 14px;
       }
     }
   }

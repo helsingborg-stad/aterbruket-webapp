@@ -73,7 +73,7 @@ const CardDiv = styled.div`
   h4 {
     color: ${(props) => props.theme.cardTheme.amountColor};
     font-weight: 900;
-    font-size: 16px;
+    font-size: 12px;
     line-height: 132%;
     letter-spacing: 0.015em;
   }

@@ -99,9 +99,7 @@ interface Props {
   setFilterValueUpdated: React.Dispatch<React.SetStateAction<boolean>>;
   filterValue: any;
   setFilterValue: React.Dispatch<React.SetStateAction<any>>;
-  conditionValues: any;
   setConditionValues: React.Dispatch<React.SetStateAction<any>>;
-
   filterValueUpdated: boolean;
 }
 
@@ -135,7 +133,6 @@ const FilterMenu: FC<Props> = ({
     let categories: any = [];
     let conditions: any = [];
 
-    // let array: any = [];
     Object.entries(saveValues).forEach((entry: any) => {
       const [key, value] = entry;
 
@@ -151,12 +148,9 @@ const FilterMenu: FC<Props> = ({
         }
       });
     });
-    console.log("conditions", conditions);
+
     setConditionValues(conditions);
-    // setFilterValue({
-    //   ...filterValue,
-    //   or: [...filterValue.or.concat(array)],
-    // });
+
     setFilterValue({
       ...filterValue,
       or: [...filterValue.or.concat(categories)],
@@ -164,7 +158,7 @@ const FilterMenu: FC<Props> = ({
 
     setIsOpen(false);
     setFilterValueUpdated(!filterValueUpdated);
-    //  array = [];
+
     categories = [];
     conditions = [];
   };

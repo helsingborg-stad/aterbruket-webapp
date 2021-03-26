@@ -78,7 +78,7 @@ const SearchFilterDiv = styled.div`
   justify-content: space-around;
   align-items: center;
 
-  input{
+  input {
     font-size: 16px;
   }
 
@@ -148,6 +148,10 @@ interface IQrCamera {
   result: string;
 }
 
+interface Item {
+  condition: string;
+}
+
 type Props = {
   modalOpen: boolean;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -178,8 +182,7 @@ const Home: FC<Props> = ({
   };
   const [items, setItems] = useState([]) as any;
   const [filterValueUpdated, setFilterValueUpdated] = useState(false);
-  const [conditionValues, setConditionValues] = useState([]);
-
+  const [conditionValues, setConditionValues] = useState<string[]>([]);
   const [filterValue, setFilterValue] = useState({
     version: { eq: 0 },
     or: [],
@@ -187,35 +190,20 @@ const Home: FC<Props> = ({
 
   const fetchItems = async () => {
     let result = [] as any;
-    const filteredResult = [] as any;
+    let filteredResult: any[] = [];
     let advertItems = [] as any;
     if (filterValue.or.length > 0 || conditionValues.length > 0) {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: filterValue })
       )) as GraphQLResult<ListAdvertsQuery>;
 
-      let copyItems = [] as any;
+      let copyItems: any[] = [];
       copyItems = result.data?.listAdverts?.items;
 
-      console.log("copyItems", copyItems);
-      console.log("condition", conditionValues);
-
-      // advertItems = copyItems.filter((item: any) => {
-      //   // console.log(item);
-      //   return conditionValues.includes(item.condition);
-      // });
-
-      for (let i = 0; i < conditionValues.length; i += 1) {
-        const value = conditionValues[i];
-        for (let j = 0; j < copyItems.length; j += 1) {
-          const item = copyItems[j];
-          if (item.condition === value) {
-            filteredResult.push(item);
-          }
-        }
-      }
-
-      console.log("advert", filteredResult);
+      filteredResult = copyItems.filter(
+        (item: Item) =>
+          item?.condition && conditionValues.includes(item.condition)
+      );
     } else {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
@@ -225,9 +213,8 @@ const Home: FC<Props> = ({
     if (filteredResult.length > 0) {
       advertItems = [...filteredResult];
     } else {
-      advertItems = result.data?.listAdverts?.items;
+      advertItems = result?.data?.listAdverts?.items;
     }
-    console.log("final", advertItems);
 
     setItems(advertItems);
     setFilterValue({
@@ -296,12 +283,10 @@ const Home: FC<Props> = ({
             <FilterMenu
               setIsOpen={setIsOpen}
               isOpen={isOpen}
-              // fetchItems={fetchItems}
               filterValueUpdated={filterValueUpdated}
               setFilterValueUpdated={setFilterValueUpdated}
               filterValue={filterValue}
               setFilterValue={setFilterValue}
-              conditionValues={conditionValues}
               setConditionValues={setConditionValues}
             />
           </SearchFilterDiv>

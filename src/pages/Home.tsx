@@ -200,10 +200,9 @@ const Home: FC<Props> = ({
       let copyItems: any[] = [];
       copyItems = result.data?.listAdverts?.items;
 
-      filteredResult = copyItems.filter(
-        (item: Item) =>
-          item?.condition && conditionValues.includes(item.condition)
-      );
+      filteredResult = copyItems.filter((item: Item) => {
+        return conditionValues.includes(item.condition);
+      });
     } else {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
@@ -212,6 +211,8 @@ const Home: FC<Props> = ({
 
     if (filteredResult.length > 0) {
       advertItems = [...filteredResult];
+    } else if (conditionValues.length > 0 && filteredResult.length === 0) {
+      console.log("no item fills the criteria");
     } else {
       advertItems = result?.data?.listAdverts?.items;
     }

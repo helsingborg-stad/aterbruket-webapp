@@ -186,54 +186,50 @@ const Home: FC<Props> = ({
   }) as any;
 
   const fetchItems = async () => {
-    let result;
-    let filteredResult: any;
-    if (filterValue.or.length > 0) {
+    let result = [] as any;
+    const filteredResult = [] as any;
+    let advertItems = [] as any;
+    if (filterValue.or.length > 0 || conditionValues.length > 0) {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: filterValue })
       )) as GraphQLResult<ListAdvertsQuery>;
 
-      // console.log("resultdata", result.data?.listAdverts?.items);
+      let copyItems = [] as any;
+      copyItems = result.data?.listAdverts?.items;
 
-      const copyItems: any = result.data?.listAdverts?.items;
+      console.log("copyItems", copyItems);
+      console.log("condition", conditionValues);
 
-      if (copyItems.length > 0 && conditionValues.length > 0) {
-        console.log("conditionValues yes", conditionValues);
+      // advertItems = copyItems.filter((item: any) => {
+      //   // console.log(item);
+      //   return conditionValues.includes(item.condition);
+      // });
 
-        filteredResult = conditionValues.map((conditionValue) => {
-          return copyItems.filter(
-            (item: any) => item.condition === conditionValue
-          );
-        });
-
-        // conditionValues.forEach(
-        //   (eachCondition: any) =>
-        //     (filteredResult = copyItems.filter((item: any) => {
-        //       item.condition === eachCondition;
-        //     }))
-        // );
-        // console.log("filteredResult", filteredResult);
+      for (let i = 0; i < conditionValues.length; i += 1) {
+        const value = conditionValues[i];
+        for (let j = 0; j < copyItems.length; j += 1) {
+          const item = copyItems[j];
+          if (item.condition === value) {
+            filteredResult.push(item);
+          }
+        }
       }
+
+      console.log("advert", filteredResult);
     } else {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
       )) as GraphQLResult<ListAdvertsQuery>;
     }
 
-    let advertItems: any;
-    console.log("filteredResult", filteredResult);
-    if (
-      conditionValues.length > 0 &&
-      filteredResult !== undefined &&
-      advertItems !== undefined
-    ) {
-      advertItems = filteredResult.data?.listAdverts?.items;
+    if (filteredResult.length > 0) {
+      advertItems = [...filteredResult];
     } else {
       advertItems = result.data?.listAdverts?.items;
     }
+    console.log("final", advertItems);
 
     setItems(advertItems);
-
     setFilterValue({
       ...filterValue,
       or: [],

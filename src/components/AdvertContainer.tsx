@@ -44,7 +44,9 @@ const AdvertContainer: FC<IAdvert> = ({
       );
     });
   } else {
+    console.log("items", items);
     filteredItems = items;
+    console.log("filteredITems", filteredItems);
   }
 
   return (

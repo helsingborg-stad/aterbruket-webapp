@@ -2,7 +2,7 @@
 import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { MdCancel } from "react-icons/md";
-import FilterCheckbox from "../components/FilterCheckbox";
+import FilterCheckbox from "./FilterCheckbox";
 import { fieldsForm } from "../utils/formUtils";
 
 const FilterCtn = styled.div`

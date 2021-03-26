@@ -114,8 +114,6 @@ const FilterMenu: FC<Props> = ({
   setFilterValue,
   filterValueUpdated,
   filterValue,
-  conditionValues,
-
   setConditionValues,
 }: Props) => {
   const [saveValues, setSaveValues] = useState({});
@@ -150,8 +148,6 @@ const FilterMenu: FC<Props> = ({
           } else if (key === "condition") {
             conditions = [...Object.keys(value)];
           }
-
-          // array.push(addNewGroupe);
         }
       });
     });

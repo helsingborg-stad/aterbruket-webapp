@@ -9,6 +9,7 @@ interface Props {
   description: string;
   id: string;
   status: string;
+  condition: string;
   quantity: number;
   imageKey: string;
 }
@@ -100,6 +101,7 @@ const Card: FC<Props> = ({
   title,
   description,
   status,
+  condition,
   quantity,
   imageKey,
 }: Props) => {
@@ -121,7 +123,8 @@ const Card: FC<Props> = ({
       <div className="infoDiv">
         <h3>{title}</h3>
         <h4>{quantity} stycken</h4>
-        <p>Status: {status}</p>
+        {/* <p>Status: {status}</p> */}
+        <p>Condition: {condition}</p>
         <p className="desc">Beskrivning: {description}</p>
       </div>
     </CardDiv>

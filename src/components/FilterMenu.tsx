@@ -99,6 +99,7 @@ interface Props {
   setFilterValueUpdated: React.Dispatch<React.SetStateAction<boolean>>;
   filterValue: any;
   setFilterValue: React.Dispatch<React.SetStateAction<any>>;
+  conditionValues: any;
   setConditionValues: React.Dispatch<React.SetStateAction<any>>;
   filterValueUpdated: boolean;
 }
@@ -112,6 +113,7 @@ const FilterMenu: FC<Props> = ({
   setFilterValue,
   filterValueUpdated,
   filterValue,
+  conditionValues,
   setConditionValues,
 }: Props) => {
   const [saveValues, setSaveValues] = useState({});
@@ -137,36 +139,35 @@ const FilterMenu: FC<Props> = ({
       const [key, value] = entry;
 
       Object.keys(value).forEach((innerKey: string) => {
+        const group = { [key]: { eq: innerKey } };
         if (value[innerKey] === true) {
-          const addNewGroupe = { [key]: { eq: innerKey } };
-
           if (key === "category") {
-            categories.push(addNewGroupe);
+            categories.push(group);
           } else if (key === "condition") {
-            conditions = [...Object.keys(value)];
+            conditions.push(innerKey);
           }
         }
       });
     });
 
-    setConditionValues(conditions);
-
     setFilterValue({
       ...filterValue,
       or: [...filterValue.or.concat(categories)],
     });
-
+    setConditionValues(conditions);
     setIsOpen(false);
     setFilterValueUpdated(!filterValueUpdated);
 
     categories = [];
     conditions = [];
   };
+
   const handleCancelFilter = () => {
     setFilterValue({
       ...filterValue,
       or: [],
     });
+    setConditionValues([]);
     setSaveValues({});
   };
 

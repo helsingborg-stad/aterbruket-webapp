@@ -44,9 +44,7 @@ const AdvertContainer: FC<IAdvert> = ({
       );
     });
   } else {
-    console.log("items", items);
     filteredItems = items;
-    console.log("filteredITems", filteredItems);
   }
 
   return (
@@ -57,7 +55,7 @@ const AdvertContainer: FC<IAdvert> = ({
         {itemsFrom === "profile" && <h3>Mina annonser</h3>}
       </div>
 
-      {itemsFrom === "home" &&
+      {itemsFrom === "home" && filteredItems.length > 0 ? (
         filteredItems.map((filteredItem: any) =>
           filteredItem.status === "available" ||
           filteredItem.status === null ? (
@@ -67,11 +65,17 @@ const AdvertContainer: FC<IAdvert> = ({
               title={filteredItem.title}
               description={filteredItem.description}
               status={filteredItem.status}
+              condition={filteredItem.condition}
               quantity={filteredItem.quantity}
               imageKey={filteredItem.images[0].src}
             />
           ) : null
-        )}
+        )
+      ) : (
+        <>
+          <h1>Vi hittade visst inget med dina filter</h1>
+        </>
+      )}
 
       {itemsFrom === "haffat" &&
         filteredItems.map((filteredItem: any) =>
@@ -83,6 +87,7 @@ const AdvertContainer: FC<IAdvert> = ({
               title={filteredItem.title}
               description={filteredItem.description}
               status={filteredItem.status}
+              condition={filteredItem.condition}
               quantity={filteredItem.quantity}
               imageKey={filteredItem.images[0].src}
             />
@@ -100,6 +105,7 @@ const AdvertContainer: FC<IAdvert> = ({
               title={filteredItem.title}
               description={filteredItem.description}
               status={filteredItem.status}
+              condition={filteredItem.condition}
               quantity={filteredItem.quantity}
               imageKey={filteredItem.images[0].src}
             />

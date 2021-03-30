@@ -188,21 +188,33 @@ const Home: FC<Props> = ({
     or: [],
   }) as any;
 
+  const filterConditions: any = (fetchedData: any, conditions: any) => {
+    let copyItems: any[] = [];
+    let results: any[] = [];
+    copyItems = fetchedData.data?.listAdverts?.items;
+    results = copyItems.filter((item: Item) => {
+      return conditions.includes(item.condition);
+    });
+    return results;
+  };
+
   const fetchItems = async () => {
     let result = [] as any;
     let filteredResult: any[] = [];
     let advertItems = [] as any;
-    if (filterValue.or.length > 0 || conditionValues.length > 0) {
+
+    if (filterValue.or.length === 0 && conditionValues.length > 0) {
+      result = (await API.graphql(
+        graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
+      )) as GraphQLResult<ListAdvertsQuery>;
+
+      filteredResult = filterConditions(result, conditionValues);
+    } else if (filterValue.or.length > 0 || conditionValues.length > 0) {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: filterValue })
       )) as GraphQLResult<ListAdvertsQuery>;
 
-      let copyItems: any[] = [];
-      copyItems = result.data?.listAdverts?.items;
-
-      filteredResult = copyItems.filter((item: Item) => {
-        return conditionValues.includes(item.condition);
-      });
+      filteredResult = filterConditions(result, conditionValues);
     } else {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
@@ -212,7 +224,7 @@ const Home: FC<Props> = ({
     if (filteredResult.length > 0) {
       advertItems = [...filteredResult];
     } else if (conditionValues.length > 0 && filteredResult.length === 0) {
-      console.log("no item fills the criteria");
+      advertItems = [];
     } else {
       advertItems = result?.data?.listAdverts?.items;
     }
@@ -222,6 +234,8 @@ const Home: FC<Props> = ({
       ...filterValue,
       or: [],
     });
+
+    setConditionValues([]);
   };
 
   useEffect(() => {
@@ -288,6 +302,7 @@ const Home: FC<Props> = ({
               setFilterValueUpdated={setFilterValueUpdated}
               filterValue={filterValue}
               setFilterValue={setFilterValue}
+              conditionValues={conditionValues}
               setConditionValues={setConditionValues}
             />
           </SearchFilterDiv>

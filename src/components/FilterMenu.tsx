@@ -2,7 +2,7 @@
 import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { MdCancel } from "react-icons/md";
-import FilterCheckbox from "../components/FilterCheckbox";
+import FilterCheckbox from "./FilterCheckbox";
 import { fieldsForm } from "../utils/formUtils";
 
 const FilterCtn = styled.div`
@@ -99,6 +99,8 @@ interface Props {
   setFilterValueUpdated: React.Dispatch<React.SetStateAction<boolean>>;
   filterValue: any;
   setFilterValue: React.Dispatch<React.SetStateAction<any>>;
+  conditionValues: any;
+  setConditionValues: React.Dispatch<React.SetStateAction<any>>;
   filterValueUpdated: boolean;
 }
 
@@ -111,6 +113,7 @@ const FilterMenu: FC<Props> = ({
   setFilterValue,
   filterValueUpdated,
   filterValue,
+  setConditionValues,
 }: Props) => {
   const [saveValues, setSaveValues] = useState({});
 
@@ -128,30 +131,42 @@ const FilterMenu: FC<Props> = ({
   };
 
   const handleSaveFilter = () => {
-    let array: any = [];
+    let categories: any = [];
+    let conditions: any = [];
+
     Object.entries(saveValues).forEach((entry: any) => {
       const [key, value] = entry;
 
       Object.keys(value).forEach((innerKey: string) => {
+        const group = { [key]: { eq: innerKey } };
         if (value[innerKey] === true) {
-          const addNewGroue = { [key]: { eq: innerKey } };
-          array.push(addNewGroue);
+          if (key === "category") {
+            categories.push(group);
+          } else if (key === "condition") {
+            conditions.push(innerKey);
+          }
         }
       });
     });
+
     setFilterValue({
       ...filterValue,
-      or: [...filterValue.or.concat(array)],
+      or: [...filterValue.or.concat(categories)],
     });
+    setConditionValues(conditions);
     setIsOpen(false);
     setFilterValueUpdated(!filterValueUpdated);
-    array = [];
+
+    categories = [];
+    conditions = [];
   };
+
   const handleCancelFilter = () => {
     setFilterValue({
       ...filterValue,
       or: [],
     });
+    setConditionValues([]);
     setSaveValues({});
   };
 

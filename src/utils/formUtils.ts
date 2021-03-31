@@ -109,7 +109,7 @@ export const fieldsForm = [
     disabled: false,
     required: true,
     title: "Skick",
-    swe: ["Ny", "Bra", "Sliten"],
+    swe: ["Nyskick", "Bra", "Sliten"],
     eng: ["new", "good", "worn"],
   },
   {
@@ -188,13 +188,13 @@ export const fieldsForm = [
 ];
 
 export const fieldsEditForm = [
-  {	
-    name: "images",	
-    dataType: "file",	
-    fieldType: "input",	
-    disabled: false,	
-    required: true,	
-    title: "Bilder",	
+  {
+    name: "images",
+    dataType: "file",
+    fieldType: "input",
+    disabled: false,
+    required: true,
+    title: "Bilder",
   },
   {
     name: "title",
@@ -297,7 +297,7 @@ export const fieldsEditForm = [
     disabled: false,
     required: true,
     title: "Skick",
-    swe: ["Ny", "Bra", "Sliten"],
+    swe: ["Nyskick", "Bra", "Sliten"],
     eng: ["new", "good", "worn"],
   },
   {

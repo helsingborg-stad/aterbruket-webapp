@@ -1,15 +1,15 @@
 import React, { FC, useEffect, useState } from "react";
+import styled from "styled-components";
+import Loader from "react-loader-spinner";
 import Form from "./Form";
 import useForm from "../hooks/useForm";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
-import styled from "styled-components";	
-import Loader from "react-loader-spinner";
 
-const ItemImg = styled.img`	
-  width: 300px;	
-  height: 300px;	
-  margin: 0;	
+const ItemImg = styled.img`
+  width: 300px;
+  height: 300px;
+  margin: 0;
 `;
 
 interface IareaOfUse {
@@ -48,18 +48,18 @@ interface Props {
     climateImpact: number;
     version: number;
     revisions: number;
-    images: [{url:string}];
+    images: [{ url: string }];
   };
   setEditItem: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
-  image: string
+  image: string;
 }
 
 const EditItemForm: FC<Props> = ({
   setEditItem,
   item,
   closeEditformAndFetchItem,
-  image
+  image,
 }: Props) => {
   const {
     values,
@@ -69,7 +69,7 @@ const EditItemForm: FC<Props> = ({
     redirect,
     result,
     file,
-    fileUploading
+    fileUploading,
   } = useForm(
     {
       id: item.id,
@@ -106,34 +106,38 @@ const EditItemForm: FC<Props> = ({
     updateAdvert
   );
 
-  const [imageURL, setImageURL] =  useState(image)	
+  const [imageURL, setImageURL] = useState(image);
 
-  useEffect(() => {	
-    if(file) {	
-
-      setImageURL(URL.createObjectURL(file))	
-    }	
-  }, [file])
+  useEffect(() => {
+    if (file) {
+      setImageURL(URL.createObjectURL(file));
+    }
+  }, [file]);
 
   if (redirect && !fileUploading) {
-    console.log(fileUploading)
+    console.log(fileUploading);
     closeEditformAndFetchItem();
   }
   return (
     <>
-      
-      
-      {!redirect ? <button type="button" onClick={() => setEditItem(false)}>
-        X
-      </button> && <ItemImg src={imageURL}/> && 
-      <Form
-        values={values}
-        fields={fields}
-        mutation={updateAdvert}
-        handleInputChange={handleInputChange}
-        handleSubmit={handleSubmit}
-        handleCheckboxChange={handleCheckboxChange}
-      /> : <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />}
+      {!redirect ? (
+        (
+          <button type="button" onClick={() => setEditItem(false)}>
+            X
+          </button>
+        ) && <ItemImg src={imageURL} /> && (
+          <Form
+            values={values}
+            fields={fields}
+            mutation={updateAdvert}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            handleCheckboxChange={handleCheckboxChange}
+          />
+        )
+      ) : (
+        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+      )}
     </>
   );
 };

@@ -149,6 +149,10 @@ interface IQrCamera {
   result: string;
 }
 
+interface Item {
+  condition: string;
+}
+
 type Props = {
   modalOpen: boolean;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -186,6 +190,7 @@ const Home: FC<Props> = ({
 
   const [items, setItems] = useState([]) as any;
   const [filterValueUpdated, setFilterValueUpdated] = useState(false);
+  const [conditionValues, setConditionValues] = useState<string[]>([]);
   const [filterValue, setFilterValue] = useState({
     version: { eq: 0 },
     or: [],
@@ -213,12 +218,33 @@ const Home: FC<Props> = ({
     }
   };
 
+  const filterConditions: any = (fetchedData: any, conditions: any) => {
+    let copyItems: any[] = [];
+    let results: any[] = [];
+    copyItems = fetchedData.data?.listAdverts?.items;
+    results = copyItems.filter((item: Item) => {
+      return conditions.includes(item.condition);
+    });
+    return results;
+  };
+
   const fetchItems = async () => {
-    let result;
-    if (filterValue.or.length > 0) {
+    let result = [] as any;
+    let filteredResult: any[] = [];
+    let advertItems = [] as any;
+
+    if (filterValue.or.length === 0 && conditionValues.length > 0) {
+      result = (await API.graphql(
+        graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
+      )) as GraphQLResult<ListAdvertsQuery>;
+
+      filteredResult = filterConditions(result, conditionValues);
+    } else if (filterValue.or.length > 0 || conditionValues.length > 0) {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: filterValue })
       )) as GraphQLResult<ListAdvertsQuery>;
+
+      filteredResult = filterConditions(result, conditionValues);
     } else {
       result = (await API.graphql(
         graphqlOperation(listAdverts, {
@@ -227,17 +253,27 @@ const Home: FC<Props> = ({
       )) as GraphQLResult<ListAdvertsQuery>;
     }
 
-    const advertItems: any = result.data?.listAdverts?.items;
+    setItems(advertItems);
+    if (filteredResult.length > 0) {
+      advertItems = [...filteredResult];
+    } else if (conditionValues.length > 0 && filteredResult.length === 0) {
+      advertItems = [];
+    } else {
+      advertItems = result?.data?.listAdverts?.items;
+    }
+
+    setItems(advertItems);
+    setFilterValue({
+      ...filterValue,
+      or: [],
+    });
+
+    setConditionValues([]);
+    // const advertItems: any = result.data?.listAdverts?.items;
     setPaginationOption({
       ...paginationOption,
       totalPages: Math.ceil(advertItems.length / paginationOption.amountToShow),
       itemLength: advertItems.length,
-    });
-    setItems(advertItems);
-
-    setFilterValue({
-      ...filterValue,
-      or: [],
     });
 
     setRenderItems(advertItems.slice(0, paginationOption.amountToShow - 1));
@@ -302,11 +338,12 @@ const Home: FC<Props> = ({
             <FilterMenu
               setIsOpen={setIsOpen}
               isOpen={isOpen}
-              // fetchItems={fetchItems}
               filterValueUpdated={filterValueUpdated}
               setFilterValueUpdated={setFilterValueUpdated}
               filterValue={filterValue}
               setFilterValue={setFilterValue}
+              conditionValues={conditionValues}
+              setConditionValues={setConditionValues}
             />
           </SearchFilterDiv>
           <AdvertContainer

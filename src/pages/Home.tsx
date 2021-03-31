@@ -174,6 +174,7 @@ const Home: FC<Props> = ({
   const [items, setItems] = useState([]) as any;
   const [filterValueUpdated, setFilterValueUpdated] = useState(false);
   const [conditionValues, setConditionValues] = useState<string[]>([]);
+  const [error, setError] = useState(false);
   const [filterValue, setFilterValue] = useState({
     version: { eq: 0 },
     or: [],
@@ -215,7 +216,7 @@ const Home: FC<Props> = ({
     if (filteredResult.length > 0) {
       advertItems = [...filteredResult];
     } else if (conditionValues.length > 0 && filteredResult.length === 0) {
-      advertItems = [];
+      setError(true);
     } else {
       advertItems = result?.data?.listAdverts?.items;
     }
@@ -300,6 +301,7 @@ const Home: FC<Props> = ({
             searchValue={searchValue}
             itemsFrom="home"
           />
+          {error && <h4> Vi hittade visst inget med dina filter </h4>}
           <AddBtn
             type="button"
             onClick={() => {

@@ -4,7 +4,7 @@ import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API, Storage } from "aws-amplify";
 import styled from "styled-components";
 import { MdNewReleases, MdSearch, MdTune } from "react-icons/md";
-import { ImQrcode } from "react-icons/im";
+import { MdPhotoCamera } from "react-icons/md";
 import { listAdverts } from "../graphql/queries";
 import { ListAdvertsQuery } from "../API";
 import AdvertContainer from "../components/AdvertContainer";
@@ -55,20 +55,11 @@ const ScanBtn = styled.button`
   right: 30px;
   outline: none;
 
-  div {
-    width: 28px;
-    height: 28px;
-    background-color: ${(props) => props.theme.colors.primaryDark};
-    border-radius: 4px;
-    display: inline-block;
-  }
-
   svg {
-    width: 24px;
-    height: 24px;
     color: white;
-    padding: 2px;
     border-radius: 4px;
+    font-size: 37px;
+    padding-top: 5px;
   }
 `;
 
@@ -308,9 +299,7 @@ const Home: FC<Props> = ({
             />
           </Modal>
           <ScanBtn type="button" onClick={() => setShowQRCamera(true)}>
-            <div>
-              <ImQrcode />
-            </div>
+            <MdPhotoCamera />
           </ScanBtn>
           <TabCtn>
             <button type="button">INSPIRATION</button>

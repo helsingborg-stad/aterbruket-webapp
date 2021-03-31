@@ -74,7 +74,7 @@ const MyAdverts: FC = () => {
         searchValue={false}
         itemsFrom="profile"
       />
-      {adverts.length > 0 && (
+      {renderItems.length > 0 && (
         <Pagination
           paginationOption={paginationOption}
           handlePagination={handlePages}

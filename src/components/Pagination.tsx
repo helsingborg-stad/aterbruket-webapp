@@ -20,7 +20,13 @@ const Button = styled.button`
   &.active {
     border: 2px solid ${(props) => props.theme.colors.primary};
   }
-
+  &.endButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
   &.endButtons {
     &:hover {
       background-color: ${(props) => props.theme.colors.opacityPrimaryLight};

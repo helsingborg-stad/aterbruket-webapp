@@ -35,6 +35,12 @@ interface DefaultTheme {
     // descColor: string;
     backgroundColor: string;
   };
+  colors: {
+    primary: string;
+    primaryLight: string;
+    primaryDark: string;
+    opacityPrimaryLight: string;
+  };
 }
 
 const theme: DefaultTheme = {
@@ -73,6 +79,12 @@ const theme: DefaultTheme = {
     // titleColor: "#7a524a",
     // descColor: "#3d3d3d",
     backgroundColor: "#F5F5F5",
+  },
+  colors: {
+    primary: "#50811B",
+    primaryLight: "#80B14A",
+    primaryDark: "#205400",
+    opacityPrimaryLight: "#7fb04a1a", // This color dos not exist in figma
   },
 };
 

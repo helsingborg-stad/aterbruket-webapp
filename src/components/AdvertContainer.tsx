@@ -14,7 +14,7 @@ const AdvertContainerDiv = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 50px;
+  margin-bottom: 15px;
 
   .allaDiv {
     width: 100%;

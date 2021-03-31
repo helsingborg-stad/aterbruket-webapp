@@ -12,6 +12,7 @@ import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
 import FilterMenu from "../components/FilterMenu";
+import Pagination from "../components/Pagination";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -176,12 +177,41 @@ const Home: FC<Props> = ({
     const { value } = target;
     setSearchValue(value);
   };
+  const [paginationOption, setPaginationOption] = useState({
+    activePage: 1,
+    totalPages: 1, // Will change after the fetch
+    amountToShow: 15,
+    itemLength: 14, // Will change after the fetch
+  });
+
   const [items, setItems] = useState([]) as any;
   const [filterValueUpdated, setFilterValueUpdated] = useState(false);
   const [filterValue, setFilterValue] = useState({
     version: { eq: 0 },
     or: [],
   }) as any;
+  const [renderItems, setRenderItems] = useState([]) as any;
+
+  const handlePages = (updatePage: number) => {
+    setPaginationOption({
+      ...paginationOption,
+      activePage: updatePage,
+    });
+
+    if (paginationOption.activePage !== updatePage) {
+      if (updatePage === 1) {
+        setRenderItems(items.slice(0, paginationOption.amountToShow - 1));
+      } else {
+        setRenderItems(
+          items.slice(
+            updatePage * paginationOption.amountToShow -
+              paginationOption.amountToShow,
+            updatePage * paginationOption.amountToShow - 1
+          )
+        );
+      }
+    }
+  };
 
   const fetchItems = async () => {
     let result;
@@ -191,19 +221,27 @@ const Home: FC<Props> = ({
       )) as GraphQLResult<ListAdvertsQuery>;
     } else {
       result = (await API.graphql(
-        graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
+        graphqlOperation(listAdverts, {
+          filter: { version: { eq: 0 } },
+        })
       )) as GraphQLResult<ListAdvertsQuery>;
     }
 
     const advertItems: any = result.data?.listAdverts?.items;
+    setPaginationOption({
+      ...paginationOption,
+      totalPages: Math.ceil(advertItems.length / paginationOption.amountToShow),
+      itemLength: advertItems.length,
+    });
     setItems(advertItems);
 
     setFilterValue({
       ...filterValue,
       or: [],
     });
-  };
 
+    setRenderItems(advertItems.slice(0, paginationOption.amountToShow - 1));
+  };
   useEffect(() => {
     fetchItems();
   }, [filterValueUpdated]);
@@ -272,10 +310,16 @@ const Home: FC<Props> = ({
             />
           </SearchFilterDiv>
           <AdvertContainer
-            items={items}
+            items={renderItems}
             searchValue={searchValue}
             itemsFrom="home"
           />
+          {items.length > 0 && (
+            <Pagination
+              paginationOption={paginationOption}
+              handlePagination={handlePages}
+            />
+          )}
           <AddBtn
             type="button"
             onClick={() => {

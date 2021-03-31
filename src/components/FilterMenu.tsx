@@ -113,7 +113,6 @@ const FilterMenu: FC<Props> = ({
   setFilterValue,
   filterValueUpdated,
   filterValue,
-  conditionValues,
   setConditionValues,
 }: Props) => {
   const [saveValues, setSaveValues] = useState({});

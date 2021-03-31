@@ -37,14 +37,14 @@ const ButtonContainer = styled.div`
 `;
 
 type PaginationOption = {
-  activePage: number;
-  totalPages: number;
-  amountToShow: number;
-  itemLength: number;
+  activePage: number | null | undefined;
+  totalPages: number | null | undefined;
+  amountToShow: number | null | undefined;
+  itemLength: number | null | undefined;
 };
 
 interface Props {
-  paginationOption: PaginationOption;
+  paginationOption: PaginationOption | any;
   handlePagination: (activePage: number) => void;
 }
 

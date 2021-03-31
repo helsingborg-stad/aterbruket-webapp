@@ -79,7 +79,7 @@ const SearchFilterDiv = styled.div`
   justify-content: space-around;
   align-items: center;
 
-  input{
+  input {
     font-size: 16px;
   }
 
@@ -228,6 +228,7 @@ const Home: FC<Props> = ({
     }
 
     const advertItems: any = result.data?.listAdverts?.items;
+    console.log(advertItems);
     setPaginationOption({
       ...paginationOption,
       totalPages: Math.ceil(advertItems.length / paginationOption.amountToShow),

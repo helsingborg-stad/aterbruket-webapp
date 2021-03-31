@@ -20,7 +20,7 @@ const OptionLink = styled(Link)`
   padding: 0 16px;
   margin-top: 10px;
   background-color: #e1e9db;
-  color: #205400;
+  color: ${(props) => props.theme.colors.primaryDark};
   text-decoration: none;
   height: 50px;
   border-radius: 14.5px;

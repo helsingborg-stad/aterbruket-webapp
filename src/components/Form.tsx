@@ -23,7 +23,7 @@ const FormContainerDiv = styled.div`
     align-items: center;
   }
   section {
-    background-color: ${(props) => props.theme.formTheme.backgroundColor};
+    background-color: ${(props) => props.theme.colors.lightGray};
     width: 90%;
     height: 110px;
     border-radius: 4.5px;

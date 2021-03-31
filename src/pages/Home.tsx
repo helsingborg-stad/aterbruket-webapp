@@ -17,7 +17,7 @@ import Pagination from "../components/Pagination";
 const AddBtn = styled.button`
   position: fixed;
   bottom: 10vh;
-  background-color: #205400;
+  background-color: ${(props) => props.theme.colors.primaryDark};
   color: white;
   display: flex;
   align-items: center;
@@ -45,7 +45,7 @@ const ScanBtn = styled.button`
   border: none;
   width: 56px;
   height: 56px;
-  background-color: #50811b;
+  background-color: ${(props) => props.theme.colors.primary};
   box-shadow: 0px 0px 2px rgba(98, 98, 98, 0.18),
     0px 3px 2px rgba(98, 98, 98, 0.12), 0px 6px 8px rgba(98, 98, 98, 0.12),
     0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
@@ -58,7 +58,7 @@ const ScanBtn = styled.button`
   div {
     width: 28px;
     height: 28px;
-    background-color: #205400;
+    background-color: ${(props) => props.theme.colors.primaryDark};
     border-radius: 4px;
     display: inline-block;
   }
@@ -90,7 +90,7 @@ const SearchFilterDiv = styled.div`
       position: absolute;
       top: 47px;
       left: 20px;
-      color: #50811b;
+      color: ${(props) => props.theme.colors.primaryDark};
       font-size: 16px;
     }
 
@@ -103,7 +103,7 @@ const SearchFilterDiv = styled.div`
       align-items: flex-start;
       border-radius: 17.5px;
       border: none;
-      background-color: #f5f5f5;
+      background-color: ${(props) => props.theme.colors.lightGray};
     }
   }
 
@@ -118,7 +118,7 @@ const SearchFilterDiv = styled.div`
     background-color: transparent;
 
     #filterIcon {
-      color: #50811b;
+      color: ${(props) => props.theme.colors.primaryDark};
       font-size: 18px;
     }
   }
@@ -126,7 +126,7 @@ const SearchFilterDiv = styled.div`
 
 const TabCtn = styled.div`
   width: 100%;
-  background-color: #f8f8f8;
+  background-color: ${(props) => props.theme.colors.offWhite};
 
   button {
     border: none;
@@ -137,7 +137,7 @@ const TabCtn = styled.div`
     margin-left: 30px;
     :active,
     :focus {
-      color: #205400;
+      color: ${(props) => props.theme.colors.primaryDark};
       border: none;
       border-bottom: 2px solid #a0c855;
       outline: none;

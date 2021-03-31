@@ -75,7 +75,7 @@ const FilterBody = styled.div`
     height: 56px;
     border-radius: 4.5px;
     font-weight: 500;
-    background-color: #50811b;
+    background-color: ${(props) => props.theme.colors.primary};
     font-size: 18px;
     color: white;
   }

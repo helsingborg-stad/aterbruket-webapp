@@ -22,7 +22,7 @@ const OptionDiv = styled.div`
     border-radius: 5px;
     :active,
     :focus {
-      background-color: #205400;
+      background-color: ${(props) => props.theme.colors.primaryDark};
       color: white;
       outline: none;
     }

@@ -40,6 +40,8 @@ interface DefaultTheme {
     primaryLight: string;
     primaryDark: string;
     opacityPrimaryLight: string;
+    lightGray: string;
+    offWhite: string;
   };
 }
 
@@ -85,6 +87,8 @@ const theme: DefaultTheme = {
     primaryLight: "#80B14A",
     primaryDark: "#205400",
     opacityPrimaryLight: "#7fb04a1a", // This color dos not exist in figma
+    lightGray: "#f5f5f5",
+    offWhite: "#F8F8F8",
   },
 };
 

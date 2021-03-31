@@ -31,7 +31,7 @@ const DivBtns = styled.div`
   flex-wrap: wrap;
 
   button {
-    border: 2px solid green;
+    border: 2px solid ${(props) => props.theme.colors.primary};
     outline: none;
     width: 100px;
     height: 30px;
@@ -69,7 +69,7 @@ const ItemImg = styled.img`
 const Line = styled.div`
    {
     width: 96%;
-    border-top: 3px dashed #f5f5f5;
+    border-top: 3px dashed ${(props) => props.theme.colors.lightGray};
   }
 `;
 

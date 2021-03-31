@@ -215,10 +215,12 @@ const Home: FC<Props> = ({
 
     if (filteredResult.length > 0) {
       advertItems = [...filteredResult];
+      setError(false);
     } else if (conditionValues.length > 0 && filteredResult.length === 0) {
       setError(true);
     } else {
       advertItems = result?.data?.listAdverts?.items;
+      setError(false);
     }
 
     setItems(advertItems);

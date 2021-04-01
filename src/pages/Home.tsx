@@ -184,6 +184,7 @@ const Home: FC<Props> = ({
   const [conditionValues, setConditionValues] = useState<string[]>([]);
   const [filterValue, setFilterValue] = useState({
     version: { eq: 0 },
+    status: { eq: "available" },
     or: [],
   }) as any;
   const [renderItems, setRenderItems] = useState([]) as any;
@@ -195,17 +196,10 @@ const Home: FC<Props> = ({
     });
 
     if (paginationOption.activePage !== updatePage) {
-      if (updatePage === 1) {
-        setRenderItems(items.slice(0, paginationOption.amountToShow - 1));
-      } else {
-        setRenderItems(
-          items.slice(
-            updatePage * paginationOption.amountToShow -
-              paginationOption.amountToShow,
-            updatePage * paginationOption.amountToShow - 1
-          )
-        );
-      }
+      const start = (updatePage - 1) * paginationOption.amountToShow;
+      const end = start + paginationOption.amountToShow;
+
+      setRenderItems(items.slice(start, end));
     }
   };
 
@@ -226,7 +220,9 @@ const Home: FC<Props> = ({
 
     if (filterValue.or.length === 0 && conditionValues.length > 0) {
       result = (await API.graphql(
-        graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
+        graphqlOperation(listAdverts, {
+          filter: { version: { eq: 0 }, status: { eq: "available" } },
+        })
       )) as GraphQLResult<ListAdvertsQuery>;
 
       filteredResult = filterConditions(result, conditionValues);
@@ -239,7 +235,7 @@ const Home: FC<Props> = ({
     } else {
       result = (await API.graphql(
         graphqlOperation(listAdverts, {
-          filter: { version: { eq: 0 } },
+          filter: { version: { eq: 0 }, status: { eq: "available" } },
         })
       )) as GraphQLResult<ListAdvertsQuery>;
     }
@@ -258,16 +254,14 @@ const Home: FC<Props> = ({
       ...filterValue,
       or: [],
     });
-
     setConditionValues([]);
-    // const advertItems: any = result.data?.listAdverts?.items;
     setPaginationOption({
       ...paginationOption,
       totalPages: Math.ceil(advertItems.length / paginationOption.amountToShow),
       itemLength: advertItems.length,
     });
 
-    setRenderItems(advertItems.slice(0, paginationOption.amountToShow - 1));
+    setRenderItems(advertItems.slice(0, paginationOption.amountToShow));
   };
   useEffect(() => {
     fetchItems();
@@ -280,7 +274,6 @@ const Home: FC<Props> = ({
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
-
   return (
     <main>
       {showQRCamera ? (

@@ -1,3 +1,4 @@
+import { debug } from "console";
 import React, { FC } from "react";
 import styled from "styled-components";
 import Card from "./Card";
@@ -46,7 +47,8 @@ const AdvertContainer: FC<IAdvert> = ({
   } else {
     filteredItems = items;
   }
-
+  // console.log(items[0]);
+  // console.log(filteredItems);
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">
@@ -56,20 +58,18 @@ const AdvertContainer: FC<IAdvert> = ({
       </div>
 
       {itemsFrom === "home" && filteredItems.length > 0 ? (
-        filteredItems.map((filteredItem: any) =>
-          filteredItem.status === "available" ||
-          filteredItem.status === null ? (
-            <Card
-              key={filteredItem.id}
-              id={filteredItem.id}
-              title={filteredItem.title}
-              description={filteredItem.description}
-              condition={filteredItem.condition}
-              quantity={filteredItem.quantity}
-              imageKey={filteredItem.images[0].src}
-            />
-          ) : null
-        )
+        filteredItems.map((filteredItem: any, idx: any) => (
+          <Card
+            idx={idx}
+            key={filteredItem.id}
+            id={filteredItem.id}
+            title={filteredItem.title}
+            description={filteredItem.description}
+            condition={filteredItem.condition}
+            quantity={filteredItem.quantity}
+            imageKey={filteredItem.images[0].src}
+          />
+        ))
       ) : (
         <>
           <h1>Vi hittade visst inget med dina filter</h1>
@@ -77,10 +77,12 @@ const AdvertContainer: FC<IAdvert> = ({
       )}
 
       {itemsFrom === "haffat" &&
-        filteredItems.map((filteredItem: any) =>
+        filteredItems.map((filteredItem: any, idx: any) =>
           filteredItem.status === "reserved" ||
           filteredItem.status === "pickedUp" ? (
+            // console.log(idx, filteredItem),
             <Card
+              idx={idx}
               key={filteredItem.id}
               id={filteredItem.id}
               title={filteredItem.title}
@@ -93,11 +95,12 @@ const AdvertContainer: FC<IAdvert> = ({
         )}
 
       {itemsFrom === "profile" &&
-        filteredItems.map((filteredItem: any) =>
+        filteredItems.map((filteredItem: any, idx: any) =>
           filteredItem.status === "available" ||
           filteredItem.status === "reserved" ||
           filteredItem.status === null ? (
             <Card
+              idx={idx}
               key={filteredItem.id}
               id={filteredItem.id}
               title={filteredItem.title}

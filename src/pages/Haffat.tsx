@@ -49,6 +49,7 @@ const Haffat: FC = () => {
             { reservedBySub: { eq: user.attributes.sub } },
             { version: { eq: 0 } },
           ],
+          not: { status: { eq: "available" } },
         },
       })
     )) as GraphQLResult<ListAdvertsQuery>;

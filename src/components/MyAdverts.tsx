@@ -44,6 +44,7 @@ const MyAdverts: FC = () => {
       graphqlOperation(listAdverts, {
         filter: {
           and: [{ giver: { eq: user.attributes.sub } }, { version: { eq: 0 } }],
+          not: { status: { eq: "pickedUp" } },
         },
       })
     )) as GraphQLResult<ListAdvertsQuery>;

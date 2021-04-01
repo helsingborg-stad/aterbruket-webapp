@@ -182,6 +182,7 @@ const Home: FC<Props> = ({
   const [items, setItems] = useState([]) as any;
   const [filterValueUpdated, setFilterValueUpdated] = useState(false);
   const [conditionValues, setConditionValues] = useState<string[]>([]);
+  const [error, setError] = useState(false);
   const [filterValue, setFilterValue] = useState({
     version: { eq: 0 },
     status: { eq: "available" },
@@ -202,7 +203,7 @@ const Home: FC<Props> = ({
       setRenderItems(items.slice(start, end));
     }
   };
-
+  console.log(error);
   const filterConditions: any = (fetchedData: any, conditions: any) => {
     let copyItems: any[] = [];
     let results: any[] = [];
@@ -243,12 +244,14 @@ const Home: FC<Props> = ({
     setItems(advertItems);
     if (filteredResult.length > 0) {
       advertItems = [...filteredResult];
+      setError(false);
     } else if (conditionValues.length > 0 && filteredResult.length === 0) {
-      advertItems = [];
+      setError(true);
     } else {
       advertItems = result?.data?.listAdverts?.items;
+      setError(false);
     }
-
+    console.log(advertItems);
     setItems(advertItems);
     setFilterValue({
       ...filterValue,
@@ -339,6 +342,7 @@ const Home: FC<Props> = ({
               handlePagination={handlePages}
             />
           )}
+          {error && <h4> Vi hittade visst inget med dina filter </h4>}
           <AddBtn
             type="button"
             onClick={() => {

@@ -203,7 +203,7 @@ const Home: FC<Props> = ({
       setRenderItems(items.slice(start, end));
     }
   };
-  console.log(error);
+
   const filterConditions: any = (fetchedData: any, conditions: any) => {
     let copyItems: any[] = [];
     let results: any[] = [];
@@ -251,7 +251,7 @@ const Home: FC<Props> = ({
       advertItems = result?.data?.listAdverts?.items;
       setError(false);
     }
-    console.log(advertItems);
+
     setItems(advertItems);
     setFilterValue({
       ...filterValue,

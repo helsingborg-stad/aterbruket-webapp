@@ -54,46 +54,17 @@ const AdvertContainer: FC<IAdvert> = ({
         {itemsFrom === "haffat" && <h3>Saker att hämta</h3>}
         {itemsFrom === "profile" && <h3>Mina annonser</h3>}
       </div>
-
-      {itemsFrom === "home" && filteredItems.length > 0
-        ? filteredItems.map((filteredItem: any) => (
-            <Card
-              key={filteredItem.id}
-              id={filteredItem.id}
-              title={filteredItem.title}
-              description={filteredItem.description}
-              condition={filteredItem.condition}
-              quantity={filteredItem.quantity}
-              imageKey={filteredItem.images[0].src}
-            />
-          ))
-        : null}
-
-      {itemsFrom === "haffat" &&
-        filteredItems.map((filteredItem: any) => (
-          <Card
-            key={filteredItem.id}
-            id={filteredItem.id}
-            title={filteredItem.title}
-            description={filteredItem.description}
-            condition={filteredItem.condition}
-            quantity={filteredItem.quantity}
-            imageKey={filteredItem.images[0].src}
-          />
-        ))}
-
-      {itemsFrom === "profile" &&
-        filteredItems.map((filteredItem: any) => (
-          <Card
-            key={filteredItem.id}
-            id={filteredItem.id}
-            title={filteredItem.title}
-            description={filteredItem.description}
-            condition={filteredItem.condition}
-            quantity={filteredItem.quantity}
-            imageKey={filteredItem.images[0].src}
-          />
-        ))}
+      {filteredItems.map((filteredItem: any) => (
+        <Card
+          key={filteredItem.id}
+          id={filteredItem.id}
+          title={filteredItem.title}
+          description={filteredItem.description}
+          condition={filteredItem.condition}
+          quantity={filteredItem.quantity}
+          imageKey={filteredItem.images[0].src}
+        />
+      ))}
     </AdvertContainerDiv>
   );
 };

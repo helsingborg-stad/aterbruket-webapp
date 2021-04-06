@@ -211,6 +211,7 @@ const Home: FC<Props> = ({
     results = copyItems.filter((item: Item) => {
       return conditions.includes(item.condition);
     });
+
     return results;
   };
 
@@ -232,7 +233,11 @@ const Home: FC<Props> = ({
         graphqlOperation(listAdverts, { filter: filterValue })
       )) as GraphQLResult<ListAdvertsQuery>;
 
-      filteredResult = filterConditions(result, conditionValues);
+      if (conditionValues.length === 0) {
+        filteredResult = [...result?.data?.listAdverts?.items];
+      } else {
+        filteredResult = filterConditions(result, conditionValues);
+      }
     } else {
       result = (await API.graphql(
         graphqlOperation(listAdverts, {
@@ -245,6 +250,8 @@ const Home: FC<Props> = ({
     if (filteredResult.length > 0) {
       advertItems = [...filteredResult];
       setError(false);
+    } else if (filterValue.or.length > 0 && filteredResult.length === 0) {
+      setError(true);
     } else if (conditionValues.length > 0 && filteredResult.length === 0) {
       setError(true);
     } else {

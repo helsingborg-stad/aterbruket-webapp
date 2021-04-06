@@ -25,17 +25,10 @@ const MyAdverts: FC = () => {
     });
 
     if (paginationOption.activePage !== updatePage) {
-      if (updatePage === 1) {
-        setRenderItems(adverts.slice(0, paginationOption.amountToShow - 1));
-      } else {
-        setRenderItems(
-          adverts.slice(
-            updatePage * paginationOption.amountToShow -
-              paginationOption.amountToShow,
-            updatePage * paginationOption.amountToShow - 1
-          )
-        );
-      }
+      const start = (updatePage - 1) * paginationOption.amountToShow;
+      const end = start + paginationOption.amountToShow;
+
+      setRenderItems(adverts.slice(start, end));
     }
   };
 
@@ -58,7 +51,7 @@ const MyAdverts: FC = () => {
         ),
         itemLength: advertItem.length,
       });
-      setRenderItems(advertItem.slice(0, paginationOption.amountToShow - 1));
+      setRenderItems(advertItem.slice(0, paginationOption.amountToShow));
     }
     setAdverts(advertItem);
   }, [user.attributes.sub]);

@@ -25,19 +25,10 @@ const Haffat: FC = () => {
     });
 
     if (paginationOption.activePage !== updatePage) {
-      if (updatePage === 1) {
-        setRenderItems(
-          reservedItems.slice(0, paginationOption.amountToShow - 1)
-        );
-      } else {
-        setRenderItems(
-          reservedItems.slice(
-            updatePage * paginationOption.amountToShow -
-              paginationOption.amountToShow,
-            updatePage * paginationOption.amountToShow - 1
-          )
-        );
-      }
+      const start = (updatePage - 1) * paginationOption.amountToShow;
+      const end = start + paginationOption.amountToShow;
+
+      setRenderItems(reservedItems.slice(start, end));
     }
   };
 
@@ -62,7 +53,7 @@ const Haffat: FC = () => {
         ),
         itemLength: advertItem.length,
       });
-      setRenderItems(advertItem.slice(0, paginationOption.amountToShow - 1));
+      setRenderItems(advertItem.slice(0, paginationOption.amountToShow));
     }
     setReservedItems(advertItem);
   }, [user.attributes.sub]);

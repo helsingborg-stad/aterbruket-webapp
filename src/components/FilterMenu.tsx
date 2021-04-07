@@ -99,7 +99,6 @@ interface Props {
   setFilterValueUpdated: React.Dispatch<React.SetStateAction<boolean>>;
   filterValue: any;
   setFilterValue: React.Dispatch<React.SetStateAction<any>>;
-  conditionValues: any;
   setConditionValues: React.Dispatch<React.SetStateAction<any>>;
   filterValueUpdated: boolean;
 }
@@ -168,6 +167,7 @@ const FilterMenu: FC<Props> = ({
     });
     setConditionValues([]);
     setSaveValues({});
+    setFilterValueUpdated(!filterValueUpdated);
   };
 
   return (

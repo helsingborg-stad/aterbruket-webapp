@@ -48,19 +48,19 @@ const AddItem: FC<Props> = ({
     redirect,
     result,
     file,
-    fileUploading
+    fileUploading,
   } = useForm(
     {
-      title: "Fisk",
+      title: "",
       status: "available",
-      category: "table",
+      category: "",
       quantity: 1,
       height: "",
       width: "",
       length: "",
       color: "",
-      condition: "good",
-      areaOfUse: { indoors: false, outside: true },
+      condition: "",
+      areaOfUse: { indoors: false, outside: false },
       material: {
         metal: false,
         plastic: false,
@@ -68,8 +68,10 @@ const AddItem: FC<Props> = ({
         wood: false,
       },
       description: "",
-      department: user.attributes["custom:department"] ? user.attributes["custom:department"] : "",
-      location: "HBG WORKS",
+      department: user.attributes["custom:department"]
+        ? user.attributes["custom:department"]
+        : "",
+      location: "",
       instructions: "",
       contactPerson: user.attributes.name ? user.attributes.name : "",
       email: user.attributes.email ? user.attributes.email : "",
@@ -84,9 +86,7 @@ const AddItem: FC<Props> = ({
 
   const [imageURL, setImageURL] = useState("");
 
-  useEffect(() => {
-    
-  }, [fileUploading])
+  useEffect(() => {}, [fileUploading]);
 
   useEffect(() => {
     if (file) {
@@ -102,7 +102,6 @@ const AddItem: FC<Props> = ({
   }
   return (
     <main>
-      
       {!redirect && file && <ItemImg src={imageURL} />}
       {!redirect && !alreadyAQRCode ? (
         <Form
@@ -117,7 +116,9 @@ const AddItem: FC<Props> = ({
         <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
       )}
 
-      {fileUploading && redirect && <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />}
+      {fileUploading && redirect && (
+        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+      )}
     </main>
   );
 };

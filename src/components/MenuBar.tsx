@@ -6,7 +6,7 @@ import { MdHome, MdCloud, MdChat, MdPerson } from "react-icons/md";
 const MenuDiv = styled.div`
   width: 100vw;
   height: 8vh;
-  background-color: #f8f8f8;
+  background-color: ${(props) => props.theme.colors.offWhite};
   position: fixed;
   bottom: 0;
   display: flex;
@@ -27,7 +27,7 @@ const MenuDiv = styled.div`
     }
     :active,
     :focus {
-      color: #80b14a;
+      color: ${(props) => props.theme.colors.primaryLight};
     }
   }
 `;

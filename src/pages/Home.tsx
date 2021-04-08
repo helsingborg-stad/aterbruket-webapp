@@ -4,7 +4,7 @@ import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API, Storage } from "aws-amplify";
 import styled from "styled-components";
 import { MdNewReleases, MdSearch, MdTune } from "react-icons/md";
-import { ImQrcode } from "react-icons/im";
+import { MdPhotoCamera } from "react-icons/md";
 import { listAdverts } from "../graphql/queries";
 import { ListAdvertsQuery } from "../API";
 import AdvertContainer from "../components/AdvertContainer";
@@ -12,11 +12,12 @@ import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
 import FilterMenu from "../components/FilterMenu";
+import Pagination from "../components/Pagination";
 
 const AddBtn = styled.button`
   position: fixed;
   bottom: 10vh;
-  background-color: #205400;
+  background-color: ${(props) => props.theme.colors.primaryDark};
   color: white;
   display: flex;
   align-items: center;
@@ -44,7 +45,7 @@ const ScanBtn = styled.button`
   border: none;
   width: 56px;
   height: 56px;
-  background-color: #50811b;
+  background-color: ${(props) => props.theme.colors.primary};
   box-shadow: 0px 0px 2px rgba(98, 98, 98, 0.18),
     0px 3px 2px rgba(98, 98, 98, 0.12), 0px 6px 8px rgba(98, 98, 98, 0.12),
     0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
@@ -54,20 +55,11 @@ const ScanBtn = styled.button`
   right: 30px;
   outline: none;
 
-  div {
-    width: 28px;
-    height: 28px;
-    background-color: #205400;
-    border-radius: 4px;
-    display: inline-block;
-  }
-
   svg {
-    width: 24px;
-    height: 24px;
     color: white;
-    padding: 2px;
     border-radius: 4px;
+    font-size: 37px;
+    padding-top: 5px;
   }
 `;
 
@@ -78,7 +70,7 @@ const SearchFilterDiv = styled.div`
   justify-content: space-around;
   align-items: center;
 
-  input{
+  input {
     font-size: 16px;
   }
 
@@ -89,7 +81,7 @@ const SearchFilterDiv = styled.div`
       position: absolute;
       top: 47px;
       left: 20px;
-      color: #50811b;
+      color: ${(props) => props.theme.colors.primaryDark};
       font-size: 16px;
     }
 
@@ -102,7 +94,7 @@ const SearchFilterDiv = styled.div`
       align-items: flex-start;
       border-radius: 17.5px;
       border: none;
-      background-color: #f5f5f5;
+      background-color: ${(props) => props.theme.colors.lightGray};
     }
   }
 
@@ -117,7 +109,7 @@ const SearchFilterDiv = styled.div`
     background-color: transparent;
 
     #filterIcon {
-      color: #50811b;
+      color: ${(props) => props.theme.colors.primaryDark};
       font-size: 18px;
     }
   }
@@ -125,7 +117,7 @@ const SearchFilterDiv = styled.div`
 
 const TabCtn = styled.div`
   width: 100%;
-  background-color: #f8f8f8;
+  background-color: ${(props) => props.theme.colors.offWhite};
 
   button {
     border: none;
@@ -136,7 +128,7 @@ const TabCtn = styled.div`
     margin-left: 30px;
     :active,
     :focus {
-      color: #205400;
+      color: ${(props) => props.theme.colors.primaryDark};
       border: none;
       border-bottom: 2px solid #a0c855;
       outline: none;
@@ -146,6 +138,10 @@ const TabCtn = styled.div`
 interface IQrCamera {
   delay: number;
   result: string;
+}
+
+interface Item {
+  condition: string;
 }
 
 type Props = {
@@ -176,34 +172,107 @@ const Home: FC<Props> = ({
     const { value } = target;
     setSearchValue(value);
   };
+  const [paginationOption, setPaginationOption] = useState({
+    activePage: 1,
+    totalPages: 1, // Will change after the fetch
+    amountToShow: 15,
+    itemLength: 14, // Will change after the fetch
+  });
+
   const [items, setItems] = useState([]) as any;
   const [filterValueUpdated, setFilterValueUpdated] = useState(false);
+  const [conditionValues, setConditionValues] = useState<string[]>([]);
+  const [error, setError] = useState(false);
   const [filterValue, setFilterValue] = useState({
     version: { eq: 0 },
+    status: { eq: "available" },
     or: [],
   }) as any;
+  const [renderItems, setRenderItems] = useState([]) as any;
+
+  const handlePages = (updatePage: number) => {
+    setPaginationOption({
+      ...paginationOption,
+      activePage: updatePage,
+    });
+
+    if (paginationOption.activePage !== updatePage) {
+      const start = (updatePage - 1) * paginationOption.amountToShow;
+      const end = start + paginationOption.amountToShow;
+
+      setRenderItems(items.slice(start, end));
+    }
+  };
+
+  const filterConditions: any = (fetchedData: any, conditions: any) => {
+    let copyItems: any[] = [];
+    let results: any[] = [];
+    copyItems = fetchedData.data?.listAdverts?.items;
+    results = copyItems.filter((item: Item) => {
+      return conditions.includes(item.condition);
+    });
+
+    return results;
+  };
 
   const fetchItems = async () => {
-    let result;
-    if (filterValue.or.length > 0) {
+    let result = [] as any;
+    let filteredResult: any[] = [];
+    let advertItems = [] as any;
+
+    if (filterValue.or.length === 0 && conditionValues.length > 0) {
+      result = (await API.graphql(
+        graphqlOperation(listAdverts, {
+          filter: { version: { eq: 0 }, status: { eq: "available" } },
+        })
+      )) as GraphQLResult<ListAdvertsQuery>;
+
+      filteredResult = filterConditions(result, conditionValues);
+    } else if (filterValue.or.length > 0 || conditionValues.length > 0) {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: filterValue })
       )) as GraphQLResult<ListAdvertsQuery>;
+
+      if (conditionValues.length === 0) {
+        filteredResult = [...result?.data?.listAdverts?.items];
+      } else {
+        filteredResult = filterConditions(result, conditionValues);
+      }
     } else {
       result = (await API.graphql(
-        graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
+        graphqlOperation(listAdverts, {
+          filter: { version: { eq: 0 }, status: { eq: "available" } },
+        })
       )) as GraphQLResult<ListAdvertsQuery>;
     }
 
-    const advertItems: any = result.data?.listAdverts?.items;
     setItems(advertItems);
+    if (filteredResult.length > 0) {
+      advertItems = [...filteredResult];
+      setError(false);
+    } else if (filterValue.or.length > 0 && filteredResult.length === 0) {
+      setError(true);
+    } else if (conditionValues.length > 0 && filteredResult.length === 0) {
+      setError(true);
+    } else {
+      advertItems = result?.data?.listAdverts?.items;
+      setError(false);
+    }
 
+    setItems(advertItems);
     setFilterValue({
       ...filterValue,
       or: [],
     });
-  };
+    setConditionValues([]);
+    setPaginationOption({
+      ...paginationOption,
+      totalPages: Math.ceil(advertItems.length / paginationOption.amountToShow),
+      itemLength: advertItems.length,
+    });
 
+    setRenderItems(advertItems.slice(0, paginationOption.amountToShow));
+  };
   useEffect(() => {
     fetchItems();
   }, [filterValueUpdated]);
@@ -215,7 +284,6 @@ const Home: FC<Props> = ({
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
-
   return (
     <main>
       {showQRCamera ? (
@@ -234,9 +302,7 @@ const Home: FC<Props> = ({
             />
           </Modal>
           <ScanBtn type="button" onClick={() => setShowQRCamera(true)}>
-            <div>
-              <ImQrcode />
-            </div>
+            <MdPhotoCamera />
           </ScanBtn>
           <TabCtn>
             <button type="button">INSPIRATION</button>
@@ -264,18 +330,26 @@ const Home: FC<Props> = ({
             <FilterMenu
               setIsOpen={setIsOpen}
               isOpen={isOpen}
-              // fetchItems={fetchItems}
               filterValueUpdated={filterValueUpdated}
               setFilterValueUpdated={setFilterValueUpdated}
               filterValue={filterValue}
               setFilterValue={setFilterValue}
+              conditionValues={conditionValues}
+              setConditionValues={setConditionValues}
             />
           </SearchFilterDiv>
           <AdvertContainer
-            items={items}
+            items={renderItems}
             searchValue={searchValue}
             itemsFrom="home"
           />
+          {items.length > 0 && (
+            <Pagination
+              paginationOption={paginationOption}
+              handlePagination={handlePages}
+            />
+          )}
+          {error && <h4> Vi hittade visst inget med dina filter </h4>}
           <AddBtn
             type="button"
             onClick={() => {

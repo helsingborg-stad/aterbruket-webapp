@@ -14,7 +14,7 @@ const AdvertContainerDiv = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 50px;
+  margin-bottom: 15px;
 
   .allaDiv {
     width: 100%;
@@ -54,55 +54,17 @@ const AdvertContainer: FC<IAdvert> = ({
         {itemsFrom === "haffat" && <h3>Saker att hämta</h3>}
         {itemsFrom === "profile" && <h3>Mina annonser</h3>}
       </div>
-
-      {itemsFrom === "home" &&
-        filteredItems.map((filteredItem: any) =>
-          filteredItem.status === "available" ||
-          filteredItem.status === null ? (
-            <Card
-              key={filteredItem.id}
-              id={filteredItem.id}
-              title={filteredItem.title}
-              description={filteredItem.description}
-              status={filteredItem.status}
-              quantity={filteredItem.quantity}
-              imageKey={filteredItem.images[0].src}
-            />
-          ) : null
-        )}
-
-      {itemsFrom === "haffat" &&
-        filteredItems.map((filteredItem: any) =>
-          filteredItem.status === "reserved" ||
-          filteredItem.status === "pickedUp" ? (
-            <Card
-              key={filteredItem.id}
-              id={filteredItem.id}
-              title={filteredItem.title}
-              description={filteredItem.description}
-              status={filteredItem.status}
-              quantity={filteredItem.quantity}
-              imageKey={filteredItem.images[0].src}
-            />
-          ) : null
-        )}
-
-      {itemsFrom === "profile" &&
-        filteredItems.map((filteredItem: any) =>
-          filteredItem.status === "available" ||
-          filteredItem.status === "reserved" ||
-          filteredItem.status === null ? (
-            <Card
-              key={filteredItem.id}
-              id={filteredItem.id}
-              title={filteredItem.title}
-              description={filteredItem.description}
-              status={filteredItem.status}
-              quantity={filteredItem.quantity}
-              imageKey={filteredItem.images[0].src}
-            />
-          ) : null
-        )}
+      {filteredItems.map((filteredItem: any) => (
+        <Card
+          key={filteredItem.id}
+          id={filteredItem.id}
+          title={filteredItem.title}
+          description={filteredItem.description}
+          condition={filteredItem.condition}
+          quantity={filteredItem.quantity}
+          imageKey={filteredItem.images[0].src}
+        />
+      ))}
     </AdvertContainerDiv>
   );
 };

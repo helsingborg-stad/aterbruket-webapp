@@ -8,7 +8,7 @@ const InputGroup = styled.div`
     align-items: center;
     justify-content: flex-start;
 
-    background-color: ${(props) => props.theme.formTheme.backgroundColor};
+    background-color: ${(props) => props.theme.colors.lightGray};
     width: 350px;
     height: 56px;
     border-radius: 4.5px;
@@ -26,8 +26,8 @@ const InputGroup = styled.div`
 
     input[type="checkbox"]:checked,
     &:focus {
-      border: 1px solid ${(props) => props.theme.formTheme.backgroundColor};
-      background-color: #80b14a;
+      border: 1px solid ${(props) => props.theme.colors.lightGray};
+      background-color: ${(props) => props.theme.colors.primaryLight};
       outline: none;
     }
   }
@@ -58,7 +58,9 @@ const FilterCheckbox: FC<Props> = ({
     element: any
   ) => {
     const { target } = e;
+
     const value = target.type === "checkbox" ? target.checked : target.value;
+    // eslint-disable-next-line no-console
 
     setSaveValues({
       ...saveValues,

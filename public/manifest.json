@@ -3,22 +3,26 @@
   "name": "Haffa - en cirkulationsplattform",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "favicon1.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "192px.png",
+      "src": "180px.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "512px.png",
+      "src": "120px.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
+<<<<<<< HEAD
   "start_url": "/",
+=======
+  "start_url": ".",
+>>>>>>> parent of 9547dca... changed the icons and start url
   "display_override": ["window-control-overlay", "fullscreen"],
   "display": "fullscreen",
   "theme_color": "#000000",

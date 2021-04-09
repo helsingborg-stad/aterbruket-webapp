@@ -18,6 +18,7 @@ import PersonalInfo from "./components/PersonalInfo";
 import Statics from "./components/Statics";
 import MyAdverts from "./components/MyAdverts";
 import { v4 as uuidv4 } from "uuid";
+import ReactPWAInstallProvider, { useReactPWAInstall } from "react-pwa-install";
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.appTheme.minHeight}vh`};
@@ -45,6 +46,7 @@ const App: FC = () => {
   const [alreadyAQRCode, setAlreadyAQRCode] = useState(false);
   const [qrCamera, setQrCamera] = useState({ delay: 500, result: "" });
   const [user, setUser] = useState({ attributes: {} }) as any;
+  const { pwaInstall, supported, isInstalled } = useReactPWAInstall();
 
   useEffect(() => {
     Auth.currentAuthenticatedUser().then((user) => {
@@ -52,10 +54,26 @@ const App: FC = () => {
     });
   }, []);
 
+  const handleClick = () => {
+    pwaInstall({
+      title: "Install Web App",
+      description: "This is a very good app that does a lot of useful stuff. ",
+    })
+      .then(() =>
+        alert("App installed successfully or instructions for install shown")
+      )
+      .catch(() => alert("User opted out from installing"));
+  };
+
   return (
     <UserContext.Provider value={user}>
       <ThemeProvider theme={theme}>
         <AppContainer>
+          {supported() && !isInstalled() && (
+            <button type="button" onClick={handleClick}>
+              Install App
+            </button>
+          )}
           <Router>
             <Header />
             <UserContext.Provider value={user}>

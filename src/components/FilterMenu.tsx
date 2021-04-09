@@ -115,6 +115,7 @@ const FilterMenu: FC<Props> = ({
   setConditionValues,
 }: Props) => {
   const [saveValues, setSaveValues] = useState({});
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     if (isOpen) {
@@ -170,6 +171,7 @@ const FilterMenu: FC<Props> = ({
     setFilterValueUpdated(!filterValueUpdated);
   };
 
+  console.log("disabled", isDisabled);
   return (
     <FilterCtn className={isOpen ? "show" : "hide"}>
       <FilterHeader>
@@ -184,18 +186,30 @@ const FilterMenu: FC<Props> = ({
       </FilterHeader>
       <FilterBody>
         <FilterCheckbox
+          isDisabled={isDisabled}
+          setIsDisabled={setIsDisabled}
           setSaveValues={setSaveValues}
           group={fieldsForm[2]}
           saveValues={saveValues}
         />
         <FilterCheckbox
+          isDisabled={isDisabled}
+          setIsDisabled={setIsDisabled}
           setSaveValues={setSaveValues}
           group={fieldsForm[9]}
           saveValues={saveValues}
         />
         {/* all the small filtering components, the following p tag is just for showing how it looks like, can be removed when component is added */}
 
-        <button className="saveBtn" type="button" onClick={handleSaveFilter}>
+        <button
+          disabled={isDisabled}
+          style={{
+            backgroundColor: isDisabled ? "#F5F5F5" : "#50811B",
+          }}
+          className="saveBtn"
+          type="button"
+          onClick={handleSaveFilter}
+        >
           Spara
         </button>
         <button className="resetBtn" type="button" onClick={handleCancelFilter}>

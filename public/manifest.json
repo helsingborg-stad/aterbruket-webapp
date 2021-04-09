@@ -18,7 +18,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "https://wip-johanna.d21bj89y0jdxx1.amplifyapp.com/",
   "display_override": ["window-control-overlay", "fullscreen"],
   "display": "fullscreen",
   "theme_color": "#000000",

@@ -56,13 +56,11 @@ const App: FC = () => {
 
   const handleClick = () => {
     pwaInstall({
-      title: "Install Web App",
-      description: "This is a very good app that does a lot of useful stuff. ",
+      title: "Installera Haffa",
+      description: "Haffa kommer hamna på din hemskärm som en app.",
     })
-      .then(() =>
-        alert("App installed successfully or instructions for install shown")
-      )
-      .catch(() => alert("User opted out from installing"));
+      .then(() => alert("Appen har installerats."))
+      .catch(() => alert("Ladda gärna ner den nästa gång du använder Haffa."));
   };
 
   return (

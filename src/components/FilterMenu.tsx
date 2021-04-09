@@ -205,6 +205,7 @@ const FilterMenu: FC<Props> = ({
           disabled={isDisabled}
           style={{
             backgroundColor: isDisabled ? "#F5F5F5" : "#50811B",
+            color: isDisabled ? "#A3A3A3" : "white",
           }}
           className="saveBtn"
           type="button"
@@ -212,7 +213,12 @@ const FilterMenu: FC<Props> = ({
         >
           Spara
         </button>
-        <button className="resetBtn" type="button" onClick={handleCancelFilter}>
+        <button
+          style={{ display: isDisabled ? "none" : "block" }}
+          className="resetBtn"
+          type="button"
+          onClick={handleCancelFilter}
+        >
           Avbryt/ Nollställ
         </button>
       </FilterBody>

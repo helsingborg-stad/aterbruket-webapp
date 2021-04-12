@@ -50,7 +50,7 @@ const ScanBtn = styled.button`
     0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
   border-radius: 34.5px;
   position: absolute;
-  top: 27vh;
+  top: 21vh;
   right: 30px;
   outline: none;
 
@@ -114,7 +114,7 @@ const SearchFilterDiv = styled.div`
   }
 `;
 
-const TabCtn = styled.div`
+/* const TabCtn = styled.div`
   width: 100%;
   background-color: ${(props) => props.theme.colors.offWhite};
 
@@ -133,7 +133,7 @@ const TabCtn = styled.div`
       outline: none;
     }
   }
-`;
+`; */
 interface IQrCamera {
   delay: number;
   result: string;
@@ -301,10 +301,10 @@ const Home: FC<Props> = ({
           <ScanBtn type="button" onClick={() => setShowQRCamera(true)}>
             <MdPhotoCamera />
           </ScanBtn>
-          <TabCtn>
+          {/* <TabCtn>
             <button type="button">INSPIRATION</button>
             <button type="button">KATEGORIER</button>
-          </TabCtn>
+          </TabCtn> */}
           <SearchFilterDiv>
             <div className="searchWrapper">
               <MdSearch id="searchIcon" />

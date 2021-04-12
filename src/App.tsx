@@ -69,7 +69,7 @@ const App: FC = () => {
         <AppContainer>
           {supported() && !isInstalled() && (
             <button type="button" onClick={handleClick}>
-              Install App
+              Lägg Haffa på hemskärmen
             </button>
           )}
           <Router>

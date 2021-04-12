@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState, useCallback, FC } from "react";
 import AdvertContainer from "../components/AdvertContainer";
 import { ListAdvertsQuery } from "../API";
 import { listAdverts } from "../graphql/queries";
-import { UserContext } from "../contexts/UserContext";
+import UserContext from "../contexts/UserContext";
 import Pagination from "../components/Pagination";
 
 const Haffat: FC = () => {

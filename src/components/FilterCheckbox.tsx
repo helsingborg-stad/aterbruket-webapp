@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 
 const InputGroup = styled.div`
@@ -45,7 +45,6 @@ interface Props {
   group: any;
   saveValues: any;
   setSaveValues: any;
-  isDisabled: boolean;
   setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -53,7 +52,6 @@ const FilterCheckbox: FC<Props> = ({
   setSaveValues,
   saveValues,
   group,
-  isDisabled,
   setIsDisabled,
 }: Props) => {
   const handleInputChange = (e: React.ChangeEvent<any>, groupName: any) => {
@@ -65,10 +63,6 @@ const FilterCheckbox: FC<Props> = ({
       },
     });
   };
-
-  useEffect(() => {
-    console.log("saveValues", saveValues);
-  }, [saveValues]);
 
   let cates: any = [];
   let condis: any = [];
@@ -86,8 +80,6 @@ const FilterCheckbox: FC<Props> = ({
       }
     });
   });
-
-  console.log("cate", cates, "condi", condis);
 
   if (cates.length === 0 && condis.length === 0) {
     setIsDisabled(true);

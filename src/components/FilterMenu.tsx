@@ -171,7 +171,6 @@ const FilterMenu: FC<Props> = ({
     setFilterValueUpdated(!filterValueUpdated);
   };
 
-  console.log("disabled", isDisabled);
   return (
     <FilterCtn className={isOpen ? "show" : "hide"}>
       <FilterHeader>
@@ -186,14 +185,12 @@ const FilterMenu: FC<Props> = ({
       </FilterHeader>
       <FilterBody>
         <FilterCheckbox
-          isDisabled={isDisabled}
           setIsDisabled={setIsDisabled}
           setSaveValues={setSaveValues}
           group={fieldsForm[2]}
           saveValues={saveValues}
         />
         <FilterCheckbox
-          isDisabled={isDisabled}
           setIsDisabled={setIsDisabled}
           setSaveValues={setSaveValues}
           group={fieldsForm[9]}

@@ -24,11 +24,13 @@ import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
 import { fieldsForm } from "../utils/formUtils";
 
-const DivBtns = styled.div`
+const TopDiv = styled.div`
+  background-color: ${(props) => props.theme.colors.offWhite};
   display: flex;
-  width: 90%;
-  justify-content: center;
+  width: 98%;
+  align-items: center;
   flex-wrap: wrap;
+  flex-direction: column;
 
   button {
     border: 2px solid ${(props) => props.theme.colors.primary};
@@ -39,15 +41,23 @@ const DivBtns = styled.div`
     margin: 5px;
     border-radius: 5px;
   }
+  .haffaBtn {
+    box-shadow: 0px 0px 2px rgba(98, 98, 98, 0.18),
+      0px 3px 2px rgba(98, 98, 98, 0.12), 0px 6px 8px rgba(98, 98, 98, 0.12),
+      0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
+    border-radius: 4.5px;
+    background-color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors.white};
+    font-weight: 900;
+    font-size: 12px;
+    line-height: 132%;
+    letter-spacing: 0.015em;
+    width: 366px;
+    height: 40px;
+    border: none;
+  }
   .regiveBtn {
     width: 111px;
-  }
-
-  p {
-    color: grey;
-    margin: 0;
-    font-style: italic;
-    font-size: 0.8em;
   }
 `;
 
@@ -56,15 +66,17 @@ const ImgDiv = styled.div`
   height: 300px;
   display: flex;
   justify-content: center;
-`;
+  background-color: ${(props) => props.theme.colors.offWhite};
 
-const ItemImg = styled.img`
-  max-height: 300px;
+  img{
+    max-height: 300px;
   max-width: 100%;
   margin: 0;
   border-radius: 9.5px;
   object-fit: contain;
+  }
 `;
+
 
 const Line = styled.div`
    {
@@ -224,32 +236,33 @@ const ItemDetails: FC<ParamTypes> = () => {
     return <td key={str}>{str}</td>;
   };
 
+  console.log(item);
+
   const allDetails = (
     <>
-      <DivBtns>
-        {(item.status === "reserved" || item.status === "pickedUp") && (
-          <p>
-            (Prylen har status: &quot;{item.status}&quot;. Gjordes av:{" "}
-            <span>{item.reservedByName}</span>)
-          </p>
+      <TopDiv>
+        {!image ? (
+          <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
+        ) : (
+          <ImgDiv>
+            <img src={image} alt="" onClick={() => setShowCarousel(true)} />
+          </ImgDiv>
         )}
+
+        <h1>{item.title}</h1>
+
         {item.status === "available" && (
           <button
+            className="haffaBtn"
             onClick={() => {
               onClickReservBtn();
             }}
             type="button"
           >
-            HAFFA
+            Haffa!
           </button>
         )}
-        {item.status === "available" && item.giver === user.attributes.sub && (
-          <>
-            <button onClick={() => setEditItem(true)} type="button">
-              Edit
-            </button>
-          </>
-        )}
+
         {item.status === "reserved" &&
           item.reservedBySub === user.attributes.sub && (
             <>
@@ -278,18 +291,14 @@ const ItemDetails: FC<ParamTypes> = () => {
               </button>
             </>
           )}
-      </DivBtns>
-      <h1>{item.title}</h1>
-      {!image ? (
-        <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
-      ) : (
-        <ImgDiv>
-          <ItemImg src={image} alt="" onClick={() => setShowCarousel(true)} />
-        </ImgDiv>
-      )}
+      </TopDiv>
 
       <Table>
         <tbody>
+          <tr>
+            <td>Beskrivning:</td>
+            <td>{item.description}</td>
+          </tr>
           <tr>
             <td>Kategori/Typ av möbel:</td>
             <td>
@@ -310,11 +319,11 @@ const ItemDetails: FC<ParamTypes> = () => {
             <td>Djup:</td>
             <td>{item.length} cm</td>
           </tr>
+
           <tr>
             <td>Färg:</td>
             <td>{item.color}</td>
           </tr>
-
           <tr>
             <td>Material:</td>
             {item.material ? (
@@ -345,10 +354,7 @@ const ItemDetails: FC<ParamTypes> = () => {
               {item.climateImpact} kg CO<sub>2</sub>e
             </td>
           </tr>
-          <tr>
-            <td>Beskrivning:</td>
-            <td>{item.description}</td>
-          </tr>
+
           {item.status === "available" && (
             <tr>
               <td>Har varit tillgänglig i:</td>
@@ -356,8 +362,20 @@ const ItemDetails: FC<ParamTypes> = () => {
             </tr>
           )}
           <tr>
-            <td>Hämtas på:</td>
+            <td>Här finns prylen:</td>
             <td>{item.location}</td>
+          </tr>
+          <tr>
+            <td>Kontaktperson:</td>
+            <td>{item.contactPerson}</td>
+          </tr>
+          <tr>
+            <td>Kontaktperson:</td>
+            <td>{item.phoneNumber}</td>
+          </tr>
+          <tr>
+            <td>Kontaktperson:</td>
+            <td>{item.email}</td>
           </tr>
         </tbody>
       </Table>
@@ -374,7 +392,13 @@ const ItemDetails: FC<ParamTypes> = () => {
           <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
         )}
       </MapContainer> */}
-
+      {item.status === "available" && item.giver === user.attributes.sub && (
+        <>
+          <button onClick={() => setEditItem(true)} type="button">
+            Redigera annons
+          </button>
+        </>
+      )}
       <Line />
 
       <QRCode id={id} />

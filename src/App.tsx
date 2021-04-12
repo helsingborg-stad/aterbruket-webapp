@@ -1,4 +1,3 @@
-import { withAuthenticator } from "@aws-amplify/ui-react";
 import React, { FC } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import "./App.css";
@@ -54,4 +53,4 @@ const App: FC = () => {
   );
 };
 
-export default withAuthenticator(App);
+export default App;

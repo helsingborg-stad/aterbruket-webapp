@@ -8,7 +8,7 @@ interface ProviderProps {
 }
 
 function UserProvider({ children }: ProviderProps) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({ attributes: {} });
 
   useEffect(() => {
     Auth.currentAuthenticatedUser()

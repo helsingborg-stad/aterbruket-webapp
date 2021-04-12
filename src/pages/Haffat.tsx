@@ -1,11 +1,11 @@
 import API, { GraphQLResult } from "@aws-amplify/api";
 import { graphqlOperation } from "aws-amplify";
-import React, { useContext, useEffect, useState, useCallback, FC } from "react";
-import AdvertContainer from "../components/AdvertContainer";
+import React, { FC, useCallback, useContext, useEffect, useState } from "react";
 import { ListAdvertsQuery } from "../API";
-import { listAdverts } from "../graphql/queries";
-import UserContext from "../contexts/UserContext";
+import AdvertContainer from "../components/AdvertContainer";
 import Pagination from "../components/Pagination";
+import UserContext from "../contexts/UserContext";
+import { listAdverts } from "../graphql/queries";
 
 const Haffat: FC = () => {
   const user: any = useContext(UserContext);

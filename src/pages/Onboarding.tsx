@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { FC, useState } from "react";
 import { Redirect } from "react-router-dom";
 
-const Onboarding: React.FC = () => {
-
+const Onboarding: FC = () => {
   const [isOnboardingDisabled, setIsOnboardingDisabled] = useState<boolean>(false);
 
   const disableOnboarding = () => {

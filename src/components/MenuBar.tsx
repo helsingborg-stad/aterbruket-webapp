@@ -51,7 +51,7 @@ const MenuBar: FC<Props> = ({ setQrCamera, qrCamera }: Props) => {
     <MenuDiv>
       <Link
         className="link"
-        to="/"
+        to="/app"
         onClick={() => setQrCamera({ ...qrCamera, result: "" })}
       >
         <MdHome className="icon" />

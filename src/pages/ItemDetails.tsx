@@ -19,7 +19,7 @@ import EditItemForm from "../components/EditItemForm";
 // import { loadMapApi } from "../utils/GoogleMapsUtils";
 // import Map from "../components/Map";
 import CarouselComp from "../components/CarouselComp";
-import { UserContext } from "../contexts/UserContext";
+import UserContext from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
 import { fieldsForm } from "../utils/formUtils";

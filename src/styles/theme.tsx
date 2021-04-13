@@ -45,6 +45,7 @@ interface DefaultTheme {
     offWhite: string;
     white: string;
     darkest: string;
+    dark: string;
   };
 }
 
@@ -94,6 +95,7 @@ const theme: DefaultTheme = {
     lightGray: "#f5f5f5",
     offWhite: "#F8F8F8",
     white: "#ffffff",
+    dark: "#707070",
     darkest: "#3D3D3D"
   },
 };

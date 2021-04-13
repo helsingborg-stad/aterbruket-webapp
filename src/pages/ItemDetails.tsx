@@ -49,11 +49,11 @@ const TopDiv = styled.div`
     background-color: ${(props) => props.theme.colors.primary};
     color: ${(props) => props.theme.colors.white};
     font-weight: 900;
-    font-size: 12px;
+    font-size: 18px;
     line-height: 132%;
     letter-spacing: 0.015em;
     width: 366px;
-    height: 40px;
+    height: 56px;
     border: none;
   }
   .regiveBtn {

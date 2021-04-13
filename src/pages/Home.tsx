@@ -166,6 +166,7 @@ const Home: FC<Props> = ({
   const [showQRCamera, setShowQRCamera] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
   const updateSearch = (event: React.ChangeEvent<any>) => {
     const { target } = event;
     const { value } = target;
@@ -182,6 +183,7 @@ const Home: FC<Props> = ({
   const [filterValueUpdated, setFilterValueUpdated] = useState(false);
   const [conditionValues, setConditionValues] = useState<string[]>([]);
   const [error, setError] = useState(false);
+  const [filtered, setFiltered] = useState(false);
   const [filterValue, setFilterValue] = useState({
     version: { eq: 0 },
     status: { eq: "available" },
@@ -227,17 +229,19 @@ const Home: FC<Props> = ({
       )) as GraphQLResult<ListAdvertsQuery>;
 
       filteredResult = filterConditions(result, conditionValues);
+      setFiltered(true);
     } else if (filterValue.or.length > 0 || conditionValues.length > 0) {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: filterValue })
       )) as GraphQLResult<ListAdvertsQuery>;
-
+      setFiltered(true);
       if (conditionValues.length === 0) {
         filteredResult = [...result?.data?.listAdverts?.items];
       } else {
         filteredResult = filterConditions(result, conditionValues);
       }
     } else {
+      setFiltered(false);
       result = (await API.graphql(
         graphqlOperation(listAdverts, {
           filter: { version: { eq: 0 }, status: { eq: "available" } },
@@ -338,6 +342,7 @@ const Home: FC<Props> = ({
             items={renderItems}
             searchValue={searchValue}
             itemsFrom="home"
+            filtered={filtered}
           />
           {items.length > 0 && (
             <Pagination

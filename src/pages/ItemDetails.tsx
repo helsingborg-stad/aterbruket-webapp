@@ -31,9 +31,11 @@ const TopSection = styled.div`
   align-items: center;
   flex-wrap: wrap;
   flex-direction: column;
+  box-shadow: 0px 1px 0px rgba(86, 86, 86, 0.16);
 
   .reservedHeader {
     background-color: ${(props) => props.theme.colors.primaryLighter};
+
     .headerTitle--reserved {
       margin: 26px 0 0 0;
     }
@@ -59,7 +61,8 @@ const TopSection = styled.div`
       font-size: 24px;
       color: ${(props) => props.theme.colors.darkest};
     }
-    p, .headerTitle {
+    p,
+    .headerTitle {
       margin: 35px 0 0 0;
       font-family: Roboto;
       font-style: normal;
@@ -90,9 +93,10 @@ const TopSection = styled.div`
     font-size: 18px;
     line-height: 132%;
     letter-spacing: 0.015em;
-    width: 366px;
+    width: 340px;
     height: 56px;
     border: none;
+    margin: 0 12px 24px 12px;
   }
 
   .haffaBtn--pickUp {
@@ -100,14 +104,35 @@ const TopSection = styled.div`
   }
   .titleDiv {
     width: 100%;
+    h4 {
+      margin: 48px 32px 12px 32px;
+
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 112%;
+      letter-spacing: 0.0025em;
+      color: ${(props) => props.theme.colors.primaryDark};
+    }
     h1 {
       font-family: Roboto;
       font-style: normal;
       font-weight: 900;
       font-size: 36px;
       line-height: 124%;
-      margin: 48px 32px 24px 32px;
+      margin: 0px 32px 24px 32px;
     }
+  }
+
+  .removeReservationP {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: ${(props) => props.theme.colors.dark};
+    margin: 24px 0 32px 0;
   }
 
   .regiveBtn {
@@ -138,25 +163,61 @@ const Line = styled.div`
   }
 `;
 
-const Table = styled.table`
-  width: 90%;
-  max-width: 500px;
-  margin: 10px auto;
-  border-collapse: collapse;
+const MainSection = styled.section`
+  width: 100%;
 
-  td {
-    text-align: left;
-    padding: 10px;
-    border: none;
-    font-weight: 500;
+  h4 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 144%;
+    margin: 0;
+
+    color: ${(props) => props.theme.colors.primary};
+  }
+  .dark {
+    margin: 48px 0 28px 0;
+    color: ${(props) => props.theme.colors.darkest};
   }
 
-  td:nth-child(2) {
-    width: 70%;
-    border: none;
-    font-weight: 400;
+  p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: ${(props) => props.theme.colors.darkest};
+  }
+
+  div {
+    padding: 0 24px 0 24px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+
+    td {
+      padding: 16px 0 0 23px;
+      border: none;
+    }
+
+    td:nth-child(2) {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 144%;
+      text-align: right;
+      padding: 16px 24px 0 0;
+      word-wrap: break-word;
+
+      span {
+        color: ${(props) => props.theme.colors.dark};
+      }
+    }
   }
 `;
+
 /* comment out map for debugging purpose  */
 // const MapContainer = styled.div`
 //   width: 80%;
@@ -289,8 +350,6 @@ const ItemDetails: FC<ParamTypes> = () => {
     return <td key={str}>{str}</td>;
   };
 
-  console.log(item);
-
   const allDetails = (
     <>
       <TopSection>
@@ -317,6 +376,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           </ImgDiv>
         )}
         <div className="titleDiv">
+          <h4>Möbler</h4>
           <h1>{item.title}</h1>
         </div>
 
@@ -344,6 +404,8 @@ const ItemDetails: FC<ParamTypes> = () => {
               >
                 Hämta ut
               </button>
+
+              <p className="removeReservationP">Ta bort reservation</p>
             </>
           )}
 
@@ -363,92 +425,122 @@ const ItemDetails: FC<ParamTypes> = () => {
           )}
       </TopSection>
 
-      <Table>
-        <tbody>
-          <tr>
-            <td>Beskrivning:</td>
-            <td>{item.description}</td>
-          </tr>
-          <tr>
-            <td>Kategori/Typ av möbel:</td>
-            <td>
-              {item.category
-                ? translate(item.category, "category")
-                : item.category}
-            </td>
-          </tr>
-          <tr>
-            <td>Höjd:</td>
-            <td>{item.height} cm</td>
-          </tr>
-          <tr>
-            <td>Bredd:</td>
-            <td>{item.width} cm</td>
-          </tr>
-          <tr>
-            <td>Djup:</td>
-            <td>{item.length} cm</td>
-          </tr>
-
-          <tr>
-            <td>Färg:</td>
-            <td>{item.color}</td>
-          </tr>
-          <tr>
-            <td>Material:</td>
-            {item.material ? (
-              mapingObject(item.material, "material")
-            ) : (
-              <td> </td>
-            )}
-          </tr>
-          <tr>
-            <td>Skick:</td>
-            <td>
-              {item.condition
-                ? translate(item.condition, "condition")
-                : item.condition}
-            </td>
-          </tr>
-          <tr>
-            <td>Användningsområde:</td>
-            {item.areaOfUse ? (
-              mapingObject(item.areaOfUse, "areaOfUse")
-            ) : (
-              <td> </td>
-            )}
-          </tr>
-          <tr>
-            <td>Klimatpåverkan:</td>
-            <td>
-              {item.climateImpact} kg CO<sub>2</sub>e
-            </td>
-          </tr>
-
-          {item.status === "available" && (
+      <MainSection>
+        <div>
+          <h4 className="dark">Beskrivning</h4>
+          <p>{item.description}</p>
+        </div>
+        <table>
+          <tbody>
             <tr>
-              <td>Har varit tillgänglig i:</td>
-              <td>{showDays(item.createdAt)} dagar</td>
+              <td>
+                <h4>Typ av möbel</h4>
+              </td>
+              <td>
+                {item.category
+                  ? translate(item.category, "category")
+                  : item.category}
+              </td>
             </tr>
-          )}
-          <tr>
-            <td>Här finns prylen:</td>
-            <td>{item.location}</td>
-          </tr>
-          <tr>
-            <td>Kontaktperson:</td>
-            <td>{item.contactPerson}</td>
-          </tr>
-          <tr>
-            <td>Kontaktperson:</td>
-            <td>{item.phoneNumber}</td>
-          </tr>
-          <tr>
-            <td>Kontaktperson:</td>
-            <td>{item.email}</td>
-          </tr>
-        </tbody>
-      </Table>
+            <tr>
+              <td>
+                <h4>Höjd</h4>
+              </td>
+              <td>
+                {item.height} <span>cm</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h4>Bredd</h4>
+              </td>
+              <td>
+                {item.width} <span>cm</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h4>Djup</h4>
+              </td>
+              <td>
+                {item.length} <span>cm</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <h4>Färg</h4>
+              </td>
+              <td>{item.color}</td>
+            </tr>
+            <tr>
+              <td>
+                <h4>Material</h4>
+              </td>
+              {item.material ? (
+                mapingObject(item.material, "material")
+              ) : (
+                <td> </td>
+              )}
+            </tr>
+            <tr>
+              <td>
+                <h4>Skick</h4>
+              </td>
+              <td>
+                {item.condition
+                  ? translate(item.condition, "condition")
+                  : item.condition}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h4>Användningsområde</h4>
+              </td>
+              {item.areaOfUse ? (
+                mapingObject(item.areaOfUse, "areaOfUse")
+              ) : (
+                <td> </td>
+              )}
+            </tr>
+            <tr>
+              <td>
+                <h4>Klimatpåverkan</h4>
+              </td>
+              <td>
+                {item.climateImpact}{" "}
+                <span>
+                  kg CO<sub>2</sub>e
+                </span>
+              </td>
+            </tr>
+
+            {item.status === "available" && (
+              <tr>
+                <td>
+                  <h4>Har varit tillgänglig i</h4>
+                </td>
+                <td>
+                  {showDays(item.createdAt)} <span>dagar</span>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </MainSection>
+      <div>
+        <h4>Här finns prylen:</h4>
+        <p>{item.location}</p>
+
+        <h4>Kontaktperson:</h4>
+        <p>{item.contactPerson}</p>
+
+        <h4>Kontaktperson:</h4>
+        <p>{item.phoneNumber}</p>
+
+        <h4>Kontaktperson:</h4>
+        <p>{item.email}</p>
+      </div>
       {/* <MapContainer>
         {item && item.location && (
           <Map

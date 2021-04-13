@@ -19,7 +19,7 @@ const HeaderDiv = styled.header`
     `${props.theme.headerTheme.padding[0]}px ${props.theme.headerTheme.padding[1]}px ${props.theme.headerTheme.padding[2]}px ${props.theme.headerTheme.padding[3]}px`};
   background-color: ${(props) => props.theme.headerTheme.backgroundColor};
   box-sizing: border-box;
-  height: ${(props: MyProps) => (props.isInDetail ? "50px" : "200px")};
+  display: ${(props: MyProps) => (props.isInDetail ? "none" : "flex")};
 
   h2 {
     font-style: ${(props) => props.theme.headerTheme.fontStyle};
@@ -55,9 +55,7 @@ const Header: FC<MyProps> = ({ isInDetail }: MyProps) => {
   return (
     <>
       {path.includes("item") ? (
-        <HeaderDiv isInDetail={true}>
-          <p>(Tillbaka ska vara här)</p>
-        </HeaderDiv>
+        <HeaderDiv isInDetail={true} />
       ) : (
         <HeaderDiv isInDetail={false}>
           {subPath === "personal-info" ||

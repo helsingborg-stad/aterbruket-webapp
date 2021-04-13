@@ -31,8 +31,12 @@ const TopSection = styled.div`
   align-items: center;
   flex-wrap: wrap;
   flex-direction: column;
+
   .reservedHeader {
     background-color: ${(props) => props.theme.colors.primaryLighter};
+    .headerTitle--reserved {
+      margin: 26px 0 0 0;
+    }
     .reservedP {
       color: ${(props) => props.theme.colors.primaryDark};
       font-size: 14px;
@@ -45,16 +49,18 @@ const TopSection = styled.div`
     width: 100%;
     text-align: center;
     height: 75px;
+    position: fixed;
+    background-color: ${(props) => props.theme.colors.offWhite};
 
     svg {
       position: absolute;
       left: 28px;
-      bottom: 24px;
+      bottom: 16px;
       font-size: 24px;
       color: ${(props) => props.theme.colors.darkest};
     }
-    p {
-      margin: 28px 0 0 0;
+    p, .headerTitle {
+      margin: 35px 0 0 0;
       font-family: Roboto;
       font-style: normal;
       font-weight: 500;
@@ -115,6 +121,7 @@ const ImgDiv = styled.div`
   display: flex;
   justify-content: center;
   background-color: ${(props) => props.theme.colors.offWhite};
+  margin-top: 75px;
 
   img {
     max-height: 256px;
@@ -290,14 +297,14 @@ const ItemDetails: FC<ParamTypes> = () => {
         {item.status === "available" && (
           <header>
             <MdArrowBack />
-            <p>{item.title}</p>
+            <p className="headerTitle">{item.title}</p>
           </header>
         )}
 
         {item.status === "reserved" && (
           <header className="reservedHeader">
             <MdArrowBack />
-            <p>{item.title}</p>
+            <p className="headerTitle headerTitle--reserved">{item.title}</p>
             <p className="reservedP">Reserverad</p>
           </header>
         )}

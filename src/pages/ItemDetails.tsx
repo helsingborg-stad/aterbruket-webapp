@@ -23,14 +23,46 @@ import { UserContext } from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
 import { fieldsForm } from "../utils/formUtils";
+import { MdArrowBack } from "react-icons/md";
 
-const TopDiv = styled.div`
+const TopSection = styled.div`
   background-color: ${(props) => props.theme.colors.offWhite};
   display: flex;
-  width: 98%;
   align-items: center;
   flex-wrap: wrap;
   flex-direction: column;
+  .reservedHeader {
+    background-color: ${(props) => props.theme.colors.primaryLighter};
+    .reservedP {
+      color: ${(props) => props.theme.colors.primaryDark};
+      font-size: 14px;
+      margin: 0;
+    }
+  }
+
+  header {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    height: 75px;
+
+    svg {
+      position: absolute;
+      left: 28px;
+      bottom: 24px;
+      font-size: 24px;
+      color: ${(props) => props.theme.colors.darkest};
+    }
+    p {
+      margin: 28px 0 0 0;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 132%;
+      color: ${(props) => props.theme.colors.darkest};
+    }
+  }
 
   button {
     border: 2px solid ${(props) => props.theme.colors.primary};
@@ -56,27 +88,41 @@ const TopDiv = styled.div`
     height: 56px;
     border: none;
   }
+
+  .haffaBtn--pickUp {
+    background-color: ${(props) => props.theme.colors.primaryLight};
+  }
+  .titleDiv {
+    width: 100%;
+    h1 {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 36px;
+      line-height: 124%;
+      margin: 48px 32px 24px 32px;
+    }
+  }
+
   .regiveBtn {
     width: 111px;
   }
 `;
 
 const ImgDiv = styled.div`
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 256px;
   display: flex;
   justify-content: center;
   background-color: ${(props) => props.theme.colors.offWhite};
 
-  img{
-    max-height: 300px;
-  max-width: 100%;
-  margin: 0;
-  border-radius: 9.5px;
-  object-fit: contain;
+  img {
+    max-height: 256px;
+    width: 100vw;
+    margin: 0;
+    object-fit: cover;
   }
 `;
-
 
 const Line = styled.div`
    {
@@ -240,7 +286,22 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const allDetails = (
     <>
-      <TopDiv>
+      <TopSection>
+        {item.status === "available" && (
+          <header>
+            <MdArrowBack />
+            <p>{item.title}</p>
+          </header>
+        )}
+
+        {item.status === "reserved" && (
+          <header className="reservedHeader">
+            <MdArrowBack />
+            <p>{item.title}</p>
+            <p className="reservedP">Reserverad</p>
+          </header>
+        )}
+
         {!image ? (
           <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
         ) : (
@@ -248,8 +309,9 @@ const ItemDetails: FC<ParamTypes> = () => {
             <img src={image} alt="" onClick={() => setShowCarousel(true)} />
           </ImgDiv>
         )}
-
-        <h1>{item.title}</h1>
+        <div className="titleDiv">
+          <h1>{item.title}</h1>
+        </div>
 
         {item.status === "available" && (
           <button
@@ -267,6 +329,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           item.reservedBySub === user.attributes.sub && (
             <>
               <button
+                className="haffaBtn haffaBtn--pickUp"
                 onClick={() => {
                   onClickPickUpBtn();
                 }}
@@ -291,7 +354,7 @@ const ItemDetails: FC<ParamTypes> = () => {
               </button>
             </>
           )}
-      </TopDiv>
+      </TopSection>
 
       <Table>
         <tbody>

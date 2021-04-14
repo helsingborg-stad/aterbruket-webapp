@@ -349,22 +349,31 @@ const ItemDetails: FC<ParamTypes> = () => {
     });
     return <td key={str}>{str}</td>;
   };
+  let history = useHistory();
+
+  const goBackFunc = () => {
+    history.goBack();
+  };
 
   const allDetails = (
     <>
       <TopSection>
         {item.status === "available" && (
           <header>
-            <MdArrowBack />
+            <MdArrowBack onClick={goBackFunc} />
             <p className="headerTitle">{item.title}</p>
           </header>
         )}
 
-        {item.status === "reserved" && (
+        {(item.status === "reserved" || item.status === "pickedUp") && (
           <header className="reservedHeader">
-            <MdArrowBack />
+            <MdArrowBack onClick={goBackFunc} />
             <p className="headerTitle headerTitle--reserved">{item.title}</p>
-            <p className="reservedP">Reserverad</p>
+            {item.status === "reserved" ? (
+              <p className="reservedP">Reserverad</p>
+            ) : (
+              <p className="reservedP">Uthämtad</p>
+            )}
           </header>
         )}
 

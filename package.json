@@ -38,6 +38,7 @@
     "react-scripts": "^3.4.4",
     "styled-components": "^5.2.0",
     "styled-components-carousel": "^0.2.0",
+    "swiper": "^6.5.6",
     "typescript": "^3.7.5",
     "uuid": "^8.3.1"
   },

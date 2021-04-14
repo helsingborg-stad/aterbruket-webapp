@@ -12,6 +12,7 @@ import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
 import FilterMenu from "../components/FilterMenu";
 import Pagination from "../components/Pagination";
+import SortItems from "../components/SortItems";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -258,7 +259,7 @@ const Home: FC<Props> = ({
     }
 
     setItems(advertItems);
-
+    console.log(advertItems);
     setFilterValue({
       ...filterValue,
       or: [],
@@ -298,6 +299,7 @@ const Home: FC<Props> = ({
               setAlreadyAQRCode={setAlreadyAQRCode}
             />
           </Modal>
+          <SortItems items={items} />
           <ScanBtn type="button" onClick={() => setShowQRCamera(true)}>
             <MdPhotoCamera />
           </ScanBtn>

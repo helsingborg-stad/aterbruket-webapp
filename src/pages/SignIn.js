@@ -5,14 +5,11 @@ import styled from "styled-components";
 import { withRouter } from 'react-router-dom'
 
 const AmplifySignInContainer = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 const LoginContainer = styled.div``;
 
 const SignIn = () => {
-
   return (
     <AmplifySignInContainer slot="sign-in">
       <LoginContainer>

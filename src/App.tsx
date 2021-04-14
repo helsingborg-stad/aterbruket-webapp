@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import "./App.css";
 import { UserProvider } from "./contexts/UserContext";
 import RootRouter from './routes/RootRouter';

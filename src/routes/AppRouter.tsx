@@ -1,4 +1,3 @@
-
 import React, { FC, useState } from "react";
 import { Route } from "react-router-dom";
 import Header from "../components/Header";
@@ -37,7 +36,6 @@ const AppContainer = styled.div`
     margin-bottom: 65px;
   }
 `;
-
 
 const AppRouter: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);

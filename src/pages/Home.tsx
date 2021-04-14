@@ -16,6 +16,7 @@ import Pagination from "../components/Pagination";
 import { fieldsForm } from "../utils/formUtils";
 import convertToSwe from "../utils/convert";
 import UserContext from "../contexts/UserContext";
+import SortItems from "../components/SortItems";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -281,7 +282,7 @@ const Home: FC<Props> = ({
     }
 
     setItems(advertItems);
-
+    console.log(advertItems);
     setFilterValue({
       ...filterValue,
       or: [],
@@ -348,11 +349,8 @@ const Home: FC<Props> = ({
               setAlreadyAQRCode={setAlreadyAQRCode}
             />
           </Modal>
-          <ScanBtn
-            id="scanBtn"
-            type="button"
-            onClick={() => setShowQRCamera(true)}
-          >
+          <SortItems items={items} />
+          <ScanBtn type="button" onClick={() => setShowQRCamera(true)}>
             <MdPhotoCamera />
           </ScanBtn>
           {/* <TabCtn>

@@ -23,7 +23,7 @@ import { UserContext } from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
 import { fieldsForm } from "../utils/formUtils";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdEdit } from "react-icons/md";
 
 const TopSection = styled.div`
   background-color: ${(props) => props.theme.colors.offWhite};
@@ -102,11 +102,34 @@ const TopSection = styled.div`
   .haffaBtn--pickUp {
     background-color: ${(props) => props.theme.colors.primaryLight};
   }
+
+  .haffaBtn--edit {
+    background-color: ${(props) => props.theme.colors.primaryLighter};
+    border: 2px solid #6f9725;
+    box-sizing: border-box;
+    border-radius: 4.5px;
+    color: ${(props) => props.theme.colors.darkest};
+    position: relative;
+
+    svg {
+      color: #6f9725;
+      position: absolute;
+      left: 115px;
+      top: 16px;
+    }
+  }
+  span {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: ${(props) => props.theme.colors.dark};
+    margin: 0 102px 24px 24px;
+  }
   .titleDiv {
     width: 100%;
     h4 {
       margin: 48px 32px 12px 32px;
-
       font-family: Roboto;
       font-style: normal;
       font-weight: bold;
@@ -389,7 +412,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           <h1>{item.title}</h1>
         </div>
 
-        {item.status === "available" && (
+        {item.status === "available" && item.giver !== user.attributes.sub && (
           <button
             className="haffaBtn"
             onClick={() => {
@@ -417,6 +440,20 @@ const ItemDetails: FC<ParamTypes> = () => {
               <p className="removeReservationP">Ta bort reservation</p>
             </>
           )}
+
+        {item.status === "available" /* && item.giver === user.attributes.sub */ && (
+          <>
+            <button
+              className="haffaBtn haffaBtn--edit"
+              onClick={() => setEditItem(true)}
+              type="button"
+            >
+              <MdEdit />
+              Ändra
+            </button>
+            <span>Den här annonsen har du lagt upp.</span>
+          </>
+        )}
 
         {item.status === "pickedUp" &&
           item.reservedBySub === user.attributes.sub && (
@@ -563,13 +600,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
         )}
       </MapContainer> */}
-      {item.status === "available" && item.giver === user.attributes.sub && (
-        <>
-          <button onClick={() => setEditItem(true)} type="button">
-            Redigera annons
-          </button>
-        </>
-      )}
+
       <Line />
 
       <QRCode id={id} />

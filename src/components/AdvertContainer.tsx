@@ -99,6 +99,7 @@ const AdvertContainer: FC<IAdvert> = ({
           condition={filteredItem.condition}
           quantity={filteredItem.quantity}
           imageKey={filteredItem.images[0].src}
+          daysAt={filteredItem.createdAt}
         />
       ))}
     </AdvertContainerDiv>

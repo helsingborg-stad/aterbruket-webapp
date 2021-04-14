@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { MdNewReleases, MdSearch, MdTune, MdPhotoCamera } from "react-icons/md";
 import { AuthState } from "@aws-amplify/ui-components";
 import { listAdverts } from "../graphql/queries";
-import { ListAdvertsQuery } from "../API";
+import { ListAdvertsQuery, ModelSortDirection } from "../API";
 import AdvertContainer from "../components/AdvertContainer";
 import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
@@ -17,6 +17,7 @@ import { fieldsForm } from "../utils/formUtils";
 import convertToSwe from "../utils/convert";
 import UserContext from "../contexts/UserContext";
 import SortItems from "../components/SortItems";
+import { sortBy } from "sort-by-typescript";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -212,6 +213,7 @@ const Home: FC<Props> = ({
   }) as any;
   const [renderItems, setRenderItems] = useState([]) as any;
   const { authState } = useContext(UserContext);
+  const [activeSorting, setActiveSorting] = useState("-createdAt");
 
   const handlePages = (updatePage: number) => {
     setPaginationOption({
@@ -223,10 +225,17 @@ const Home: FC<Props> = ({
       const start = (updatePage - 1) * paginationOption.amountToShow;
       const end = start + paginationOption.amountToShow;
 
-      setRenderItems(items.slice(start, end));
+      setRenderItems(items.sort(sortBy(activeSorting)).slice(start, end));
     }
   };
-
+  const handleSortItems = (str: string) => {
+    console.log(str, items.sort(sortBy(str)));
+    setActiveSorting(str);
+    // fetchItems();
+    // setRenderItems(items.sort(sortBy(str)));
+    // handlePages(paginationOption.activePage);
+  };
+  console.log(activeSorting);
   const filterConditions: any = (fetchedData: any, conditions: any) => {
     let copyItems: any[] = [];
     let results: any[] = [];
@@ -282,7 +291,6 @@ const Home: FC<Props> = ({
     }
 
     setItems(advertItems);
-    console.log(advertItems);
     setFilterValue({
       ...filterValue,
       or: [],
@@ -295,9 +303,15 @@ const Home: FC<Props> = ({
       itemLength: advertItems.length,
     });
 
-    setRenderItems(advertItems.slice(0, paginationOption.amountToShow));
+    setRenderItems(
+      advertItems
+        .sort(sortBy(activeSorting))
+        .slice(0, paginationOption.amountToShow)
+    );
   };
-
+  useEffect(() => {
+    fetchItems();
+  }, [activeSorting]);
   useEffect(() => {
     if (authState === AuthState.SignedIn) {
       fetchItems();
@@ -349,7 +363,7 @@ const Home: FC<Props> = ({
               setAlreadyAQRCode={setAlreadyAQRCode}
             />
           </Modal>
-          <SortItems items={items} />
+          <SortItems items={items} handleSortItems={handleSortItems} />
           <ScanBtn type="button" onClick={() => setShowQRCamera(true)}>
             <MdPhotoCamera />
           </ScanBtn>

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { API, Storage } from "aws-amplify";
+import showDays from "../hooks/showDays";
 
 interface Props {
   title: string;
@@ -11,6 +12,7 @@ interface Props {
   condition: string;
   quantity: number;
   imageKey: string;
+  daysAt: string;
 }
 
 const CardDiv = styled.div`
@@ -102,6 +104,7 @@ const Card: FC<Props> = ({
   condition,
   quantity,
   imageKey,
+  daysAt,
 }: Props) => {
   const [url, setURL] = useState(undefined) as any;
   const fetchImage = (): void => {
@@ -119,6 +122,7 @@ const Card: FC<Props> = ({
         <img src={url} alt="" />
       </div>
       <div className="infoDiv">
+        <p>{showDays(daysAt)} dagar</p>
         <h3>{title}</h3>
         <h4>{quantity} stycken</h4>
         <p className="desc">Beskrivning: {description}</p>

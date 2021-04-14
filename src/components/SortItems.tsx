@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { sortBy } from "sort-by-typescript";
 
 const Button = styled.button`
   background-color: ${(props) => props.theme.appTheme.primaryColor};
@@ -32,13 +31,46 @@ const Button = styled.button`
     }
   }
 `;
+const ButtonContainer = styled.div`
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: 10px 0 60px 0;
+`;
 type Props = {
   items: any;
+  handleSortItems: (str: string) => void;
 };
-const SortItems: FC<Props> = ({ items }) => {
+const SortItems: FC<Props> = ({ items, handleSortItems }) => {
   console.log(items);
-  console.log("sorted ", items.sort(sortBy("createdAt")));
-  return <Button>A-Ö</Button>;
+
+  // const handleSortItems = (str: string) => {
+  //   console.log(str, items.sort(sortBy(str)));
+  // };
+
+  return (
+    <ButtonContainer>
+      <Button onClick={() => handleSortItems("-createdAt")}>Nyast först</Button>
+      <Button onClick={() => handleSortItems("createdAt")}>Äldst först</Button>
+      <Button onClick={() => handleSortItems("category")}>
+        Katergorie A-Ö
+      </Button>
+      <Button onClick={() => handleSortItems("-category")}>
+        Katergorie Ö-A
+      </Button>
+      <Button onClick={() => handleSortItems("condition")}>Skick A-Ö</Button>
+      <Button onClick={() => handleSortItems("-condition")}>Skick Ö-A</Button>
+      <Button onClick={() => handleSortItems("title^")}>Titel A-Ö</Button>
+      <Button onClick={() => handleSortItems("-title^")}>Titel Ö-A</Button>
+      <Button onClick={() => handleSortItems("climateImpact")}>
+        Klimatavtryck lägst
+      </Button>
+      <Button onClick={() => handleSortItems("-climateImpact")}>
+        Klimatavtryck högst
+      </Button>
+    </ButtonContainer>
+  );
 };
 
 export default SortItems;

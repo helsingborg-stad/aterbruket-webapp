@@ -64,7 +64,7 @@ const MyAdverts: FC = () => {
   return (
     <main style={{ marginTop: "60px" }}>
       <AdvertContainer
-        allValues={null}
+        sweValues={null}
         filtered={false}
         items={renderItems}
         searchValue={false}

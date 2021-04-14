@@ -299,23 +299,38 @@ const Home: FC<Props> = ({
   console.log("categoryData", categoryData);
 
   const conditionData = fieldsForm[9];
+  let indexes: number[] = [];
+  let sweValues: string[] = [];
 
   if (categoryData.eng && conditionData.eng) {
     const valuesInEng = [...categoryData.eng, ...conditionData.eng];
+    const valuesInSwe = [...categoryData.swe, ...conditionData.swe];
     console.log("eng", valuesInEng);
-    let indexes: number[] = [];
+
     const arraySameValues = (a: any, b: any) => {
       return a.filter(function (i: string) {
         console.log("i", i);
-        if (b.indexOf(i) > 0) {
+        console.log("b", allValues);
+        if (b.indexOf(i) >= 0) {
           indexes.push(a.indexOf(i));
-          console.log("idx", indexes);
+
           return true;
         }
         return false;
       });
     };
+
     arraySameValues(valuesInEng, allValues);
+    console.log("idx", indexes);
+
+    const convertEngToSwe = (c: any, d: any) => {
+      d.forEach((i: number) => {
+        sweValues.push(c[i]);
+      });
+    };
+    convertEngToSwe(valuesInSwe, indexes);
+
+    console.log("final", sweValues);
   }
 
   console.log("allValues", allValues);
@@ -379,7 +394,7 @@ const Home: FC<Props> = ({
             />
           </SearchFilterDiv>
           <AdvertContainer
-            allValues={allValues}
+            sweValues={sweValues}
             items={renderItems}
             searchValue={searchValue}
             itemsFrom="home"

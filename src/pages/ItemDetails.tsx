@@ -23,7 +23,14 @@ import { UserContext } from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
 import { fieldsForm } from "../utils/formUtils";
-import { MdArrowBack, MdEdit } from "react-icons/md";
+import {
+  MdArrowBack,
+  MdEdit,
+  MdPlace,
+  MdPerson,
+  MdPhone,
+} from "react-icons/md";
+import { FiAtSign } from "react-icons/fi";
 
 const TopSection = styled.div`
   background-color: ${(props) => props.theme.colors.offWhite};
@@ -73,37 +80,14 @@ const TopSection = styled.div`
     }
   }
 
-  button {
-    border: 2px solid ${(props) => props.theme.colors.primary};
-    outline: none;
-    width: 100px;
-    height: 30px;
-    background-color: white;
-    margin: 5px;
-    border-radius: 5px;
-  }
-  .haffaBtn {
-    box-shadow: 0px 0px 2px rgba(98, 98, 98, 0.18),
-      0px 3px 2px rgba(98, 98, 98, 0.12), 0px 6px 8px rgba(98, 98, 98, 0.12),
-      0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
-    border-radius: 4.5px;
-    background-color: ${(props) => props.theme.colors.primary};
-    color: ${(props) => props.theme.colors.white};
-    font-weight: 900;
-    font-size: 18px;
-    line-height: 132%;
-    letter-spacing: 0.015em;
-    width: 340px;
-    height: 56px;
-    border: none;
-    margin: 0 12px 24px 12px;
+  .btn {
   }
 
-  .haffaBtn--pickUp {
+  .btn--pickUp {
     background-color: ${(props) => props.theme.colors.primaryLight};
   }
 
-  .haffaBtn--edit {
+  .btn--edit {
     background-color: ${(props) => props.theme.colors.primaryLighter};
     border: 2px solid #6f9725;
     box-sizing: border-box;
@@ -144,7 +128,7 @@ const TopSection = styled.div`
       font-weight: 900;
       font-size: 36px;
       line-height: 124%;
-      margin: 0px 32px 24px 32px;
+      margin: 48px 32px 24px 32px;
     }
   }
 
@@ -155,12 +139,29 @@ const TopSection = styled.div`
     font-size: 16px;
     line-height: 150%;
     color: ${(props) => props.theme.colors.dark};
-    margin: 24px 0 32px 0;
+    margin: 0 0 32px 0;
   }
 
   .regiveBtn {
     width: 111px;
   }
+`;
+
+const Button = styled.button`
+  box-shadow: 0px 0px 2px rgba(98, 98, 98, 0.18),
+    0px 3px 2px rgba(98, 98, 98, 0.12), 0px 6px 8px rgba(98, 98, 98, 0.12),
+    0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
+  border-radius: 4.5px;
+  background-color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.white};
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 132%;
+  letter-spacing: 0.015em;
+  width: 340px;
+  height: 56px;
+  border: none;
+  margin: 0 12px 24px 12px;
 `;
 
 const ImgDiv = styled.div`
@@ -237,6 +238,96 @@ const MainSection = styled.section`
       span {
         color: ${(props) => props.theme.colors.dark};
       }
+    }
+  }
+`;
+
+const CardDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  height: 218px;
+  background-color: ${(props) => props.theme.colors.white};
+  border-radius: 0px 0px 9.5px 9.5px;
+  filter: drop-shadow(0px 0px 2px rgba(98, 98, 98, 0.18)),
+    drop-shadow(0px 1px 2px rgba(98, 98, 98, 0.18));
+  h5 {
+    font-weight: 900;
+    font-size: 12px;
+    line-height: 150%;
+    color: ${(props) => props.theme.colors.primary};
+    margin: 24px ​0px 12px 0px;
+  }
+  p {
+    margin: 0;
+  }
+  .btn--adress {
+    margin: 16px 0;
+    width: 100%;
+    text-align: left;
+    padding: 16px;
+    // background-color: ${(props) => props.theme.colors.lightGray};
+    //color: ${(props) => props.theme.colors.offWhite};
+    background-color: ${(props) => props.theme.colors.primaryLighter};
+    color: ${(props) => props.theme.colors.primaryDark};
+    position: relative;
+    opacity: 0.2; // remove this when function is working
+    outline: none;
+
+    svg {
+      color: ${(props) => props.theme.colors.secondaryDark};
+      position: absolute;
+      top: 17px;
+      right: 14px;
+    }
+  }
+
+  .contactPersonDiv {
+    padding: 0;
+    width: 100%;
+    display: flex;
+    margin: 16px 0;
+    align-items: center;
+
+    h4 {
+      margin: 0 16px;
+    }
+    div {
+      padding: 0;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: #f2f6ee;
+      position: relative;
+    }
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: ${(props) => props.theme.colors.illustration};
+      font-size: 24px;
+    }
+  }
+  .contactInfo {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    background-color: #f5f5f5;
+    border-radius: 4.5px;
+    margin: 0 0 10px 0;
+
+    p {
+      color: ${(props) => props.theme.colors.darker};
+      margin-left: 14px;
+    }
+    svg {
+      font-size: 24px;
+      color: ${(props) => props.theme.colors.dark};
+      margin-left: 14px;
     }
   }
 `;
@@ -408,49 +499,51 @@ const ItemDetails: FC<ParamTypes> = () => {
           </ImgDiv>
         )}
         <div className="titleDiv">
-          <h4>Möbler</h4>
+          {/*           <h4>Möbler</h4>
+           */}
           <h1>{item.title}</h1>
         </div>
 
-        {item.status === "available" && item.giver !== user.attributes.sub && (
-          <button
-            className="haffaBtn"
+        {item.status ===
+          "available" /* && item.giver !== user.attributes.sub */ && (
+          <Button
+            className="btn--haffa"
             onClick={() => {
               onClickReservBtn();
             }}
             type="button"
           >
             Haffa!
-          </button>
+          </Button>
         )}
 
         {item.status === "reserved" &&
           item.reservedBySub === user.attributes.sub && (
             <>
-              <button
-                className="haffaBtn haffaBtn--pickUp"
+              <Button
+                className=" btn--pickUp"
                 onClick={() => {
                   onClickPickUpBtn();
                 }}
                 type="button"
               >
                 Hämta ut
-              </button>
+              </Button>
 
               <p className="removeReservationP">Ta bort reservation</p>
             </>
           )}
 
-        {item.status === "available" /* && item.giver === user.attributes.sub */ && (
+        {item.status === "available" && item.giver === user.attributes.sub && (
           <>
-            <button
-              className="haffaBtn haffaBtn--edit"
+            <Button
+              className=" btn--edit"
               onClick={() => setEditItem(true)}
               type="button"
             >
               <MdEdit />
               Ändra
-            </button>
+            </Button>
             <span>Den här annonsen har du lagt upp.</span>
           </>
         )}
@@ -458,15 +551,15 @@ const ItemDetails: FC<ParamTypes> = () => {
         {item.status === "pickedUp" &&
           item.reservedBySub === user.attributes.sub && (
             <>
-              <button
-                className="regiveBtn"
+              <Button
+                className=" btn--regive"
                 onClick={() => {
                   setRegive(true);
                 }}
                 type="button"
               >
                 Annonsera igen
-              </button>
+              </Button>
             </>
           )}
       </TopSection>
@@ -573,20 +666,39 @@ const ItemDetails: FC<ParamTypes> = () => {
             )}
           </tbody>
         </table>
+        <div>
+          <h4 className="dark">Här finns prylen</h4>
+
+          <CardDiv>
+            <h5>ADRESS</h5>
+            <p>{item.department}</p>
+            <p>{item.location}</p>
+            <Button className=" btn--adress" type="button">
+              Hitta hit
+              <MdPlace />
+            </Button>
+          </CardDiv>
+          <h4 className="dark">Kontaktperson</h4>
+
+          <CardDiv>
+            <div className="contactPersonDiv">
+              <div>
+                <MdPerson />
+              </div>
+              <h4 className="dark">{item.contactPerson}</h4>
+            </div>
+            <div className="contactInfo">
+              <MdPhone />
+              <p>{item.phoneNumber}</p>
+            </div>
+            <div className="contactInfo">
+              <FiAtSign />
+              <p>{item.email}</p>
+            </div>
+          </CardDiv>
+        </div>
       </MainSection>
-      <div>
-        <h4>Här finns prylen:</h4>
-        <p>{item.location}</p>
 
-        <h4>Kontaktperson:</h4>
-        <p>{item.contactPerson}</p>
-
-        <h4>Kontaktperson:</h4>
-        <p>{item.phoneNumber}</p>
-
-        <h4>Kontaktperson:</h4>
-        <p>{item.email}</p>
-      </div>
       {/* <MapContainer>
         {item && item.location && (
           <Map

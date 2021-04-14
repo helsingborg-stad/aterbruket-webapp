@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
-import { API, Storage } from "aws-amplify";
+import { API } from "aws-amplify";
 import styled from "styled-components";
 import { MdNewReleases, MdSearch, MdTune, MdPhotoCamera } from "react-icons/md";
 import { listAdverts } from "../graphql/queries";
@@ -12,6 +12,7 @@ import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
 import FilterMenu from "../components/FilterMenu";
 import Pagination from "../components/Pagination";
+import { fieldsForm } from "../utils/formUtils";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -107,7 +108,7 @@ const SearchFilterDiv = styled.div`
     border: none;
     background-color: transparent;
 
-    #filterIcon {
+    .filterIcon {
       color: ${(props) => props.theme.colors.primaryDark};
       font-size: 18px;
     }
@@ -134,6 +135,17 @@ const TabCtn = styled.div`
     }
   }
 `;
+
+const MessageCtn = styled.div`
+  width: 50%;
+  text-align: center;
+
+  .filterIcon {
+    font-size: 7rem;
+    color: #e5e5e5;
+  }
+`;
+
 interface IQrCamera {
   delay: number;
   result: string;
@@ -182,6 +194,7 @@ const Home: FC<Props> = ({
   const [items, setItems] = useState([]) as any;
   const [filterValueUpdated, setFilterValueUpdated] = useState(false);
   const [conditionValues, setConditionValues] = useState<string[]>([]);
+  const [allValues, setAllValues] = useState<string[]>([]);
   const [error, setError] = useState(false);
   const [filtered, setFiltered] = useState(false);
   const [filterValue, setFilterValue] = useState({
@@ -282,9 +295,35 @@ const Home: FC<Props> = ({
     fetchItems();
   }, [filterValueUpdated]);
 
+  const categoryData = fieldsForm[2];
+  console.log("categoryData", categoryData);
+
+  const conditionData = fieldsForm[9];
+
+  if (categoryData.eng && conditionData.eng) {
+    const valuesInEng = [...categoryData.eng, ...conditionData.eng];
+    console.log("eng", valuesInEng);
+    let indexes: number[] = [];
+    const arraySameValues = (a: any, b: any) => {
+      return a.filter(function (i: string) {
+        console.log("i", i);
+        if (b.indexOf(i) > 0) {
+          indexes.push(a.indexOf(i));
+          console.log("idx", indexes);
+          return true;
+        }
+        return false;
+      });
+    };
+    arraySameValues(valuesInEng, allValues);
+  }
+
+  console.log("allValues", allValues);
+
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
+
   return (
     <main>
       {showQRCamera ? (
@@ -325,10 +364,11 @@ const Home: FC<Props> = ({
               type="button"
               id="filterBtn"
             >
-              Filter <MdTune id="filterIcon" />
+              Filter <MdTune className="filterIcon" />
             </button>
 
             <FilterMenu
+              setAllValues={setAllValues}
               setIsOpen={setIsOpen}
               isOpen={isOpen}
               filterValueUpdated={filterValueUpdated}
@@ -339,6 +379,7 @@ const Home: FC<Props> = ({
             />
           </SearchFilterDiv>
           <AdvertContainer
+            allValues={allValues}
             items={renderItems}
             searchValue={searchValue}
             itemsFrom="home"
@@ -350,7 +391,12 @@ const Home: FC<Props> = ({
               handlePagination={handlePages}
             />
           )}
-          {error && <h4> Vi hittade visst inget med dina filter </h4>}
+          {error && (
+            <MessageCtn>
+              <MdTune className="filterIcon" />
+              <h4> Du råkade visst filtrera bort precis allt </h4>
+            </MessageCtn>
+          )}
           <AddBtn
             type="button"
             onClick={() => {

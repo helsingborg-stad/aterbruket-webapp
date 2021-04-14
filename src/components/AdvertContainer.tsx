@@ -7,6 +7,7 @@ interface IAdvert {
   searchValue: any;
   itemsFrom: string;
   filtered: boolean;
+  allValues: any;
 }
 
 const AdvertContainerDiv = styled.div`
@@ -33,6 +34,7 @@ const AdvertContainer: FC<IAdvert> = ({
   searchValue,
   itemsFrom,
   filtered,
+  allValues,
 }: IAdvert) => {
   let filteredItems = [];
   if (searchValue) {
@@ -52,8 +54,15 @@ const AdvertContainer: FC<IAdvert> = ({
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">
-        {itemsFrom === "home" && filtered ? (
-          <h3>Aktiva filter</h3>
+        {itemsFrom === "home" && allValues.length > 0 ? (
+          <>
+            <h3>Aktiva filter</h3>
+            <div>
+              {allValues.map((value: string) => {
+                return <span style={{ margin: "5px" }}>{value}</span>;
+              })}
+            </div>
+          </>
         ) : (
           <h3>Alla möbler</h3>
         )}

@@ -1,12 +1,14 @@
-import React, { FC, useState } from "react";
-import { Redirect } from "react-router-dom";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination, Parallax, Scrollbar, A11y } from 'swiper';
-import styled from "styled-components";
-import SignIn from "../pages/SignIn";
+import { AuthState } from '@aws-amplify/ui-components';
 import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
-import BG from "../pics/onboarding_bg.png";
+import React, { FC, useContext, useState } from "react";
+import { Redirect } from "react-router-dom";
+import styled from "styled-components";
+import SwiperCore, { A11y, Navigation, Pagination, Parallax, Scrollbar } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
+import UserContext from "../contexts/UserContext";
+import SignIn from "../pages/SignIn";
+import BG from "../pics/onboarding_bg.png";
 
 SwiperCore.use([Navigation, Parallax, Pagination, Scrollbar, A11y]);
 
@@ -48,15 +50,13 @@ const Text = styled.p`
 `;
 
 const Button = styled.button`
-  height: 56px;
   background: #50811B;
   box-shadow: 0px 0px 2px rgba(98, 98, 98, 0.18), 0px 3px 2px rgba(98, 98, 98, 0.12), 0px 6px 8px rgba(98, 98, 98, 0.12), 0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
   border-radius: 4.5px;
-
   border: none;
   color: white;
-  font-size: 18px;
-  padding: 10px 60px;
+  font-size: 16px;
+  padding: 15px 30px;
   margin: 10px 0px;
   cursor: pointer;
 `;
@@ -81,14 +81,11 @@ const ParallaxBackground = styled.div`
 
 const Onboarding: FC = () => {
   const [isOnboardingDisabled, setIsOnboardingDisabled] = useState<boolean>(false);
+  const { authState } = useContext(UserContext);
 
   const disableOnboarding = () => {
     localStorage.setItem('HaffaApp:showOnboardingScreen', 'false');
     setIsOnboardingDisabled(true);
-  }
-
-  if (isOnboardingDisabled) {
-    return <Redirect to="app" />
   }
 
   const slides = [
@@ -169,6 +166,10 @@ const Onboarding: FC = () => {
       </SwipeContainer>
     </SwiperSlide>,
   ];
+
+  if (authState === AuthState.SignedIn || isOnboardingDisabled) {
+    return <Redirect to={'app'} />
+  }
 
   return (
     <Swiper

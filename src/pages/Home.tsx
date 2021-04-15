@@ -145,6 +145,10 @@ const MessageCtn = styled.div`
     font-size: 7rem;
     color: #e5e5e5;
   }
+
+  .message {
+    margin-bottom: 50px;
+  }
 `;
 
 interface IQrCamera {
@@ -389,7 +393,9 @@ const Home: FC<Props> = ({
           {error && (
             <MessageCtn>
               <MdTune className="filterIcon" />
-              <h4> Du råkade visst filtrera bort precis allt </h4>
+              <h4 className="message">
+                Du råkade visst filtrera bort precis allt{" "}
+              </h4>
             </MessageCtn>
           )}
           <AddBtn

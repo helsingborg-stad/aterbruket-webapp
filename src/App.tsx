@@ -57,7 +57,7 @@ const App: FC = () => {
       <ThemeProvider theme={theme}>
         <AppContainer>
           <Router>
-            <Header />
+            <Header isInDetail={false}/>
             <UserContext.Provider value={user}>
               <Route
                 exact

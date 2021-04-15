@@ -23,47 +23,161 @@ import { UserContext } from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
 import { fieldsForm } from "../utils/formUtils";
+import {
+  MdArrowBack,
+  MdEdit,
+  MdPlace,
+  MdPerson,
+  MdPhone,
+} from "react-icons/md";
+import { FiAtSign } from "react-icons/fi";
 
-const DivBtns = styled.div`
+const TopSection = styled.div`
+  background-color: ${(props) => props.theme.colors.offWhite};
   display: flex;
-  width: 90%;
-  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
+  flex-direction: column;
+  box-shadow: 0px 1px 0px rgba(86, 86, 86, 0.16);
 
-  button {
-    border: 2px solid ${(props) => props.theme.colors.primary};
-    outline: none;
-    width: 100px;
-    height: 30px;
-    background-color: white;
-    margin: 5px;
-    border-radius: 5px;
+  .reservedHeader {
+    background-color: ${(props) => props.theme.colors.primaryLighter};
+
+    .headerTitle--reserved {
+      margin: 26px 0 0 0;
+    }
+    .reservedP {
+      color: ${(props) => props.theme.colors.primaryDark};
+      font-size: 14px;
+      margin: 0;
+    }
   }
+
+  header {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    height: 75px;
+    position: fixed;
+    background-color: ${(props) => props.theme.colors.offWhite};
+
+    svg {
+      position: absolute;
+      left: 28px;
+      bottom: 16px;
+      font-size: 24px;
+      color: ${(props) => props.theme.colors.darkest};
+    }
+    p,
+    .headerTitle {
+      margin: 35px 0 0 0;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 132%;
+      color: ${(props) => props.theme.colors.darkest};
+    }
+  }
+
+  .btn {
+  }
+
+  .btn--pickUp {
+    background-color: ${(props) => props.theme.colors.primaryLight};
+  }
+
+  .btn--edit {
+    background-color: ${(props) => props.theme.colors.primaryLighter};
+    border: 2px solid #6f9725;
+    box-sizing: border-box;
+    border-radius: 4.5px;
+    color: ${(props) => props.theme.colors.darkest};
+    position: relative;
+
+    svg {
+      color: #6f9725;
+      position: absolute;
+      left: 115px;
+      top: 16px;
+    }
+  }
+  span {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: ${(props) => props.theme.colors.dark};
+    margin: 0 102px 24px 24px;
+  }
+  .titleDiv {
+    width: 100%;
+    h4 {
+      margin: 48px 32px 12px 32px;
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 112%;
+      letter-spacing: 0.0025em;
+      color: ${(props) => props.theme.colors.primaryDark};
+    }
+    h1 {
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 36px;
+      line-height: 124%;
+      margin: 48px 32px 24px 32px;
+    }
+  }
+
+  .removeReservationP {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: ${(props) => props.theme.colors.dark};
+    margin: 0 0 32px 0;
+  }
+
   .regiveBtn {
     width: 111px;
   }
+`;
 
-  p {
-    color: grey;
-    margin: 0;
-    font-style: italic;
-    font-size: 0.8em;
-  }
+const Button = styled.button`
+  box-shadow: 0px 0px 2px rgba(98, 98, 98, 0.18),
+    0px 3px 2px rgba(98, 98, 98, 0.12), 0px 6px 8px rgba(98, 98, 98, 0.12),
+    0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
+  border-radius: 4.5px;
+  background-color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.white};
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 132%;
+  letter-spacing: 0.015em;
+  width: 340px;
+  height: 56px;
+  border: none;
+  margin: 0 12px 24px 12px;
 `;
 
 const ImgDiv = styled.div`
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  height: 256px;
   display: flex;
   justify-content: center;
-`;
+  background-color: ${(props) => props.theme.colors.offWhite};
+  margin-top: 75px;
 
-const ItemImg = styled.img`
-  max-height: 300px;
-  max-width: 100%;
-  margin: 0;
-  border-radius: 9.5px;
-  object-fit: contain;
+  img {
+    max-height: 256px;
+    width: 100vw;
+    margin: 0;
+    object-fit: cover;
+  }
 `;
 
 const Line = styled.div`
@@ -73,25 +187,151 @@ const Line = styled.div`
   }
 `;
 
-const Table = styled.table`
-  width: 90%;
-  max-width: 500px;
-  margin: 10px auto;
-  border-collapse: collapse;
+const MainSection = styled.section`
+  width: 100%;
 
-  td {
-    text-align: left;
-    padding: 10px;
-    border: none;
-    font-weight: 500;
+  h4 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 144%;
+    margin: 0;
+
+    color: ${(props) => props.theme.colors.primary};
+  }
+  .dark {
+    margin: 48px 0 28px 0;
+    color: ${(props) => props.theme.colors.darkest};
   }
 
-  td:nth-child(2) {
-    width: 70%;
-    border: none;
-    font-weight: 400;
+  p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: ${(props) => props.theme.colors.darkest};
+  }
+
+  div {
+    padding: 0 24px 0 24px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+
+    td {
+      padding: 16px 0 0 23px;
+      border: none;
+    }
+
+    td:nth-child(2) {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 144%;
+      text-align: right;
+      padding: 16px 24px 0 0;
+      word-wrap: break-word;
+
+      span {
+        color: ${(props) => props.theme.colors.dark};
+      }
+    }
   }
 `;
+
+const CardDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  height: 218px;
+  background-color: ${(props) => props.theme.colors.white};
+  border-radius: 0px 0px 9.5px 9.5px;
+  filter: drop-shadow(0px 0px 2px rgba(98, 98, 98, 0.18)),
+    drop-shadow(0px 1px 2px rgba(98, 98, 98, 0.18));
+  h5 {
+    font-weight: 900;
+    font-size: 12px;
+    line-height: 150%;
+    color: ${(props) => props.theme.colors.primary};
+    margin: 24px ​0px 12px 0px;
+  }
+  p {
+    margin: 0;
+  }
+  .btn--adress {
+    margin: 16px 0;
+    width: 100%;
+    text-align: left;
+    padding: 16px;
+    // background-color: ${(props) => props.theme.colors.lightGray};
+    //color: ${(props) => props.theme.colors.offWhite};
+    background-color: ${(props) => props.theme.colors.primaryLighter};
+    color: ${(props) => props.theme.colors.primaryDark};
+    position: relative;
+    opacity: 0.2; // remove this when function is working
+    outline: none;
+
+    svg {
+      color: ${(props) => props.theme.colors.secondaryDark};
+      position: absolute;
+      top: 17px;
+      right: 14px;
+    }
+  }
+
+  .contactPersonDiv {
+    padding: 0;
+    width: 100%;
+    display: flex;
+    margin: 16px 0;
+    align-items: center;
+
+    h4 {
+      margin: 0 16px;
+    }
+    div {
+      padding: 0;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: #f2f6ee;
+      position: relative;
+    }
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: ${(props) => props.theme.colors.illustration};
+      font-size: 24px;
+    }
+  }
+  .contactInfo {
+    padding: 0 8px 0 8px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    background-color: #f5f5f5;
+    border-radius: 4.5px;
+    margin: 0 0 10px 0;
+    line-break: anywhere;
+
+    p {
+      color: ${(props) => props.theme.colors.darker};
+      margin-left: 8px;
+    }
+    svg {
+      font-size: 20px;
+      color: ${(props) => props.theme.colors.dark};
+    }
+  }
+`;
+
 /* comment out map for debugging purpose  */
 // const MapContainer = styled.div`
 //   width: 80%;
@@ -223,144 +463,242 @@ const ItemDetails: FC<ParamTypes> = () => {
     });
     return <td key={str}>{str}</td>;
   };
+  let history = useHistory();
+
+  const goBackFunc = () => {
+    history.goBack();
+  };
 
   const allDetails = (
     <>
-      <DivBtns>
-        {(item.status === "reserved" || item.status === "pickedUp") && (
-          <p>
-            (Prylen har status: &quot;{item.status}&quot;. Gjordes av:{" "}
-            <span>{item.reservedByName}</span>)
-          </p>
-        )}
+      <TopSection>
         {item.status === "available" && (
-          <button
+          <header>
+            <MdArrowBack onClick={goBackFunc} />
+            <p className="headerTitle">{item.title}</p>
+          </header>
+        )}
+
+        {(item.status === "reserved" || item.status === "pickedUp") && (
+          <header className="reservedHeader">
+            <MdArrowBack onClick={goBackFunc} />
+            <p className="headerTitle headerTitle--reserved">{item.title}</p>
+            {item.status === "reserved" ? (
+              <p className="reservedP">Reserverad</p>
+            ) : (
+              <p className="reservedP">Uthämtad</p>
+            )}
+          </header>
+        )}
+
+        {!image ? (
+          <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
+        ) : (
+          <ImgDiv>
+            <img src={image} alt="" onClick={() => setShowCarousel(true)} />
+          </ImgDiv>
+        )}
+        <div className="titleDiv">
+          {/*           <h4>Möbler</h4>
+           */}
+          <h1>{item.title}</h1>
+        </div>
+
+        {item.status ===
+          "available" /* && item.giver !== user.attributes.sub */ && (
+          <Button
+            className="btn--haffa"
             onClick={() => {
               onClickReservBtn();
             }}
             type="button"
           >
-            HAFFA
-          </button>
+            Haffa!
+          </Button>
         )}
-        {item.status === "available" && item.giver === user.attributes.sub && (
-          <>
-            <button onClick={() => setEditItem(true)} type="button">
-              Edit
-            </button>
-          </>
-        )}
+
         {item.status === "reserved" &&
           item.reservedBySub === user.attributes.sub && (
             <>
-              <button
+              <Button
+                className=" btn--pickUp"
                 onClick={() => {
                   onClickPickUpBtn();
                 }}
                 type="button"
               >
                 Hämta ut
-              </button>
+              </Button>
+
+              <p className="removeReservationP">Ta bort reservation</p>
             </>
           )}
+
+        {item.status === "available" && item.giver === user.attributes.sub && (
+          <>
+            <Button
+              className=" btn--edit"
+              onClick={() => setEditItem(true)}
+              type="button"
+            >
+              <MdEdit />
+              Ändra
+            </Button>
+            <span>Den här annonsen har du lagt upp.</span>
+          </>
+        )}
 
         {item.status === "pickedUp" &&
           item.reservedBySub === user.attributes.sub && (
             <>
-              <button
-                className="regiveBtn"
+              <Button
+                className=" btn--regive"
                 onClick={() => {
                   setRegive(true);
                 }}
                 type="button"
               >
                 Annonsera igen
-              </button>
+              </Button>
             </>
           )}
-      </DivBtns>
-      <h1>{item.title}</h1>
-      {!image ? (
-        <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
-      ) : (
-        <ImgDiv>
-          <ItemImg src={image} alt="" onClick={() => setShowCarousel(true)} />
-        </ImgDiv>
-      )}
+      </TopSection>
 
-      <Table>
-        <tbody>
-          <tr>
-            <td>Kategori/Typ av möbel:</td>
-            <td>
-              {item.category
-                ? translate(item.category, "category")
-                : item.category}
-            </td>
-          </tr>
-          <tr>
-            <td>Höjd:</td>
-            <td>{item.height} cm</td>
-          </tr>
-          <tr>
-            <td>Bredd:</td>
-            <td>{item.width} cm</td>
-          </tr>
-          <tr>
-            <td>Djup:</td>
-            <td>{item.length} cm</td>
-          </tr>
-          <tr>
-            <td>Färg:</td>
-            <td>{item.color}</td>
-          </tr>
-
-          <tr>
-            <td>Material:</td>
-            {item.material ? (
-              mapingObject(item.material, "material")
-            ) : (
-              <td> </td>
-            )}
-          </tr>
-          <tr>
-            <td>Skick:</td>
-            <td>
-              {item.condition
-                ? translate(item.condition, "condition")
-                : item.condition}
-            </td>
-          </tr>
-          <tr>
-            <td>Användningsområde:</td>
-            {item.areaOfUse ? (
-              mapingObject(item.areaOfUse, "areaOfUse")
-            ) : (
-              <td> </td>
-            )}
-          </tr>
-          <tr>
-            <td>Klimatpåverkan:</td>
-            <td>
-              {item.climateImpact} kg CO<sub>2</sub>e
-            </td>
-          </tr>
-          <tr>
-            <td>Beskrivning:</td>
-            <td>{item.description}</td>
-          </tr>
-          {item.status === "available" && (
+      <MainSection>
+        <div>
+          <h4 className="dark">Beskrivning</h4>
+          <p>{item.description}</p>
+        </div>
+        <table>
+          <tbody>
             <tr>
-              <td>Har varit tillgänglig i:</td>
-              <td>{showDays(item.createdAt)} dagar</td>
+              <td>
+                <h4>Typ av möbel</h4>
+              </td>
+              <td>
+                {item.category
+                  ? translate(item.category, "category")
+                  : item.category}
+              </td>
             </tr>
-          )}
-          <tr>
-            <td>Hämtas på:</td>
-            <td>{item.location}</td>
-          </tr>
-        </tbody>
-      </Table>
+            <tr>
+              <td>
+                <h4>Höjd</h4>
+              </td>
+              <td>
+                {item.height} <span>cm</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h4>Bredd</h4>
+              </td>
+              <td>
+                {item.width} <span>cm</span>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h4>Djup</h4>
+              </td>
+              <td>
+                {item.length} <span>cm</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <h4>Färg</h4>
+              </td>
+              <td>{item.color}</td>
+            </tr>
+            <tr>
+              <td>
+                <h4>Material</h4>
+              </td>
+              {item.material ? (
+                mapingObject(item.material, "material")
+              ) : (
+                <td> </td>
+              )}
+            </tr>
+            <tr>
+              <td>
+                <h4>Skick</h4>
+              </td>
+              <td>
+                {item.condition
+                  ? translate(item.condition, "condition")
+                  : item.condition}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h4>Användningsområde</h4>
+              </td>
+              {item.areaOfUse ? (
+                mapingObject(item.areaOfUse, "areaOfUse")
+              ) : (
+                <td> </td>
+              )}
+            </tr>
+            <tr>
+              <td>
+                <h4>Klimatpåverkan</h4>
+              </td>
+              <td>
+                {item.climateImpact}{" "}
+                <span>
+                  kg CO<sub>2</sub>e
+                </span>
+              </td>
+            </tr>
+
+            {item.status === "available" && (
+              <tr>
+                <td>
+                  <h4>Har varit tillgänglig i</h4>
+                </td>
+                <td>
+                  {showDays(item.createdAt)} <span>dagar</span>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+        <div>
+          <h4 className="dark">Här finns prylen</h4>
+
+          <CardDiv>
+            <h5>ADRESS</h5>
+            <p>{item.department}</p>
+            <p>{item.location}</p>
+            <Button className=" btn--adress" type="button">
+              Hitta hit
+              <MdPlace />
+            </Button>
+          </CardDiv>
+          <h4 className="dark">Kontaktperson</h4>
+
+          <CardDiv>
+            <div className="contactPersonDiv">
+              <div>
+                <MdPerson />
+              </div>
+              <h4 className="dark">{item.contactPerson}</h4>
+            </div>
+            <div className="contactInfo">
+              <MdPhone />
+              <p>{item.phoneNumber}</p>
+            </div>
+            <div className="contactInfo">
+              <FiAtSign />
+              <p>{item.email}</p>
+            </div>
+          </CardDiv>
+        </div>
+      </MainSection>
+
       {/* <MapContainer>
         {item && item.location && (
           <Map

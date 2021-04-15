@@ -1,21 +1,12 @@
 
 import React, { FC } from "react";
 import { AmplifySignIn } from "@aws-amplify/ui-react";
-import styled from "styled-components";
 import { withRouter } from 'react-router-dom';
 
-const AmplifySignInContainer = styled.div``;
-
-const LoginContainer = styled.div``;
-
-const SignIn: FC = () => {
+const SignIn: FC = ({ children }) => {
   return (
-    <AmplifySignInContainer slot="sign-in">
-      <LoginContainer>
-        <h4>En delningsplattform</h4>
-        <h1>Haffa!</h1>
-        <h3>Logga in med ditt vanliga jobbkonto - ingen registrering behövs. </h3>
-      </LoginContainer>
+    <div slot="sign-in">
+      {children}
       <AmplifySignIn
         headerText=""
         submitButtonText="Logga in"
@@ -37,7 +28,7 @@ const SignIn: FC = () => {
           },
         ]}>
       </AmplifySignIn>
-    </AmplifySignInContainer>
+    </div>
   );
 }
 

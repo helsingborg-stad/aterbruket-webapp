@@ -534,7 +534,7 @@ const ItemDetails: FC<ParamTypes> = () => {
             </>
           )}
 
-        {item.status === "available" && item.giver === user.attributes.sub && (
+        {item.status === "available" && item.giver === user.sub && (
           <>
             <Button
               className=" btn--edit"

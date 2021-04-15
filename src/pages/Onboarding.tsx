@@ -309,19 +309,21 @@ const Onboarding: FC = () => {
       <SwipeContainer>
         <SwipeContent>
           <AmplifyAuthenticator>
-            <SignIn>
-              <div data-swiper-parallax="-100">
-                <Logo src={HbgLogo} alt="Logo" />
-                <SubTitle>En delningsplattform.</SubTitle>
-                <Separator />
-              </div>
-              <div data-swiper-parallax="-200">
-                <Title>Haffa!</Title>
-              </div>
-              <div data-swiper-parallax="-300">
-                <Text>Logga in med ditt vanliga jobbkonto - ingen registrering behövs.</Text>
-              </div>
-            </SignIn>
+            <div slot="sign-in">
+              <SignIn>
+                <div data-swiper-parallax="-100">
+                  <Logo src={HbgLogo} alt="Logo" />
+                  <SubTitle>En delningsplattform.</SubTitle>
+                  <Separator />
+                </div>
+                <div data-swiper-parallax="-200">
+                  <Title>Haffa!</Title>
+                </div>
+                <div data-swiper-parallax="-300">
+                  <Text>Logga in med ditt vanliga jobbkonto - ingen registrering behövs.</Text>
+                </div>
+              </SignIn>
+            </div>
           </AmplifyAuthenticator>
         </SwipeContent>
       </SwipeContainer>

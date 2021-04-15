@@ -73,7 +73,7 @@ const App: FC = () => {
           </button>
           {/* )} */}
           <Router>
-            <Header />
+            <Header isInDetail={false}/>
             <UserContext.Provider value={user}>
               <Route
                 exact

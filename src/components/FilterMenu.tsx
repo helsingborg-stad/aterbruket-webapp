@@ -101,6 +101,7 @@ interface Props {
   setFilterValue: React.Dispatch<React.SetStateAction<any>>;
   setConditionValues: React.Dispatch<React.SetStateAction<any>>;
   filterValueUpdated: boolean;
+  setAllValues: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const FLITER_OPEN_CLASS = "openFilter";
@@ -113,8 +114,10 @@ const FilterMenu: FC<Props> = ({
   filterValueUpdated,
   filterValue,
   setConditionValues,
+  setAllValues,
 }: Props) => {
   const [saveValues, setSaveValues] = useState({});
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     if (isOpen) {
@@ -131,6 +134,7 @@ const FilterMenu: FC<Props> = ({
 
   const handleSaveFilter = () => {
     let categories: any = [];
+    let cateValues: any = [];
     let conditions: any = [];
 
     Object.entries(saveValues).forEach((entry: any) => {
@@ -141,13 +145,14 @@ const FilterMenu: FC<Props> = ({
         if (value[innerKey] === true) {
           if (key === "category") {
             categories.push(group);
+            cateValues.push(innerKey);
           } else if (key === "condition") {
             conditions.push(innerKey);
           }
         }
       });
     });
-
+    setAllValues([...cateValues, ...conditions]);
     setFilterValue({
       ...filterValue,
       or: [...filterValue.or.concat(categories)],
@@ -168,6 +173,7 @@ const FilterMenu: FC<Props> = ({
     setConditionValues([]);
     setSaveValues({});
     setFilterValueUpdated(!filterValueUpdated);
+    setAllValues([]);
   };
 
   return (
@@ -184,21 +190,37 @@ const FilterMenu: FC<Props> = ({
       </FilterHeader>
       <FilterBody>
         <FilterCheckbox
+          setIsDisabled={setIsDisabled}
           setSaveValues={setSaveValues}
           group={fieldsForm[2]}
           saveValues={saveValues}
         />
         <FilterCheckbox
+          setIsDisabled={setIsDisabled}
           setSaveValues={setSaveValues}
           group={fieldsForm[9]}
           saveValues={saveValues}
         />
         {/* all the small filtering components, the following p tag is just for showing how it looks like, can be removed when component is added */}
 
-        <button className="saveBtn" type="button" onClick={handleSaveFilter}>
+        <button
+          disabled={isDisabled}
+          style={{
+            backgroundColor: isDisabled ? "#F5F5F5" : "#50811B",
+            color: isDisabled ? "#A3A3A3" : "white",
+          }}
+          className="saveBtn"
+          type="button"
+          onClick={handleSaveFilter}
+        >
           Spara
         </button>
-        <button className="resetBtn" type="button" onClick={handleCancelFilter}>
+        <button
+          style={{ display: isDisabled ? "none" : "block" }}
+          className="resetBtn"
+          type="button"
+          onClick={handleCancelFilter}
+        >
           Avbryt/ Nollställ
         </button>
       </FilterBody>

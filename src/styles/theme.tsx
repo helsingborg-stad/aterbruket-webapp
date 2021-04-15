@@ -38,10 +38,16 @@ interface DefaultTheme {
   colors: {
     primary: string;
     primaryLight: string;
+    primaryLighter: string;
     primaryDark: string;
     opacityPrimaryLight: string;
+    secondaryDark: string;
     lightGray: string;
     offWhite: string;
+    white: string;
+    darkest: string;
+    dark: string;
+    illustration: string;
   };
 }
 
@@ -85,10 +91,16 @@ const theme: DefaultTheme = {
   colors: {
     primary: "#50811B",
     primaryLight: "#80B14A",
+    primaryLighter: "#E1E9DB",
     primaryDark: "#205400",
     opacityPrimaryLight: "#7fb04a1a", // This color dos not exist in figma
+    secondaryDark: "#6F9725",
     lightGray: "#f5f5f5",
     offWhite: "#F8F8F8",
+    white: "#ffffff",
+    dark: "#707070",
+    darkest: "#3D3D3D", 
+    illustration: "#C9D6C2"
   },
 };
 

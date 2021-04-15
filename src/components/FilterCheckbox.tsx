@@ -45,28 +45,47 @@ interface Props {
   group: any;
   saveValues: any;
   setSaveValues: any;
+  setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FilterCheckbox: FC<Props> = ({
   setSaveValues,
   saveValues,
   group,
+  setIsDisabled,
 }: Props) => {
-  const handleInputChange = (
-    e: React.ChangeEvent<any>,
-    groupName: any,
-    element: any
-  ) => {
-    const { target } = e;
-
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    // eslint-disable-next-line no-console
-
+  const handleInputChange = (e: React.ChangeEvent<any>, groupName: any) => {
     setSaveValues({
       ...saveValues,
-      [groupName]: { ...saveValues[groupName], [element]: value },
+      [groupName]: {
+        ...saveValues[groupName],
+        [e.target.name]: e.target.checked,
+      },
     });
   };
+
+  let cates: any = [];
+  let condis: any = [];
+
+  Object.entries(saveValues).forEach((entry: any) => {
+    const [key, value] = entry;
+
+    Object.keys(value).forEach((innerKey: string) => {
+      if (value[innerKey] === true) {
+        if (key === "category") {
+          cates.push(innerKey);
+        } else if (key === "condition") {
+          condis.push(innerKey);
+        }
+      }
+    });
+  });
+
+  if (cates.length === 0 && condis.length === 0) {
+    setIsDisabled(true);
+  } else {
+    setIsDisabled(false);
+  }
 
   let checkboxes: any;
 
@@ -79,7 +98,7 @@ const FilterCheckbox: FC<Props> = ({
           <input
             type="checkbox"
             name={element}
-            onChange={(e) => handleInputChange(e, [group.name], element)}
+            onChange={(e) => handleInputChange(e, [group.name])}
             checked={
               !!(saveValues[group.name] && saveValues[group.name][element])
             }

@@ -311,7 +311,7 @@ const CardDiv = styled.div`
     }
   }
   .contactInfo {
-    padding: 0;
+    padding: 0 8px 0 8px;
     display: flex;
     align-items: center;
     width: 100%;
@@ -319,15 +319,15 @@ const CardDiv = styled.div`
     background-color: #f5f5f5;
     border-radius: 4.5px;
     margin: 0 0 10px 0;
+    line-break: anywhere;
 
     p {
       color: ${(props) => props.theme.colors.darker};
-      margin-left: 14px;
+      margin-left: 8px;
     }
     svg {
-      font-size: 24px;
+      font-size: 20px;
       color: ${(props) => props.theme.colors.dark};
-      margin-left: 14px;
     }
   }
 `;

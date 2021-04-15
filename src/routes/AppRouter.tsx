@@ -1,5 +1,7 @@
+import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
 import React, { FC, useState } from "react";
 import { Route } from "react-router-dom";
+import styled from "styled-components";
 import Header from "../components/Header";
 import MenuBar from "../components/MenuBar";
 import MyAdverts from "../components/MyAdverts";
@@ -11,10 +13,8 @@ import Home from "../pages/Home";
 import ItemDetails from "../pages/ItemDetails";
 import Onboarding from "../pages/Onboarding";
 import Profile from "../pages/Profile";
-import StartScreen from "../pages/StartScreen";
 import SignIn from "../pages/SignIn";
-import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
-import styled from "styled-components";
+import StartScreen from "../pages/StartScreen";
 import HbgLogo from "../pics/HBG_logo_sm.png";
 import BG from "../pics/onboarding_bg_x2.png";
 
@@ -56,7 +56,7 @@ const SubTitle = styled.h4`
 const Text = styled.p`
   font-size: 16px;
   font-weight: 500;
-  color: #3D3D3D;
+  color: #3d3d3d;
   line-height: 27px;
   margin: 0px 0px 16px 0px;
 `;
@@ -75,7 +75,7 @@ const SignInWrapper = styled.div`
   -webkit-background-size: cover;
   background-size: cover;
   background-position: center;
-  background-image:url(${BG});
+  background-image: url(${BG});
 `;
 
 const SignInContent = styled.div`
@@ -89,7 +89,7 @@ const Separator = styled.div`
   width: 32px;
   height: 2px;
   margin: 16px 0;
-  background-color: #E1E9DB;
+  background-color: #e1e9db;
   border-radius: 10px;
 `;
 
@@ -107,7 +107,9 @@ const AppRouter: FC = () => {
             <SubTitle>En delningsplattform.</SubTitle>
             <Separator />
             <Title>Haffa!</Title>
-            <Text>Logga in med ditt vanliga jobbkonto - ingen registrering behövs.</Text>
+            <Text>
+              Logga in med ditt vanliga jobbkonto - ingen registrering behövs.
+            </Text>
           </SignIn>
         </SignInContent>
       </SignInWrapper>
@@ -148,6 +150,6 @@ const AppRouter: FC = () => {
       </AppContainer>
     </AmplifyAuthenticator>
   );
-}
+};
 
 export default AppRouter;

@@ -101,6 +101,7 @@ interface Props {
   setFilterValue: React.Dispatch<React.SetStateAction<any>>;
   setConditionValues: React.Dispatch<React.SetStateAction<any>>;
   filterValueUpdated: boolean;
+  setAllValues: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const FLITER_OPEN_CLASS = "openFilter";
@@ -113,6 +114,7 @@ const FilterMenu: FC<Props> = ({
   filterValueUpdated,
   filterValue,
   setConditionValues,
+  setAllValues,
 }: Props) => {
   const [saveValues, setSaveValues] = useState({});
   const [isDisabled, setIsDisabled] = useState(true);
@@ -132,6 +134,7 @@ const FilterMenu: FC<Props> = ({
 
   const handleSaveFilter = () => {
     let categories: any = [];
+    let cateValues: any = [];
     let conditions: any = [];
 
     Object.entries(saveValues).forEach((entry: any) => {
@@ -142,13 +145,14 @@ const FilterMenu: FC<Props> = ({
         if (value[innerKey] === true) {
           if (key === "category") {
             categories.push(group);
+            cateValues.push(innerKey);
           } else if (key === "condition") {
             conditions.push(innerKey);
           }
         }
       });
     });
-
+    setAllValues([...cateValues, ...conditions]);
     setFilterValue({
       ...filterValue,
       or: [...filterValue.or.concat(categories)],
@@ -169,6 +173,7 @@ const FilterMenu: FC<Props> = ({
     setConditionValues([]);
     setSaveValues({});
     setFilterValueUpdated(!filterValueUpdated);
+    setAllValues([]);
   };
 
   return (

@@ -15,6 +15,8 @@ import StartScreen from "../pages/StartScreen";
 import SignIn from "../pages/SignIn";
 import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
 import styled from "styled-components";
+import HbgLogo from "../pics/HBG_logo_sm.png";
+import BG from "../pics/onboarding_bg.png";
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.appTheme.minHeight}vh`};
@@ -37,6 +39,60 @@ const AppContainer = styled.div`
   }
 `;
 
+const Title = styled.h1`
+  font-size: 36px;
+  font-weight: 900;
+  color: #000;
+  margin: 0px 0px 16px 0px;
+`;
+
+const SubTitle = styled.h4`
+  font-size: 16px;
+  font-weight: 700;
+  color: #205400;
+  margin: 0px;
+`;
+
+const Text = styled.p`
+  font-size: 16px;
+  font-weight: 500;
+  color: #3D3D3D;
+  line-height: 27px;
+  margin: 0px 0px 16px 0px;
+`;
+
+const Logo = styled.img`
+  width: 34px;
+  margin-bottom: 26px;
+`;
+
+const SignInWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center;
+  background-image:url(${BG});
+`;
+
+const SignInContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 500px;
+`;
+
+const Separator = styled.div`
+  width: 32px;
+  height: 2px;
+  margin: 16px 0;
+  background-color: #E1E9DB;
+  border-radius: 10px;
+`;
+
 const AppRouter: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [alreadyAQRCode, setAlreadyAQRCode] = useState(false);
@@ -44,7 +100,17 @@ const AppRouter: FC = () => {
 
   return (
     <AmplifyAuthenticator>
-      <SignIn />
+      <SignInWrapper slot="sign-in">
+        <SignInContent>
+          <SignIn>
+            <Logo src={HbgLogo} alt="Logo" />
+            <SubTitle>En delningsplattform.</SubTitle>
+            <Separator />
+            <Title>Haffa!</Title>
+            <Text>Logga in med ditt vanliga jobbkonto - ingen registrering behövs.</Text>
+          </SignIn>
+        </SignInContent>
+      </SignInWrapper>
       <AppContainer>
         <Header />
         <Route exact path="/" component={StartScreen} />

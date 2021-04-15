@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 
 const SignIn: FC = ({ children }) => {
   return (
-    <div slot="sign-in">
+    <>
       {children}
       <AmplifySignIn
         headerText=""
@@ -28,7 +28,7 @@ const SignIn: FC = ({ children }) => {
           },
         ]}>
       </AmplifySignIn>
-    </div>
+    </>
   );
 }
 

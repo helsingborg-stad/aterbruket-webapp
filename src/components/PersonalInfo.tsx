@@ -1,6 +1,7 @@
 import React, { FC, useContext } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
+import { Auth } from 'aws-amplify';
 
 const InformationFrame = styled.header`
   padding: 24px;
@@ -16,8 +17,19 @@ const InformationHeader = styled.p`
 
 const InformationContainer = styled.div`
   width: 90%;
-  height: 100vh;
   background: #fcfcfc;
+`;
+
+const SignOutButton = styled.button`
+  background: #50811B;
+  border-radius: 4.5px;
+  border: none;
+  color: white;
+  font-size: 14px;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 24px;
 `;
 
 const PersonalInfo: FC = () => {
@@ -58,6 +70,9 @@ const PersonalInfo: FC = () => {
           </>
         }
       </InformationContainer>
+
+      <SignOutButton onClick={() => { Auth.signOut() }}>Logga ut</SignOutButton>
+
     </main>
   );
 };

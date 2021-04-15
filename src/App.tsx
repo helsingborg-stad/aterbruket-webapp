@@ -59,7 +59,7 @@ const App: FC = () => {
       title: "Installera Haffa",
       description: "Haffa kommer hamna på din hemskärm som en app.",
     })
-      .then(() => alert("Appen har installerats."))
+      .then()
       .catch(() => alert("Ladda gärna ner den nästa gång du använder Haffa."));
   };
 

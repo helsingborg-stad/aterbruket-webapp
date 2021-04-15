@@ -121,7 +121,6 @@ const Card: FC<Props> = ({
       <div className="infoDiv">
         <h3>{title}</h3>
         <h4>{quantity} stycken</h4>
-        <p>Condition: {condition}</p>
         <p className="desc">Beskrivning: {description}</p>
       </div>
     </CardDiv>

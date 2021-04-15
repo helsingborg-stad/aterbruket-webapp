@@ -16,7 +16,7 @@ import SignIn from "../pages/SignIn";
 import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
 import styled from "styled-components";
 import HbgLogo from "../pics/HBG_logo_sm.png";
-import BG from "../pics/onboarding_bg.png";
+import BG from "../pics/onboarding_bg_x2.png";
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.appTheme.minHeight}vh`};

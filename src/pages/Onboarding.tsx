@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import UserContext from "../contexts/UserContext";
 import SignIn from "../pages/SignIn";
-import BG from "../pics/onboarding_bg.png";
+import BG from "../pics/onboarding_bg_x2.png";
 import HbgLogo from "../pics/HBG_logo_sm.png";
 
 SwiperCore.use([Navigation, Parallax, Pagination, Scrollbar, A11y]);

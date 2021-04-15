@@ -85,7 +85,7 @@ const AdvertContainer: FC<IAdvert> = ({
             })}
           </OptionWrapper>
         ) : (
-          <h3>Alla möbler</h3>
+          itemsFrom === "home" && <h3>Alla möbler</h3>
         )}
         {itemsFrom === "haffat" && <h3>Saker att hämta</h3>}
         {itemsFrom === "profile" && <h3>Mina annonser</h3>}

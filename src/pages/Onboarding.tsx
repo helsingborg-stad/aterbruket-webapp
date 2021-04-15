@@ -54,7 +54,7 @@ type ButtonProps = {
   transparent?: boolean;
   secondary?: boolean;
   shadow?: boolean;
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'lg'
 };
 
 const Button = styled.button<ButtonProps>`
@@ -62,14 +62,21 @@ const Button = styled.button<ButtonProps>`
   border-radius: 4.5px;
   border: none;
   color: white;
-  font-size: 16px;
-  padding: 16px 32px;
+  font-size: 14px;
+  padding: 12px 24px;
   cursor: pointer;
   font-weight: 500;
   ${({ size }) =>
     size === 'sm' &&
     `
-      font-size: 10px;
+      font-size: 12px;
+      padding: 8px 12px;
+  `}
+  ${({ size }) =>
+    size === 'lg' &&
+    `
+    font-size: 16px;
+    padding: 16px 32px;
   `}
   ${({ secondary }) =>
     secondary &&
@@ -77,7 +84,6 @@ const Button = styled.button<ButtonProps>`
       color: #205400;
       background: #E1E9DB;
       font-weight: 700;
-      padding: 8px 12px;
   `}
  ${({ transparent }) =>
     transparent &&
@@ -93,6 +99,11 @@ const Button = styled.button<ButtonProps>`
   `}
 `;
 
+const NextButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const SwiperFooterButtons = styled.div`
   display: flex;
   align-items: center;
@@ -105,6 +116,26 @@ const SwiperHeaderButtons = styled.div`
   flex-direction: column;
 `;
 
+
+type BackgroundProps = {
+  transparent?: boolean;
+};
+
+const Background = styled.div<BackgroundProps>`
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: center;
+  background-color: #EAF0E4;
+  transition: background-color 1s linear;
+  ${({ transparent }) => transparent && `background-color: transparent;`}
+`;
+
 const ParallaxBackground = styled.div`
   position: absolute;
   left: 0;
@@ -115,6 +146,7 @@ const ParallaxBackground = styled.div`
   background-size: cover;
   background-position: center;
   background-image:url(${BG});
+  background-color:transparent;
 `;
 
 const Logo = styled.img`
@@ -132,6 +164,7 @@ const Separator = styled.div`
 
 const Onboarding: FC = () => {
   const [isOnboardingDisabled, setIsOnboardingDisabled] = useState<boolean>(false);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
   const { authState } = useContext(UserContext);
 
   const disableOnboarding = () => {
@@ -158,8 +191,8 @@ const Onboarding: FC = () => {
           </div>
           <div data-swiper-parallax="-400">
             <SwiperFooterButtons>
-              <Button shadow className="swipe-next">Nu kör vi!</Button>
-              <Button transparent onClick={disableOnboarding}>Logga in</Button>
+              <Button size="lg" shadow className="swipe-next">Nu kör vi!</Button>
+              <Button size="lg" transparent onClick={disableOnboarding}>Logga in</Button>
             </SwiperFooterButtons>
           </div>
         </SwipeContent>
@@ -185,9 +218,9 @@ const Onboarding: FC = () => {
             <Text>Ser du något du vill ha? Haffa möbeln och ta kontakt via annonsen, och kom överens om när och hur möbeln hämtas.</Text>
           </div>
           <div data-swiper-parallax="-400">
-            <SwiperFooterButtons>
-              <Button transparent className="swipe-next">Fortsätt</Button>
-            </SwiperFooterButtons>
+            <NextButtonWrapper>
+              <Button size="md" className="swipe-next">Fortsätt</Button>
+            </NextButtonWrapper>
           </div>
         </SwipeContent>
       </SwipeContainer>
@@ -211,9 +244,9 @@ const Onboarding: FC = () => {
             <Text>Med Haffa kan du enkelt hitta prylen du behöver låna istället för att din skola, enhet eller avdelning skall behöva köpa in nytt.</Text>
           </div>
           <div data-swiper-parallax="-400">
-            <SwiperFooterButtons>
-              <Button transparent className="swipe-next">Fortsätt</Button>
-            </SwiperFooterButtons>
+            <NextButtonWrapper>
+              <Button size="md" className="swipe-next">Fortsätt</Button>
+            </NextButtonWrapper>
           </div>
         </SwipeContent>
       </SwipeContainer>
@@ -238,9 +271,9 @@ const Onboarding: FC = () => {
             <Text>Med Haffa genererar du enkelt en QR-kod som du klistrar på din pryl och den som lånar kan enkelt scanna koden med sin telefon för att låna eller lämna tillbaka. </Text>
           </div>
           <div data-swiper-parallax="-400">
-            <SwiperFooterButtons>
-              <Button transparent className="swipe-next">Fortsätt</Button>
-            </SwiperFooterButtons>
+            <NextButtonWrapper>
+              <Button size="md" className="swipe-next">Fortsätt</Button>
+            </NextButtonWrapper>
           </div>
         </SwipeContent>
       </SwipeContainer>
@@ -265,9 +298,9 @@ const Onboarding: FC = () => {
             <Text>Häng med och bidra du också!</Text>
           </div>
           <div data-swiper-parallax="-400">
-            <SwiperFooterButtons>
-              <Button transparent className="swipe-next">Fortsätt</Button>
-            </SwiperFooterButtons>
+            <NextButtonWrapper>
+              <Button size="md" className="swipe-next">Fortsätt</Button>
+            </NextButtonWrapper>
           </div>
         </SwipeContent>
       </SwipeContainer>
@@ -308,11 +341,13 @@ const Onboarding: FC = () => {
       }}
       spaceBetween={50}
       slidesPerView={1}
-      pagination={{ clickable: true }}
-      onSlideChange={() => console.log('slide change')}
+      onSlideChange={(swiper) => {
+        setActiveIndex(swiper.activeIndex);
+      }}
       onSwiper={(swiper) => console.log(swiper)}
       style={{ height: '100vh' }}
     >
+      <Background transparent={activeIndex === 0 || activeIndex === 5} />
       <ParallaxBackground data-swiper-parallax="-80%" />
       {slides}
     </Swiper>

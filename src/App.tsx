@@ -67,13 +67,13 @@ const App: FC = () => {
     <UserContext.Provider value={user}>
       <ThemeProvider theme={theme}>
         <AppContainer>
-          {/* {supported() && !isInstalled() && ( */}
-          <button type="button" onClick={handleClick}>
-            Installera Haffa på hemskärmen
-          </button>
-          {/* )} */}
+          {supported() && !isInstalled() && (
+            <button type="button" onClick={handleClick}>
+              Lägg Haffa på hemskärmen
+            </button>
+          )}
           <Router>
-            <Header isInDetail={false}/>
+            <Header isInDetail={false} />
             <UserContext.Provider value={user}>
               <Route
                 exact

@@ -353,7 +353,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const [editItem, setEditItem] = useState(false);
   const [regive, setRegive] = useState(false);
   const [showCarousel, setShowCarousel] = useState(false);
-  const user: any = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [image, setImage] = useState("") as any;
   const [itemUpdated, setItemUpdated] = useState(false);
 
@@ -405,8 +405,8 @@ const ItemDetails: FC<ParamTypes> = () => {
         input: {
           id,
           status: newStatus,
-          reservedBySub: user.attributes.sub,
-          reservedByName: user.attributes.name,
+          reservedBySub: user.sub,
+          reservedByName: user.name,
           version: 0,
           revisions: item.revisions + 1,
         },
@@ -518,7 +518,7 @@ const ItemDetails: FC<ParamTypes> = () => {
         )}
 
         {item.status === "reserved" &&
-          item.reservedBySub === user.attributes.sub && (
+          item.reservedBySub === user.sub && (
             <>
               <Button
                 className=" btn--pickUp"
@@ -549,7 +549,7 @@ const ItemDetails: FC<ParamTypes> = () => {
         )}
 
         {item.status === "pickedUp" &&
-          item.reservedBySub === user.attributes.sub && (
+          item.reservedBySub === user.sub && (
             <>
               <Button
                 className=" btn--regive"

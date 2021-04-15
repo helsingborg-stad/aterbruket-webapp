@@ -1,15 +1,14 @@
 
-import React, { FC, useEffect } from "react";
-import { AmplifySignIn, AmplifyForgotPassword as AwsForgotPassword } from "@aws-amplify/ui-react";
+import React, { FC } from "react";
+import { AmplifySignIn } from "@aws-amplify/ui-react";
 import styled from "styled-components";
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
-const AmplifySignInContainer = styled.div`
-`;
+const AmplifySignInContainer = styled.div``;
 
 const LoginContainer = styled.div``;
 
-const SignIn = () => {
+const SignIn: FC = () => {
   return (
     <AmplifySignInContainer slot="sign-in">
       <LoginContainer>

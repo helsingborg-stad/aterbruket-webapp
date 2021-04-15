@@ -21,31 +21,42 @@ const InformationContainer = styled.div`
 `;
 
 const PersonalInfo: FC = () => {
-  const user: any = useContext(UserContext);
-  const userKeys = Object.keys(user.attributes);
-  const userInfo = userKeys.map((key) => {
-    return (
-      <div key={key}>
-        {key === "email_verified" ? null : (
-          <>
-            <InformationHeader> {key} </InformationHeader>
-            <InformationFrame>{user.attributes[key]}</InformationFrame>
-          </>
-        )}
-      </div>
-    );
-  });
+  const { user } = useContext(UserContext);
+
   return (
     <main>
-      <h2> {user.attributes.name} </h2>
+      <h2> {user.name} </h2>
       <InformationContainer>
-        {userInfo}
-        <InformationHeader>DEPARTMENT</InformationHeader>
-        {!user["custom:department"] ? (
-          <InformationFrame>Kan inte hitta avdelning..</InformationFrame>
-        ) : (
-          <InformationFrame>{user["custom:department"]}</InformationFrame>
-        )}
+        {user.name &&
+          <>
+            <InformationHeader>Namn</InformationHeader>
+            <InformationFrame>{user.name}</InformationFrame>
+          </>
+        }
+        {user.department &&
+          <>
+            <InformationHeader>Avdelning</InformationHeader>
+            <InformationFrame>{user.department}</InformationFrame>
+          </>
+        }
+        {user.email &&
+          <>
+            <InformationHeader>Email</InformationHeader>
+            <InformationFrame>{user.email}</InformationFrame>
+          </>
+        }
+        {user.address &&
+          <>
+            <InformationHeader>Adress</InformationHeader>
+            <InformationFrame>{user.address}</InformationFrame>
+          </>
+        }
+        {user.postalcode &&
+          <>
+            <InformationHeader>Postnummer</InformationHeader>
+            <InformationFrame>{user.postalcode}</InformationFrame>
+          </>
+        }
       </InformationContainer>
     </main>
   );

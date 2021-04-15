@@ -8,7 +8,7 @@ import UserContext from "../contexts/UserContext";
 import { listAdverts } from "../graphql/queries";
 
 const Haffat: FC = () => {
-  const user: any = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [reservedItems, setReservedItems] = useState([]) as any;
   const [paginationOption, setPaginationOption] = useState({
     activePage: 1,
@@ -37,7 +37,7 @@ const Haffat: FC = () => {
       graphqlOperation(listAdverts, {
         filter: {
           and: [
-            { reservedBySub: { eq: user.attributes.sub } },
+            { reservedBySub: { eq: user.sub } },
             { version: { eq: 0 } },
           ],
           not: { status: { eq: "available" } },
@@ -56,10 +56,10 @@ const Haffat: FC = () => {
       setRenderItems(advertItem.slice(0, paginationOption.amountToShow));
     }
     setReservedItems(advertItem);
-  }, [user.attributes.sub]);
+  }, [user.sub]);
 
   useEffect(() => {
-    if (user.attributes.sub) {
+    if (user.sub) {
       fetchReservedAdverts();
     }
   }, [fetchReservedAdverts, user]);

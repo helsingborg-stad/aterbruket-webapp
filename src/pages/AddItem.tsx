@@ -38,8 +38,7 @@ const AddItem: FC<Props> = ({
   qrCamera,
   setQrCamera,
 }: Props) => {
-  const history = useHistory();
-  const user: any = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const {
     values,
     handleInputChange,
@@ -68,15 +67,13 @@ const AddItem: FC<Props> = ({
         wood: false,
       },
       description: "",
-      department: user.attributes["custom:department"]
-        ? user.attributes["custom:department"]
-        : "",
+      department: user.department,
       location: "",
       instructions: "",
-      contactPerson: user.attributes.name ? user.attributes.name : "",
-      email: user.attributes.email ? user.attributes.email : "",
+      contactPerson: user.name ? user.name : "",
+      email: user.email ? user.email : "",
       phoneNumber: "",
-      giver: user.attributes.sub,
+      giver: user.sub,
       climateImpact: 0,
       version: 0,
       revisions: 0,

@@ -3,8 +3,7 @@ import { Redirect } from "react-router-dom";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API, Storage } from "aws-amplify";
 import styled from "styled-components";
-import { MdNewReleases, MdSearch, MdTune } from "react-icons/md";
-import { MdPhotoCamera } from "react-icons/md";
+import { MdNewReleases, MdSearch, MdTune, MdPhotoCamera } from "react-icons/md";
 import { listAdverts } from "../graphql/queries";
 import { ListAdvertsQuery } from "../API";
 import AdvertContainer from "../components/AdvertContainer";
@@ -246,7 +245,6 @@ const Home: FC<Props> = ({
       )) as GraphQLResult<ListAdvertsQuery>;
     }
 
-    setItems(advertItems);
     if (filteredResult.length > 0) {
       advertItems = [...filteredResult];
       setError(false);
@@ -254,16 +252,18 @@ const Home: FC<Props> = ({
       setError(true);
     } else if (conditionValues.length > 0 && filteredResult.length === 0) {
       setError(true);
-    } else {
+    } else if (filterValue.or.length === 0) {
       advertItems = result?.data?.listAdverts?.items;
       setError(false);
     }
 
     setItems(advertItems);
+
     setFilterValue({
       ...filterValue,
       or: [],
     });
+
     setConditionValues([]);
     setPaginationOption({
       ...paginationOption,
@@ -273,13 +273,10 @@ const Home: FC<Props> = ({
 
     setRenderItems(advertItems.slice(0, paginationOption.amountToShow));
   };
-  useEffect(() => {
-    fetchItems();
-  }, [filterValueUpdated]);
 
   useEffect(() => {
     fetchItems();
-  }, []);
+  }, [filterValueUpdated]);
 
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
@@ -334,7 +331,6 @@ const Home: FC<Props> = ({
               setFilterValueUpdated={setFilterValueUpdated}
               filterValue={filterValue}
               setFilterValue={setFilterValue}
-              conditionValues={conditionValues}
               setConditionValues={setConditionValues}
             />
           </SearchFilterDiv>

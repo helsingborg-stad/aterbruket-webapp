@@ -67,8 +67,7 @@ const Haffat: FC = () => {
   return (
     <main style={{ marginTop: "60px" }}>
       <AdvertContainer
-        sweValues={[]}
-        filtered={false}
+        filteredSweValues={[]}
         searchValue={false}
         items={renderItems}
         itemsFrom="haffat"

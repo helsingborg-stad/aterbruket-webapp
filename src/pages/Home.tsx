@@ -13,6 +13,7 @@ import OpenCamera from "../components/OpenCamera";
 import FilterMenu from "../components/FilterMenu";
 import Pagination from "../components/Pagination";
 import { fieldsForm } from "../utils/formUtils";
+import convertToSwe from "../utils/convert";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -196,7 +197,6 @@ const Home: FC<Props> = ({
   const [conditionValues, setConditionValues] = useState<string[]>([]);
   const [allValues, setAllValues] = useState<string[]>([]);
   const [error, setError] = useState(false);
-  const [filtered, setFiltered] = useState(false);
   const [filterValue, setFilterValue] = useState({
     version: { eq: 0 },
     status: { eq: "available" },
@@ -242,19 +242,17 @@ const Home: FC<Props> = ({
       )) as GraphQLResult<ListAdvertsQuery>;
 
       filteredResult = filterConditions(result, conditionValues);
-      setFiltered(true);
     } else if (filterValue.or.length > 0 || conditionValues.length > 0) {
       result = (await API.graphql(
         graphqlOperation(listAdverts, { filter: filterValue })
       )) as GraphQLResult<ListAdvertsQuery>;
-      setFiltered(true);
+
       if (conditionValues.length === 0) {
         filteredResult = [...result?.data?.listAdverts?.items];
       } else {
         filteredResult = filterConditions(result, conditionValues);
       }
     } else {
-      setFiltered(false);
       result = (await API.graphql(
         graphqlOperation(listAdverts, {
           filter: { version: { eq: 0 }, status: { eq: "available" } },
@@ -296,44 +294,27 @@ const Home: FC<Props> = ({
   }, [filterValueUpdated]);
 
   const categoryData = fieldsForm[2];
-  console.log("categoryData", categoryData);
-
   const conditionData = fieldsForm[9];
-  let indexes: number[] = [];
-  let sweValues: string[] = [];
+  const indexes: number[] = [];
+  let filteredSweValues: string[] = [];
 
   if (categoryData.eng && conditionData.eng) {
     const valuesInEng = [...categoryData.eng, ...conditionData.eng];
     const valuesInSwe = [...categoryData.swe, ...conditionData.swe];
-    console.log("eng", valuesInEng);
 
-    const arraySameValues = (a: any, b: any) => {
-      return a.filter(function (i: string) {
-        console.log("i", i);
-        console.log("b", allValues);
-        if (b.indexOf(i) >= 0) {
-          indexes.push(a.indexOf(i));
-
+    const findSameValuesIndex = (engValues: any, allFilterValues: any) => {
+      return engValues.filter((i: string) => {
+        if (allFilterValues.indexOf(i) >= 0) {
+          indexes.push(engValues.indexOf(i));
           return true;
         }
         return false;
       });
     };
 
-    arraySameValues(valuesInEng, allValues);
-    console.log("idx", indexes);
-
-    const convertEngToSwe = (c: any, d: any) => {
-      d.forEach((i: number) => {
-        sweValues.push(c[i]);
-      });
-    };
-    convertEngToSwe(valuesInSwe, indexes);
-
-    console.log("final", sweValues);
+    findSameValuesIndex(valuesInEng, allValues);
+    filteredSweValues = convertToSwe(valuesInSwe, indexes);
   }
-
-  console.log("allValues", allValues);
 
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
@@ -394,11 +375,10 @@ const Home: FC<Props> = ({
             />
           </SearchFilterDiv>
           <AdvertContainer
-            sweValues={sweValues}
+            filteredSweValues={filteredSweValues}
             items={renderItems}
             searchValue={searchValue}
             itemsFrom="home"
-            filtered={filtered}
           />
           {items.length > 0 && (
             <Pagination

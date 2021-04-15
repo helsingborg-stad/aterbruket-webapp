@@ -346,7 +346,6 @@ const Onboarding: FC = () => {
       onSlideChange={(swiper) => {
         setActiveIndex(swiper.activeIndex);
       }}
-      onSwiper={(swiper) => console.log(swiper)}
       style={{ height: '100vh' }}
     >
       <Background transparent={activeIndex === 0 || activeIndex === 5} />

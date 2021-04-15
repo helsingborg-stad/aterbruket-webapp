@@ -40,7 +40,7 @@ const ButtonContainer = styled.div`
 `;
 type Props = {
   items: any;
-  handleSortItems: (str: string) => void;
+  handleSortItems: (str: string, secondStr: string) => void;
 };
 const SortItems: FC<Props> = ({ items, handleSortItems }) => {
   console.log(items);
@@ -51,22 +51,34 @@ const SortItems: FC<Props> = ({ items, handleSortItems }) => {
 
   return (
     <ButtonContainer>
-      <Button onClick={() => handleSortItems("-createdAt")}>Nyast först</Button>
-      <Button onClick={() => handleSortItems("createdAt")}>Äldst först</Button>
-      <Button onClick={() => handleSortItems("category")}>
+      <Button onClick={() => handleSortItems("-createdAt", "title^")}>
+        Nyast först
+      </Button>
+      <Button onClick={() => handleSortItems("createdAt", "title^")}>
+        Äldst först
+      </Button>
+      <Button onClick={() => handleSortItems("category", "-createdAt")}>
         Katergorie A-Ö
       </Button>
-      <Button onClick={() => handleSortItems("-category")}>
+      <Button onClick={() => handleSortItems("-category", "-createdAt")}>
         Katergorie Ö-A
       </Button>
-      <Button onClick={() => handleSortItems("condition")}>Skick A-Ö</Button>
-      <Button onClick={() => handleSortItems("-condition")}>Skick Ö-A</Button>
-      <Button onClick={() => handleSortItems("title^")}>Titel A-Ö</Button>
-      <Button onClick={() => handleSortItems("-title^")}>Titel Ö-A</Button>
-      <Button onClick={() => handleSortItems("climateImpact")}>
+      <Button onClick={() => handleSortItems("condition", "-createdAt")}>
+        Skick A-Ö
+      </Button>
+      <Button onClick={() => handleSortItems("-condition", "-createdAt")}>
+        Skick Ö-A
+      </Button>
+      <Button onClick={() => handleSortItems("title^", "-createdAt")}>
+        Titel A-Ö
+      </Button>
+      <Button onClick={() => handleSortItems("-title^", "-createdAt")}>
+        Titel Ö-A
+      </Button>
+      <Button onClick={() => handleSortItems("climateImpact", "-createdAt")}>
         Klimatavtryck lägst
       </Button>
-      <Button onClick={() => handleSortItems("-climateImpact")}>
+      <Button onClick={() => handleSortItems("-climateImpact", "-createdAt")}>
         Klimatavtryck högst
       </Button>
     </ButtonContainer>

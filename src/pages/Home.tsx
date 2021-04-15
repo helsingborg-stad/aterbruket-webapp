@@ -228,8 +228,8 @@ const Home: FC<Props> = ({
       setRenderItems(items.sort(sortBy(activeSorting)).slice(start, end));
     }
   };
-  const handleSortItems = (str: string) => {
-    console.log(str, items.sort(sortBy(str)));
+  const handleSortItems = (str: string, secondStr: string) => {
+    console.log(str, items.sort(sortBy(str, secondStr)));
     setActiveSorting(str);
     // fetchItems();
     // setRenderItems(items.sort(sortBy(str)));

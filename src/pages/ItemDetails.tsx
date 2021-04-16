@@ -128,7 +128,7 @@ const TopSection = styled.div`
       font-weight: 900;
       font-size: 36px;
       line-height: 124%;
-      margin: 48px 32px 24px 32px;
+      margin: 8px 32px 24px 32px;
     }
   }
 
@@ -499,8 +499,11 @@ const ItemDetails: FC<ParamTypes> = () => {
           </ImgDiv>
         )}
         <div className="titleDiv">
-          {/*           <h4>Möbler</h4>
-           */}
+          <h4>
+            {item.category
+              ? translate(item.category, "category")
+              : item.category}
+          </h4>
           <h1>{item.title}</h1>
         </div>
 

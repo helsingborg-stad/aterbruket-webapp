@@ -1,6 +1,7 @@
 import React, { FC, useContext } from "react";
 import styled from "styled-components";
 import { Auth } from "aws-amplify";
+import { RouteComponentProps } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 
 const InformationFrame = styled.header`
@@ -32,8 +33,18 @@ const SignOutButton = styled.button`
   margin-top: 24px;
 `;
 
-const PersonalInfo: FC = () => {
+const PersonalInfo: FC<RouteComponentProps> = ({ history }) => {
   const { user } = useContext(UserContext);
+
+  const handleSignOut = async () => {
+    try {
+      await Auth.signOut().then(() => {
+        history.push("/");
+      });
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  };
 
   return (
     <main>
@@ -71,13 +82,7 @@ const PersonalInfo: FC = () => {
         )}
       </InformationContainer>
 
-      <SignOutButton
-        onClick={() => {
-          Auth.signOut();
-        }}
-      >
-        Logga ut
-      </SignOutButton>
+      <SignOutButton onClick={handleSignOut}>Logga ut</SignOutButton>
     </main>
   );
 };

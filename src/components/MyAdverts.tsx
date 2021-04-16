@@ -68,6 +68,7 @@ const MyAdverts: FC = () => {
         items={renderItems}
         searchValue={false}
         itemsFrom="profile"
+        activeSorting={""}
       />
       {renderItems.length > 0 && (
         <Pagination

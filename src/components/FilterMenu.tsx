@@ -3,7 +3,9 @@ import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { MdCancel } from "react-icons/md";
 import FilterCheckbox from "./FilterCheckbox";
+import SortRadioButtons from "./SortRadioButtons";
 import { fieldsForm } from "../utils/formUtils";
+import { sortValues } from "../utils/sortValuesUtils";
 
 const FilterCtn = styled.div`
   display: ${({ className }) => (className === "show" ? "block" : "none")};
@@ -93,6 +95,12 @@ const FilterBody = styled.div`
   }
 `;
 
+type ISorting = {
+  first: string;
+  second: string;
+  sortTitle: string;
+};
+
 interface Props {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isOpen: boolean;
@@ -102,6 +110,9 @@ interface Props {
   setConditionValues: React.Dispatch<React.SetStateAction<any>>;
   filterValueUpdated: boolean;
   setAllValues: React.Dispatch<React.SetStateAction<any>>;
+  handleSortItems: (str: string, secondStr: string) => void;
+  setActiveSorting: React.Dispatch<React.SetStateAction<ISorting>>;
+  activeSorting: ISorting;
 }
 
 const FLITER_OPEN_CLASS = "openFilter";
@@ -115,9 +126,17 @@ const FilterMenu: FC<Props> = ({
   filterValue,
   setConditionValues,
   setAllValues,
+  handleSortItems,
+  activeSorting,
+  setActiveSorting,
 }: Props) => {
   const [saveValues, setSaveValues] = useState({});
   const [isDisabled, setIsDisabled] = useState(true);
+  const [newSorting, setNewSorting] = useState({
+    first: activeSorting.first,
+    second: activeSorting.second,
+    sortTitle: activeSorting.sortTitle,
+  });
 
   useEffect(() => {
     if (isOpen) {
@@ -163,6 +182,7 @@ const FilterMenu: FC<Props> = ({
 
     categories = [];
     conditions = [];
+    setActiveSorting({ ...newSorting });
   };
 
   const handleCancelFilter = () => {
@@ -174,8 +194,18 @@ const FilterMenu: FC<Props> = ({
     setSaveValues({});
     setFilterValueUpdated(!filterValueUpdated);
     setAllValues([]);
+    setActiveSorting({
+      first: "climateImpact",
+      second: "-createdAt",
+      sortTitle: "Klimatavtryck",
+    });
+    setNewSorting({
+      first: "climateImpact",
+      second: "-createdAt",
+      sortTitle: "Klimatavtryck",
+    });
   };
-
+  console.log("disabled -> ", isDisabled);
   return (
     <FilterCtn className={isOpen ? "show" : "hide"}>
       <FilterHeader>
@@ -189,6 +219,13 @@ const FilterMenu: FC<Props> = ({
         <h1 className="pageTitle">Filtrera</h1>
       </FilterHeader>
       <FilterBody>
+        <SortRadioButtons
+          setNewSorting={setNewSorting}
+          setIsDisabled={setIsDisabled}
+          groupTitle={"Sortering"}
+          newSorting={newSorting}
+          activeSorting={activeSorting}
+        />
         <FilterCheckbox
           setIsDisabled={setIsDisabled}
           setSaveValues={setSaveValues}

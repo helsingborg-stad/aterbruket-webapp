@@ -12,7 +12,6 @@ import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
 import FilterMenu from "../components/FilterMenu";
 import Pagination from "../components/Pagination";
-import SortItems from "../components/SortItems";
 import { sortBy } from "sort-by-typescript";
 import { fieldsForm } from "../utils/formUtils";
 import convertToSwe from "../utils/convert";
@@ -184,7 +183,7 @@ const Home: FC<Props> = ({
 }: Props) => {
   const [showQRCamera, setShowQRCamera] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const updateSearch = (event: React.ChangeEvent<any>) => {
     const { target } = event;
@@ -209,7 +208,11 @@ const Home: FC<Props> = ({
     or: [],
   }) as any;
   const [renderItems, setRenderItems] = useState([]) as any;
-  const [activeSorting, setActiveSorting] = useState("-createdAt");
+  const [activeSorting, setActiveSorting] = useState({
+    first: "climateImpact",
+    second: "-createdAt",
+    sortTitle: "Klimatavtryck",
+  });
 
   const handlePages = (updatePage: number) => {
     setPaginationOption({
@@ -221,17 +224,21 @@ const Home: FC<Props> = ({
       const start = (updatePage - 1) * paginationOption.amountToShow;
       const end = start + paginationOption.amountToShow;
 
-      setRenderItems(items.sort(sortBy(activeSorting)).slice(start, end));
+      setRenderItems(
+        items
+          .sort(sortBy(activeSorting.first, activeSorting.second))
+          .slice(start, end)
+      );
     }
   };
   const handleSortItems = (str: string, secondStr: string) => {
     console.log(str, items.sort(sortBy(str, secondStr)));
-    setActiveSorting(str);
+    setActiveSorting({ first: str, second: secondStr, sortTitle: "" });
     // fetchItems();
     // setRenderItems(items.sort(sortBy(str)));
     // handlePages(paginationOption.activePage);
   };
-  console.log(activeSorting);
+
   const filterConditions: any = (fetchedData: any, conditions: any) => {
     let copyItems: any[] = [];
     let results: any[] = [];
@@ -301,7 +308,7 @@ const Home: FC<Props> = ({
 
     setRenderItems(
       advertItems
-        .sort(sortBy(activeSorting))
+        .sort(sortBy(activeSorting.first, activeSorting.second))
         .slice(0, paginationOption.amountToShow)
     );
   };
@@ -356,7 +363,6 @@ const Home: FC<Props> = ({
               setAlreadyAQRCode={setAlreadyAQRCode}
             />
           </Modal>
-          <SortItems items={items} handleSortItems={handleSortItems} />
           <ScanBtn type="button" onClick={() => setShowQRCamera(true)}>
             <MdPhotoCamera />
           </ScanBtn>
@@ -392,6 +398,9 @@ const Home: FC<Props> = ({
               filterValue={filterValue}
               setFilterValue={setFilterValue}
               setConditionValues={setConditionValues}
+              handleSortItems={handleSortItems}
+              activeSorting={activeSorting}
+              setActiveSorting={setActiveSorting}
             />
           </SearchFilterDiv>
           <AdvertContainer
@@ -399,6 +408,7 @@ const Home: FC<Props> = ({
             items={renderItems}
             searchValue={searchValue}
             itemsFrom="home"
+            activeSorting={activeSorting.sortTitle}
           />
           {items.length > 0 && (
             <Pagination

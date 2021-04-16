@@ -71,6 +71,7 @@ const Haffat: FC = () => {
         searchValue={false}
         items={renderItems}
         itemsFrom="haffat"
+        activeSorting={""}
       />
       {reservedItems.length > 0 && (
         <Pagination

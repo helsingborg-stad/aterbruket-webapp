@@ -2,11 +2,18 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import Card from "./Card";
 
+type ISorting = {
+  first: string;
+  second: string;
+  sortTitle: string;
+};
+
 interface IAdvert {
   items: any;
   searchValue: any;
   itemsFrom: string;
   filteredSweValues: any;
+  activeSorting: string;
 }
 
 const AdvertContainerDiv = styled.div`
@@ -54,6 +61,7 @@ const AdvertContainer: FC<IAdvert> = ({
   searchValue,
   itemsFrom,
   filteredSweValues,
+  activeSorting,
 }: IAdvert) => {
   let filteredItems = [];
   if (searchValue) {
@@ -73,9 +81,18 @@ const AdvertContainer: FC<IAdvert> = ({
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">
-        {itemsFrom === "home" && filteredSweValues.length > 0 ? (
+        {itemsFrom === "home" && activeSorting !== "" && (
           <OptionWrapper>
             <h3>Aktiva filter :</h3>
+            <span className="options" style={{ margin: "5px" }}>
+              {activeSorting}
+            </span>
+          </OptionWrapper>
+        )}
+
+        {itemsFrom === "home" && filteredSweValues.length > 0 ? (
+          <OptionWrapper>
+            <h3>Sorterar på :</h3>
             {filteredSweValues.map((value: string) => {
               return (
                 <span className="options" key={value} style={{ margin: "5px" }}>

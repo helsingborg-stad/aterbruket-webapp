@@ -125,7 +125,6 @@ const Card: FC<Props> = ({
         <p>{showDays(daysAt)} dagar</p>
         <h3>{title}</h3>
         <h4>{quantity} stycken</h4>
-        <p>Condition: {condition}</p>
         <p className="desc">Beskrivning: {description}</p>
       </div>
     </CardDiv>

@@ -28,7 +28,7 @@ function UserProvider({ children }: ProviderProps) {
   const [authState, setAuthState] = useState<string>("");
   const [user, setUser] = useState<User>({});
 
-  React.useEffect(() => {
+  useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData: any) => {
       setAuthState(nextAuthState);
       if (authData?.attributes) {

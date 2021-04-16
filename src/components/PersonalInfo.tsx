@@ -1,7 +1,7 @@
 import React, { FC, useContext } from "react";
 import styled from "styled-components";
+import { Auth } from "aws-amplify";
 import UserContext from "../contexts/UserContext";
-import { Auth } from 'aws-amplify';
 
 const InformationFrame = styled.header`
   padding: 24px;
@@ -21,7 +21,7 @@ const InformationContainer = styled.div`
 `;
 
 const SignOutButton = styled.button`
-  background: #50811B;
+  background: #50811b;
   border-radius: 4.5px;
   border: none;
   color: white;
@@ -39,40 +39,45 @@ const PersonalInfo: FC = () => {
     <main>
       <h2> {user.name} </h2>
       <InformationContainer>
-        {user.name &&
+        {user.name && (
           <>
             <InformationHeader>Namn</InformationHeader>
             <InformationFrame>{user.name}</InformationFrame>
           </>
-        }
-        {user.department &&
+        )}
+        {user.department && (
           <>
             <InformationHeader>Avdelning</InformationHeader>
             <InformationFrame>{user.department}</InformationFrame>
           </>
-        }
-        {user.email &&
+        )}
+        {user.email && (
           <>
             <InformationHeader>Email</InformationHeader>
             <InformationFrame>{user.email}</InformationFrame>
           </>
-        }
-        {user.address &&
+        )}
+        {user.address && (
           <>
             <InformationHeader>Adress</InformationHeader>
             <InformationFrame>{user.address}</InformationFrame>
           </>
-        }
-        {user.postalcode &&
+        )}
+        {user.postalcode && (
           <>
             <InformationHeader>Postnummer</InformationHeader>
             <InformationFrame>{user.postalcode}</InformationFrame>
           </>
-        }
+        )}
       </InformationContainer>
 
-      <SignOutButton onClick={() => { Auth.signOut() }}>Logga ut</SignOutButton>
-
+      <SignOutButton
+        onClick={() => {
+          Auth.signOut();
+        }}
+      >
+        Logga ut
+      </SignOutButton>
     </main>
   );
 };

@@ -1,7 +1,6 @@
-
 import React, { FC } from "react";
 import { AmplifySignIn } from "@aws-amplify/ui-react";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 
 const SignIn: FC = ({ children }) => {
   return (
@@ -24,12 +23,12 @@ const SignIn: FC = ({ children }) => {
             label: "Lösenord",
             placeholder: "Fyll i ditt lösenord",
             required: true,
-            hint: '' // <-- Hides forgotten password link
+            hint: "", // <-- Hides forgotten password link
           },
-        ]}>
-      </AmplifySignIn>
+        ]}
+      />
     </>
   );
-}
+};
 
 export default withRouter(SignIn);

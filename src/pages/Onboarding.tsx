@@ -180,7 +180,7 @@ const Onboarding: FC = () => {
   };
 
   const slides = [
-    <SwiperSlide>
+    <SwiperSlide key="slide1">
       <SwipeContainer>
         <SwipeContent>
           <div data-swiper-parallax="-100">
@@ -219,7 +219,7 @@ const Onboarding: FC = () => {
         </SwipeContent>
       </SwipeContainer>
     </SwiperSlide>,
-    <SwiperSlide>
+    <SwiperSlide key="slide2">
       <SwipeContainer>
         <SwipeContent>
           <div data-swiper-parallax="-100">
@@ -259,7 +259,7 @@ const Onboarding: FC = () => {
         </SwipeContent>
       </SwipeContainer>
     </SwiperSlide>,
-    <SwiperSlide>
+    <SwiperSlide key="slide3">
       <SwipeContainer>
         <SwipeContent>
           <div data-swiper-parallax="-100">
@@ -297,7 +297,7 @@ const Onboarding: FC = () => {
         </SwipeContent>
       </SwipeContainer>
     </SwiperSlide>,
-    <SwiperSlide>
+    <SwiperSlide key="slide4">
       <SwipeContainer>
         <SwipeContent>
           <div data-swiper-parallax="-100">
@@ -338,7 +338,7 @@ const Onboarding: FC = () => {
         </SwipeContent>
       </SwipeContainer>
     </SwiperSlide>,
-    <SwiperSlide>
+    <SwiperSlide key="slide5">
       <SwipeContainer>
         <SwipeContent>
           <div data-swiper-parallax="-100">
@@ -375,7 +375,7 @@ const Onboarding: FC = () => {
         </SwipeContent>
       </SwipeContainer>
     </SwiperSlide>,
-    <SwiperSlide>
+    <SwiperSlide key="slide6">
       <SwipeContainer>
         <SwipeContent>
           <AmplifyAuthenticator>

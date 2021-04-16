@@ -5,7 +5,7 @@
 /* eslint-disable import/no-named-as-default-member */
 /* global google */
 
-import React, { FC, useState, useEffect, useContext } from "react";
+import React, { FC, useState, useEffect, useContext, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
@@ -60,6 +60,7 @@ const TopSection = styled.div`
     height: 75px;
     position: fixed;
     background-color: ${(props) => props.theme.colors.offWhite};
+    z-index: 10;
 
     svg {
       position: absolute;
@@ -78,9 +79,28 @@ const TopSection = styled.div`
       line-height: 132%;
       color: ${(props) => props.theme.colors.darkest};
     }
-  }
+    .btn--haffa--header {
+      width: 70px;
+      height: 34px;
+      margin: 0;
+      position: absolute;
+      top: 30px;
+      right: 16px;
+      padding: 0;
+      font-size: 16px;
+    }
 
-  .btn {
+    .btn--pickUp--header {
+      width: 94px;
+      height: 34px;
+      margin: 0;
+      position: absolute;
+      top: 30px;
+      right: 16px;
+      padding: 0;
+      font-size: 16px;
+      background-color: ${(props) => props.theme.colors.primaryLight};
+    }
   }
 
   .btn--pickUp {
@@ -362,6 +382,9 @@ const ItemDetails: FC<ParamTypes> = () => {
   const { user } = useContext(UserContext);
   const [image, setImage] = useState("") as any;
   const [itemUpdated, setItemUpdated] = useState(false);
+  const buttonOutOfScreen = useRef(null);
+  const [refVisible, setRefVisible] = useState(false);
+  const [showHeaderBtn, setShowHeaderBtn] = useState(false);
 
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
@@ -390,6 +413,28 @@ const ItemDetails: FC<ParamTypes> = () => {
     fetchItem();
     setItemUpdated(false);
   }, [itemUpdated]);
+
+  useEffect(() => {
+    if (!refVisible) {
+      return;
+    }
+    scrollFunc();
+  }, [refVisible]);
+
+  const scrollFunc = () => {
+    let element: any = buttonOutOfScreen.current;
+
+    window.addEventListener("scroll", function () {
+      let buttonPos: any = element.offsetTop - element.offsetHeight;
+     
+
+      if (window.scrollY >= buttonPos) {
+        setShowHeaderBtn(true);
+      } else {
+        setShowHeaderBtn(false);
+      }
+    });
+  };
 
   /* comment out map for debugging purpose  */
   // useEffect(() => {
@@ -474,6 +519,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const goBackFunc = () => {
     history.goBack();
   };
+  console.log(showHeaderBtn)
 
   const mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
   const telHref = `tel:${item.phoneNumber}`;
@@ -486,6 +532,17 @@ const ItemDetails: FC<ParamTypes> = () => {
           <header>
             <MdArrowBack onClick={goBackFunc} />
             <p className="headerTitle">{item.title}</p>
+            {showHeaderBtn && (
+              <Button
+                className="btn--haffa--header"
+                onClick={() => {
+                  onClickReservBtn();
+                }}
+                type="button"
+              >
+                HAFFA!
+              </Button>
+            )}
           </header>
         )}
 
@@ -498,6 +555,17 @@ const ItemDetails: FC<ParamTypes> = () => {
             ) : (
               <p className="reservedP">Uthämtad</p>
             )}
+            {/* {showHeaderBtn && (
+              <Button
+                className="btn--pickUp--header"
+                onClick={() => {
+                  onClickPickUpBtn();
+                }}
+                type="button"
+              >
+                HÄMTA UT
+              </Button>
+            )} */}
           </header>
         )}
 
@@ -520,6 +588,10 @@ const ItemDetails: FC<ParamTypes> = () => {
         {item.status ===
           "available" /* && item.giver !== user.attributes.sub */ && (
           <Button
+            ref={(el: any) => {
+              buttonOutOfScreen.current = el;
+              setRefVisible(!!el);
+            }}
             className="btn--haffa"
             onClick={() => {
               onClickReservBtn();

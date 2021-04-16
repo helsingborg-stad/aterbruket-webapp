@@ -174,8 +174,12 @@ const Onboarding: FC = () => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const { authState } = useContext(UserContext);
 
-  const disableOnboarding = () => {
+  const storeOnboardingVisibility = () => {
     localStorage.setItem("HaffaApp:showOnboardingScreen", "false");
+  };
+
+  const disableOnboarding = () => {
+    storeOnboardingVisibility();
     setIsOnboardingDisabled(true);
   };
 
@@ -367,7 +371,11 @@ const Onboarding: FC = () => {
           </div>
           <div data-swiper-parallax="-400">
             <NextButtonWrapper>
-              <Button size="md" className="swipe-next">
+              <Button
+                size="md"
+                className="swipe-next"
+                onClick={() => storeOnboardingVisibility()}
+              >
                 Fortsätt
               </Button>
             </NextButtonWrapper>

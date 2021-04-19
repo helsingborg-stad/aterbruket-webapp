@@ -2,7 +2,6 @@ import { AmplifyAuthenticator } from "@aws-amplify/ui-react";
 import React, { FC, useState } from "react";
 import { Route } from "react-router-dom";
 import styled from "styled-components";
-import { useReactPWAInstall } from "react-pwa-install";
 import Header from "../components/Header";
 import MenuBar from "../components/MenuBar";
 import MyAdverts from "../components/MyAdverts";
@@ -99,15 +98,6 @@ const AppRouter: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [alreadyAQRCode, setAlreadyAQRCode] = useState(false);
   const [qrCamera, setQrCamera] = useState({ delay: 500, result: "" });
-  const { pwaInstall, supported, isInstalled } = useReactPWAInstall();
-  const handleClick = () => {
-    pwaInstall({
-      title: "Installera Haffa",
-      description: "Haffa kommer hamna på din hemskärm som en app.",
-    })
-      .then()
-      .catch(() => alert("Ladda gärna ner den nästa gång du använder Haffa."));
-  };
 
   return (
     <AmplifyAuthenticator>
@@ -125,11 +115,6 @@ const AppRouter: FC = () => {
         </SignInContent>
       </SignInWrapper>
       <AppContainer>
-        {supported() && !isInstalled() && (
-          <button type="button" onClick={handleClick}>
-            Lägg Haffa på hemskärmen
-          </button>
-        )}
         <Header isInDetail={false} />
         <Route exact path="/" component={StartScreen} />
         <Route exact path="/onboarding" component={Onboarding} />

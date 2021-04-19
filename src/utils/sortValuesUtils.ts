@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 export const sortValues = [
   {
     id: "climateImpactLow",
@@ -5,7 +6,6 @@ export const sortValues = [
     first: "climateImpact",
     second: "-createdAt",
   },
-
   // {
   //   id: "climateImpactHighest",
   //   value: "Klimatavtryck högst till lägst",
@@ -18,6 +18,12 @@ export const sortValues = [
     first: "title^",
     second: "-createdAt",
   },
+  // {
+  //   id: "titleÖA",
+  //   value: "Titel Ö-A",
+  //   first: "-title^",
+  //   second: "-createdAt",
+  // },
   {
     id: "new",
     value: "Annonsens ålder",
@@ -31,15 +37,15 @@ export const sortValues = [
   //   second: "title^",
   // },
   {
-    id: "condition",
-    value: "Skick",
+    id: "conditionBäst",
+    value: "Skick bäst",
     first: "condition",
     second: "-createdAt",
   },
-  // {
-  //   id: "titleÖA",
-  //   value: "Titel Ö-A",
-  //   first: "-title^",
-  //   second: "-createdAt",
-  // },
+  {
+    id: "conditionSämst",
+    value: "Skick sämst",
+    first: "-condition",
+    second: "-createdAt",
+  },
 ];

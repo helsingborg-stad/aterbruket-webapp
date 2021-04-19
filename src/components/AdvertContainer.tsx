@@ -78,12 +78,13 @@ const AdvertContainer: FC<IAdvert> = ({
     filteredItems = items;
   }
 
+  console.log(items);
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">
         {itemsFrom === "home" && activeSorting !== "" && (
           <OptionWrapper>
-            <h3>Aktiva filter :</h3>
+            <h3>Sorterar på:</h3>
             <span className="options" style={{ margin: "5px" }}>
               {activeSorting}
             </span>
@@ -92,7 +93,7 @@ const AdvertContainer: FC<IAdvert> = ({
 
         {itemsFrom === "home" && filteredSweValues.length > 0 ? (
           <OptionWrapper>
-            <h3>Sorterar på :</h3>
+            <h3>Aktiva filter :</h3>
             {filteredSweValues.map((value: string) => {
               return (
                 <span className="options" key={value} style={{ margin: "5px" }}>
@@ -109,6 +110,7 @@ const AdvertContainer: FC<IAdvert> = ({
       </div>
       {filteredItems.map((filteredItem: any) => (
         <Card
+          climat={filteredItem.climateImpact}
           key={filteredItem.id}
           id={filteredItem.id}
           title={filteredItem.title}

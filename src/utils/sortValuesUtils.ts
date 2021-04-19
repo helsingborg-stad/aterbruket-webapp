@@ -1,51 +1,31 @@
 /* eslint-disable import/prefer-default-export */
 export const sortValues = [
   {
+    title: "Klimatavtryck",
     id: "climateImpactLow",
-    value: "Klimatavtryck",
-    first: "climateImpact",
+    low: "climateImpact",
+    high: "-climateImpact",
     second: "-createdAt",
   },
-  // {
-  //   id: "climateImpactHighest",
-  //   value: "Klimatavtryck högst till lägst",
-  //   first: "-climateImpact",
-  //   second: "-createdAt",
-  // },
   {
+    title: "Titel",
     id: "titleAÖ",
-    value: "Titel",
-    first: "title^",
-    second: "-createdAt",
-  },
-  // {
-  //   id: "titleÖA",
-  //   value: "Titel Ö-A",
-  //   first: "-title^",
-  //   second: "-createdAt",
-  // },
-  {
-    id: "new",
-    value: "Annonsens ålder",
-    first: "-createdAt",
-    second: "title^",
-  },
-  // {
-  //   id: "old",
-  //   value: "Äldst till nyast",
-  //   first: "createdAt",
-  //   second: "title^",
-  // },
-  {
-    id: "conditionBäst",
-    value: "Skick bäst",
-    first: "condition",
+    low: "title^",
+    high: "-title^",
     second: "-createdAt",
   },
   {
-    id: "conditionSämst",
-    value: "Skick sämst",
-    first: "-condition",
+    title: "Annonsens ålder",
+    id: "age",
+    low: "createdAt",
+    high: "-createdAt",
+    second: "-createdAt",
+  },
+  {
+    title: "Skick",
+    id: "condition",
+    low: "condition",
+    high: "-condition",
     second: "-createdAt",
   },
 ];

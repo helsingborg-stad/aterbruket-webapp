@@ -110,7 +110,7 @@ export const fieldsForm = [
     required: true,
     title: "Skick",
     swe: ["Nyskick", "Bra", "Sliten"],
-    eng: ["new", "good", "worn"],
+    eng: ["Anew", "Bgood", "Cworn"],
   },
   {
     name: "areaOfUse",
@@ -298,7 +298,7 @@ export const fieldsEditForm = [
     required: true,
     title: "Skick",
     swe: ["Nyskick", "Bra", "Sliten"],
-    eng: ["new", "good", "worn"],
+    eng: ["Anew", "Bgood", "Cworn"],
   },
   {
     name: "areaOfUse",

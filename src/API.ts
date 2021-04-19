@@ -56,9 +56,9 @@ export type ItemAMaterialInput = {
 };
 
 export enum ItemCondition {
-  new = "new",
-  good = "good",
-  worn = "worn",
+  Anew = "Anew",
+  Bgood = "Bgood",
+  Cworn = "Cworn",
 }
 
 

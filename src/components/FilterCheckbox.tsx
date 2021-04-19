@@ -81,11 +81,11 @@ const FilterCheckbox: FC<Props> = ({
     });
   });
 
-  if (cates.length === 0 && condis.length === 0) {
-    setIsDisabled(true);
-  } else {
-    setIsDisabled(false);
-  }
+  // if (cates.length === 0 && condis.length === 0) {
+  //   setIsDisabled(true);
+  // } else {
+  //   setIsDisabled(false);
+  // }
 
   let checkboxes: any;
 

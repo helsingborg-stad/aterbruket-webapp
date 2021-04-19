@@ -9,10 +9,11 @@ interface Props {
   title: string;
   description: string;
   id: string;
-  condition: string;
   quantity: number;
   imageKey: string;
   daysAt: string;
+  condition: string;
+  climat: string;
 }
 
 const CardDiv = styled.div`
@@ -101,10 +102,11 @@ const Card: FC<Props> = ({
   id,
   title,
   description,
-  condition,
   quantity,
   imageKey,
   daysAt,
+  condition,
+  climat,
 }: Props) => {
   const [url, setURL] = useState(undefined) as any;
   const fetchImage = (): void => {
@@ -118,6 +120,8 @@ const Card: FC<Props> = ({
 
   return (
     <CardDiv as={Link} to={`/item/${id}`} id={id}>
+      {condition}
+      {climat}
       <div className="picDiv">
         <img src={url} alt="" />
       </div>

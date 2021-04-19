@@ -131,7 +131,7 @@ const FilterMenu: FC<Props> = ({
   setActiveSorting,
 }: Props) => {
   const [saveValues, setSaveValues] = useState({});
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [newSorting, setNewSorting] = useState({
     first: activeSorting.first,
     second: activeSorting.second,

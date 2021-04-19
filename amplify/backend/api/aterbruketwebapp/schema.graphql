@@ -58,9 +58,9 @@ type ItemAMaterial {
 }
 
 enum ItemCondition {
-  new
-  good
-  worn
+  Anew
+  Bgood
+  Cworn
 }
 
 type ItemAreaOfUse {

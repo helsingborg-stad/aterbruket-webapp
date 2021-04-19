@@ -188,7 +188,7 @@ const Home: FC<Props> = ({
 }: Props) => {
   const [showQRCamera, setShowQRCamera] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const updateSearch = (event: React.ChangeEvent<any>) => {
     const { target } = event;
@@ -237,6 +237,8 @@ const Home: FC<Props> = ({
       );
     }
   };
+
+  console.log(typeof items);
   const handleSortItems = (str: string, secondStr: string) => {
     console.log(str, items.sort(sortBy(str, secondStr)));
     setActiveSorting({ first: str, second: secondStr, sortTitle: "" });

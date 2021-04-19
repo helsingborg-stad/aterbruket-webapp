@@ -415,12 +415,17 @@ const ItemDetails: FC<ParamTypes> = () => {
       return;
     }
     scrollFunc();
+    return () => {
+      window.removeEventListener("scroll", handler, false);
+    };
   }, [refVisible]);
 
-  const scrollFunc = () => {
-    let element: any = buttonOutOfScreen.current;
+  let handler: any;
 
-    window.addEventListener("scroll", function () {
+  const scrollFunc = () => {
+    handler = function () {
+      let element: any = buttonOutOfScreen.current;
+
       let buttonPos: any = element.offsetTop - element.offsetHeight;
 
       if (window.scrollY >= buttonPos) {
@@ -428,7 +433,9 @@ const ItemDetails: FC<ParamTypes> = () => {
       } else {
         setShowHeaderBtn(false);
       }
-    });
+    };
+
+    window.addEventListener("scroll", handler, false);
   };
 
   /* comment out map for debugging purpose  */
@@ -470,12 +477,15 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const onClickReservBtn = () => {
     updateItem("reserved");
+    setShowHeaderBtn(false);
   };
   const onClickRemoveResBtn = () => {
     updateItem("available");
+    setShowHeaderBtn(false);
   };
   const onClickPickUpBtn = () => {
     updateItem("pickedUp");
+    setShowHeaderBtn(false);
   };
   const translate = (word: string, cat: any) => {
     let sweWord = "";
@@ -516,7 +526,6 @@ const ItemDetails: FC<ParamTypes> = () => {
   const goBackFunc = () => {
     history.goBack();
   };
-  console.log(showHeaderBtn);
 
   const mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
   const telHref = `tel:${item.phoneNumber}`;
@@ -552,7 +561,7 @@ const ItemDetails: FC<ParamTypes> = () => {
             ) : (
               <p className="reservedP">Uthämtad</p>
             )}
-            {/* {showHeaderBtn && (
+            {showHeaderBtn && (
               <Button
                 className="btn--pickUp--header"
                 onClick={() => {
@@ -562,7 +571,7 @@ const ItemDetails: FC<ParamTypes> = () => {
               >
                 HÄMTA UT
               </Button>
-            )} */}
+            )}
           </header>
         )}
 
@@ -602,6 +611,10 @@ const ItemDetails: FC<ParamTypes> = () => {
         {item.status === "reserved" && item.reservedBySub === user.sub && (
           <>
             <Button
+              ref={(el: any) => {
+                buttonOutOfScreen.current = el;
+                setRefVisible(!!el);
+              }}
               className=" btn--pickUp"
               onClick={() => {
                 onClickPickUpBtn();

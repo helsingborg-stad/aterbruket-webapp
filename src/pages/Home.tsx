@@ -5,20 +5,20 @@ import { API } from "aws-amplify";
 import styled from "styled-components";
 import { MdNewReleases, MdSearch, MdTune, MdPhotoCamera } from "react-icons/md";
 import { AuthState } from "@aws-amplify/ui-components";
+import { sortBy } from "sort-by-typescript";
 import { listAdverts } from "../graphql/queries";
-import { ListAdvertsQuery, ModelSortDirection } from "../API";
+import { ListAdvertsQuery } from "../API";
 import AdvertContainer from "../components/AdvertContainer";
 import Modal from "../components/Modal";
 import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
 import FilterMenu from "../components/FilterMenu";
 import Pagination from "../components/Pagination";
-import { sortBy } from "sort-by-typescript";
+
 import { fieldsForm } from "../utils/formUtils";
 import convertToSwe from "../utils/convert";
 import UserContext from "../contexts/UserContext";
 import SortItems from "../components/SortItems";
-import { sortBy } from "sort-by-typescript";
 
 const AddBtn = styled.button`
   position: fixed;

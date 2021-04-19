@@ -72,7 +72,6 @@ const TopSection = styled.div`
     p,
     .headerTitle {
       margin: 35px 0 0 0;
-      font-family: Roboto;
       font-style: normal;
       font-weight: 500;
       font-size: 18px;
@@ -134,7 +133,6 @@ const TopSection = styled.div`
     width: 100%;
     h4 {
       margin: 48px 32px 12px 32px;
-      font-family: Roboto;
       font-style: normal;
       font-weight: bold;
       font-size: 18px;
@@ -143,7 +141,6 @@ const TopSection = styled.div`
       color: ${(props) => props.theme.colors.primaryDark};
     }
     h1 {
-      font-family: Roboto;
       font-style: normal;
       font-weight: 900;
       font-size: 36px;
@@ -152,8 +149,7 @@ const TopSection = styled.div`
     }
   }
 
-  .removeReservationP {
-    font-family: Roboto;
+  .removeReservation {
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -420,7 +416,6 @@ const ItemDetails: FC<ParamTypes> = () => {
 
     window.addEventListener("scroll", function () {
       let buttonPos: any = element.offsetTop - element.offsetHeight;
-     
 
       if (window.scrollY >= buttonPos) {
         setShowHeaderBtn(true);
@@ -470,7 +465,9 @@ const ItemDetails: FC<ParamTypes> = () => {
   const onClickReservBtn = () => {
     updateItem("reserved");
   };
-
+  const onClickRemoveResBtn = () => {
+    updateItem("available");
+  };
   const onClickPickUpBtn = () => {
     updateItem("pickedUp");
   };
@@ -513,7 +510,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const goBackFunc = () => {
     history.goBack();
   };
-  console.log(showHeaderBtn)
+  console.log(showHeaderBtn);
 
   const allDetails = (
     <>
@@ -604,8 +601,14 @@ const ItemDetails: FC<ParamTypes> = () => {
               >
                 Hämta ut
               </Button>
-
-              <p className="removeReservationP">Ta bort reservation</p>
+              <a
+                className="removeReservation"
+                onClick={() => {
+                  onClickRemoveResBtn();
+                }}
+              >
+                Ta bort reservation
+              </a>
             </>
           )}
 
@@ -646,16 +649,6 @@ const ItemDetails: FC<ParamTypes> = () => {
         </div>
         <table>
           <tbody>
-            <tr>
-              <td>
-                <h4>Typ av möbel</h4>
-              </td>
-              <td>
-                {item.category
-                  ? translate(item.category, "category")
-                  : item.category}
-              </td>
-            </tr>
             <tr>
               <td>
                 <h4>Höjd</h4>

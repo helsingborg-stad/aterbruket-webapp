@@ -78,7 +78,6 @@ const AdvertContainer: FC<IAdvert> = ({
     filteredItems = items;
   }
 
-  console.log(items);
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">

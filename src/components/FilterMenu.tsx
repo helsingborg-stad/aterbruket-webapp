@@ -110,7 +110,6 @@ interface Props {
   setConditionValues: React.Dispatch<React.SetStateAction<any>>;
   filterValueUpdated: boolean;
   setAllValues: React.Dispatch<React.SetStateAction<any>>;
-  handleSortItems: (str: string, secondStr: string) => void;
   setActiveSorting: React.Dispatch<React.SetStateAction<ISorting>>;
   activeSorting: ISorting;
 }
@@ -126,7 +125,6 @@ const FilterMenu: FC<Props> = ({
   filterValue,
   setConditionValues,
   setAllValues,
-  handleSortItems,
   activeSorting,
   setActiveSorting,
 }: Props) => {
@@ -205,7 +203,7 @@ const FilterMenu: FC<Props> = ({
       sortTitle: "Klimatavtryck",
     });
   };
-  console.log("disabled -> ", isDisabled);
+
   return (
     <FilterCtn className={isOpen ? "show" : "hide"}>
       <FilterHeader>
@@ -222,7 +220,7 @@ const FilterMenu: FC<Props> = ({
         <SortRadioButtons
           setNewSorting={setNewSorting}
           setIsDisabled={setIsDisabled}
-          groupTitle={"Sortering"}
+          groupTitle="Sortering"
           newSorting={newSorting}
           activeSorting={activeSorting}
         />

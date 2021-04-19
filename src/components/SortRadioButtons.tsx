@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { sortValues } from "../utils/sortValuesUtils";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { sortValues } from "../utils/sortValuesUtils";
 
 const InputGroup = styled.div`
    {
@@ -63,7 +63,6 @@ type IElement = {
 };
 
 interface Props {
-  //   handleSortItems: (str: string, secondStr: string) => void;
   setNewSorting: React.Dispatch<React.SetStateAction<ISorting>>;
   setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
   groupTitle: string;
@@ -83,7 +82,6 @@ const SortRadioButtons: FC<Props> = ({
     secondStr: string,
     value: string
   ) => {
-    console.log(firstStr, secondStr);
     setNewSorting({ first: firstStr, second: secondStr, sortTitle: value });
 
     // if (firstStr !== activeSorting.first) {
@@ -93,8 +91,6 @@ const SortRadioButtons: FC<Props> = ({
     //   setIsDisabled(true);
     // }
   };
-  console.log("new ", newSorting.first, "act ", activeSorting.first);
-  //
 
   const radio = sortValues.map((element: IElement) => {
     return (

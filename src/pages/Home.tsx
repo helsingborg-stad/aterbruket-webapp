@@ -233,14 +233,13 @@ const Home: FC<Props> = ({
     }
   };
 
-  console.log(typeof items);
-  const handleSortItems = (str: string, secondStr: string) => {
-    console.log(str, items.sort(sortBy(str, secondStr)));
-    setActiveSorting({ first: str, second: secondStr, sortTitle: "" });
-    // fetchItems();
-    // setRenderItems(items.sort(sortBy(str)));
-    // handlePages(paginationOption.activePage);
-  };
+  // const handleSortItems = (str: string, secondStr: string) => {
+  //   console.log(str, items.sort(sortBy(str, secondStr)));
+  //   setActiveSorting({ first: str, second: secondStr, sortTitle: "" });
+  //   // fetchItems();
+  //   // setRenderItems(items.sort(sortBy(str)));
+  //   // handlePages(paginationOption.activePage);
+  // };
 
   const filterConditions: any = (fetchedData: any, conditions: any) => {
     let copyItems: any[] = [];
@@ -401,7 +400,6 @@ const Home: FC<Props> = ({
               filterValue={filterValue}
               setFilterValue={setFilterValue}
               setConditionValues={setConditionValues}
-              handleSortItems={handleSortItems}
               activeSorting={activeSorting}
               setActiveSorting={setActiveSorting}
             />

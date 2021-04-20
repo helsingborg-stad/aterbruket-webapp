@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { MdHome, MdCloud, MdChat, MdPerson } from "react-icons/md";
 
@@ -25,7 +25,7 @@ const MenuDiv = styled.div`
     .icon {
       font-size: 18px;
     }
-    :active,
+
     :focus {
       color: ${(props) => props.theme.colors.primaryLight};
     }
@@ -49,27 +49,48 @@ type Props = {
 const MenuBar: FC<Props> = ({ setQrCamera, qrCamera }: Props) => {
   return (
     <MenuDiv>
-      <Link
+      <NavLink
         className="link"
+        activeStyle={{
+          color: "#80B14A",
+        }}
         to="/app"
         onClick={() => setQrCamera({ ...qrCamera, result: "" })}
       >
         <MdHome className="icon" />
         Hem
-      </Link>
-      <Link className="link" to="/haffat">
+      </NavLink>
+      <NavLink
+        className="link"
+        activeStyle={{
+          color: "#80B14A",
+        }}
+        to="/haffat"
+      >
         <MdCloud className="icon" />
         Haffat
-      </Link>
+      </NavLink>
 
-      <Link className="link" to="/profile">
+      <NavLink
+        className="link"
+        activeStyle={{
+          color: "#80B14A",
+        }}
+        to="/profile"
+      >
         <MdPerson className="icon" />
         Profile
-      </Link>
-      <Link className="link" to="/about">
+      </NavLink>
+      <NavLink
+        className="link"
+        activeStyle={{
+          color: "#80B14A",
+        }}
+        to="/about"
+      >
         <MdChat className="icon" />
         Om
-      </Link>
+      </NavLink>
     </MenuDiv>
   );
 };

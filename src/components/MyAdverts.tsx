@@ -4,11 +4,11 @@ import React, { FC, useContext, useEffect, useState, useCallback } from "react";
 import AdvertContainer from "./AdvertContainer";
 import { ListAdvertsQuery } from "../API";
 import { listAdverts } from "../graphql/queries";
-import { UserContext } from "../contexts/UserContext";
+import UserContext from "../contexts/UserContext";
 import Pagination from "./Pagination";
 
 const MyAdverts: FC = () => {
-  const user: any = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [adverts, setAdverts] = useState([{}]) as any;
   const [paginationOption, setPaginationOption] = useState({
     activePage: 1,
@@ -36,7 +36,7 @@ const MyAdverts: FC = () => {
     const result = (await API.graphql(
       graphqlOperation(listAdverts, {
         filter: {
-          and: [{ giver: { eq: user.attributes.sub } }, { version: { eq: 0 } }],
+          and: [{ giver: { eq: user.sub } }, { version: { eq: 0 } }],
           not: { status: { eq: "pickedUp" } },
         },
       })
@@ -54,16 +54,17 @@ const MyAdverts: FC = () => {
       setRenderItems(advertItem.slice(0, paginationOption.amountToShow));
     }
     setAdverts(advertItem);
-  }, [user.attributes.sub]);
+  }, [user.sub]);
 
   useEffect(() => {
-    if (user.attributes.sub) {
+    if (user.sub) {
       fetchCreatedAdverts();
     }
   }, [user]);
   return (
     <main style={{ marginTop: "60px" }}>
       <AdvertContainer
+        filteredSweValues={null}
         items={renderItems}
         searchValue={false}
         itemsFrom="profile"

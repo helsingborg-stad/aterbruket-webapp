@@ -6,6 +6,7 @@ interface IAdvert {
   items: any;
   searchValue: any;
   itemsFrom: string;
+  filteredSweValues: any;
 }
 
 const AdvertContainerDiv = styled.div`
@@ -27,10 +28,32 @@ const AdvertContainerDiv = styled.div`
   }
 `;
 
+const OptionWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  .options {
+    font-weight: 900;
+    font-size: 12px;
+    line-height: 150%;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    background-color: #e1e9db;
+
+    color: ${(props) => props.theme.colors.primaryDark};
+    border-radius: 4.5px;
+  }
+`;
+
 const AdvertContainer: FC<IAdvert> = ({
   items,
   searchValue,
   itemsFrom,
+  filteredSweValues,
 }: IAdvert) => {
   let filteredItems = [];
   if (searchValue) {
@@ -50,7 +73,20 @@ const AdvertContainer: FC<IAdvert> = ({
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">
-        {itemsFrom === "home" && <h3>Alla möbler</h3>}
+        {itemsFrom === "home" && filteredSweValues.length > 0 ? (
+          <OptionWrapper>
+            <h3>Aktiva filter :</h3>
+            {filteredSweValues.map((value: string) => {
+              return (
+                <span className="options" key={value} style={{ margin: "5px" }}>
+                  {value}
+                </span>
+              );
+            })}
+          </OptionWrapper>
+        ) : (
+          itemsFrom === "home" && <h3>Alla möbler</h3>
+        )}
         {itemsFrom === "haffat" && <h3>Saker att hämta</h3>}
         {itemsFrom === "profile" && <h3>Mina annonser</h3>}
       </div>

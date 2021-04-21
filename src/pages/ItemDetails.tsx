@@ -11,6 +11,14 @@ import Loader from "react-loader-spinner";
 import styled from "styled-components";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API, Storage } from "aws-amplify";
+import {
+  MdArrowBack,
+  MdEdit,
+  MdPlace,
+  MdPerson,
+  MdPhone,
+} from "react-icons/md";
+import { FiAtSign } from "react-icons/fi";
 import QRCode from "../components/QRCodeContainer";
 import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
@@ -23,14 +31,6 @@ import UserContext from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
 import { fieldsForm } from "../utils/formUtils";
-import {
-  MdArrowBack,
-  MdEdit,
-  MdPlace,
-  MdPerson,
-  MdPhone,
-} from "react-icons/md";
-import { FiAtSign } from "react-icons/fi";
 
 const TopSection = styled.div`
   background-color: ${(props) => props.theme.colors.offWhite};
@@ -257,7 +257,7 @@ const CardDiv = styled.div`
     font-size: 12px;
     line-height: 150%;
     color: ${(props) => props.theme.colors.primary};
-    margin: 24px ​0px 12px 0px;
+    margin: 24px 0px 12px 0px;
   }
   p {
     margin: 0;
@@ -469,14 +469,14 @@ const ItemDetails: FC<ParamTypes> = () => {
     });
     return <td key={str}>{str}</td>;
   };
-  let history = useHistory();
+  const history = useHistory();
 
   const goBackFunc = () => {
     history.goBack();
   };
 
-  let mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
-  let telHref = `tel:${item.phoneNumber}`;
+  const mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
+  const telHref = `tel:${item.phoneNumber}`;
 
   const allDetails = (
     <>

@@ -99,8 +99,8 @@ const theme: DefaultTheme = {
     offWhite: "#F8F8F8",
     white: "#ffffff",
     dark: "#707070",
-    darkest: "#3D3D3D", 
-    illustration: "#C9D6C2"
+    darkest: "#3D3D3D",
+    illustration: "#C9D6C2",
   },
 };
 

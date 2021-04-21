@@ -1,8 +1,10 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/no-named-as-default-member */
+/* eslint-disable-next-line react-hooks/exhaustive-deps */
 /* global google */
 
 import React, { FC, useState, useEffect, useContext, useRef } from "react";
@@ -56,11 +58,14 @@ const TopSection = styled.div`
   header {
     position: relative;
     width: 100%;
-    text-align: center;
     height: 75px;
     position: fixed;
     background-color: ${(props) => props.theme.colors.offWhite};
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     svg {
       position: absolute;
@@ -77,6 +82,7 @@ const TopSection = styled.div`
       font-size: 18px;
       line-height: 132%;
       color: ${(props) => props.theme.colors.darkest};
+      max-width: 30%;
     }
     .btn--haffa--header,
     .btn--pickUp--header {
@@ -150,6 +156,9 @@ const TopSection = styled.div`
     line-height: 150%;
     color: ${(props) => props.theme.colors.dark};
     margin: 0 0 32px 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
   }
 
   .regiveBtn {
@@ -404,23 +413,12 @@ const ItemDetails: FC<ParamTypes> = () => {
     setItemUpdated(false);
   }, [itemUpdated]);
 
-  useEffect(() => {
-    if (!refVisible) {
-      return;
-    }
-    scrollFunc();
-    return () => {
-      window.removeEventListener("scroll", handler, false);
-    };
-  }, [refVisible]);
-
   let handler: any;
-
   const scrollFunc = () => {
     handler = function () {
-      let element: any = buttonOutOfScreen.current;
+      const element: any = buttonOutOfScreen.current;
 
-      let buttonPos: any = element.offsetTop - element.offsetHeight;
+      const buttonPos: any = element.offsetTop - element.offsetHeight;
 
       if (window.scrollY >= buttonPos) {
         setShowHeaderBtn(true);
@@ -431,6 +429,16 @@ const ItemDetails: FC<ParamTypes> = () => {
 
     window.addEventListener("scroll", handler, false);
   };
+  useEffect(() => {
+    if (!refVisible) {
+      return;
+    }
+
+    scrollFunc();
+    return () => {
+      window.removeEventListener("scroll", handler, false);
+    };
+  });
 
   /* comment out map for debugging purpose  */
   // useEffect(() => {
@@ -617,14 +625,15 @@ const ItemDetails: FC<ParamTypes> = () => {
             >
               Hämta ut
             </Button>
-            <a
+            <button
+              type="button"
               className="removeReservation"
               onClick={() => {
                 onClickRemoveResBtn();
               }}
             >
               Ta bort reservation
-            </a>
+            </button>
           </>
         )}
 

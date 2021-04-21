@@ -104,6 +104,9 @@ export default function Form(props: {
       if (props.values[field.name] !== undefined) {
         attributes.value = props.values[field.name];
       }
+      if (field.name === "title") {
+        attributes.maxLength = "20";
+      }
       if (dimensions.includes(field.name) || field.name === "phoneNumber") {
         attributes.pattern = "[0-9]*";
       }
@@ -114,6 +117,9 @@ export default function Form(props: {
             {field.required && <span className="required">obligatorisk</span>}
             {field.name === "location" && (
               <span className="infoSpan">ex, Drottninggatan 14</span>
+            )}
+            {field.name === "title" && (
+              <span className="infoSpan">max 20 tecken</span>
             )}
             {dimensions.includes(field.name) && (
               <span className="infoSpan">ange i cm</span>

@@ -78,26 +78,20 @@ const TopSection = styled.div`
       line-height: 132%;
       color: ${(props) => props.theme.colors.darkest};
     }
-    .btn--haffa--header {
-      width: 70px;
-      height: 34px;
+    .btn--haffa--header,
+    .btn--pickUp--header {
+      width: auto;
+      height: auto;
       margin: 0;
       position: absolute;
-      top: 30px;
+      bottom: 7px;
       right: 16px;
-      padding: 0;
+      padding: 8px 12px;
       font-size: 16px;
+      box-shadow: none;
     }
 
     .btn--pickUp--header {
-      width: 94px;
-      height: 34px;
-      margin: 0;
-      position: absolute;
-      top: 30px;
-      right: 16px;
-      padding: 0;
-      font-size: 16px;
       background-color: ${(props) => props.theme.colors.primaryLight};
     }
   }

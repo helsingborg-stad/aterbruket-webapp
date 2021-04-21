@@ -48,7 +48,8 @@ const PersonalInfo: FC<RouteComponentProps> = ({ history }) => {
 
   return (
     <main>
-      <h2> {user.name} </h2>
+      <h2>{user.name}</h2>
+      {user.isAdmin && <strong>Administratör</strong>}
       <InformationContainer>
         {user.name && (
           <>

@@ -16,8 +16,8 @@ import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
 import EditItemForm from "../components/EditItemForm";
-// import { loadMapApi } from "../utils/GoogleMapsUtils";
-// import Map from "../components/Map";
+import { loadMapApi } from "../utils/GoogleMapsUtils";
+import Map from "../components/Map";
 import CarouselComp from "../components/CarouselComp";
 import UserContext from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
@@ -189,6 +189,7 @@ const Line = styled.div`
 
 const MainSection = styled.section`
   width: 100%;
+  margin: 0 auto;
 
   h4 {
     font-style: normal;
@@ -242,16 +243,34 @@ const MainSection = styled.section`
   }
 `;
 
-const CardDiv = styled.div`
+const CardGroups = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 24px;
-  height: 218px;
-  background-color: ${(props) => props.theme.colors.white};
-  border-radius: 0px 0px 9.5px 9.5px;
-  filter: drop-shadow(0px 0px 2px rgba(98, 98, 98, 0.18)),
-    drop-shadow(0px 1px 2px rgba(98, 98, 98, 0.18));
+  align-items: center;
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    width: 382px;
+    height: 326px;
+    background-color: ${(props) => props.theme.colors.white};
+    border-radius: 0px 0px 9.5px 9.5px;
+    filter: drop-shadow(0px 0px 2px rgba(98, 98, 98, 0.18)),
+      drop-shadow(0px 1px 2px rgba(98, 98, 98, 0.18));
+  }
+
+  .cardHeader {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .cardBody {
+    width: 100%;
+    height: 70%;
+  }
   h5 {
     font-weight: 900;
     font-size: 12px;
@@ -333,14 +352,14 @@ const CardDiv = styled.div`
 `;
 
 /* comment out map for debugging purpose  */
-// const MapContainer = styled.div`
-//   width: 80%;
-//   height: 45vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   border-radius: 5px;
-// `;
+const MapContainer = styled.div`
+  width: 80%;
+  height: 45vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+`;
 
 interface ParamTypes {
   id: string;
@@ -386,18 +405,18 @@ const ItemDetails: FC<ParamTypes> = () => {
   }, [itemUpdated]);
 
   /* comment out map for debugging purpose  */
-  // useEffect(() => {
-  //   const googleMapScript = loadMapApi();
+  useEffect(() => {
+    const googleMapScript = loadMapApi();
 
-  //   const cb = () => {
-  //     setScriptLoaded(true);
-  //   };
-  //   googleMapScript.addEventListener("load", cb);
+    const cb = () => {
+      setScriptLoaded(true);
+    };
+    googleMapScript.addEventListener("load", cb);
 
-  //   return () => {
-  //     googleMapScript.removeEventListener("load", cb);
-  //   };
-  // }, []);
+    return () => {
+      googleMapScript.removeEventListener("load", cb);
+    };
+  }, []);
 
   const updateItem = async (newStatus: string) => {
     const result = (await API.graphql(
@@ -517,22 +536,21 @@ const ItemDetails: FC<ParamTypes> = () => {
           </Button>
         )}
 
-        {item.status === "reserved" &&
-          item.reservedBySub === user.sub && (
-            <>
-              <Button
-                className=" btn--pickUp"
-                onClick={() => {
-                  onClickPickUpBtn();
-                }}
-                type="button"
-              >
-                Hämta ut
-              </Button>
+        {item.status === "reserved" && item.reservedBySub === user.sub && (
+          <>
+            <Button
+              className=" btn--pickUp"
+              onClick={() => {
+                onClickPickUpBtn();
+              }}
+              type="button"
+            >
+              Hämta ut
+            </Button>
 
-              <p className="removeReservationP">Ta bort reservation</p>
-            </>
-          )}
+            <p className="removeReservationP">Ta bort reservation</p>
+          </>
+        )}
 
         {item.status === "available" && item.giver === user.sub && (
           <>
@@ -548,20 +566,19 @@ const ItemDetails: FC<ParamTypes> = () => {
           </>
         )}
 
-        {item.status === "pickedUp" &&
-          item.reservedBySub === user.sub && (
-            <>
-              <Button
-                className=" btn--regive"
-                onClick={() => {
-                  setRegive(true);
-                }}
-                type="button"
-              >
-                Annonsera igen
-              </Button>
-            </>
-          )}
+        {item.status === "pickedUp" && item.reservedBySub === user.sub && (
+          <>
+            <Button
+              className=" btn--regive"
+              onClick={() => {
+                setRegive(true);
+              }}
+              type="button"
+            >
+              Annonsera igen
+            </Button>
+          </>
+        )}
       </TopSection>
 
       <MainSection>
@@ -666,21 +683,59 @@ const ItemDetails: FC<ParamTypes> = () => {
             )}
           </tbody>
         </table>
-        <div>
+        <CardGroups>
           <h4 className="dark">Här finns prylen</h4>
 
-          <CardDiv>
-            <h5>ADRESS</h5>
-            <p>{item.department}</p>
-            <p>{item.location}</p>
-            <Button className=" btn--adress" type="button">
-              Hitta hit
-              <MdPlace />
-            </Button>
-          </CardDiv>
+          <div className="card">
+            <div className="cardHeader">
+              {item && item.location && (
+                <Map
+                  mapType={google.maps.MapTypeId.ROADMAP}
+                  mapTypeControl={false}
+                  location={item.location}
+                />
+              )}
+
+              {!item.location && (
+                <Loader
+                  type="ThreeDots"
+                  color="#9db0c6"
+                  height={50}
+                  width={50}
+                />
+              )}
+            </div>
+            <div className="cardBody">
+              <h5>ADRESS</h5>
+              <p>{item.department}</p>
+              <p>{item.location}</p>
+              <Button className=" btn--adress" type="button">
+                Hitta hit
+                <MdPlace />
+              </Button>
+            </div>
+            {/* <MapContainer>
+              {item && item.location && (
+                <Map
+                  mapType={google.maps.MapTypeId.ROADMAP}
+                  mapTypeControl={false}
+                  location={item.location}
+                />
+              )}
+
+              {!item.location && (
+                <Loader
+                  type="ThreeDots"
+                  color="#9db0c6"
+                  height={50}
+                  width={50}
+                />
+              )}
+            </MapContainer> */}
+          </div>
           <h4 className="dark">Kontaktperson</h4>
 
-          <CardDiv>
+          <div className="card">
             <div className="contactPersonDiv">
               <div>
                 <MdPerson />
@@ -695,23 +750,9 @@ const ItemDetails: FC<ParamTypes> = () => {
               <FiAtSign />
               <p>{item.email}</p>
             </div>
-          </CardDiv>
-        </div>
+          </div>
+        </CardGroups>
       </MainSection>
-
-      {/* <MapContainer>
-        {item && item.location && (
-          <Map
-            mapType={google.maps.MapTypeId.ROADMAP}
-            mapTypeControl={false}
-            location={item.location}
-          />
-        )}
-
-        {!item.location && (
-          <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
-        )}
-      </MapContainer> */}
 
       <Line />
 

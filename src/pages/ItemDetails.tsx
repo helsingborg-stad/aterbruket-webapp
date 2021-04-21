@@ -29,7 +29,7 @@ import EditItemForm from "../components/EditItemForm";
 // import { loadMapApi } from "../utils/GoogleMapsUtils";
 // import Map from "../components/Map";
 import CarouselComp from "../components/CarouselComp";
-import { UserContext } from "../contexts/UserContext";
+import UserContext from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
 import { fieldsForm } from "../utils/formUtils";
@@ -340,9 +340,15 @@ const CardDiv = styled.div`
     margin: 0 0 10px 0;
     line-break: anywhere;
 
-    p {
+    a {
       color: ${(props) => props.theme.colors.darker};
       margin-left: 8px;
+      text-decoration: inherit;
+      color: inherit;
+      :visited {
+        text-decoration: inherit;
+        color: inherit;
+      }
     }
     svg {
       font-size: 20px;
@@ -372,7 +378,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   const [editItem, setEditItem] = useState(false);
   const [regive, setRegive] = useState(false);
   const [showCarousel, setShowCarousel] = useState(false);
-  const user: any = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [image, setImage] = useState("") as any;
   const [itemUpdated, setItemUpdated] = useState(false);
   const buttonOutOfScreen = useRef(null);
@@ -454,8 +460,8 @@ const ItemDetails: FC<ParamTypes> = () => {
         input: {
           id,
           status: newStatus,
-          reservedBySub: user.attributes.sub,
-          reservedByName: user.attributes.name,
+          reservedBySub: user.sub,
+          reservedByName: user.name,
           version: 0,
           revisions: item.revisions + 1,
         },
@@ -522,6 +528,10 @@ const ItemDetails: FC<ParamTypes> = () => {
   const goBackFunc = () => {
     history.goBack();
   };
+
+  const mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
+  const telHref = `tel:${item.phoneNumber}`;
+  console.log(item);
 
   const allDetails = (
     <>
@@ -600,35 +610,34 @@ const ItemDetails: FC<ParamTypes> = () => {
           </Button>
         )}
 
-        {item.status === "reserved" &&
-          item.reservedBySub === user.attributes.sub && (
-            <>
-              <Button
-                ref={(el: any) => {
-                  buttonOutOfScreen.current = el;
-                  setRefVisible(!!el);
-                }}
-                className=" btn--pickUp"
-                onClick={() => {
-                  onClickPickUpBtn();
-                }}
-                type="button"
-              >
-                Hämta ut
-              </Button>
-              <button
-                type="button"
-                className="removeReservation"
-                onClick={() => {
-                  onClickRemoveResBtn();
-                }}
-              >
-                Ta bort reservation
-              </button>
-            </>
-          )}
+        {item.status === "reserved" && item.reservedBySub === user.sub && (
+          <>
+            <Button
+              ref={(el: any) => {
+                buttonOutOfScreen.current = el;
+                setRefVisible(!!el);
+              }}
+              className=" btn--pickUp"
+              onClick={() => {
+                onClickPickUpBtn();
+              }}
+              type="button"
+            >
+              Hämta ut
+            </Button>
+            <button
+              type="button"
+              className="removeReservation"
+              onClick={() => {
+                onClickRemoveResBtn();
+              }}
+            >
+              Ta bort reservation
+            </button>
+          </>
+        )}
 
-        {item.status === "available" && item.giver === user.attributes.sub && (
+        {item.status === "available" && item.giver === user.sub && (
           <>
             <Button
               className=" btn--edit"
@@ -642,20 +651,19 @@ const ItemDetails: FC<ParamTypes> = () => {
           </>
         )}
 
-        {item.status === "pickedUp" &&
-          item.reservedBySub === user.attributes.sub && (
-            <>
-              <Button
-                className=" btn--regive"
-                onClick={() => {
-                  setRegive(true);
-                }}
-                type="button"
-              >
-                Annonsera igen
-              </Button>
-            </>
-          )}
+        {item.status === "pickedUp" && item.reservedBySub === user.sub && (
+          <>
+            <Button
+              className=" btn--regive"
+              onClick={() => {
+                setRegive(true);
+              }}
+              type="button"
+            >
+              Annonsera igen
+            </Button>
+          </>
+        )}
       </TopSection>
 
       <MainSection>
@@ -771,13 +779,16 @@ const ItemDetails: FC<ParamTypes> = () => {
               </div>
               <h4 className="dark">{item.contactPerson}</h4>
             </div>
-            <div className="contactInfo">
-              <MdPhone />
-              <p>{item.phoneNumber}</p>
-            </div>
+            {item.phoneNumber && (
+              <div className="contactInfo">
+                <MdPhone />
+                <a href={telHref}>{item.phoneNumber}</a>
+              </div>
+            )}
+
             <div className="contactInfo">
               <FiAtSign />
-              <p>{item.email}</p>
+              <a href={mailtoHref}>{item.email}</a>
             </div>
           </CardDiv>
         </div>

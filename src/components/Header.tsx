@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { useLocation, Link } from "react-router-dom";
 import { RiArrowLeftSLine } from "react-icons/ri";
+import { useReactPWAInstall } from "react-pwa-install";
 
 interface MyProps {
   isInDetail: boolean;
@@ -47,10 +48,23 @@ const MenuLink = styled(Link)`
   }
 `;
 
+const InstallButton = styled.button`
+  margin: 0 auto;
+`;
+
 const Header: FC<MyProps> = ({ isInDetail }: MyProps) => {
   const location = useLocation();
   const path = location.pathname.slice(1);
   const subPath = location.pathname.slice(9);
+  const { pwaInstall, supported, isInstalled } = useReactPWAInstall();
+  const handleClick = () => {
+    pwaInstall({
+      title: "Installera Haffa",
+      description: "Haffa kommer hamna på din hemskärm som en app.",
+    })
+      .then()
+      .catch(() => alert("Ladda gärna ner den nästa gång du använder Haffa."));
+  };
 
   return (
     <>
@@ -58,6 +72,11 @@ const Header: FC<MyProps> = ({ isInDetail }: MyProps) => {
         <HeaderDiv isInDetail={true} />
       ) : (
         <HeaderDiv isInDetail={false}>
+          {supported() && !isInstalled() && (
+            <InstallButton type="button" onClick={handleClick}>
+              Lägg Haffa på hemskärmen
+            </InstallButton>
+          )}
           {subPath === "personal-info" ||
           subPath === "myadverts" ||
           subPath === "statics" ? (

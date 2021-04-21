@@ -1,5 +1,12 @@
-
-type Advert @model @key(fields: [ "id", "version" ]){
+type Advert
+  @model @key(fields: [ "id", "version" ])
+  @auth(
+    rules: [
+      { allow: owner },
+      { allow: private, operations: [read] },
+      { allow: groups, groups: ["administrator"] }
+    ])
+{
   id: ID!
   title: String!
   description: String
@@ -7,7 +14,7 @@ type Advert @model @key(fields: [ "id", "version" ]){
   height: String
   width: String
   length: String
-  status: ItemStatus
+  status: ItemStatus @auth(rules: [{ allow: owner }, { allow: private, operations: [read, update]  }, { allow: groups, groups: ["administrator"] }])
   category: ItemCategory
   material: [ItemAMaterial]
   condition: ItemCondition
@@ -21,11 +28,11 @@ type Advert @model @key(fields: [ "id", "version" ]){
   email: String
   phoneNumber: String
   giver: String
-  version: Int!
+  version: Int! @auth(rules: [{ allow: owner }, { allow: private, operations: [read, update]  }, { allow: groups, groups: ["administrator"] }])
   climateImpact: Int
-  reservedBySub: String
-  reservedByName: String
-  revisions: Int
+  reservedBySub: String @auth(rules: [{ allow: owner }, { allow: private, operations: [read, update]  }, { allow: groups, groups: ["administrator"] }])
+  reservedByName: String @auth(rules: [{ allow: owner }, { allow: private, operations: [read, update]  }, { allow: groups, groups: ["administrator"] }])
+  revisions: Int @auth(rules: [{ allow: owner }, { allow: private, operations: [read, update]  }, { allow: groups, groups: ["administrator"] }])
 }
 
 enum ItemStatus {

@@ -655,14 +655,16 @@ const ItemDetails: FC<ParamTypes> = () => {
         {item.status === "available" && item.giver === user.sub && (
           <>
             <Button
-              className=" btn--edit"
-              onClick={() => setEditItem(true)}
+              className=" btn--pickUp"
+              onClick={() => {
+                onClickPickUpBtn();
+              }}
               type="button"
             >
-              <MdEdit />
-              Ändra
+              Hämta ut
             </Button>
-            <span>Den här annonsen har du lagt upp.</span>
+
+            <p className="removeReservationP">Ta bort reservation</p>
           </>
         )}
 

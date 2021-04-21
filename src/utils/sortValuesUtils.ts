@@ -17,9 +17,9 @@ export const sortValues = [
   {
     title: "Annonsens ålder",
     id: "age",
-    low: "createdAt",
-    high: "-createdAt",
-    second: "-createdAt",
+    low: "-createdAt",
+    high: "createdAt",
+    second: "",
   },
   {
     title: "Skick",

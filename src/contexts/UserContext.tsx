@@ -8,6 +8,7 @@ export interface User {
   department?: string;
   address?: string;
   postalcode?: string;
+  isAdmin?: boolean;
 }
 
 export interface UserContextType {
@@ -31,7 +32,14 @@ function UserProvider({ children }: ProviderProps) {
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData: any) => {
       setAuthState(nextAuthState);
+
       if (authData?.attributes) {
+        const cognitoGroups =
+          authData?.signInUserSession?.accessToken?.payload["cognito:groups"];
+        const isAdmin = !!(
+          cognitoGroups && cognitoGroups.includes("administrator")
+        );
+
         setUser({
           name: authData?.attributes?.name || "",
           sub: authData?.attributes?.sub || "",
@@ -39,6 +47,7 @@ function UserProvider({ children }: ProviderProps) {
           department: authData?.attributes["custom:department"] || "",
           address: authData?.attributes?.address || "",
           postalcode: authData?.attributes["custom:postalcode"] || "",
+          isAdmin,
         });
       }
     });

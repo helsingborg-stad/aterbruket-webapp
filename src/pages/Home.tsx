@@ -1,9 +1,10 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import styled from "styled-components";
 import { MdNewReleases, MdSearch, MdTune, MdPhotoCamera } from "react-icons/md";
+import { AuthState } from "@aws-amplify/ui-components";
 import { listAdverts } from "../graphql/queries";
 import { ListAdvertsQuery } from "../API";
 import AdvertContainer from "../components/AdvertContainer";
@@ -14,6 +15,7 @@ import FilterMenu from "../components/FilterMenu";
 import Pagination from "../components/Pagination";
 import { fieldsForm } from "../utils/formUtils";
 import convertToSwe from "../utils/convert";
+import UserContext from "../contexts/UserContext";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -208,6 +210,7 @@ const Home: FC<Props> = ({
     or: [],
   }) as any;
   const [renderItems, setRenderItems] = useState([]) as any;
+  const { authState } = useContext(UserContext);
 
   const handlePages = (updatePage: number) => {
     setPaginationOption({
@@ -295,8 +298,11 @@ const Home: FC<Props> = ({
   };
 
   useEffect(() => {
-    fetchItems();
-  }, [filterValueUpdated]);
+    if (authState === AuthState.SignedIn) {
+      fetchItems();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authState, filterValueUpdated]);
 
   const categoryData = fieldsForm[2];
   const conditionData = fieldsForm[9];

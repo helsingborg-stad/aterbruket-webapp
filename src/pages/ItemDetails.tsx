@@ -477,6 +477,7 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
   const telHref = `tel:${item.phoneNumber}`;
+  console.log(item);
 
   const allDetails = (
     <>
@@ -694,10 +695,13 @@ const ItemDetails: FC<ParamTypes> = () => {
               </div>
               <h4 className="dark">{item.contactPerson}</h4>
             </div>
-            <div className="contactInfo">
-              <MdPhone />
-              <a href={telHref}>{item.phoneNumber}</a>
-            </div>
+            {item.phoneNumber && (
+              <div className="contactInfo">
+                <MdPhone />
+                <a href={telHref}>{item.phoneNumber}</a>
+              </div>
+            )}
+
             <div className="contactInfo">
               <FiAtSign />
               <a href={mailtoHref}>{item.email}</a>

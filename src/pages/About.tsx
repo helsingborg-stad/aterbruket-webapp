@@ -11,9 +11,10 @@ const SubtitleContent = styled.p`
   font-weight: 700;
 `;
 
-const IntroContent = styled.article``;
-
 const About = () => {
+  const mailHref = `mailto:aterbruket.amf@helsingborg.se?subject=Mail to aterbruket`;
+  const telHref = `tel:+4642102800`;
+
   return (
     <main>
       <Container>
@@ -47,13 +48,13 @@ const About = () => {
             två personer per bokning.
           </p>
           <p>
-            Du kan mejla aterbruket.amf@helsingborg.se eller ringa om du hittar
-            en möbel i annonserna som du vill reservera. Möbler kan reserveras i
-            två veckor.
+            Du kan mejla <a href={mailHref}>aterbruket.amf@helsingborg.se </a>
+            eller ringa om du hittar en möbel i annonserna som du vill
+            reservera. Möbler kan reserveras i två veckor.
           </p>
           <p>
-            Ring oss på 042-10 28 00 för att boka en tid om du vill hämta och
-            lämna möbler eller besöka oss.
+            Ring oss på <a href={telHref}>042-10 28 00</a> för att boka en tid
+            om du vill hämta och lämna möbler eller besöka oss.
           </p>
         </article>
         <h3>Hämta och lämna möbler, hur går det till?</h3>

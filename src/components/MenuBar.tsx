@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { MdHome, MdCloud, MdChat, MdPerson } from "react-icons/md";
+import { MdHome, MdCloud, MdPerson, MdHelp } from "react-icons/md";
 
 const MenuDiv = styled.div`
   width: 100vw;
@@ -88,7 +88,7 @@ const MenuBar: FC<Props> = ({ setQrCamera, qrCamera }: Props) => {
         }}
         to="/about"
       >
-        <MdChat className="icon" />
+        <MdHelp className="icon" />
         Om
       </NavLink>
     </MenuDiv>

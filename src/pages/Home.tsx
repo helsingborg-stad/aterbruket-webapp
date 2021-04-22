@@ -52,7 +52,7 @@ const ScanBtn = styled.button`
     0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
   border-radius: 34.5px;
   position: fixed;
-  top: 15vh;
+  top: 13vh;
   right: 30px;
   outline: none;
   z-index: 11;
@@ -342,7 +342,11 @@ const Home: FC<Props> = ({
               setAlreadyAQRCode={setAlreadyAQRCode}
             />
           </Modal>
-          <ScanBtn type="button" onClick={() => setShowQRCamera(true)}>
+          <ScanBtn
+            id="scanBtn"
+            type="button"
+            onClick={() => setShowQRCamera(true)}
+          >
             <MdPhotoCamera />
           </ScanBtn>
           {/* <TabCtn>

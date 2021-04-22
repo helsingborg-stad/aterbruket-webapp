@@ -531,7 +531,6 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
   const telHref = `tel:${item.phoneNumber}`;
-  console.log(item);
 
   const allDetails = (
     <>

@@ -54,16 +54,16 @@ const GroupDiv = styled.div`
     margin-bottom: 0;
   }
 `;
-const Admin: FC = () => {
+const Statics: FC = () => {
   const [statusGroup, setStatusGroup] = useState([]) as any;
   const [infoOption, setInfoOption] = useState("total");
   // console.log("statusGroup ", statusGroup[0]);
 
   const filterStatus = (advertItems: any) => {
     const newStatusGroup = [
-      { option: "available", items: [] as any },
-      { option: "reserved", items: [] as any },
-      { option: "pickedUp", items: [] as any },
+      { option: "available", sweOp: "Tillgängliga", items: [] as any },
+      { option: "reserved", sweOp: "Reserverade", items: [] as any },
+      { option: "pickedUp", sweOp: "Uthämtade", items: [] as any },
     ];
     advertItems.forEach((i: any) => {
       const index = newStatusGroup.findIndex(
@@ -124,7 +124,7 @@ const Admin: FC = () => {
         {statusGroup.map((group: any) => {
           return (
             <GroupDiv key={group.option}>
-              <h4 className="groupTitle">{group.option.toUpperCase()}</h4>
+              <h4 className="groupTitle">{group.sweOp.toUpperCase()}</h4>
               {infoOption === "total" ? (
                 <h4> {group.items.length} stycken</h4>
               ) : infoOption === "most" ? (
@@ -176,4 +176,4 @@ const Admin: FC = () => {
   );
 };
 
-export default Admin;
+export default Statics;

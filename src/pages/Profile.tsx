@@ -42,7 +42,7 @@ const Profile: FC = () => {
     },
     { option: "myadverts", title: "Mina annonser" },
 
-    { option: "statics", title: "Haffa statics" },
+    { option: "statics", title: "Haffa statik" },
   ];
 
   return (

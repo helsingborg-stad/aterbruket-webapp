@@ -104,7 +104,12 @@ const About = () => {
             från byggen eller renoveringar.
           </p>
         </article>
-        <h2>DELA MED VARANDRA</h2>
+        <h2>
+          DELA MED VARANDRA{" "}
+          <span role="img" aria-label="peace">
+            ✌🏻
+          </span>
+        </h2>
       </Container>
     </main>
   );

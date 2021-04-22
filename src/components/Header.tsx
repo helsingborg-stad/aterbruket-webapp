@@ -12,9 +12,6 @@ interface MyProps {
 
 const HeaderDiv = styled.header`
   width: ${(props) => `${props.theme.headerTheme.width}vw`};
-  //height: ${(props) => `${props.theme.headerTheme.height}vh`};
-  //height: auto;
-  //display: ${(props) => props.theme.headerTheme.display};
   flex-direction: ${(props) => props.theme.headerTheme.flexDirection};
   align-items: ${(props) => props.theme.headerTheme.alignItems};
   justify-content: ${(props) => props.theme.headerTheme.justifyContent};

@@ -1,16 +1,26 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/no-named-as-default-member */
+/* eslint-disable-next-line react-hooks/exhaustive-deps */
 /* global google */
 
-import React, { FC, useState, useEffect, useContext } from "react";
+import React, { FC, useState, useEffect, useContext, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API, Storage } from "aws-amplify";
+import {
+  MdArrowBack,
+  MdEdit,
+  MdPlace,
+  MdPerson,
+  MdPhone,
+} from "react-icons/md";
+import { FiAtSign } from "react-icons/fi";
 import QRCode from "../components/QRCodeContainer";
 import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
@@ -23,14 +33,6 @@ import UserContext from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
 import { fieldsForm } from "../utils/formUtils";
-import {
-  MdArrowBack,
-  MdEdit,
-  MdPlace,
-  MdPerson,
-  MdPhone,
-} from "react-icons/md";
-import { FiAtSign } from "react-icons/fi";
 
 const TopSection = styled.div`
   background-color: ${(props) => props.theme.colors.offWhite};
@@ -56,10 +58,14 @@ const TopSection = styled.div`
   header {
     position: relative;
     width: 100%;
-    text-align: center;
     height: 75px;
     position: fixed;
     background-color: ${(props) => props.theme.colors.offWhite};
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     svg {
       position: absolute;
@@ -71,16 +77,29 @@ const TopSection = styled.div`
     p,
     .headerTitle {
       margin: 35px 0 0 0;
-      font-family: Roboto;
       font-style: normal;
       font-weight: 500;
       font-size: 18px;
       line-height: 132%;
       color: ${(props) => props.theme.colors.darkest};
+      max-width: 30%;
     }
-  }
+    .btn--haffa--header,
+    .btn--pickUp--header {
+      width: auto;
+      height: auto;
+      margin: 0;
+      position: absolute;
+      bottom: 7px;
+      right: 16px;
+      padding: 8px 12px;
+      font-size: 16px;
+      box-shadow: none;
+    }
 
-  .btn {
+    .btn--pickUp--header {
+      background-color: ${(props) => props.theme.colors.primaryLight};
+    }
   }
 
   .btn--pickUp {
@@ -114,7 +133,6 @@ const TopSection = styled.div`
     width: 100%;
     h4 {
       margin: 48px 32px 12px 32px;
-      font-family: Roboto;
       font-style: normal;
       font-weight: bold;
       font-size: 18px;
@@ -123,23 +141,24 @@ const TopSection = styled.div`
       color: ${(props) => props.theme.colors.primaryDark};
     }
     h1 {
-      font-family: Roboto;
       font-style: normal;
       font-weight: 900;
       font-size: 36px;
       line-height: 124%;
-      margin: 48px 32px 24px 32px;
+      margin: 8px 32px 24px 32px;
     }
   }
 
-  .removeReservationP {
-    font-family: Roboto;
+  .removeReservation {
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 150%;
     color: ${(props) => props.theme.colors.dark};
     margin: 0 0 32px 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
   }
 
   .regiveBtn {
@@ -257,7 +276,7 @@ const CardDiv = styled.div`
     font-size: 12px;
     line-height: 150%;
     color: ${(props) => props.theme.colors.primary};
-    margin: 24px ​0px 12px 0px;
+    margin: 24px 0px 12px 0px;
   }
   p {
     margin: 0;
@@ -362,6 +381,9 @@ const ItemDetails: FC<ParamTypes> = () => {
   const { user } = useContext(UserContext);
   const [image, setImage] = useState("") as any;
   const [itemUpdated, setItemUpdated] = useState(false);
+  const buttonOutOfScreen = useRef(null);
+  const [refVisible, setRefVisible] = useState(false);
+  const [showHeaderBtn, setShowHeaderBtn] = useState(false);
 
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
@@ -390,6 +412,33 @@ const ItemDetails: FC<ParamTypes> = () => {
     fetchItem();
     setItemUpdated(false);
   }, [itemUpdated]);
+
+  let handler: any;
+  const scrollFunc = () => {
+    handler = function () {
+      const element: any = buttonOutOfScreen.current;
+
+      const buttonPos: any = element.offsetTop - element.offsetHeight;
+
+      if (window.scrollY >= buttonPos) {
+        setShowHeaderBtn(true);
+      } else {
+        setShowHeaderBtn(false);
+      }
+    };
+
+    window.addEventListener("scroll", handler, false);
+  };
+  useEffect(() => {
+    if (!refVisible) {
+      return;
+    }
+
+    scrollFunc();
+    return () => {
+      window.removeEventListener("scroll", handler, false);
+    };
+  });
 
   /* comment out map for debugging purpose  */
   // useEffect(() => {
@@ -430,10 +479,15 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const onClickReservBtn = () => {
     updateItem("reserved");
+    setShowHeaderBtn(false);
   };
-
+  const onClickRemoveResBtn = () => {
+    updateItem("available");
+    setShowHeaderBtn(false);
+  };
   const onClickPickUpBtn = () => {
     updateItem("pickedUp");
+    setShowHeaderBtn(false);
   };
   const translate = (word: string, cat: any) => {
     let sweWord = "";
@@ -469,14 +523,15 @@ const ItemDetails: FC<ParamTypes> = () => {
     });
     return <td key={str}>{str}</td>;
   };
-  let history = useHistory();
+  const history = useHistory();
 
   const goBackFunc = () => {
     history.goBack();
   };
 
-  let mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
-  let telHref = `tel:${item.phoneNumber}`;
+  const mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
+  const telHref = `tel:${item.phoneNumber}`;
+  console.log(item);
 
   const allDetails = (
     <>
@@ -485,6 +540,17 @@ const ItemDetails: FC<ParamTypes> = () => {
           <header>
             <MdArrowBack onClick={goBackFunc} />
             <p className="headerTitle">{item.title}</p>
+            {showHeaderBtn && (
+              <Button
+                className="btn--haffa--header"
+                onClick={() => {
+                  onClickReservBtn();
+                }}
+                type="button"
+              >
+                HAFFA!
+              </Button>
+            )}
           </header>
         )}
 
@@ -497,6 +563,17 @@ const ItemDetails: FC<ParamTypes> = () => {
             ) : (
               <p className="reservedP">Uthämtad</p>
             )}
+            {showHeaderBtn && (
+              <Button
+                className="btn--pickUp--header"
+                onClick={() => {
+                  onClickPickUpBtn();
+                }}
+                type="button"
+              >
+                HÄMTA UT
+              </Button>
+            )}
           </header>
         )}
 
@@ -508,14 +585,21 @@ const ItemDetails: FC<ParamTypes> = () => {
           </ImgDiv>
         )}
         <div className="titleDiv">
-          {/*           <h4>Möbler</h4>
-           */}
+          <h4>
+            {item.category
+              ? translate(item.category, "category")
+              : item.category}
+          </h4>
           <h1>{item.title}</h1>
         </div>
 
         {item.status ===
           "available" /* && item.giver !== user.attributes.sub */ && (
           <Button
+            ref={(el: any) => {
+              buttonOutOfScreen.current = el;
+              setRefVisible(!!el);
+            }}
             className="btn--haffa"
             onClick={() => {
               onClickReservBtn();
@@ -529,6 +613,10 @@ const ItemDetails: FC<ParamTypes> = () => {
         {item.status === "reserved" && item.reservedBySub === user.sub && (
           <>
             <Button
+              ref={(el: any) => {
+                buttonOutOfScreen.current = el;
+                setRefVisible(!!el);
+              }}
               className=" btn--pickUp"
               onClick={() => {
                 onClickPickUpBtn();
@@ -537,8 +625,15 @@ const ItemDetails: FC<ParamTypes> = () => {
             >
               Hämta ut
             </Button>
-
-            <p className="removeReservationP">Ta bort reservation</p>
+            <button
+              type="button"
+              className="removeReservation"
+              onClick={() => {
+                onClickRemoveResBtn();
+              }}
+            >
+              Ta bort reservation
+            </button>
           </>
         )}
 
@@ -578,16 +673,6 @@ const ItemDetails: FC<ParamTypes> = () => {
         </div>
         <table>
           <tbody>
-            <tr>
-              <td>
-                <h4>Typ av möbel</h4>
-              </td>
-              <td>
-                {item.category
-                  ? translate(item.category, "category")
-                  : item.category}
-              </td>
-            </tr>
             <tr>
               <td>
                 <h4>Höjd</h4>
@@ -694,10 +779,13 @@ const ItemDetails: FC<ParamTypes> = () => {
               </div>
               <h4 className="dark">{item.contactPerson}</h4>
             </div>
-            <div className="contactInfo">
-              <MdPhone />
-              <a href={telHref}>{item.phoneNumber}</a>
-            </div>
+            {item.phoneNumber && (
+              <div className="contactInfo">
+                <MdPhone />
+                <a href={telHref}>{item.phoneNumber}</a>
+              </div>
+            )}
+
             <div className="contactInfo">
               <FiAtSign />
               <a href={mailtoHref}>{item.email}</a>

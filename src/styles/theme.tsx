@@ -63,7 +63,7 @@ const theme: DefaultTheme = {
   },
   headerTheme: {
     width: 100, // %
-    height: 25, // vh
+    height: 20, // vh
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
@@ -99,8 +99,8 @@ const theme: DefaultTheme = {
     offWhite: "#F8F8F8",
     white: "#ffffff",
     dark: "#707070",
-    darkest: "#3D3D3D", 
-    illustration: "#C9D6C2"
+    darkest: "#3D3D3D",
+    illustration: "#C9D6C2",
   },
 };
 

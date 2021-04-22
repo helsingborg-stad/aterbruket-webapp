@@ -65,7 +65,7 @@ const MenuBar: FC<Props> = ({ setQrCamera, qrCamera }: Props) => {
         <MdChat className="icon" />
         Meddelenden
       </Link>
-      <Link className="link" to="/profile">
+      <Link className="link" to="/profil">
         <MdPerson className="icon" />
         Profile
       </Link>

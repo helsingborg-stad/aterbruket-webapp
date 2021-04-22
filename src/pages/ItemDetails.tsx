@@ -662,7 +662,9 @@ const ItemDetails: FC<ParamTypes> = () => {
                 <MdEdit />
                 Ändra
               </Button>
-              <span>Den här annonsen har du lagt upp.</span>
+              {item.giver === user.sub && (
+                <span>Den här annonsen har du lagt upp.</span>
+              )}
             </>
           )}
 

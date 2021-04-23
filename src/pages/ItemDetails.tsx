@@ -60,7 +60,7 @@ const TopSection = styled.div`
     height: 75px;
     position: fixed;
     background-color: ${(props) => props.theme.colors.offWhite};
-
+    z-index: 1000;
     svg {
       position: absolute;
       left: 28px;
@@ -189,7 +189,6 @@ const Line = styled.div`
 
 const MainSection = styled.section`
   width: 100%;
-  background-color: pink;
   margin: 0 auto;
 
   h4 {
@@ -202,8 +201,9 @@ const MainSection = styled.section`
     color: ${(props) => props.theme.colors.primary};
   }
   .dark {
-    margin: 48px 0 28px 0;
+    margin: 48px 0 28px 24px;
     color: ${(props) => props.theme.colors.darkest};
+    align-self: flex-start;
   }
 
   p {
@@ -244,18 +244,22 @@ const CardGroups = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .card {
     display: flex;
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    padding: 0 24px;
     width: 382px;
     height: 326px;
+
     background-color: ${(props) => props.theme.colors.white};
     border-radius: 9.5px;
     filter: drop-shadow(0px 0px 2px rgba(98, 98, 98, 0.18)),
       drop-shadow(0px 1px 2px rgba(98, 98, 98, 0.18));
+  }
+  .contactCard {
+    height: auto;
   }
 
   .cardHeader {
@@ -263,11 +267,14 @@ const CardGroups = styled.div`
     width: 100%;
     height: 30%;
     display: flex;
+
     justify-content: center;
     align-items: center;
     border-radius: 9.5px 9.5px 0px 0px;
   }
   .cardBody {
+    box-sizing: border-box;
+    margin: 0 24px;
     padding: 0 24px;
     width: 100%;
     height: 70%;
@@ -305,7 +312,8 @@ const CardGroups = styled.div`
   }
 
   .contactPersonDiv {
-    padding: 0;
+    box-sizing: border-box;
+    padding: 0 24px;
     width: 100%;
     display: flex;
     margin: 16px 0;
@@ -313,6 +321,7 @@ const CardGroups = styled.div`
 
     h4 {
       margin: 0 16px;
+      align-self: unset;
     }
     div {
       padding: 0;
@@ -332,10 +341,11 @@ const CardGroups = styled.div`
     }
   }
   .contactInfo {
+    box-sizing: border-box;
     padding: 0 8px 0 8px;
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 334px;
     height: 48px;
     background-color: #f5f5f5;
     border-radius: 4.5px;
@@ -354,14 +364,14 @@ const CardGroups = styled.div`
 `;
 
 /* comment out map for debugging purpose  */
-const MapContainer = styled.div`
-  width: 80%;
-  height: 45vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-`;
+// const MapContainer = styled.div`
+//   width: 99%;
+//   height: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   border-radius: 9.5px 9.5px 0 0;
+// `;
 
 interface ParamTypes {
   id: string;
@@ -494,7 +504,7 @@ const ItemDetails: FC<ParamTypes> = () => {
     <>
       <TopSection>
         {item.status === "available" && (
-          <header>
+          <header className="header">
             <MdArrowBack onClick={goBackFunc} />
             <p className="headerTitle">{item.title}</p>
           </header>
@@ -688,8 +698,9 @@ const ItemDetails: FC<ParamTypes> = () => {
         <CardGroups>
           <h4 className="dark">Här finns prylen</h4>
 
-          <div className="card">
+          <div className="card mapCard">
             <div className="cardHeader">
+              {/* <MapContainer> */}
               {item && item.location && scriptLoaded && (
                 <Map
                   mapType={google.maps.MapTypeId.ROADMAP}
@@ -706,6 +717,7 @@ const ItemDetails: FC<ParamTypes> = () => {
                   width={50}
                 />
               )}
+              {/* </MapContainer> */}
             </div>
             <div className="cardBody">
               <h5>ADRESS</h5>
@@ -716,34 +728,17 @@ const ItemDetails: FC<ParamTypes> = () => {
                 <MdPlace />
               </Button>
             </div>
-            {/* <MapContainer>
-              {item && item.location && (
-                <Map
-                  mapType={google.maps.MapTypeId.ROADMAP}
-                  mapTypeControl={false}
-                  location={item.location}
-                />
-              )}
-
-              {!item.location && (
-                <Loader
-                  type="ThreeDots"
-                  color="#9db0c6"
-                  height={50}
-                  width={50}
-                />
-              )}
-            </MapContainer> */}
           </div>
           <h4 className="dark">Kontaktperson</h4>
 
-          <div className="card">
+          <div className="card contactCard">
             <div className="contactPersonDiv">
               <div>
                 <MdPerson />
               </div>
               <h4 className="dark">{item.contactPerson}</h4>
             </div>
+
             <div className="contactInfo">
               <MdPhone />
               <p>{item.phoneNumber}</p>

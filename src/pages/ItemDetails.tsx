@@ -381,7 +381,7 @@ interface ParamTypes {
 
 const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
-  const [scriptLoaded, setScriptLoaded] = useState(false);
+  // const [scriptLoaded, setScriptLoaded] = useState(false);
   const [item, setItem] = useState({}) as any;
   const [editItem, setEditItem] = useState(false);
   const [regive, setRegive] = useState(false);
@@ -422,14 +422,15 @@ const ItemDetails: FC<ParamTypes> = () => {
   useEffect(() => {
     const googleMapScript = loadMapApi();
 
-    const cb = () => {
-      setScriptLoaded(true);
-    };
-    googleMapScript.addEventListener("load", cb);
+    // const cb = () => {
+    //   setScriptLoaded(true);
+    // };
 
-    return () => {
-      googleMapScript.removeEventListener("load", cb);
-    };
+    // googleMapScript.addEventListener("load", cb);
+
+    // return () => {
+    //   googleMapScript.removeEventListener("load", cb);
+    // };
   }, []);
 
   const updateItem = async (newStatus: string) => {
@@ -703,7 +704,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           <div className="card mapCard">
             <div className="cardHeader">
               {/* <MapContainer> */}
-              {item && item.location && scriptLoaded && (
+              {item && item.location && (
                 <Map
                   mapType={google.maps.MapTypeId.ROADMAP}
                   mapTypeControl={false}

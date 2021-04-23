@@ -144,8 +144,8 @@ const Header: FC<MyProps> = () => {
               ? "Grejer du Haffat!"
               : path === "add"
               ? "Gör en annons!"
-              : path === "message"
-              ? "Din Haffa-meddelanden (kommer i senare version...)"
+              : path === "about"
+              ? "Om Haffa!"
               : "Haffa en möbel!"}
           </h2>
         </HeaderDiv>

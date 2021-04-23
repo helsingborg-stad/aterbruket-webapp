@@ -35,7 +35,7 @@ const HeaderDiv = styled.header`
 const MenuLink = styled(Link)`
   color: ${(props) => props.theme.colors.dark};
   position: absolute;
-  top: 12px;
+  top: 24px;
   left: 20px;
 
   .icon {
@@ -132,6 +132,7 @@ const Header: FC<MyProps> = () => {
             style={{
               transform: visible ? "none" : "scale(0.5)",
               marginBottom: visible ? "revert" : "12px",
+              width: visible ? "unset" : "max-content",
             }}
           >
             {subPath === "personal-info"

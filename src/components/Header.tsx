@@ -111,7 +111,13 @@ const Header: FC<MyProps> = () => {
           }}
         >
           {supported() && !isInstalled() && (
-            <InstallButton type="button" onClick={handleClick}>
+            <InstallButton
+              type="button"
+              onClick={handleClick}
+              style={{
+                display: visible ? "block" : "none",
+              }}
+            >
               Lägg Haffa på hemskärmen
             </InstallButton>
           )}

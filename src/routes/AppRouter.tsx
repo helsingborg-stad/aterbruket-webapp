@@ -9,6 +9,7 @@ import PersonalInfo from "../components/PersonalInfo";
 import Statics from "../components/Statics";
 import AddItem from "../pages/AddItem";
 import Haffat from "../pages/Haffat";
+import About from "../pages/About";
 import Home from "../pages/Home";
 import ItemDetails from "../pages/ItemDetails";
 import Onboarding from "../pages/Onboarding";
@@ -148,6 +149,7 @@ const AppRouter: FC = () => {
         <Route path="/profile/statics" component={Statics} />
         <Route path="/profile/myadverts" component={MyAdverts} />
         <Route path="/item/:id" component={ItemDetails} />
+        <Route path="/about" component={About} />
         <MenuBar setQrCamera={setQrCamera} qrCamera={qrCamera} />
       </AppContainer>
     </AmplifyAuthenticator>

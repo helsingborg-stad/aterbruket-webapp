@@ -2,7 +2,7 @@
 import React, { FC, useState, useEffect } from "react";
 import styled from "styled-components";
 import { useLocation, Link } from "react-router-dom";
-import { RiArrowLeftSLine } from "react-icons/ri";
+import { MdArrowBack } from "react-icons/md";
 import { useReactPWAInstall } from "react-pwa-install";
 import { useCallback } from "react";
 
@@ -33,20 +33,10 @@ const HeaderDiv = styled.header`
 `;
 
 const MenuLink = styled(Link)`
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  line-height: 20px;
-  font-size: 20px;
-  padding: 0;
   color: ${(props) => props.theme.colors.dark};
   position: absolute;
-  top: 0;
-  left: 12px;
-
-  p {
-    margin-left: 5px;
-  }
+  top: 12px;
+  left: 20px;
 
   .icon {
     font-size: 22px;
@@ -91,7 +81,7 @@ const Header: FC<MyProps> = () => {
     const button: HTMLElement | null = document.getElementById("scanBtn");
     if (button) {
       if (!visible) {
-        button.style.top = "6vh";
+        button.style.top = "5vh";
       } else {
         button.style.top = "13vh";
       }
@@ -115,7 +105,7 @@ const Header: FC<MyProps> = () => {
         <HeaderDiv
           isInDetail={false}
           style={{
-            height: visible ? "auto" : "60px",
+            height: visible ? "auto" : "65px",
             alignItems: visible ? "flex-start" : "center",
             padding: visible ? "12px 0px 0px 24px" : "0",
           }}
@@ -129,8 +119,7 @@ const Header: FC<MyProps> = () => {
           subPath === "myadverts" ||
           subPath === "statics" ? (
             <MenuLink to="/profile">
-              <RiArrowLeftSLine className="icon" />
-              <p>Meny</p>
+              <MdArrowBack className="icon" />
             </MenuLink>
           ) : null}
           <h2

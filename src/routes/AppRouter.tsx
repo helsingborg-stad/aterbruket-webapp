@@ -116,7 +116,7 @@ const AppRouter: FC = () => {
         </SignInContent>
       </SignInWrapper>
       <AppContainer>
-        <Header isInDetail={false} />
+        <Header isHidden={false} />
         <Route exact path="/" component={StartScreen} />
         <Route exact path="/onboarding" component={Onboarding} />
         <Route

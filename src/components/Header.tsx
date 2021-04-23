@@ -7,7 +7,7 @@ import { useReactPWAInstall } from "react-pwa-install";
 import { useCallback } from "react";
 
 interface MyProps {
-  isInDetail: boolean;
+  isHidden: boolean;
 }
 
 const HeaderDiv = styled.header`
@@ -18,7 +18,7 @@ const HeaderDiv = styled.header`
   padding: ${(props) =>
     `${props.theme.headerTheme.padding[0]}px ${props.theme.headerTheme.padding[1]}px ${props.theme.headerTheme.padding[2]}px ${props.theme.headerTheme.padding[3]}px`};
   background-color: ${(props) => props.theme.headerTheme.backgroundColor};
-  display: ${(props: MyProps) => (props.isInDetail ? "none" : "flex")};
+  display: ${(props: MyProps) => (props.isHidden ? "none" : "flex")};
   position: fixed;
   z-index: 10;
   transition: all 0.2s;
@@ -100,10 +100,10 @@ const Header: FC<MyProps> = () => {
   return (
     <>
       {path.includes("item") ? (
-        <HeaderDiv isInDetail />
+        <HeaderDiv isHidden />
       ) : (
         <HeaderDiv
-          isInDetail={false}
+          isHidden={false}
           style={{
             height: visible ? "auto" : "65px",
             alignItems: visible ? "flex-start" : "center",
@@ -136,6 +136,8 @@ const Header: FC<MyProps> = () => {
               ? "Haffa statistik"
               : path === "haffat"
               ? "Grejer du Haffat!"
+              : path === "add"
+              ? "Gör en annons!"
               : path === "message"
               ? "Din Haffa-meddelanden (kommer i senare version...)"
               : "Haffa en möbel!"}

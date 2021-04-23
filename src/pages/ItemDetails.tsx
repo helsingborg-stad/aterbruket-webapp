@@ -815,7 +815,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   );
 
   return (
-    <main>
+    <main style={{ padding: 0 }}>
       {editItem ? (
         <EditItemForm
           setEditItem={setEditItem}

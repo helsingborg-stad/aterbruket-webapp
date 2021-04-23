@@ -37,6 +37,7 @@ const AppContainer = styled.div`
     flex-direction: column;
     align-items: center;
     margin-bottom: 65px;
+    padding-top: 120px;
   }
 `;
 
@@ -116,7 +117,7 @@ const AppRouter: FC = () => {
         </SignInContent>
       </SignInWrapper>
       <AppContainer>
-        <Header isInDetail={false} />
+        <Header isHidden={false} />
         <Route exact path="/" component={StartScreen} />
         <Route exact path="/onboarding" component={Onboarding} />
         <Route

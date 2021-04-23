@@ -189,6 +189,7 @@ const Line = styled.div`
 
 const MainSection = styled.section`
   width: 100%;
+  background-color: pink;
   margin: 0 auto;
 
   h4 {
@@ -211,10 +212,6 @@ const MainSection = styled.section`
     font-size: 16px;
     line-height: 150%;
     color: ${(props) => props.theme.colors.darkest};
-  }
-
-  div {
-    padding: 0 24px 0 24px;
   }
 
   table {
@@ -251,25 +248,30 @@ const CardGroups = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 24px;
+    box-sizing: border-box;
+    padding: 0 24px;
     width: 382px;
     height: 326px;
     background-color: ${(props) => props.theme.colors.white};
-    border-radius: 0px 0px 9.5px 9.5px;
+    border-radius: 9.5px;
     filter: drop-shadow(0px 0px 2px rgba(98, 98, 98, 0.18)),
       drop-shadow(0px 1px 2px rgba(98, 98, 98, 0.18));
   }
 
   .cardHeader {
+    z-index: 0;
     width: 100%;
     height: 30%;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 9.5px 9.5px 0px 0px;
   }
   .cardBody {
+    padding: 0 24px;
     width: 100%;
     height: 70%;
+    border-radius: 0px 0px 9.5px 9.5px;
   }
   h5 {
     font-weight: 900;
@@ -688,7 +690,7 @@ const ItemDetails: FC<ParamTypes> = () => {
 
           <div className="card">
             <div className="cardHeader">
-              {item && item.location && (
+              {item && item.location && scriptLoaded && (
                 <Map
                   mapType={google.maps.MapTypeId.ROADMAP}
                   mapTypeControl={false}

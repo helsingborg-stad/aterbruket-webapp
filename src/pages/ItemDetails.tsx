@@ -250,7 +250,8 @@ const CardGroups = styled.div`
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    width: 382px;
+    width: 90%;
+    min-width: 382px;
     height: 326px;
 
     background-color: ${(props) => props.theme.colors.white};
@@ -345,7 +346,8 @@ const CardGroups = styled.div`
     padding: 0 8px 0 8px;
     display: flex;
     align-items: center;
-    width: 334px;
+    width: 90%;
+    min-width: 334px;
     height: 48px;
     background-color: #f5f5f5;
     border-radius: 4.5px;

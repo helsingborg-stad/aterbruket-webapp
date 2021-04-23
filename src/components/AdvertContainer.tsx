@@ -2,12 +2,6 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import Card from "./Card";
 
-type ISorting = {
-  first: string;
-  second: string;
-  sortTitle: string;
-};
-
 interface IAdvert {
   items: any;
   searchValue: any;
@@ -28,7 +22,8 @@ const AdvertContainerDiv = styled.div`
     width: 100%;
     display: flex;
     align-items: flex-start;
-    h3 {
+    flex-direction: column;
+    justy h3 {
       color: #3d3d3d;
       margin: 10px;
     }
@@ -81,15 +76,6 @@ const AdvertContainer: FC<IAdvert> = ({
   return (
     <AdvertContainerDiv>
       <div className="allaDiv">
-        {itemsFrom === "home" && activeSorting !== "" && (
-          <OptionWrapper>
-            <h3>Sorterar på:</h3>
-            <span className="options" style={{ margin: "5px" }}>
-              {activeSorting}
-            </span>
-          </OptionWrapper>
-        )}
-
         {itemsFrom === "home" && filteredSweValues.length > 0 ? (
           <OptionWrapper>
             <h3>Aktiva filter :</h3>
@@ -104,6 +90,15 @@ const AdvertContainer: FC<IAdvert> = ({
         ) : (
           itemsFrom === "home" && <h3>Alla möbler</h3>
         )}
+        {itemsFrom === "home" && activeSorting !== "" && (
+          <OptionWrapper>
+            <h3>Sorterar på:</h3>
+            <span className="options" style={{ margin: "5px" }}>
+              {activeSorting}
+            </span>
+          </OptionWrapper>
+        )}
+
         {itemsFrom === "haffat" && <h3>Saker att hämta</h3>}
         {itemsFrom === "profile" && <h3>Mina annonser</h3>}
       </div>

@@ -19,6 +19,7 @@ import { fieldsForm } from "../utils/formUtils";
 import convertToSwe from "../utils/convert";
 import UserContext from "../contexts/UserContext";
 import SortItems from "../components/SortItems";
+import { DEFAULTSORTVALUE } from "../utils/sortValuesUtils";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -214,11 +215,7 @@ const Home: FC<Props> = ({
   }) as any;
   const [renderItems, setRenderItems] = useState([]) as any;
   const { authState } = useContext(UserContext);
-  const [activeSorting, setActiveSorting] = useState({
-    first: "climateImpact",
-    second: "-createdAt",
-    sortTitle: "Klimatavtryck",
-  });
+  const [activeSorting, setActiveSorting] = useState(DEFAULTSORTVALUE);
 
   const handlePages = (updatePage: number) => {
     setPaginationOption({

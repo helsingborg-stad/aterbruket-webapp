@@ -5,7 +5,7 @@ import { MdCancel } from "react-icons/md";
 import FilterCheckbox from "./FilterCheckbox";
 import SortRadioButtons from "./SortRadioButtons";
 import { fieldsForm } from "../utils/formUtils";
-import { sortValues } from "../utils/sortValuesUtils";
+import { sortValues, DEFAULTSORTVALUE } from "../utils/sortValuesUtils";
 
 const FilterCtn = styled.div`
   display: ${({ className }) => (className === "show" ? "block" : "none")};
@@ -135,6 +135,7 @@ const FilterMenu: FC<Props> = ({
     second: activeSorting.second,
     sortTitle: activeSorting.sortTitle,
   });
+  const [showToggle, setShowToggle] = useState(activeSorting.sortTitle);
 
   useEffect(() => {
     if (isOpen) {
@@ -192,16 +193,9 @@ const FilterMenu: FC<Props> = ({
     setSaveValues({});
     setFilterValueUpdated(!filterValueUpdated);
     setAllValues([]);
-    setActiveSorting({
-      first: "climateImpact",
-      second: "-createdAt",
-      sortTitle: "Klimatavtryck",
-    });
-    setNewSorting({
-      first: "climateImpact",
-      second: "-createdAt",
-      sortTitle: "Klimatavtryck",
-    });
+    setActiveSorting(DEFAULTSORTVALUE);
+    setNewSorting(DEFAULTSORTVALUE);
+    setShowToggle(DEFAULTSORTVALUE.sortTitle);
   };
 
   return (
@@ -223,6 +217,8 @@ const FilterMenu: FC<Props> = ({
           groupTitle="Sortering"
           newSorting={newSorting}
           activeSorting={activeSorting}
+          setShowToggle={setShowToggle}
+          showToggle={showToggle}
         />
         <FilterCheckbox
           setIsDisabled={setIsDisabled}

@@ -11,6 +11,14 @@ import Loader from "react-loader-spinner";
 import styled from "styled-components";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API, Storage } from "aws-amplify";
+import {
+  MdArrowBack,
+  MdEdit,
+  MdPlace,
+  MdPerson,
+  MdPhone,
+} from "react-icons/md";
+import { FiAtSign } from "react-icons/fi";
 import QRCode from "../components/QRCodeContainer";
 import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
@@ -23,14 +31,6 @@ import UserContext from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
 import { fieldsForm } from "../utils/formUtils";
-import {
-  MdArrowBack,
-  MdEdit,
-  MdPlace,
-  MdPerson,
-  MdPhone,
-} from "react-icons/md";
-import { FiAtSign } from "react-icons/fi";
 
 const TopSection = styled.div`
   background-color: ${(props) => props.theme.colors.offWhite};
@@ -205,6 +205,10 @@ const MainSection = styled.section`
     color: ${(props) => props.theme.colors.darkest};
     align-self: flex-start;
   }
+  .description {
+    box-sizing: border-box;
+    margin: 0 24px;
+  }
 
   p {
     font-style: normal;
@@ -251,7 +255,6 @@ const CardGroups = styled.div`
     align-items: center;
     box-sizing: border-box;
     width: 90%;
-    min-width: 382px;
     height: 326px;
 
     background-color: ${(props) => props.theme.colors.white};
@@ -365,23 +368,12 @@ const CardGroups = styled.div`
   }
 `;
 
-/* comment out map for debugging purpose  */
-// const MapContainer = styled.div`
-//   width: 99%;
-//   height: 100%;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   border-radius: 9.5px 9.5px 0 0;
-// `;
-
 interface ParamTypes {
   id: string;
 }
 
 const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
-  // const [scriptLoaded, setScriptLoaded] = useState(false);
   const [item, setItem] = useState({}) as any;
   const [editItem, setEditItem] = useState(false);
   const [regive, setRegive] = useState(false);
@@ -418,19 +410,8 @@ const ItemDetails: FC<ParamTypes> = () => {
     setItemUpdated(false);
   }, [itemUpdated]);
 
-  /* comment out map for debugging purpose  */
   useEffect(() => {
-    const googleMapScript = loadMapApi();
-
-    // const cb = () => {
-    //   setScriptLoaded(true);
-    // };
-
-    // googleMapScript.addEventListener("load", cb);
-
-    // return () => {
-    //   googleMapScript.removeEventListener("load", cb);
-    // };
+    loadMapApi();
   }, []);
 
   const updateItem = async (newStatus: string) => {
@@ -497,7 +478,7 @@ const ItemDetails: FC<ParamTypes> = () => {
     });
     return <td key={str}>{str}</td>;
   };
-  let history = useHistory();
+  const history = useHistory();
 
   const goBackFunc = () => {
     history.goBack();
@@ -599,7 +580,7 @@ const ItemDetails: FC<ParamTypes> = () => {
       <MainSection>
         <div>
           <h4 className="dark">Beskrivning</h4>
-          <p>{item.description}</p>
+          <p className="description">{item.description}</p>
         </div>
         <table>
           <tbody>
@@ -703,7 +684,6 @@ const ItemDetails: FC<ParamTypes> = () => {
 
           <div className="card mapCard">
             <div className="cardHeader">
-              {/* <MapContainer> */}
               {item && item.location && (
                 <Map
                   mapType={google.maps.MapTypeId.ROADMAP}
@@ -720,7 +700,6 @@ const ItemDetails: FC<ParamTypes> = () => {
                   width={50}
                 />
               )}
-              {/* </MapContainer> */}
             </div>
             <div className="cardBody">
               <h5>ADRESS</h5>

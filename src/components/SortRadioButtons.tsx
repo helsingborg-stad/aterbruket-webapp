@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { sortValues } from "../utils/sortValuesUtils";
@@ -27,6 +27,21 @@ const InputGroup = styled.div`
     span {
       margin-left: 19px;
     }
+    .radioInput{
+      appearance: none;
+      border: 1px solid #c9d6c2;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      margin: 19px;
+    }
+
+    .radioInput[type="radio"]:checked,
+    &:focus {
+      appearance: none;
+      outline: none;
+      border: none;
+      
   }
 `;
 const GroupRadio = styled.div`
@@ -77,6 +92,7 @@ const SortRadioButtons: FC<Props> = ({
   activeSorting,
   newSorting,
 }: Props) => {
+  const [showToggle, setShowToggle] = useState(activeSorting.sortTitle);
   const handleInputChange = (
     firstStr: string,
     secondStr: string,
@@ -91,50 +107,69 @@ const SortRadioButtons: FC<Props> = ({
     //   setIsDisabled(true);
     // }
   };
+  // let show = activeSorting.sortTitle;
+  // useEffect(() => {
+  //   console.log(show);
+  // }, [show]);
 
+  const handleRadioInput = (e: any) => {
+    setShowToggle(e.target.value);
+  };
+  console.log("show ", showToggle);
   const radio = sortValues.map((element: IElement) => {
     return (
       <InputGroup key={element.title}>
         <span>{element.title}</span>
-        <GroupRadio>
-          <label
-            htmlFor={element.low}
-            style={{
-              color: newSorting.first === element.low ? "#80B14A" : "black",
-            }}
-          >
-            <FaArrowUp />
-          </label>
-          <input
-            type="radio"
-            id={element.low}
-            name="sorting"
-            value={element.title}
-            onChange={() =>
-              handleInputChange(element.low, element.second, element.title)
-            }
-            checked={newSorting.first === element.low}
-          />
+        <input
+          className="radioInput"
+          type="radio"
+          id={element.title}
+          name="sortingMaster"
+          value={element.title}
+          onChange={(e) => handleRadioInput(e)}
+          checked={element.title === showToggle}
+        />
+        {showToggle === element.title && (
+          <GroupRadio>
+            <label
+              htmlFor={element.low}
+              style={{
+                color: newSorting.first === element.low ? "#80B14A" : "black",
+              }}
+            >
+              <FaArrowUp />
+            </label>
+            <input
+              type="radio"
+              id={element.low}
+              name="sorting"
+              value={element.title}
+              onChange={() =>
+                handleInputChange(element.low, element.second, element.title)
+              }
+              checked={newSorting.first === element.low}
+            />
 
-          <label
-            htmlFor={element.high}
-            style={{
-              color: newSorting.first === element.high ? "#80B14A" : "black",
-            }}
-          >
-            <FaArrowDown />
-          </label>
-          <input
-            type="radio"
-            id={element.high}
-            name="sorting"
-            value={element.title}
-            onChange={() =>
-              handleInputChange(element.high, element.second, element.title)
-            }
-            checked={newSorting.first === element.high}
-          />
-        </GroupRadio>
+            <label
+              htmlFor={element.high}
+              style={{
+                color: newSorting.first === element.high ? "#80B14A" : "black",
+              }}
+            >
+              <FaArrowDown />
+            </label>
+            <input
+              type="radio"
+              id={element.high}
+              name="sorting"
+              value={element.title}
+              onChange={() =>
+                handleInputChange(element.high, element.second, element.title)
+              }
+              checked={newSorting.first === element.high}
+            />
+          </GroupRadio>
+        )}
       </InputGroup>
     );
   });

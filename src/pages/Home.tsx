@@ -16,6 +16,7 @@ import Pagination from "../components/Pagination";
 
 import { fieldsForm } from "../utils/formUtils";
 import convertToSwe from "../utils/convert";
+import { DEFAULTSORTVALUE } from "../utils/sortValuesUtils";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -209,11 +210,7 @@ const Home: FC<Props> = ({
     or: [],
   }) as any;
   const [renderItems, setRenderItems] = useState([]) as any;
-  const [activeSorting, setActiveSorting] = useState({
-    first: "climateImpact",
-    second: "-createdAt",
-    sortTitle: "Klimatavtryck",
-  });
+  const [activeSorting, setActiveSorting] = useState(DEFAULTSORTVALUE);
 
   const handlePages = (updatePage: number) => {
     setPaginationOption({

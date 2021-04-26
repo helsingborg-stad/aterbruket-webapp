@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
@@ -73,7 +74,9 @@ type IElement = {
   title: string;
   id: string;
   low: string;
+  lowText: string;
   high: string;
+  highText: string;
   second: string;
 };
 
@@ -83,6 +86,8 @@ interface Props {
   groupTitle: string;
   newSorting: ISorting;
   activeSorting: ISorting;
+  setShowToggle: React.Dispatch<React.SetStateAction<string>>;
+  showToggle: string;
 }
 
 const SortRadioButtons: FC<Props> = ({
@@ -91,8 +96,9 @@ const SortRadioButtons: FC<Props> = ({
   setIsDisabled,
   activeSorting,
   newSorting,
+  setShowToggle,
+  showToggle,
 }: Props) => {
-  const [showToggle, setShowToggle] = useState(activeSorting.sortTitle);
   const handleInputChange = (
     firstStr: string,
     secondStr: string,
@@ -107,56 +113,40 @@ const SortRadioButtons: FC<Props> = ({
     //   setIsDisabled(true);
     // }
   };
-  // let show = activeSorting.sortTitle;
-  // useEffect(() => {
-  //   console.log(show);
-  // }, [show]);
 
-  const handleRadioInput = (e: any) => {
+  console.log("this is ", newSorting);
+  const handleRadioInput = (e: any, low: string, secondStr: string) => {
     setShowToggle(e.target.value);
+    setNewSorting({ first: low, second: secondStr, sortTitle: e.target.value });
   };
   console.log("show ", showToggle);
   const radio = sortValues.map((element: IElement) => {
     return (
       <InputGroup key={element.title}>
-        <span>{element.title}</span>
+        <span>
+          {element.title}
+          {showToggle === element.title && ": "}
+          {showToggle && newSorting.first === element.high && element.highText}
+          {showToggle && newSorting.first === element.low && element.lowText}
+        </span>
         <input
           className="radioInput"
           type="radio"
           id={element.title}
           name="sortingMaster"
           value={element.title}
-          onChange={(e) => handleRadioInput(e)}
+          onChange={(e) => handleRadioInput(e, element.low, element.second)}
           checked={element.title === showToggle}
         />
         {showToggle === element.title && (
           <GroupRadio>
-            <label
-              htmlFor={element.low}
-              style={{
-                color: newSorting.first === element.low ? "#80B14A" : "black",
-              }}
-            >
-              <FaArrowUp />
-            </label>
-            <input
-              type="radio"
-              id={element.low}
-              name="sorting"
-              value={element.title}
-              onChange={() =>
-                handleInputChange(element.low, element.second, element.title)
-              }
-              checked={newSorting.first === element.low}
-            />
-
             <label
               htmlFor={element.high}
               style={{
                 color: newSorting.first === element.high ? "#80B14A" : "black",
               }}
             >
-              <FaArrowDown />
+              <FaArrowUp />
             </label>
             <input
               type="radio"
@@ -167,6 +157,24 @@ const SortRadioButtons: FC<Props> = ({
                 handleInputChange(element.high, element.second, element.title)
               }
               checked={newSorting.first === element.high}
+            />
+            <label
+              htmlFor={element.low}
+              style={{
+                color: newSorting.first === element.low ? "#80B14A" : "black",
+              }}
+            >
+              <FaArrowDown />
+            </label>
+            <input
+              type="radio"
+              id={element.low}
+              name="sorting"
+              value={element.title}
+              onChange={() =>
+                handleInputChange(element.low, element.second, element.title)
+              }
+              checked={newSorting.first === element.low}
             />
           </GroupRadio>
         )}

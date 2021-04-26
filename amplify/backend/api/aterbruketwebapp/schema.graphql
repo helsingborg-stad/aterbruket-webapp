@@ -72,3 +72,17 @@ type ItemImages {
   src: String
   alt: String
 }
+
+type Page
+  @model
+  @key(fields: [ "slug" ])
+  @auth(
+    rules: [
+      { allow: groups, groups: ["administrator"] }
+  ])
+{
+  id: ID!
+  slug: String!
+  title: String!
+  content: String
+}

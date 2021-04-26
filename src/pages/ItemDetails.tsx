@@ -26,8 +26,9 @@ import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
 import EditItemForm from "../components/EditItemForm";
-import { loadMapApi } from "../utils/GoogleMapsUtils";
+import { loadMapApi, getLatLng } from "../utils/GoogleMapsUtils";
 import Map from "../components/Map";
+
 import CarouselComp from "../components/CarouselComp";
 import UserContext from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
@@ -318,12 +319,10 @@ const CardGroups = styled.div`
     width: 100%;
     text-align: left;
     padding: 16px;
-    // background-color: ${(props) => props.theme.colors.lightGray};
-    //color: ${(props) => props.theme.colors.offWhite};
     background-color: ${(props) => props.theme.colors.primaryLighter};
     color: ${(props) => props.theme.colors.primaryDark};
     position: relative;
-    opacity: 0.2; // remove this when function is working
+    // opacity: 0.2; // remove this when function is working
     outline: none;
 
     svg {
@@ -454,6 +453,10 @@ const ItemDetails: FC<ParamTypes> = () => {
 
     window.addEventListener("scroll", handler, false);
   };
+  // const showInMapClicked = () => {
+  //   window.open(`"https://maps.google.com?q="+your_lat+","+your_lng`);
+  // };
+
   useEffect(() => {
     if (!refVisible) {
       return;
@@ -524,6 +527,7 @@ const ItemDetails: FC<ParamTypes> = () => {
     });
     return sweWord;
   };
+
   const mapingObject = (obj: any, cat: string) => {
     let str = "";
     Object.entries(obj[0]).forEach(([key, value]) => {
@@ -799,7 +803,11 @@ const ItemDetails: FC<ParamTypes> = () => {
               <h5>ADRESS</h5>
               <p>{item.department}</p>
               <p>{item.location}</p>
-              <Button className=" btn--adress" type="button">
+              <Button
+                onClick={() => getLatLng(item.location)}
+                className=" btn--adress"
+                type="button"
+              >
                 Hitta hit
                 <MdPlace />
               </Button>

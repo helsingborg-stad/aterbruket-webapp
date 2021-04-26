@@ -19,3 +19,17 @@ export const loadMapApi = () => {
     window.document.body.appendChild(googleMapScript);
     return googleMapScript;
 };
+
+export const getLatLng = (address: string) => {
+    const geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({ address }, (results, status) => {
+        if (status === google.maps.GeocoderStatus.OK) {
+            const latitude = results[0].geometry.location.lat();
+            const longitude = results[0].geometry.location.lng();
+            console.log(latitude, longitude);
+            window.open(`https://maps.google.com?q=${latitude}, ${longitude}`)
+
+        }
+    });
+};

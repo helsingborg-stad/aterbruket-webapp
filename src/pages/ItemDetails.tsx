@@ -26,8 +26,8 @@ import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
 import EditItemForm from "../components/EditItemForm";
-// import { loadMapApi } from "../utils/GoogleMapsUtils";
-// import Map from "../components/Map";
+import { loadMapApi } from "../utils/GoogleMapsUtils";
+import Map from "../components/Map";
 import CarouselComp from "../components/CarouselComp";
 import UserContext from "../contexts/UserContext";
 import RegiveForm from "../components/RegiveForm";
@@ -61,7 +61,7 @@ const TopSection = styled.div`
     height: 75px;
     position: fixed;
     background-color: ${(props) => props.theme.colors.offWhite};
-    z-index: 10;
+    z-index: 1000;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -208,6 +208,7 @@ const Line = styled.div`
 
 const MainSection = styled.section`
   width: 100%;
+  margin: 0 auto;
 
   h4 {
     font-style: normal;
@@ -219,8 +220,13 @@ const MainSection = styled.section`
     color: ${(props) => props.theme.colors.primary};
   }
   .dark {
-    margin: 48px 0 28px 0;
+    margin: 48px 0 28px 24px;
     color: ${(props) => props.theme.colors.darkest};
+    align-self: flex-start;
+  }
+  .description {
+    box-sizing: border-box;
+    margin: 0 24px;
   }
 
   p {
@@ -229,10 +235,6 @@ const MainSection = styled.section`
     font-size: 16px;
     line-height: 150%;
     color: ${(props) => props.theme.colors.darkest};
-  }
-
-  div {
-    padding: 0 24px 0 24px;
   }
 
   table {
@@ -261,16 +263,46 @@ const MainSection = styled.section`
   }
 `;
 
-const CardDiv = styled.div`
+const CardGroups = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 24px;
-  height: 218px;
-  background-color: ${(props) => props.theme.colors.white};
-  border-radius: 0px 0px 9.5px 9.5px;
-  filter: drop-shadow(0px 0px 2px rgba(98, 98, 98, 0.18)),
-    drop-shadow(0px 1px 2px rgba(98, 98, 98, 0.18));
+  align-items: center;
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    width: 90%;
+    height: 326px;
+
+    background-color: ${(props) => props.theme.colors.white};
+    border-radius: 9.5px;
+    filter: drop-shadow(0px 0px 2px rgba(98, 98, 98, 0.18)),
+      drop-shadow(0px 1px 2px rgba(98, 98, 98, 0.18));
+  }
+  .contactCard {
+    height: auto;
+  }
+
+  .cardHeader {
+    z-index: 0;
+    width: 100%;
+    height: 30%;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    border-radius: 9.5px 9.5px 0px 0px;
+  }
+  .cardBody {
+    box-sizing: border-box;
+    margin: 0 24px;
+    padding: 0 24px;
+    width: 100%;
+    height: 70%;
+    border-radius: 0px 0px 9.5px 9.5px;
+  }
   h5 {
     font-weight: 900;
     font-size: 12px;
@@ -303,7 +335,8 @@ const CardDiv = styled.div`
   }
 
   .contactPersonDiv {
-    padding: 0;
+    box-sizing: border-box;
+    padding: 0 24px;
     width: 100%;
     display: flex;
     margin: 16px 0;
@@ -311,6 +344,7 @@ const CardDiv = styled.div`
 
     h4 {
       margin: 0 16px;
+      align-self: unset;
     }
     div {
       padding: 0;
@@ -330,10 +364,12 @@ const CardDiv = styled.div`
     }
   }
   .contactInfo {
+    box-sizing: border-box;
     padding: 0 8px 0 8px;
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 90%;
+    min-width: 334px;
     height: 48px;
     background-color: #f5f5f5;
     border-radius: 4.5px;
@@ -357,23 +393,12 @@ const CardDiv = styled.div`
   }
 `;
 
-/* comment out map for debugging purpose  */
-// const MapContainer = styled.div`
-//   width: 80%;
-//   height: 45vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   border-radius: 5px;
-// `;
-
 interface ParamTypes {
   id: string;
 }
 
 const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
-  const [scriptLoaded, setScriptLoaded] = useState(false);
   const [item, setItem] = useState({}) as any;
   const [editItem, setEditItem] = useState(false);
   const [regive, setRegive] = useState(false);
@@ -440,19 +465,9 @@ const ItemDetails: FC<ParamTypes> = () => {
     };
   });
 
-  /* comment out map for debugging purpose  */
-  // useEffect(() => {
-  //   const googleMapScript = loadMapApi();
-
-  //   const cb = () => {
-  //     setScriptLoaded(true);
-  //   };
-  //   googleMapScript.addEventListener("load", cb);
-
-  //   return () => {
-  //     googleMapScript.removeEventListener("load", cb);
-  //   };
-  // }, []);
+  useEffect(() => {
+    loadMapApi();
+  }, []);
 
   const updateItem = async (newStatus: string) => {
     const result = (await API.graphql(
@@ -537,7 +552,7 @@ const ItemDetails: FC<ParamTypes> = () => {
     <>
       <TopSection>
         {item.status === "available" && (
-          <header>
+          <header className="header">
             <MdArrowBack onClick={goBackFunc} />
             <p className="headerTitle">{item.title}</p>
             {showHeaderBtn && (
@@ -669,7 +684,7 @@ const ItemDetails: FC<ParamTypes> = () => {
       <MainSection>
         <div>
           <h4 className="dark">Beskrivning</h4>
-          <p>{item.description}</p>
+          <p className="description">{item.description}</p>
         </div>
         <table>
           <tbody>
@@ -758,21 +773,41 @@ const ItemDetails: FC<ParamTypes> = () => {
             )}
           </tbody>
         </table>
-        <div>
+        <CardGroups>
           <h4 className="dark">Här finns prylen</h4>
 
-          <CardDiv>
-            <h5>ADRESS</h5>
-            <p>{item.department}</p>
-            <p>{item.location}</p>
-            <Button className=" btn--adress" type="button">
-              Hitta hit
-              <MdPlace />
-            </Button>
-          </CardDiv>
+          <div className="card mapCard">
+            <div className="cardHeader">
+              {item && item.location && (
+                <Map
+                  mapType={google.maps.MapTypeId.ROADMAP}
+                  mapTypeControl={false}
+                  location={item.location}
+                />
+              )}
+
+              {!item.location && (
+                <Loader
+                  type="ThreeDots"
+                  color="#9db0c6"
+                  height={50}
+                  width={50}
+                />
+              )}
+            </div>
+            <div className="cardBody">
+              <h5>ADRESS</h5>
+              <p>{item.department}</p>
+              <p>{item.location}</p>
+              <Button className=" btn--adress" type="button">
+                Hitta hit
+                <MdPlace />
+              </Button>
+            </div>
+          </div>
           <h4 className="dark">Kontaktperson</h4>
 
-          <CardDiv>
+          <div className="card contactCard">
             <div className="contactPersonDiv">
               <div>
                 <MdPerson />
@@ -790,23 +825,9 @@ const ItemDetails: FC<ParamTypes> = () => {
               <FiAtSign />
               <a href={mailtoHref}>{item.email}</a>
             </div>
-          </CardDiv>
-        </div>
+          </div>
+        </CardGroups>
       </MainSection>
-
-      {/* <MapContainer>
-        {item && item.location && (
-          <Map
-            mapType={google.maps.MapTypeId.ROADMAP}
-            mapTypeControl={false}
-            location={item.location}
-          />
-        )}
-
-        {!item.location && (
-          <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
-        )}
-      </MapContainer> */}
 
       <Line />
 

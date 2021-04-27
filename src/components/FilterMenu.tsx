@@ -214,7 +214,7 @@ const FilterMenu: FC<Props> = ({
         <SortRadioButtons
           setNewSorting={setNewSorting}
           setIsDisabled={setIsDisabled}
-          groupTitle="Sortering"
+          groupTitle="SORTERING"
           newSorting={newSorting}
           activeSorting={activeSorting}
           setShowToggle={setShowToggle}

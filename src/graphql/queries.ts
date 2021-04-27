@@ -109,3 +109,42 @@ export const listAdverts = /* GraphQL */ `
     }
   }
 `;
+export const getPage = /* GraphQL */ `
+  query GetPage($slug: String!) {
+    getPage(slug: $slug) {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPages = /* GraphQL */ `
+  query ListPages(
+    $slug: String
+    $filter: ModelPageFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listPages(
+      slug: $slug
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        slug
+        title
+        content
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

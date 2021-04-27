@@ -137,3 +137,39 @@ export const onDeleteAdvert = /* GraphQL */ `
     }
   }
 `;
+export const onCreatePage = /* GraphQL */ `
+  subscription OnCreatePage {
+    onCreatePage {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdatePage = /* GraphQL */ `
+  subscription OnUpdatePage {
+    onUpdatePage {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeletePage = /* GraphQL */ `
+  subscription OnDeletePage {
+    onDeletePage {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;

@@ -11,6 +11,7 @@ import { sortValues } from "../utils/sortValuesUtils";
 
 const InputGroup = styled.div`
    {
+     color: ${(props) => props.theme.colors.dark};
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -44,7 +45,8 @@ const InputGroup = styled.div`
 
    
     svg {
-      padding: 3px 1px 0 1px;
+      font-size: 14px;
+      padding: 4px 0 0 2px;
       color: ${(props) => props.theme.colors.primaryLight}
    
     }
@@ -53,13 +55,14 @@ const InputGroup = styled.div`
       margin-left: 4px;
     }
     
-    .masterRadio {
+    .normal {
       margin-left: 19px; 
       font-weight: 500;
     }
     .active{
       margin-left: 19px; 
       font-weight: 900;
+      color: ${(props) => props.theme.colors.darker};
     }
     
     .radioInput{
@@ -97,12 +100,26 @@ const GroupRadio = styled.div`
     }
   }
 `;
-
+const Divider = styled.div`
+   {
+    width: 71px;
+    height: 2px;
+    margin-top: 15px;
+    background-color: ${(props) => props.theme.colors.primaryLighter};
+  }
+`;
 const GroupCtn = styled.div`
    {
     width: 350px;
     height: 100%;
     margin-bottom: 3px;
+
+    h2 {
+      font-size: 12px;
+      font-weight: 900;
+      color: ${(props) => props.theme.colors.darker};
+      margin-block-end: 0;
+    }
   }
 `;
 type ISorting = {
@@ -170,7 +187,7 @@ const SortRadioButtons: FC<Props> = ({
           }
         >
           <label
-            className={showToggle === element.title ? "active" : "masterRadio"}
+            className={showToggle === element.title ? "active" : "normal"}
             htmlFor={element.title}
           >
             {element.title}
@@ -250,7 +267,8 @@ const SortRadioButtons: FC<Props> = ({
   return (
     <>
       <GroupCtn>
-        {groupTitle}
+        <h2>{groupTitle}</h2>
+        <Divider />
         {radio}
       </GroupCtn>
     </>

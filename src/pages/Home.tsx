@@ -185,7 +185,7 @@ const Home: FC<Props> = ({
 }: Props) => {
   const [showQRCamera, setShowQRCamera] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const updateSearch = (event: React.ChangeEvent<any>) => {
     const { target } = event;
@@ -229,14 +229,6 @@ const Home: FC<Props> = ({
       );
     }
   };
-
-  // const handleSortItems = (str: string, secondStr: string) => {
-  //   console.log(str, items.sort(sortBy(str, secondStr)));
-  //   setActiveSorting({ first: str, second: secondStr, sortTitle: "" });
-  //   // fetchItems();
-  //   // setRenderItems(items.sort(sortBy(str)));
-  //   // handlePages(paginationOption.activePage);
-  // };
 
   const filterConditions: any = (fetchedData: any, conditions: any) => {
     let copyItems: any[] = [];

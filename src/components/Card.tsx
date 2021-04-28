@@ -11,6 +11,7 @@ interface Props {
   condition: string;
   quantity: number;
   imageKey: string;
+  status: string;
 }
 
 const CardDiv = styled.div`
@@ -102,6 +103,7 @@ const Card: FC<Props> = ({
   condition,
   quantity,
   imageKey,
+  status,
 }: Props) => {
   const [url, setURL] = useState(undefined) as any;
   const fetchImage = (): void => {
@@ -122,6 +124,7 @@ const Card: FC<Props> = ({
         <h3>{title}</h3>
         <h4>{quantity} stycken</h4>
         <p className="desc">Beskrivning: {description}</p>
+        {status === "reserved" && <p>Status: {status}</p>}
       </div>
     </CardDiv>
   );

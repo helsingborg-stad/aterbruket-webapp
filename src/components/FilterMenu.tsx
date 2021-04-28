@@ -129,14 +129,13 @@ const FilterMenu: FC<Props> = ({
   setActiveSorting,
 }: Props) => {
   const [saveValues, setSaveValues] = useState({});
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [newSorting, setNewSorting] = useState({
     first: activeSorting.first,
     second: activeSorting.second,
     sortTitle: activeSorting.sortTitle,
   });
   const [showToggle, setShowToggle] = useState(activeSorting.sortTitle);
-
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add(FLITER_OPEN_CLASS);
@@ -198,6 +197,29 @@ const FilterMenu: FC<Props> = ({
     setShowToggle(DEFAULTSORTVALUE.sortTitle);
   };
 
+  useEffect(() => {
+    const count: string[] = [];
+    Object.entries(saveValues).forEach((entry: any) => {
+      const [key, value] = entry;
+
+      Object.keys(value).forEach((innerKey: string) => {
+        if (value[innerKey] === true) {
+          if (key === "category") {
+            count.push(innerKey);
+          } else if (key === "condition") {
+            count.push(innerKey);
+          }
+        }
+      });
+    });
+
+    if (count.length === 0 && newSorting.first === activeSorting.first) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [newSorting, saveValues]);
+
   return (
     <FilterCtn className={isOpen ? "show" : "hide"}>
       <FilterHeader>
@@ -213,27 +235,21 @@ const FilterMenu: FC<Props> = ({
       <FilterBody>
         <SortRadioButtons
           setNewSorting={setNewSorting}
-          setIsDisabled={setIsDisabled}
           groupTitle="SORTERING"
           newSorting={newSorting}
-          activeSorting={activeSorting}
           setShowToggle={setShowToggle}
           showToggle={showToggle}
         />
         <FilterCheckbox
-          setIsDisabled={setIsDisabled}
           setSaveValues={setSaveValues}
           group={fieldsForm[2]}
           saveValues={saveValues}
         />
         <FilterCheckbox
-          setIsDisabled={setIsDisabled}
           setSaveValues={setSaveValues}
           group={fieldsForm[9]}
           saveValues={saveValues}
         />
-        {/* all the small filtering components, the following p tag is just for showing how it looks like, can be removed when component is added */}
-
         <button
           disabled={isDisabled}
           style={{

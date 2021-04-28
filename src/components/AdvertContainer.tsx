@@ -104,15 +104,12 @@ const AdvertContainer: FC<IAdvert> = ({
       </div>
       {filteredItems.map((filteredItem: any) => (
         <Card
-          climat={filteredItem.climateImpact}
           key={filteredItem.id}
           id={filteredItem.id}
           title={filteredItem.title}
           description={filteredItem.description}
-          condition={filteredItem.condition}
           quantity={filteredItem.quantity}
           imageKey={filteredItem.images[0].src}
-          daysAt={filteredItem.createdAt}
         />
       ))}
     </AdvertContainerDiv>

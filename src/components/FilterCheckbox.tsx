@@ -76,14 +76,12 @@ interface Props {
   group: any;
   saveValues: any;
   setSaveValues: any;
-  setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const FilterCheckbox: FC<Props> = ({
   setSaveValues,
   saveValues,
   group,
-  setIsDisabled,
 }: Props) => {
   const handleInputChange = (e: React.ChangeEvent<any>, groupName: any) => {
     setSaveValues({
@@ -94,29 +92,6 @@ const FilterCheckbox: FC<Props> = ({
       },
     });
   };
-
-  let cates: any = [];
-  let condis: any = [];
-
-  Object.entries(saveValues).forEach((entry: any) => {
-    const [key, value] = entry;
-
-    Object.keys(value).forEach((innerKey: string) => {
-      if (value[innerKey] === true) {
-        if (key === "category") {
-          cates.push(innerKey);
-        } else if (key === "condition") {
-          condis.push(innerKey);
-        }
-      }
-    });
-  });
-
-  // if (cates.length === 0 && condis.length === 0) {
-  //   setIsDisabled(true);
-  // } else {
-  //   setIsDisabled(false);
-  // }
 
   let checkboxes: any;
 
@@ -138,7 +113,7 @@ const FilterCheckbox: FC<Props> = ({
           <label
             htmlFor={element}
             className={
-              !!(saveValues[group.name] && saveValues[group.name][element])
+              saveValues[group.name] && saveValues[group.name][element]
                 ? "active"
                 : "normal"
             }

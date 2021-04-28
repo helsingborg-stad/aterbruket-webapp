@@ -87,7 +87,7 @@ const AdvertContainer: FC<IAdvert> = ({
         ) : (
           itemsFrom === "home" && <h3>Alla möbler</h3>
         )}
-        {itemsFrom === "haffat" && <h3>Saker att hämta</h3>}
+        {itemsFrom === "haffat" && <h3>Grejer att hämta</h3>}{" "}
         {itemsFrom === "profile" && <h3>Mina annonser</h3>}
       </div>
       {filteredItems.map((filteredItem: any) => (
@@ -99,6 +99,7 @@ const AdvertContainer: FC<IAdvert> = ({
           condition={filteredItem.condition}
           quantity={filteredItem.quantity}
           imageKey={filteredItem.images[0].src}
+          status={filteredItem.status}
         />
       ))}
     </AdvertContainerDiv>

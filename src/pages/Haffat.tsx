@@ -36,10 +36,7 @@ const Haffat: FC = () => {
     const result = (await API.graphql(
       graphqlOperation(listAdverts, {
         filter: {
-          and: [
-            { reservedBySub: { eq: user.sub } },
-            { version: { eq: 0 } },
-          ],
+          and: [{ reservedBySub: { eq: user.sub } }, { version: { eq: 0 } }],
           not: { status: { eq: "available" } },
         },
       })
@@ -72,6 +69,7 @@ const Haffat: FC = () => {
         items={renderItems}
         itemsFrom="haffat"
       />
+
       {reservedItems.length > 0 && (
         <Pagination
           paginationOption={paginationOption}

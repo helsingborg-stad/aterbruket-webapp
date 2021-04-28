@@ -1,6 +1,8 @@
 import React, { FC, useContext } from "react";
 import styled from "styled-components";
-import { UserContext } from "../contexts/UserContext";
+import { Auth } from "aws-amplify";
+import { RouteComponentProps } from "react-router-dom";
+import UserContext from "../contexts/UserContext";
 
 const InformationFrame = styled.header`
   padding: 24px;
@@ -16,37 +18,71 @@ const InformationHeader = styled.p`
 
 const InformationContainer = styled.div`
   width: 90%;
-  height: 100vh;
   background: #fcfcfc;
 `;
 
-const PersonalInfo: FC = () => {
-  const user: any = useContext(UserContext);
-  const userKeys = Object.keys(user.attributes);
-  const userInfo = userKeys.map((key) => {
-    return (
-      <div key={key}>
-        {key === "email_verified" ? null : (
-          <>
-            <InformationHeader> {key} </InformationHeader>
-            <InformationFrame>{user.attributes[key]}</InformationFrame>
-          </>
-        )}
-      </div>
-    );
-  });
+const SignOutButton = styled.button`
+  background: #50811b;
+  border-radius: 4.5px;
+  border: none;
+  color: white;
+  font-size: 14px;
+  padding: 12px 24px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 24px;
+`;
+
+const PersonalInfo: FC<RouteComponentProps> = ({ history }) => {
+  const { user } = useContext(UserContext);
+
+  const handleSignOut = async () => {
+    try {
+      await Auth.signOut().then(() => {
+        history.push("/");
+      });
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  };
+
   return (
     <main>
-      <h2> {user.attributes.name} </h2>
+      <h2> {user.name} </h2>
       <InformationContainer>
-        {userInfo}
-        <InformationHeader>DEPARTMENT</InformationHeader>
-        {!user["custom:department"] ? (
-          <InformationFrame>Kan inte hitta avdelning..</InformationFrame>
-        ) : (
-          <InformationFrame>{user["custom:department"]}</InformationFrame>
+        {user.name && (
+          <>
+            <InformationHeader>Namn</InformationHeader>
+            <InformationFrame>{user.name}</InformationFrame>
+          </>
+        )}
+        {user.department && (
+          <>
+            <InformationHeader>Avdelning</InformationHeader>
+            <InformationFrame>{user.department}</InformationFrame>
+          </>
+        )}
+        {user.email && (
+          <>
+            <InformationHeader>Email</InformationHeader>
+            <InformationFrame>{user.email}</InformationFrame>
+          </>
+        )}
+        {user.address && (
+          <>
+            <InformationHeader>Adress</InformationHeader>
+            <InformationFrame>{user.address}</InformationFrame>
+          </>
+        )}
+        {user.postalcode && (
+          <>
+            <InformationHeader>Postnummer</InformationHeader>
+            <InformationFrame>{user.postalcode}</InformationFrame>
+          </>
         )}
       </InformationContainer>
+
+      <SignOutButton onClick={handleSignOut}>Logga ut</SignOutButton>
     </main>
   );
 };

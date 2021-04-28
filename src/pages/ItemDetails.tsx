@@ -1,28 +1,18 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/no-named-as-default-member */
+/* eslint-disable-next-line react-hooks/exhaustive-deps */
 /* global google */
 
-import React, { FC, useState, useEffect, useContext } from "react";
+import React, { FC, useState, useEffect, useContext, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API, Storage } from "aws-amplify";
-import QRCode from "../components/QRCodeContainer";
-import { GetAdvertQuery } from "../API";
-import { getAdvert } from "../graphql/queries";
-import { createAdvert, updateAdvert } from "../graphql/mutations";
-import EditItemForm from "../components/EditItemForm";
-// import { loadMapApi } from "../utils/GoogleMapsUtils";
-// import Map from "../components/Map";
-import CarouselComp from "../components/CarouselComp";
-import { UserContext } from "../contexts/UserContext";
-import RegiveForm from "../components/RegiveForm";
-import showDays from "../hooks/showDays";
-import { fieldsForm } from "../utils/formUtils";
 import {
   MdArrowBack,
   MdEdit,
@@ -31,6 +21,18 @@ import {
   MdPhone,
 } from "react-icons/md";
 import { FiAtSign } from "react-icons/fi";
+import QRCode from "../components/QRCodeContainer";
+import { GetAdvertQuery } from "../API";
+import { getAdvert } from "../graphql/queries";
+import { createAdvert, updateAdvert } from "../graphql/mutations";
+import EditItemForm from "../components/EditItemForm";
+import { loadMapApi } from "../utils/GoogleMapsUtils";
+import Map from "../components/Map";
+import CarouselComp from "../components/CarouselComp";
+import UserContext from "../contexts/UserContext";
+import RegiveForm from "../components/RegiveForm";
+import showDays from "../hooks/showDays";
+import { fieldsForm } from "../utils/formUtils";
 
 const TopSection = styled.div`
   background-color: ${(props) => props.theme.colors.offWhite};
@@ -56,10 +58,14 @@ const TopSection = styled.div`
   header {
     position: relative;
     width: 100%;
-    text-align: center;
     height: 75px;
     position: fixed;
     background-color: ${(props) => props.theme.colors.offWhite};
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     svg {
       position: absolute;
@@ -71,16 +77,29 @@ const TopSection = styled.div`
     p,
     .headerTitle {
       margin: 35px 0 0 0;
-      font-family: Roboto;
       font-style: normal;
       font-weight: 500;
       font-size: 18px;
       line-height: 132%;
       color: ${(props) => props.theme.colors.darkest};
+      max-width: 30%;
     }
-  }
+    .btn--haffa--header,
+    .btn--pickUp--header {
+      width: auto;
+      height: auto;
+      margin: 0;
+      position: absolute;
+      bottom: 7px;
+      right: 16px;
+      padding: 8px 12px;
+      font-size: 16px;
+      box-shadow: none;
+    }
 
-  .btn {
+    .btn--pickUp--header {
+      background-color: ${(props) => props.theme.colors.primaryLight};
+    }
   }
 
   .btn--pickUp {
@@ -114,7 +133,6 @@ const TopSection = styled.div`
     width: 100%;
     h4 {
       margin: 48px 32px 12px 32px;
-      font-family: Roboto;
       font-style: normal;
       font-weight: bold;
       font-size: 18px;
@@ -123,23 +141,24 @@ const TopSection = styled.div`
       color: ${(props) => props.theme.colors.primaryDark};
     }
     h1 {
-      font-family: Roboto;
       font-style: normal;
       font-weight: 900;
       font-size: 36px;
       line-height: 124%;
-      margin: 48px 32px 24px 32px;
+      margin: 8px 32px 24px 32px;
     }
   }
 
-  .removeReservationP {
-    font-family: Roboto;
+  .removeReservation {
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 150%;
     color: ${(props) => props.theme.colors.dark};
     margin: 0 0 32px 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
   }
 
   .regiveBtn {
@@ -189,6 +208,7 @@ const Line = styled.div`
 
 const MainSection = styled.section`
   width: 100%;
+  margin: 0 auto;
 
   h4 {
     font-style: normal;
@@ -200,8 +220,13 @@ const MainSection = styled.section`
     color: ${(props) => props.theme.colors.primary};
   }
   .dark {
-    margin: 48px 0 28px 0;
+    margin: 48px 0 28px 24px;
     color: ${(props) => props.theme.colors.darkest};
+    align-self: flex-start;
+  }
+  .description {
+    box-sizing: border-box;
+    margin: 0 24px;
   }
 
   p {
@@ -210,10 +235,6 @@ const MainSection = styled.section`
     font-size: 16px;
     line-height: 150%;
     color: ${(props) => props.theme.colors.darkest};
-  }
-
-  div {
-    padding: 0 24px 0 24px;
   }
 
   table {
@@ -242,22 +263,52 @@ const MainSection = styled.section`
   }
 `;
 
-const CardDiv = styled.div`
+const CardGroups = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 24px;
-  height: 218px;
-  background-color: ${(props) => props.theme.colors.white};
-  border-radius: 0px 0px 9.5px 9.5px;
-  filter: drop-shadow(0px 0px 2px rgba(98, 98, 98, 0.18)),
-    drop-shadow(0px 1px 2px rgba(98, 98, 98, 0.18));
+  align-items: center;
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    width: 90%;
+    height: 326px;
+
+    background-color: ${(props) => props.theme.colors.white};
+    border-radius: 9.5px;
+    filter: drop-shadow(0px 0px 2px rgba(98, 98, 98, 0.18)),
+      drop-shadow(0px 1px 2px rgba(98, 98, 98, 0.18));
+  }
+  .contactCard {
+    height: auto;
+  }
+
+  .cardHeader {
+    z-index: 0;
+    width: 100%;
+    height: 30%;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    border-radius: 9.5px 9.5px 0px 0px;
+  }
+  .cardBody {
+    box-sizing: border-box;
+    margin: 0 24px;
+    padding: 0 24px;
+    width: 100%;
+    height: 70%;
+    border-radius: 0px 0px 9.5px 9.5px;
+  }
   h5 {
     font-weight: 900;
     font-size: 12px;
     line-height: 150%;
     color: ${(props) => props.theme.colors.primary};
-    margin: 24px ​0px 12px 0px;
+    margin: 24px 0px 12px 0px;
   }
   p {
     margin: 0;
@@ -284,7 +335,8 @@ const CardDiv = styled.div`
   }
 
   .contactPersonDiv {
-    padding: 0;
+    box-sizing: border-box;
+    padding: 0 24px;
     width: 100%;
     display: flex;
     margin: 16px 0;
@@ -292,6 +344,7 @@ const CardDiv = styled.div`
 
     h4 {
       margin: 0 16px;
+      align-self: unset;
     }
     div {
       padding: 0;
@@ -311,19 +364,27 @@ const CardDiv = styled.div`
     }
   }
   .contactInfo {
+    box-sizing: border-box;
     padding: 0 8px 0 8px;
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 90%;
+    min-width: 334px;
     height: 48px;
     background-color: #f5f5f5;
     border-radius: 4.5px;
     margin: 0 0 10px 0;
     line-break: anywhere;
 
-    p {
+    a {
       color: ${(props) => props.theme.colors.darker};
       margin-left: 8px;
+      text-decoration: inherit;
+      color: inherit;
+      :visited {
+        text-decoration: inherit;
+        color: inherit;
+      }
     }
     svg {
       font-size: 20px;
@@ -332,30 +393,22 @@ const CardDiv = styled.div`
   }
 `;
 
-/* comment out map for debugging purpose  */
-// const MapContainer = styled.div`
-//   width: 80%;
-//   height: 45vh;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   border-radius: 5px;
-// `;
-
 interface ParamTypes {
   id: string;
 }
 
 const ItemDetails: FC<ParamTypes> = () => {
   const { id } = useParams<ParamTypes>();
-  const [scriptLoaded, setScriptLoaded] = useState(false);
   const [item, setItem] = useState({}) as any;
   const [editItem, setEditItem] = useState(false);
   const [regive, setRegive] = useState(false);
   const [showCarousel, setShowCarousel] = useState(false);
-  const user: any = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [image, setImage] = useState("") as any;
   const [itemUpdated, setItemUpdated] = useState(false);
+  const buttonOutOfScreen = useRef(null);
+  const [refVisible, setRefVisible] = useState(false);
+  const [showHeaderBtn, setShowHeaderBtn] = useState(false);
 
   const fetchImage = (item: any) => {
     Storage.get(item.images[0].src).then((url: any) => {
@@ -385,19 +438,36 @@ const ItemDetails: FC<ParamTypes> = () => {
     setItemUpdated(false);
   }, [itemUpdated]);
 
-  /* comment out map for debugging purpose  */
-  // useEffect(() => {
-  //   const googleMapScript = loadMapApi();
+  let handler: any;
+  const scrollFunc = () => {
+    handler = function () {
+      const element: any = buttonOutOfScreen.current;
 
-  //   const cb = () => {
-  //     setScriptLoaded(true);
-  //   };
-  //   googleMapScript.addEventListener("load", cb);
+      const buttonPos: any = element.offsetTop - element.offsetHeight;
 
-  //   return () => {
-  //     googleMapScript.removeEventListener("load", cb);
-  //   };
-  // }, []);
+      if (window.scrollY >= buttonPos) {
+        setShowHeaderBtn(true);
+      } else {
+        setShowHeaderBtn(false);
+      }
+    };
+
+    window.addEventListener("scroll", handler, false);
+  };
+  useEffect(() => {
+    if (!refVisible) {
+      return;
+    }
+
+    scrollFunc();
+    return () => {
+      window.removeEventListener("scroll", handler, false);
+    };
+  });
+
+  useEffect(() => {
+    loadMapApi();
+  }, []);
 
   const updateItem = async (newStatus: string) => {
     const result = (await API.graphql(
@@ -405,8 +475,8 @@ const ItemDetails: FC<ParamTypes> = () => {
         input: {
           id,
           status: newStatus,
-          reservedBySub: user.attributes.sub,
-          reservedByName: user.attributes.name,
+          reservedBySub: user.sub,
+          reservedByName: user.name,
           version: 0,
           revisions: item.revisions + 1,
         },
@@ -424,10 +494,15 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const onClickReservBtn = () => {
     updateItem("reserved");
+    setShowHeaderBtn(false);
   };
-
+  const onClickRemoveResBtn = () => {
+    updateItem("available");
+    setShowHeaderBtn(false);
+  };
   const onClickPickUpBtn = () => {
     updateItem("pickedUp");
+    setShowHeaderBtn(false);
   };
   const translate = (word: string, cat: any) => {
     let sweWord = "";
@@ -463,19 +538,34 @@ const ItemDetails: FC<ParamTypes> = () => {
     });
     return <td key={str}>{str}</td>;
   };
-  let history = useHistory();
+  const history = useHistory();
 
   const goBackFunc = () => {
     history.goBack();
   };
 
+  const mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
+  const telHref = `tel:${item.phoneNumber}`;
+  console.log(item);
+
   const allDetails = (
     <>
       <TopSection>
         {item.status === "available" && (
-          <header>
+          <header className="header">
             <MdArrowBack onClick={goBackFunc} />
             <p className="headerTitle">{item.title}</p>
+            {showHeaderBtn && (
+              <Button
+                className="btn--haffa--header"
+                onClick={() => {
+                  onClickReservBtn();
+                }}
+                type="button"
+              >
+                HAFFA!
+              </Button>
+            )}
           </header>
         )}
 
@@ -488,6 +578,17 @@ const ItemDetails: FC<ParamTypes> = () => {
             ) : (
               <p className="reservedP">Uthämtad</p>
             )}
+            {showHeaderBtn && (
+              <Button
+                className="btn--pickUp--header"
+                onClick={() => {
+                  onClickPickUpBtn();
+                }}
+                type="button"
+              >
+                HÄMTA UT
+              </Button>
+            )}
           </header>
         )}
 
@@ -499,14 +600,21 @@ const ItemDetails: FC<ParamTypes> = () => {
           </ImgDiv>
         )}
         <div className="titleDiv">
-          {/*           <h4>Möbler</h4>
-           */}
+          <h4>
+            {item.category
+              ? translate(item.category, "category")
+              : item.category}
+          </h4>
           <h1>{item.title}</h1>
         </div>
 
         {item.status ===
           "available" /* && item.giver !== user.attributes.sub */ && (
           <Button
+            ref={(el: any) => {
+              buttonOutOfScreen.current = el;
+              setRefVisible(!!el);
+            }}
             className="btn--haffa"
             onClick={() => {
               onClickReservBtn();
@@ -517,24 +625,34 @@ const ItemDetails: FC<ParamTypes> = () => {
           </Button>
         )}
 
-        {item.status === "reserved" &&
-          item.reservedBySub === user.attributes.sub && (
-            <>
-              <Button
-                className=" btn--pickUp"
-                onClick={() => {
-                  onClickPickUpBtn();
-                }}
-                type="button"
-              >
-                Hämta ut
-              </Button>
+        {item.status === "reserved" && item.reservedBySub === user.sub && (
+          <>
+            <Button
+              ref={(el: any) => {
+                buttonOutOfScreen.current = el;
+                setRefVisible(!!el);
+              }}
+              className=" btn--pickUp"
+              onClick={() => {
+                onClickPickUpBtn();
+              }}
+              type="button"
+            >
+              Hämta ut
+            </Button>
+            <button
+              type="button"
+              className="removeReservation"
+              onClick={() => {
+                onClickRemoveResBtn();
+              }}
+            >
+              Ta bort reservation
+            </button>
+          </>
+        )}
 
-              <p className="removeReservationP">Ta bort reservation</p>
-            </>
-          )}
-
-        {item.status === "available" && item.giver === user.attributes.sub && (
+        {item.status === "available" && item.giver === user.sub && (
           <>
             <Button
               className=" btn--edit"
@@ -548,39 +666,28 @@ const ItemDetails: FC<ParamTypes> = () => {
           </>
         )}
 
-        {item.status === "pickedUp" &&
-          item.reservedBySub === user.attributes.sub && (
-            <>
-              <Button
-                className=" btn--regive"
-                onClick={() => {
-                  setRegive(true);
-                }}
-                type="button"
-              >
-                Annonsera igen
-              </Button>
-            </>
-          )}
+        {item.status === "pickedUp" && item.reservedBySub === user.sub && (
+          <>
+            <Button
+              className=" btn--regive"
+              onClick={() => {
+                setRegive(true);
+              }}
+              type="button"
+            >
+              Annonsera igen
+            </Button>
+          </>
+        )}
       </TopSection>
 
       <MainSection>
         <div>
           <h4 className="dark">Beskrivning</h4>
-          <p>{item.description}</p>
+          <p className="description">{item.description}</p>
         </div>
         <table>
           <tbody>
-            <tr>
-              <td>
-                <h4>Typ av möbel</h4>
-              </td>
-              <td>
-                {item.category
-                  ? translate(item.category, "category")
-                  : item.category}
-              </td>
-            </tr>
             <tr>
               <td>
                 <h4>Höjd</h4>
@@ -666,52 +773,61 @@ const ItemDetails: FC<ParamTypes> = () => {
             )}
           </tbody>
         </table>
-        <div>
+        <CardGroups>
           <h4 className="dark">Här finns prylen</h4>
 
-          <CardDiv>
-            <h5>ADRESS</h5>
-            <p>{item.department}</p>
-            <p>{item.location}</p>
-            <Button className=" btn--adress" type="button">
-              Hitta hit
-              <MdPlace />
-            </Button>
-          </CardDiv>
+          <div className="card mapCard">
+            <div className="cardHeader">
+              {item && item.location && (
+                <Map
+                  mapType={google.maps.MapTypeId.ROADMAP}
+                  mapTypeControl={false}
+                  location={item.location}
+                />
+              )}
+
+              {!item.location && (
+                <Loader
+                  type="ThreeDots"
+                  color="#9db0c6"
+                  height={50}
+                  width={50}
+                />
+              )}
+            </div>
+            <div className="cardBody">
+              <h5>ADRESS</h5>
+              <p>{item.department}</p>
+              <p>{item.location}</p>
+              <Button className=" btn--adress" type="button">
+                Hitta hit
+                <MdPlace />
+              </Button>
+            </div>
+          </div>
           <h4 className="dark">Kontaktperson</h4>
 
-          <CardDiv>
+          <div className="card contactCard">
             <div className="contactPersonDiv">
               <div>
                 <MdPerson />
               </div>
               <h4 className="dark">{item.contactPerson}</h4>
             </div>
-            <div className="contactInfo">
-              <MdPhone />
-              <p>{item.phoneNumber}</p>
-            </div>
+            {item.phoneNumber && (
+              <div className="contactInfo">
+                <MdPhone />
+                <a href={telHref}>{item.phoneNumber}</a>
+              </div>
+            )}
+
             <div className="contactInfo">
               <FiAtSign />
-              <p>{item.email}</p>
+              <a href={mailtoHref}>{item.email}</a>
             </div>
-          </CardDiv>
-        </div>
+          </div>
+        </CardGroups>
       </MainSection>
-
-      {/* <MapContainer>
-        {item && item.location && (
-          <Map
-            mapType={google.maps.MapTypeId.ROADMAP}
-            mapTypeControl={false}
-            location={item.location}
-          />
-        )}
-
-        {!item.location && (
-          <Loader type="ThreeDots" color="#9db0c6" height={50} width={50} />
-        )}
-      </MapContainer> */}
 
       <Line />
 
@@ -720,7 +836,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   );
 
   return (
-    <main>
+    <main style={{ padding: 0 }}>
       {editItem ? (
         <EditItemForm
           setEditItem={setEditItem}

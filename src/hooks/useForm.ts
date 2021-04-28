@@ -10,11 +10,11 @@ const recreateInitial = async (mutation: any, values: any) => {
   delete values.createdAt;
   delete values.updatedAt;
   values.version = values.revisions + 1;
+  values.status = "pickedUp";
+  values.revisions -= 1;
 
   await API.graphql(graphqlOperation(mutation, { input: values }));
 };
-
-
 
 const useForm = (initialValues: any, mutation: string) => {
   const [values, setValues] = useState(initialValues);
@@ -36,13 +36,13 @@ const useForm = (initialValues: any, mutation: string) => {
   const upload = (file: any) => {
     Storage.put(file.uuid, file)
       .then((result: any) => {
-        setFileUploading(false)
+        setFileUploading(false);
         return { src: result.key, alt: file.name };
       })
       .catch((err) => {
         return err;
       });
-  }
+  };
 
   const handleInputChange = async (event: React.ChangeEvent<any>) => {
     const { target } = event;
@@ -51,7 +51,7 @@ const useForm = (initialValues: any, mutation: string) => {
       console.log("target.files", target.files);
       target.files[0].uuid = uuidv4();
       setFile(target.files[0]);
-      setFileUploading(true)
+      setFileUploading(true);
       console.log("target.files[0]", target.files[0]);
 
       return;
@@ -87,7 +87,7 @@ const useForm = (initialValues: any, mutation: string) => {
 
     if (result.data && !values.id) {
       // console.log("db CREATE ", result.data.createAdvert);
-      //sendEmail(result.data.createAdvert);
+      // sendEmail(result.data.createAdvert);
       return setRedirect(result.data.createAdvert.id);
     }
   };
@@ -126,7 +126,7 @@ const useForm = (initialValues: any, mutation: string) => {
     handleCheckboxChange,
     result,
     file,
-    fileUploading
+    fileUploading,
   };
 };
 

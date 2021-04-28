@@ -141,10 +141,8 @@ type IElement = {
 
 interface Props {
   setNewSorting: React.Dispatch<React.SetStateAction<ISorting>>;
-  setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
   groupTitle: string;
   newSorting: ISorting;
-  activeSorting: ISorting;
   setShowToggle: React.Dispatch<React.SetStateAction<string>>;
   showToggle: string;
 }
@@ -152,8 +150,6 @@ interface Props {
 const SortRadioButtons: FC<Props> = ({
   setNewSorting,
   groupTitle,
-  setIsDisabled,
-  activeSorting,
   newSorting,
   setShowToggle,
   showToggle,
@@ -164,13 +160,6 @@ const SortRadioButtons: FC<Props> = ({
     value: string
   ) => {
     setNewSorting({ first: firstStr, second: secondStr, sortTitle: value });
-
-    // if (firstStr !== activeSorting.first) {
-    //   console.log("hej hej ");
-    //   setIsDisabled(false);
-    // } else {
-    //   setIsDisabled(true);
-    // }
   };
 
   const handleRadioInput = (e: any, low: string, secondStr: string) => {

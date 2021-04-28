@@ -185,7 +185,7 @@ const Home: FC<Props> = ({
 }: Props) => {
   const [showQRCamera, setShowQRCamera] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const updateSearch = (event: React.ChangeEvent<any>) => {
     const { target } = event;

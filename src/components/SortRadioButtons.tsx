@@ -55,7 +55,7 @@ const InputGroup = styled.div`
       margin-left: 4px;
     }
     
-    .normal {
+    .masterRadio {
       margin-left: 19px; 
       font-weight: 500;
     }
@@ -117,6 +117,7 @@ const GroupCtn = styled.div`
     h2 {
       font-size: 12px;
       font-weight: 900;
+
       color: ${(props) => props.theme.colors.darker};
       margin-block-end: 0;
     }
@@ -172,12 +173,11 @@ const SortRadioButtons: FC<Props> = ({
     // }
   };
 
-  console.log("this is ", newSorting);
   const handleRadioInput = (e: any, low: string, secondStr: string) => {
     setShowToggle(e.target.value);
     setNewSorting({ first: low, second: secondStr, sortTitle: e.target.value });
   };
-  console.log("show ", showToggle);
+
   const radio = sortValues.map((element: IElement) => {
     return (
       <InputGroup key={element.title}>
@@ -187,7 +187,7 @@ const SortRadioButtons: FC<Props> = ({
           }
         >
           <label
-            className={showToggle === element.title ? "active" : "normal"}
+            className={showToggle === element.title ? "active" : "masterRadio"}
             htmlFor={element.title}
           >
             {element.title}

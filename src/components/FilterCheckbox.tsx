@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { ImCheckboxChecked, ImCheckboxUnchecked } from "react-icons/im";
 
 const InputGroup = styled.div`
    {
@@ -34,12 +33,16 @@ const InputGroup = styled.div`
       outline: none;
     }
 
-    .normal {
+    label {
       font-weight: 500;
     }
-    .active {
+
+    input[type="checkbox"]:checked + label,
+    &:focus {
       font-weight: 900;
       color: ${(props) => props.theme.colors.darker};
+    }
+    
     }
   }
 `;
@@ -140,7 +143,7 @@ const FilterCheckbox: FC<Props> = ({
                 : "normal"
             }
           >
-            {group.swe[idx]}{" "}
+            {group.swe[idx]}
           </label>
         </InputGroup>
       );

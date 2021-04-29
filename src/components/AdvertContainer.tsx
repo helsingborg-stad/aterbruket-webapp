@@ -69,7 +69,6 @@ const AdvertContainer: FC<IAdvert> = ({
   } else {
     filteredItems = items;
   }
-  console.log("items", items);
 
   return (
     <AdvertContainerDiv>
@@ -100,7 +99,6 @@ const AdvertContainer: FC<IAdvert> = ({
           id={filteredItem.id}
           title={filteredItem.title}
           description={filteredItem.description}
-          condition={filteredItem.condition}
           quantity={filteredItem.quantity}
           imageKey={filteredItem.images[0].src}
           status={filteredItem.status}

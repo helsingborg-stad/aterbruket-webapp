@@ -337,7 +337,6 @@ const Home: FC<Props> = ({
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
-
   return (
     <main>
       {showQRCamera ? (

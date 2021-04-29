@@ -5,7 +5,7 @@ import { MdCancel } from "react-icons/md";
 import FilterCheckbox from "./FilterCheckbox";
 import SortRadioButtons from "./SortRadioButtons";
 import { fieldsForm } from "../utils/formUtils";
-import { sortValues, DEFAULTSORTVALUE } from "../utils/sortValuesUtils";
+import { DEFAULTSORTVALUE } from "../utils/sortValuesUtils";
 
 const FilterCtn = styled.div`
   display: ${({ className }) => (className === "show" ? "block" : "none")};
@@ -99,6 +99,7 @@ type ISorting = {
   first: string;
   second: string;
   sortTitle: string;
+  secText: string;
 };
 
 interface Props {
@@ -134,6 +135,7 @@ const FilterMenu: FC<Props> = ({
     first: activeSorting.first,
     second: activeSorting.second,
     sortTitle: activeSorting.sortTitle,
+    secText: activeSorting.secText,
   });
   const [showToggle, setShowToggle] = useState(activeSorting.sortTitle);
   useEffect(() => {

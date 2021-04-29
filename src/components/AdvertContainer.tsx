@@ -2,12 +2,19 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import Card from "./Card";
 
+type ISorting = {
+  first: string;
+  second: string;
+  sortTitle: string;
+  secText: string;
+};
+
 interface IAdvert {
   items: any;
   searchValue: any;
   itemsFrom: string;
   filteredSweValues: any;
-  activeSorting: string;
+  activeSorting: ISorting;
 }
 
 const AdvertContainerDiv = styled.div`
@@ -33,6 +40,8 @@ const AdvertContainerDiv = styled.div`
 const OptionWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
   .options {
     font-weight: 900;
     font-size: 12px;
@@ -48,6 +57,9 @@ const OptionWrapper = styled.div`
 
     color: ${(props) => props.theme.colors.primaryDark};
     border-radius: 4.5px;
+  }
+  h3 {
+    margin: 8px;
   }
 `;
 
@@ -81,20 +93,28 @@ const AdvertContainer: FC<IAdvert> = ({
             <h3>Aktiva filter :</h3>
             {filteredSweValues.map((value: string) => {
               return (
-                <span className="options" key={value} style={{ margin: "5px" }}>
+                <span
+                  className="options"
+                  key={value}
+                  style={{ margin: "5px", height: "15px" }}
+                >
                   {value}
                 </span>
               );
             })}
           </OptionWrapper>
         ) : (
-          itemsFrom === "home" && <h3>Alla möbler</h3>
+          itemsFrom === "home" && (
+            <OptionWrapper>
+              <h3>Alla möbler</h3>
+            </OptionWrapper>
+          )
         )}
-        {itemsFrom === "home" && activeSorting !== "" && (
+        {itemsFrom === "home" && activeSorting.sortTitle !== "" && (
           <OptionWrapper>
             <h3>Sorterar på:</h3>
-            <span className="options" style={{ margin: "5px" }}>
-              {activeSorting}
+            <span className="options" style={{ margin: "5px", height: "15px" }}>
+              {activeSorting.sortTitle}: {activeSorting.secText}
             </span>
           </OptionWrapper>
         )}

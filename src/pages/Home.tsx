@@ -406,7 +406,7 @@ const Home: FC<Props> = ({
             items={renderItems}
             searchValue={searchValue}
             itemsFrom="home"
-            activeSorting={activeSorting.sortTitle}
+            activeSorting={activeSorting}
           />
           {items.length > 0 && (
             <Pagination

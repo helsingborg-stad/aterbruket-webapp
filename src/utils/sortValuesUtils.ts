@@ -42,4 +42,5 @@ export const DEFAULTSORTVALUE = {
   sortTitle: "Klimatavtryck",
   first: "climateImpact",
   second: "-createdAt",
+  secText: "Lägst",
 };

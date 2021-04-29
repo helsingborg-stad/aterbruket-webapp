@@ -8,7 +8,6 @@ interface Props {
   title: string;
   description: string;
   id: string;
-  condition: string;
   quantity: number;
   imageKey: string;
   status: string;
@@ -37,7 +36,7 @@ const CardDiv = styled.div`
   }
 
   .picDiv {
-    width: 35%;
+    width: 25%;
     align-self: stretch;
 
     img {
@@ -94,13 +93,29 @@ const CardDiv = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  .btn--pickUp {
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 132%;
+    letter-spacing: 0.015em;
+    width: 202px;
+    height: 40px;
+    border: none;
+    margin: 0px 24px 24px 0px;
+    padding-left: 12px;
+    background-color: ${(props) => props.theme.colors.primaryLighter};
+    box-sizing: border-box;
+    border-radius: 4.5px;
+    color: ${(props) => props.theme.colors.primaryDark};
+    position: relative;
+    text-align: left;
+  }
 `;
 
 const Card: FC<Props> = ({
   id,
   title,
   description,
-  condition,
   quantity,
   imageKey,
   status,
@@ -116,7 +131,15 @@ const Card: FC<Props> = ({
   }, []);
 
   return (
-    <CardDiv as={Link} to={`/item/${id}`} id={id}>
+    <CardDiv
+      as={Link}
+      to={`/item/${id}`}
+      id={id}
+      style={{
+        opacity: status === "pickedUp" ? "0.5" : "1",
+        filter: status === "pickedUp" ? "grayscale(1)" : "none",
+      }}
+    >
       <div className="picDiv">
         <img src={url} alt="" />
       </div>
@@ -124,7 +147,18 @@ const Card: FC<Props> = ({
         <h3>{title}</h3>
         <h4>{quantity} stycken</h4>
         <p className="desc">Beskrivning: {description}</p>
-        {status === "reserved" && <p>Status: {status}</p>}
+        {status === "reserved" && (
+          <button
+            className="btn--pickUp"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              console.log("click");
+            }}
+          >
+            Haffa ut!
+          </button>
+        )}
       </div>
     </CardDiv>
   );

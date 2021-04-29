@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import {
   FaArrowCircleDown,
@@ -127,6 +127,7 @@ type ISorting = {
   first: string;
   second: string;
   sortTitle: string;
+  secText: string;
 };
 
 type IElement = {
@@ -157,14 +158,30 @@ const SortRadioButtons: FC<Props> = ({
   const handleInputChange = (
     firstStr: string,
     secondStr: string,
-    value: string
+    value: string,
+    text: string
   ) => {
-    setNewSorting({ first: firstStr, second: secondStr, sortTitle: value });
+    setNewSorting({
+      first: firstStr,
+      second: secondStr,
+      sortTitle: value,
+      secText: text,
+    });
   };
 
-  const handleRadioInput = (e: any, low: string, secondStr: string) => {
+  const handleRadioInput = (
+    e: any,
+    low: string,
+    secondStr: string,
+    text: string
+  ) => {
     setShowToggle(e.target.value);
-    setNewSorting({ first: low, second: secondStr, sortTitle: e.target.value });
+    setNewSorting({
+      first: low,
+      second: secondStr,
+      sortTitle: e.target.value,
+      secText: text,
+    });
   };
 
   const radio = sortValues.map((element: IElement) => {
@@ -194,7 +211,9 @@ const SortRadioButtons: FC<Props> = ({
             id={element.title}
             name="sortingMaster"
             value={element.title}
-            onChange={(e) => handleRadioInput(e, element.low, element.second)}
+            onChange={(e) =>
+              handleRadioInput(e, element.low, element.second, element.lowText)
+            }
             checked={element.title === showToggle}
           />
         </div>
@@ -219,7 +238,12 @@ const SortRadioButtons: FC<Props> = ({
                 name="sorting"
                 value={element.title}
                 onChange={() =>
-                  handleInputChange(element.high, element.second, element.title)
+                  handleInputChange(
+                    element.high,
+                    element.second,
+                    element.title,
+                    element.highText
+                  )
                 }
                 checked={newSorting.first === element.high}
               />
@@ -242,7 +266,12 @@ const SortRadioButtons: FC<Props> = ({
                 name="sorting"
                 value={element.title}
                 onChange={() =>
-                  handleInputChange(element.low, element.second, element.title)
+                  handleInputChange(
+                    element.low,
+                    element.second,
+                    element.title,
+                    element.lowText
+                  )
                 }
                 checked={newSorting.first === element.low}
               />

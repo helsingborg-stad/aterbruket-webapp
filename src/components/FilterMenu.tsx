@@ -146,11 +146,6 @@ const FilterMenu: FC<Props> = ({
     return () => document.body.classList.remove(FLITER_OPEN_CLASS);
   }, [isOpen]);
 
-  const closeFilter = (e: any) => {
-    e.stopPropagation();
-    setIsOpen(false);
-  };
-
   const handleSaveFilter = () => {
     let categories: any = [];
     let cateValues: any = [];
@@ -184,6 +179,10 @@ const FilterMenu: FC<Props> = ({
     conditions = [];
     setActiveSorting({ ...newSorting });
   };
+  const closeFilter = (e: any) => {
+    e.stopPropagation();
+    setIsOpen(false);
+  };
 
   const handleCancelFilter = () => {
     setFilterValue({
@@ -216,6 +215,7 @@ const FilterMenu: FC<Props> = ({
     });
 
     if (count.length === 0 && newSorting.first === activeSorting.first) {
+      setAllValues([]);
       setIsDisabled(true);
     } else {
       setIsDisabled(false);

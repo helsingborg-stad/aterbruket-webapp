@@ -82,8 +82,12 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-aterbruketwebapp-annabox-134822-deployment",
-          "S3Key": "amplify-builds/migrateADUser-536a5438575072547853-build.zip"
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
         }
       }
     },

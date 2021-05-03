@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { API, Storage } from "aws-amplify";
 import { MdArrowForward } from "react-icons/md";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
@@ -8,13 +8,9 @@ import { createAdvert, updateAdvert } from "../graphql/mutations";
 import UserContext from "../contexts/UserContext";
 
 interface Props {
-  title: string;
-  description: string;
-  id: string;
-  quantity: number;
   imageKey: string;
-  status: string;
   filteredItem: any;
+  fetchReservedAdverts: any;
 }
 
 const CardDiv = styled.div`
@@ -122,18 +118,12 @@ const CardDiv = styled.div`
 `;
 
 const Card: FC<Props> = ({
-  id,
-  title,
-  description,
-  quantity,
   imageKey,
-  status,
   filteredItem,
+  fetchReservedAdverts,
 }: Props) => {
   const [url, setURL] = useState(undefined) as any;
   const { user } = useContext(UserContext);
-  const [itemUpdated, setItemUpdated] = useState(false);
-  const [redirect, setRedirect] = useState(false);
 
   const fetchImage = (): void => {
     Storage.get(imageKey).then((url: any) => {
@@ -148,7 +138,7 @@ const Card: FC<Props> = ({
     const result = (await API.graphql(
       graphqlOperation(updateAdvert, {
         input: {
-          id,
+          id: filteredItem.id,
           status: newStatus,
           reservedBySub: user.sub,
           reservedByName: user.name,
@@ -157,8 +147,6 @@ const Card: FC<Props> = ({
         },
       })
     )) as any;
-
-    setItemUpdated(true);
 
     delete filteredItem.createdAt;
     delete filteredItem.updatedAt;
@@ -169,22 +157,17 @@ const Card: FC<Props> = ({
 
   const onClickPickUpBtn = () => {
     updateItem("pickedUp");
-    //setRedirect(!redirect);
+    fetchReservedAdverts();
   };
-
-  /*  if (redirect) {
-    return <Redirect to={`/item/${id}`} />;
-  }
-   */
 
   return (
     <CardDiv
       as={Link}
-      to={`/item/${id}`}
-      id={id}
+      to={`/item/${filteredItem.id}`}
+      id={filteredItem.id}
       style={{
-        opacity: status === "pickedUp" ? "0.5" : "1",
-        filter: status === "pickedUp" ? "grayscale(1)" : "none",
+        opacity: filteredItem.status === "pickedUp" ? "0.5" : "1",
+        filter: filteredItem.status === "pickedUp" ? "grayscale(1)" : "none",
       }}
     >
       <div className="picDiv">
@@ -192,16 +175,15 @@ const Card: FC<Props> = ({
       </div>
       <div className="infoDiv">
         <h3>{filteredItem.title}</h3>
-        <h4>{quantity} stycken</h4>
-        <p className="desc">Beskrivning: {description}</p>
-        {status === "reserved" && (
+        <h4>{filteredItem.quantity} stycken</h4>
+        <p className="desc">Beskrivning: {filteredItem.description}</p>
+        {filteredItem.status === "reserved" && (
           <button
             className="btn--pickUp"
             type="button"
             onClick={(e) => {
               e.preventDefault();
               onClickPickUpBtn();
-              console.log("click");
             }}
           >
             Haffa ut!

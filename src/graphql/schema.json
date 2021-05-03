@@ -436,6 +436,17 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
+          "name" : "purchasePrice",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
           "name" : "createdAt",
           "description" : null,
           "args" : [ ],
@@ -1024,6 +1035,15 @@
           "defaultValue" : null
         }, {
           "name" : "revisions",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIntInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "purchasePrice",
           "description" : null,
           "type" : {
             "kind" : "INPUT_OBJECT",
@@ -2026,6 +2046,15 @@
             "ofType" : null
           },
           "defaultValue" : null
+        }, {
+          "name" : "purchasePrice",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
         } ],
         "interfaces" : null,
         "enumValues" : null,
@@ -2324,6 +2353,15 @@
           },
           "defaultValue" : null
         }, {
+          "name" : "purchasePrice",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "ModelIntInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
           "name" : "and",
           "description" : null,
           "type" : {
@@ -2614,6 +2652,15 @@
           "defaultValue" : null
         }, {
           "name" : "revisions",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Int",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "purchasePrice",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",

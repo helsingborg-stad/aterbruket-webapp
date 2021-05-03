@@ -7,6 +7,7 @@ interface IAdvert {
   searchValue: any;
   itemsFrom: string;
   filteredSweValues: any;
+  fetchReservedAdverts?: any;
 }
 
 const AdvertContainerDiv = styled.div`
@@ -54,6 +55,7 @@ const AdvertContainer: FC<IAdvert> = ({
   searchValue,
   itemsFrom,
   filteredSweValues,
+  fetchReservedAdverts,
 }: IAdvert) => {
   let filteredItems = [];
   if (searchValue) {
@@ -96,13 +98,9 @@ const AdvertContainer: FC<IAdvert> = ({
       {filteredItems.map((filteredItem: any) => (
         <Card
           key={filteredItem.id}
-          id={filteredItem.id}
-          title={filteredItem.title}
-          description={filteredItem.description}
-          quantity={filteredItem.quantity}
           imageKey={filteredItem.images[0].src}
-          status={filteredItem.status}
           filteredItem={filteredItem}
+          fetchReservedAdverts={fetchReservedAdverts}
         />
       ))}
     </AdvertContainerDiv>

@@ -17,6 +17,12 @@
     "apiaterbruketwebappGraphQLAPIEndpointOutput": {
       "Type": "String",
       "Default": "apiaterbruketwebappGraphQLAPIEndpointOutput"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
     }
   },
   "Conditions": {

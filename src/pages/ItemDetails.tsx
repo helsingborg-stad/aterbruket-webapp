@@ -546,7 +546,6 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   const mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
   const telHref = `tel:${item.phoneNumber}`;
-  console.log(item);
 
   const allDetails = (
     <>
@@ -610,20 +609,20 @@ const ItemDetails: FC<ParamTypes> = () => {
 
         {item.status ===
           "available" /* && item.giver !== user.attributes.sub */ && (
-          <Button
-            ref={(el: any) => {
-              buttonOutOfScreen.current = el;
-              setRefVisible(!!el);
-            }}
-            className="btn--haffa"
-            onClick={() => {
-              onClickReservBtn();
-            }}
-            type="button"
-          >
-            Haffa!
-          </Button>
-        )}
+            <Button
+              ref={(el: any) => {
+                buttonOutOfScreen.current = el;
+                setRefVisible(!!el);
+              }}
+              className="btn--haffa"
+              onClick={() => {
+                onClickReservBtn();
+              }}
+              type="button"
+            >
+              Haffa!
+            </Button>
+          )}
 
         {item.status === "reserved" && item.reservedBySub === user.sub && (
           <>
@@ -652,19 +651,22 @@ const ItemDetails: FC<ParamTypes> = () => {
           </>
         )}
 
-        {item.status === "available" && item.giver === user.sub && (
-          <>
-            <Button
-              className=" btn--edit"
-              onClick={() => setEditItem(true)}
-              type="button"
-            >
-              <MdEdit />
-              Ändra
-            </Button>
-            <span>Den här annonsen har du lagt upp.</span>
-          </>
-        )}
+        {item.status === "available" &&
+          (item.giver === user.sub || user.isAdmin) && (
+            <>
+              <Button
+                className=" btn--edit"
+                onClick={() => setEditItem(true)}
+                type="button"
+              >
+                <MdEdit />
+                Ändra
+              </Button>
+              {item.giver === user.sub && (
+                <span>Den här annonsen har du lagt upp.</span>
+              )}
+            </>
+          )}
 
         {item.status === "pickedUp" && item.reservedBySub === user.sub && (
           <>

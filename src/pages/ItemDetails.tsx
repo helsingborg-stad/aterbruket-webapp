@@ -491,7 +491,6 @@ const ItemDetails: FC<ParamTypes> = () => {
 
     await API.graphql(graphqlOperation(createAdvert, { input: item }));
   };
-
   const onClickReservBtn = () => {
     updateItem("reserved");
     setShowHeaderBtn(false);
@@ -609,20 +608,20 @@ const ItemDetails: FC<ParamTypes> = () => {
 
         {item.status ===
           "available" /* && item.giver !== user.attributes.sub */ && (
-            <Button
-              ref={(el: any) => {
-                buttonOutOfScreen.current = el;
-                setRefVisible(!!el);
-              }}
-              className="btn--haffa"
-              onClick={() => {
-                onClickReservBtn();
-              }}
-              type="button"
-            >
-              Haffa!
-            </Button>
-          )}
+          <Button
+            ref={(el: any) => {
+              buttonOutOfScreen.current = el;
+              setRefVisible(!!el);
+            }}
+            className="btn--haffa"
+            onClick={() => {
+              onClickReservBtn();
+            }}
+            type="button"
+          >
+            Haffa!
+          </Button>
+        )}
 
         {item.status === "reserved" && item.reservedBySub === user.sub && (
           <>
@@ -762,17 +761,17 @@ const ItemDetails: FC<ParamTypes> = () => {
                 </span>
               </td>
             </tr>
-            {item.purchasePrice > 0 ||
-              (item.purchasePrice === "" && (
-                <tr>
-                  <td>
-                    <h4>Inköpspris</h4>
-                  </td>
-                  <td>
-                    {item.purchasePrice} <span>kr</span>
-                  </td>
-                </tr>
-              ))}
+
+            {item.purchasePrice !== "" && (
+              <tr>
+                <td>
+                  <h4>Inköpspris</h4>
+                </td>
+                <td>
+                  {item.purchasePrice} <span>kr</span>
+                </td>
+              </tr>
+            )}
 
             {item.status === "available" && (
               <tr>

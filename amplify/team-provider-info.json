@@ -93,10 +93,10 @@
         "userPoolGroups": {}
       },
       "function": {
-        "migrateADUser": { 
+        "migrateADUser": {
           "deploymentBucketName": "amplify-aterbruketwebapp-jsandbox-111327-deployment",
           "s3Key": "amplify-builds/migrateADUser-536a5438575072547853-build.zip"
-          }
+        }
       }
     }
   },

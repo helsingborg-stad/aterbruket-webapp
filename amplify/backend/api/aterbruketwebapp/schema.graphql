@@ -26,6 +26,7 @@ type Advert @model @key(fields: [ "id", "version" ]){
   reservedBySub: String
   reservedByName: String
   revisions: Int
+  purchasePrice: Int
 }
 
 enum ItemStatus {

@@ -1,11 +1,11 @@
 {
-    "AppSyncApiName": "aterbruketwebapp",
-    "DynamoDBBillingMode": "PAY_PER_REQUEST",
-    "DynamoDBEnableServerSideEncryption": false,
-    "AuthCognitoUserPoolId": {
-        "Fn::GetAtt": [
-            "authaterbruketwebapp75287c9a",
-            "Outputs.UserPoolId"
-        ]
-    }
+  "AppSyncApiName": "aterbruketwebapp",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authaterbruketwebapp75287c9a",
+      "Outputs.UserPoolId"
+    ]
+  }
 }

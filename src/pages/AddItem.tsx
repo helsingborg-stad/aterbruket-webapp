@@ -77,7 +77,7 @@ const AddItem: FC<Props> = ({
       climateImpact: 0,
       version: 0,
       revisions: 0,
-      purchasePrice: 0,
+      purchasePrice: "",
     },
     createAdvert
   );

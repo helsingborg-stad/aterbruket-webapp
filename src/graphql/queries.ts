@@ -42,6 +42,7 @@ export const getAdvert = /* GraphQL */ `
       reservedBySub
       reservedByName
       revisions
+      purchasePrice
       createdAt
       updatedAt
     }
@@ -102,6 +103,7 @@ export const listAdverts = /* GraphQL */ `
         reservedBySub
         reservedByName
         revisions
+        purchasePrice
         createdAt
         updatedAt
       }

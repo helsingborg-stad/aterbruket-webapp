@@ -133,6 +133,14 @@ export const fieldsForm = [
     ],
   },
   {
+    name: "purchasePrice",
+    dataType: "number",
+    fieldType: "input",
+    disabled: false,
+    required: false,
+    title: "Inköpspris",
+  },
+  {
     name: "description",
     fieldType: "textarea",
     disabled: false,
@@ -319,6 +327,14 @@ export const fieldsEditForm = [
         eng: ["outside"],
       },
     ],
+  },
+  {
+    name: "purchasePrice",
+    dataType: "number",
+    fieldType: "input",
+    disabled: false,
+    required: false,
+    title: "Inköpspris",
   },
   {
     name: "description",

@@ -77,13 +77,14 @@ const AddItem: FC<Props> = ({
       climateImpact: 0,
       version: 0,
       revisions: 0,
+      purchasePrice: 0,
     },
     createAdvert
   );
 
   const [imageURL, setImageURL] = useState("");
 
-  useEffect(() => { }, [fileUploading]);
+  useEffect(() => {}, [fileUploading]);
 
   useEffect(() => {
     if (file) {

@@ -33,6 +33,7 @@ type Advert
   reservedBySub: String
   reservedByName: String
   revisions: Int
+  purchasePrice: Int
 }
 
 enum ItemStatus {

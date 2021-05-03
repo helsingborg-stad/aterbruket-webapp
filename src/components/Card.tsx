@@ -1,8 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import { API, Storage } from "aws-amplify";
+import { MdArrowForward } from "react-icons/md";
+import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
+import { createAdvert, updateAdvert } from "../graphql/mutations";
+import UserContext from "../contexts/UserContext";
 
 interface Props {
   title: string;
@@ -11,6 +14,7 @@ interface Props {
   quantity: number;
   imageKey: string;
   status: string;
+  filteredItem: any;
 }
 
 const CardDiv = styled.div`
@@ -94,10 +98,10 @@ const CardDiv = styled.div`
     overflow: hidden;
   }
   .btn--pickUp {
-    font-weight: 900;
+    font-weight: 500;
     font-size: 18px;
     line-height: 132%;
-    letter-spacing: 0.015em;
+    font-style: normal;
     width: 202px;
     height: 40px;
     border: none;
@@ -107,8 +111,13 @@ const CardDiv = styled.div`
     box-sizing: border-box;
     border-radius: 4.5px;
     color: ${(props) => props.theme.colors.primaryDark};
-    position: relative;
-    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    svg {
+      color: ${(props) => props.theme.colors.secondaryDark};
+      font-size: 24px;
+    }
   }
 `;
 
@@ -119,8 +128,13 @@ const Card: FC<Props> = ({
   quantity,
   imageKey,
   status,
+  filteredItem,
 }: Props) => {
   const [url, setURL] = useState(undefined) as any;
+  const { user } = useContext(UserContext);
+  const [itemUpdated, setItemUpdated] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+
   const fetchImage = (): void => {
     Storage.get(imageKey).then((url: any) => {
       setURL(url);
@@ -129,6 +143,39 @@ const Card: FC<Props> = ({
   useEffect(() => {
     fetchImage();
   }, []);
+
+  const updateItem = async (newStatus: string) => {
+    const result = (await API.graphql(
+      graphqlOperation(updateAdvert, {
+        input: {
+          id,
+          status: newStatus,
+          reservedBySub: user.sub,
+          reservedByName: user.name,
+          version: 0,
+          revisions: filteredItem.revisions + 1,
+        },
+      })
+    )) as any;
+
+    setItemUpdated(true);
+
+    delete filteredItem.createdAt;
+    delete filteredItem.updatedAt;
+    filteredItem.version = result.data.updateAdvert.revisions + 1;
+
+    await API.graphql(graphqlOperation(createAdvert, { input: filteredItem }));
+  };
+
+  const onClickPickUpBtn = () => {
+    updateItem("pickedUp");
+    //setRedirect(!redirect);
+  };
+
+  /*  if (redirect) {
+    return <Redirect to={`/item/${id}`} />;
+  }
+   */
 
   return (
     <CardDiv
@@ -144,7 +191,7 @@ const Card: FC<Props> = ({
         <img src={url} alt="" />
       </div>
       <div className="infoDiv">
-        <h3>{title}</h3>
+        <h3>{filteredItem.title}</h3>
         <h4>{quantity} stycken</h4>
         <p className="desc">Beskrivning: {description}</p>
         {status === "reserved" && (
@@ -153,10 +200,12 @@ const Card: FC<Props> = ({
             type="button"
             onClick={(e) => {
               e.preventDefault();
+              onClickPickUpBtn();
               console.log("click");
             }}
           >
             Haffa ut!
+            <MdArrowForward />
           </button>
         )}
       </div>

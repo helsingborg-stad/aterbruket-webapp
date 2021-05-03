@@ -61,6 +61,7 @@ const Haffat: FC = () => {
     }
   }, [fetchReservedAdverts, user]);
 
+
   const haffatItems = renderItems.filter((renderItem: any) => {
     return renderItem.status === "reserved";
   });

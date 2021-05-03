@@ -1,9 +1,9 @@
 import React, { FC, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { API, Storage } from "aws-amplify";
 import { MdArrowForward } from "react-icons/md";
-import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
+import { graphqlOperation } from "@aws-amplify/api";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
 import UserContext from "../contexts/UserContext";
 
@@ -94,10 +94,6 @@ const CardDiv = styled.div`
     overflow: hidden;
   }
   .btn--pickUp {
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 132%;
-    font-style: normal;
     width: 202px;
     height: 40px;
     border: none;
@@ -106,10 +102,17 @@ const CardDiv = styled.div`
     background-color: ${(props) => props.theme.colors.primaryLighter};
     box-sizing: border-box;
     border-radius: 4.5px;
-    color: ${(props) => props.theme.colors.primaryDark};
     display: flex;
     align-items: center;
     justify-content: space-between;
+    span {
+      font-family: ${(props) => props.theme.appTheme.fontFamily};
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 132%;
+      font-style: normal;
+      color: ${(props) => props.theme.colors.primaryDark};
+    }
     svg {
       color: ${(props) => props.theme.colors.secondaryDark};
       font-size: 24px;
@@ -186,7 +189,8 @@ const Card: FC<Props> = ({
               onClickPickUpBtn();
             }}
           >
-            Haffa ut!
+            <span>Haffa ut!</span>
+
             <MdArrowForward />
           </button>
         )}

@@ -90,9 +90,9 @@ const AdvertContainer: FC<IAdvert> = ({
           itemsFrom === "home" && <h3>Alla möbler</h3>
         )}
         {itemsFrom === "haffat" && items.length !== 0 && (
-          <h3>Grejer att hämta</h3>
+          <h3>Saker att hämta</h3>
         )}
-        {itemsFrom === "pickedUp" && <h3>Grejer du hämtat tidigare</h3>}
+        {itemsFrom === "pickedUp" && <h3>Saker du hämtat tidigare</h3>}
         {itemsFrom === "profile" && <h3>Mina annonser</h3>}
       </div>
       {filteredItems.map((filteredItem: any) => (

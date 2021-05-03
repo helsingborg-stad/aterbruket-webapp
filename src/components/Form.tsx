@@ -107,7 +107,11 @@ export default function Form(props: {
       if (field.name === "title") {
         attributes.maxLength = "20";
       }
-      if (dimensions.includes(field.name) || field.name === "phoneNumber") {
+      if (
+        dimensions.includes(field.name) ||
+        field.name === "phoneNumber" ||
+        field.name === "purchasePrice"
+      ) {
         attributes.pattern = "[0-9]*";
       }
 
@@ -127,6 +131,12 @@ export default function Form(props: {
             {field.name === "phoneNumber" && (
               <span className="infoSpan">
                 ange endast siffror ex, 0701234567
+              </span>
+            )}
+            {field.name === "purchasePrice" && (
+              <span className="infoSpan">
+                Vet du inte exakt vad den köptes in för? <br />
+                Ange då en uppskattning av priset.
               </span>
             )}
           </div>

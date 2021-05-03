@@ -760,6 +760,16 @@ const ItemDetails: FC<ParamTypes> = () => {
                 </span>
               </td>
             </tr>
+            {item.purchasePrice > 0 && (
+              <tr>
+                <td>
+                  <h4>Inköpspris</h4>
+                </td>
+                <td>
+                  {item.purchasePrice} <span>kr</span>
+                </td>
+              </tr>
+            )}
 
             {item.status === "available" && (
               <tr>

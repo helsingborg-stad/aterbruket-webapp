@@ -29,7 +29,10 @@
         "aterbruketwebapp75287c9a": {}
       },
       "function": {
-        "migrateADUser": {}
+        "migrateADUser": {
+          "deploymentBucketName": "amplify-aterbruketwebapp-dev-224145-deployment",
+          "s3Key": "amplify-builds/migrateADUser-536a5438575072547853-build.zip"
+        }
       }
     }
   },

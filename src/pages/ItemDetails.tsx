@@ -469,6 +469,7 @@ const ItemDetails: FC<ParamTypes> = () => {
     loadMapApi();
   }, []);
 
+
   const updateItem = async (newStatus: string) => {
     const result = (await API.graphql(
       graphqlOperation(updateAdvert, {

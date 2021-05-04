@@ -127,6 +127,7 @@ const Card: FC<Props> = ({
 }: Props) => {
   const [url, setURL] = useState(undefined) as any;
   const { user } = useContext(UserContext);
+  const [itemUpdated, setItemUpdated] = useState(false);
 
   const fetchImage = (): void => {
     Storage.get(imageKey).then((url: any) => {
@@ -151,6 +152,8 @@ const Card: FC<Props> = ({
       })
     )) as any;
 
+    setItemUpdated(true);
+
     delete filteredItem.createdAt;
     delete filteredItem.updatedAt;
     filteredItem.version = result.data.updateAdvert.revisions + 1;
@@ -160,8 +163,14 @@ const Card: FC<Props> = ({
 
   const onClickPickUpBtn = () => {
     updateItem("pickedUp");
-    fetchReservedAdverts();
   };
+
+  useEffect(() => {
+    if (itemUpdated) {
+      fetchReservedAdverts();
+      setItemUpdated(false);
+    }
+  }, [itemUpdated]);
 
   return (
     <CardDiv

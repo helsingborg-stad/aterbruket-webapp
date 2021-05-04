@@ -18,7 +18,6 @@ import Pagination from "../components/Pagination";
 import { fieldsForm } from "../utils/formUtils";
 import convertToSwe from "../utils/convert";
 import UserContext from "../contexts/UserContext";
-import SortItems from "../components/SortItems";
 import { DEFAULTSORTVALUE } from "../utils/sortValuesUtils";
 
 const AddBtn = styled.button`
@@ -308,15 +307,13 @@ const Home: FC<Props> = ({
         .slice(0, paginationOption.amountToShow)
     );
   };
-  useEffect(() => {
-    fetchItems();
-  }, [activeSorting]);
+
   useEffect(() => {
     if (authState === AuthState.SignedIn) {
       fetchItems();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authState, filterValueUpdated]);
+  }, [authState, filterValueUpdated, activeSorting]);
 
   const categoryData = fieldsForm[2];
   const conditionData = fieldsForm[9];

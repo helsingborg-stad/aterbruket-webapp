@@ -217,6 +217,7 @@ const FilterMenu: FC<Props> = ({
     if (count.length === 0 && newSorting.first === activeSorting.first) {
       setAllValues([]);
       setIsDisabled(true);
+      setFilterValueUpdated(!filterValueUpdated);
     } else {
       setIsDisabled(false);
     }

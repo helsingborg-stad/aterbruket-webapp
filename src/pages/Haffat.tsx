@@ -36,10 +36,7 @@ const Haffat: FC = () => {
     const result = (await API.graphql(
       graphqlOperation(listAdverts, {
         filter: {
-          and: [
-            { reservedBySub: { eq: user.sub } },
-            { version: { eq: 0 } },
-          ],
+          and: [{ reservedBySub: { eq: user.sub } }, { version: { eq: 0 } }],
           not: { status: { eq: "available" } },
         },
       })
@@ -64,13 +61,29 @@ const Haffat: FC = () => {
     }
   }, [fetchReservedAdverts, user]);
 
+  const haffatItems = renderItems.filter((renderItem: any) => {
+    return renderItem.status === "reserved";
+  });
+
+  const pickedUpItems = renderItems.filter((renderItem: any) => {
+    return renderItem.status === "pickedUp";
+  });
+
   return (
     <main style={{ marginTop: "60px" }}>
       <AdvertContainer
         filteredSweValues={[]}
         searchValue={false}
-        items={renderItems}
+        items={haffatItems}
         itemsFrom="haffat"
+        fetchReservedAdverts={fetchReservedAdverts}
+      />
+
+      <AdvertContainer
+        filteredSweValues={[]}
+        searchValue={false}
+        items={pickedUpItems}
+        itemsFrom="pickedUp"
       />
       {reservedItems.length > 0 && (
         <Pagination

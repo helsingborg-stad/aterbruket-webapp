@@ -1,5 +1,12 @@
-
-type Advert @model @key(fields: [ "id", "version" ]){
+type Advert
+  @model
+  @key(fields: [ "id", "version" ])
+  @auth(
+    rules: [
+      { allow: private },
+      { allow: groups, groups: ["administrator"] }
+  ])
+{
   id: ID!
   title: String!
   description: String

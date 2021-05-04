@@ -7,7 +7,7 @@ interface IAdvert {
   searchValue: any;
   itemsFrom: string;
   filteredSweValues: any;
-  fetchReservedAdverts?: () => void;
+  fetchReservedAdverts?: any;
 }
 
 const AdvertContainerDiv = styled.div`

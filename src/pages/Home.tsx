@@ -85,11 +85,11 @@ const SearchFilterDiv = styled.div`
     position: relative;
 
     #searchIcon {
-      position: absolute;
-      top: 47px;
-      left: 20px;
       color: ${(props) => props.theme.colors.primaryDark};
-      font-size: 16px;
+      position: absolute;
+      top: 43px;
+      left: 13px;
+      font-size: 22px;
     }
 
     #searchInput {

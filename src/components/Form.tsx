@@ -99,11 +99,14 @@ export default function Form(props: {
         placeholder: field.title,
         disabled: field.disabled,
         required: field.required,
+        value: props.values[field.name],
       };
+      console.log("name", field.name, ". value:", props.values[field.name]);
+      /* if (props.values[field.name] !== undefined) {
+        // console.log("inte undefined", props.values[field.name]);
 
-      if (props.values[field.name] !== undefined) {
         attributes.value = props.values[field.name];
-      }
+      } */
       if (field.name === "title") {
         attributes.maxLength = "20";
       }

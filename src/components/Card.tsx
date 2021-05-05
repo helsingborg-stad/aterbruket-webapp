@@ -136,6 +136,7 @@ const Card: FC<Props> = ({
   };
   useEffect(() => {
     fetchImage();
+    return () => {};
   }, []);
 
   const updateItem = async (newStatus: string) => {

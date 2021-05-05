@@ -41,7 +41,6 @@ type Props = {
 };
 
 const CarouselComp: FC<Props> = ({ setShowCarousel, image }: Props) => {
-  console.log("image i carusel", image);
   return (
     <CarouselWrapper>
       <button

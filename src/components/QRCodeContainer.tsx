@@ -53,7 +53,6 @@ const QRCodeContainer: FC<IProps> = ({ id }: IProps) => {
     const doc = new jsPDF("l", "px", [265, 121], true);
 
     const pdfDiv: any | null = document.getElementById("labelDiv");
-    console.log(doc);
 
     if (pdfDiv !== null) {
       doc.html(pdfDiv, {

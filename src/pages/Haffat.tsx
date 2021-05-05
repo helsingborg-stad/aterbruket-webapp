@@ -61,13 +61,30 @@ const Haffat: FC = () => {
     }
   }, [fetchReservedAdverts, user]);
 
+  const haffatItems = renderItems.filter((renderItem: any) => {
+    return renderItem.status === "reserved";
+  });
+
+  const pickedUpItems = renderItems.filter((renderItem: any) => {
+    return renderItem.status === "pickedUp";
+  });
+
   return (
     <main style={{ marginTop: "60px" }}>
       <AdvertContainer
         filteredSweValues={[]}
         searchValue={false}
-        items={renderItems}
+        items={haffatItems}
         itemsFrom="haffat"
+        activeSorting={{ first: "", second: "", sortTitle: "", secText: "" }}
+        fetchReservedAdverts={fetchReservedAdverts}
+      />
+
+      <AdvertContainer
+        filteredSweValues={[]}
+        searchValue={false}
+        items={pickedUpItems}
+        itemsFrom="pickedUp"
         activeSorting={{ first: "", second: "", sortTitle: "", secText: "" }}
       />
       {reservedItems.length > 0 && (

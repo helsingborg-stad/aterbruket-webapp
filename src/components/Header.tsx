@@ -63,7 +63,7 @@ const Header: FC<MyProps> = () => {
     // set state based on location info
     setVisible(
       (prevScrollPos > currentScrollPos &&
-        prevScrollPos - currentScrollPos > 70) ||
+        prevScrollPos - currentScrollPos > 300) ||
         currentScrollPos < 100
     );
 

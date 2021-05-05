@@ -49,6 +49,7 @@ interface Props {
     version: number;
     revisions: number;
     images: [{ url: string }];
+    purchasePrice: number;
   };
   setEditItem: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
@@ -102,6 +103,7 @@ const EditItemForm: FC<Props> = ({
       climateImpact: item.climateImpact,
       version: 0,
       revisions: item.revisions + 1,
+      purchasePrice: item.purchasePrice,
     },
     updateAdvert
   );

@@ -15,6 +15,7 @@ interface IAdvert {
   itemsFrom: string;
   filteredSweValues: any;
   activeSorting: ISorting;
+  fetchReservedAdverts?: any;
 }
 
 const AdvertContainerDiv = styled.div`
@@ -69,6 +70,7 @@ const AdvertContainer: FC<IAdvert> = ({
   itemsFrom,
   filteredSweValues,
   activeSorting,
+  fetchReservedAdverts,
 }: IAdvert) => {
   let filteredItems = [];
   if (searchValue) {
@@ -119,17 +121,18 @@ const AdvertContainer: FC<IAdvert> = ({
           </OptionWrapper>
         )}
 
-        {itemsFrom === "haffat" && <h3>Saker att hämta</h3>}
+        {itemsFrom === "haffat" && items.length !== 0 && (
+          <h3>Saker att hämta</h3>
+        )}
+        {itemsFrom === "pickedUp" && <h3>Saker du hämtat tidigare</h3>}
         {itemsFrom === "profile" && <h3>Mina annonser</h3>}
       </div>
       {filteredItems.map((filteredItem: any) => (
         <Card
           key={filteredItem.id}
-          id={filteredItem.id}
-          title={filteredItem.title}
-          description={filteredItem.description}
-          quantity={filteredItem.quantity}
           imageKey={filteredItem.images[0].src}
+          filteredItem={filteredItem}
+          fetchReservedAdverts={fetchReservedAdverts}
         />
       ))}
     </AdvertContainerDiv>

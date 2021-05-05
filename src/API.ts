@@ -29,6 +29,7 @@ export type CreateAdvertInput = {
   reservedBySub?: string | null,
   reservedByName?: string | null,
   revisions?: number | null,
+  purchasePrice?: string | null,
 };
 
 export enum ItemStatus {
@@ -94,6 +95,7 @@ export type ModelAdvertConditionInput = {
   reservedBySub?: ModelStringInput | null,
   reservedByName?: ModelStringInput | null,
   revisions?: ModelIntInput | null,
+  purchasePrice?: ModelStringInput | null,
   and?: Array< ModelAdvertConditionInput | null > | null,
   or?: Array< ModelAdvertConditionInput | null > | null,
   not?: ModelAdvertConditionInput | null,
@@ -194,6 +196,7 @@ export type Advert = {
   reservedBySub?: string | null,
   reservedByName?: string | null,
   revisions?: number | null,
+  purchasePrice?: string | null,
   createdAt?: string,
   updatedAt?: string,
 };
@@ -245,11 +248,48 @@ export type UpdateAdvertInput = {
   reservedBySub?: string | null,
   reservedByName?: string | null,
   revisions?: number | null,
+  purchasePrice?: string | null,
 };
 
 export type DeleteAdvertInput = {
   id: string,
   version: number,
+};
+
+export type CreatePageInput = {
+  id?: string | null,
+  slug: string,
+  title: string,
+  content?: string | null,
+};
+
+export type ModelPageConditionInput = {
+  title?: ModelStringInput | null,
+  content?: ModelStringInput | null,
+  and?: Array< ModelPageConditionInput | null > | null,
+  or?: Array< ModelPageConditionInput | null > | null,
+  not?: ModelPageConditionInput | null,
+};
+
+export type Page = {
+  __typename: "Page",
+  id?: string,
+  slug?: string,
+  title?: string,
+  content?: string | null,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
+export type UpdatePageInput = {
+  id: string,
+  slug: string,
+  title?: string | null,
+  content?: string | null,
+};
+
+export type DeletePageInput = {
+  slug: string,
 };
 
 export type ModelIntKeyConditionInput = {
@@ -285,6 +325,7 @@ export type ModelAdvertFilterInput = {
   reservedBySub?: ModelStringInput | null,
   reservedByName?: ModelStringInput | null,
   revisions?: ModelIntInput | null,
+  purchasePrice?: ModelStringInput | null,
   and?: Array< ModelAdvertFilterInput | null > | null,
   or?: Array< ModelAdvertFilterInput | null > | null,
   not?: ModelAdvertFilterInput | null,
@@ -315,6 +356,22 @@ export enum ModelSortDirection {
 export type ModelAdvertConnection = {
   __typename: "ModelAdvertConnection",
   items?:  Array<Advert | null > | null,
+  nextToken?: string | null,
+};
+
+export type ModelPageFilterInput = {
+  id?: ModelIDInput | null,
+  slug?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  content?: ModelStringInput | null,
+  and?: Array< ModelPageFilterInput | null > | null,
+  or?: Array< ModelPageFilterInput | null > | null,
+  not?: ModelPageFilterInput | null,
+};
+
+export type ModelPageConnection = {
+  __typename: "ModelPageConnection",
+  items?:  Array<Page | null > | null,
   nextToken?: string | null,
 };
 
@@ -366,6 +423,7 @@ export type CreateAdvertMutation = {
     reservedBySub?: string | null,
     reservedByName?: string | null,
     revisions?: number | null,
+    purchasePrice?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -419,6 +477,7 @@ export type UpdateAdvertMutation = {
     reservedBySub?: string | null,
     reservedByName?: string | null,
     revisions?: number | null,
+    purchasePrice?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -472,6 +531,58 @@ export type DeleteAdvertMutation = {
     reservedBySub?: string | null,
     reservedByName?: string | null,
     revisions?: number | null,
+    purchasePrice?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreatePageMutationVariables = {
+  input?: CreatePageInput,
+  condition?: ModelPageConditionInput | null,
+};
+
+export type CreatePageMutation = {
+  createPage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdatePageMutationVariables = {
+  input?: UpdatePageInput,
+  condition?: ModelPageConditionInput | null,
+};
+
+export type UpdatePageMutation = {
+  updatePage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeletePageMutationVariables = {
+  input?: DeletePageInput,
+  condition?: ModelPageConditionInput | null,
+};
+
+export type DeletePageMutation = {
+  deletePage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -525,6 +636,7 @@ export type GetAdvertQuery = {
     reservedBySub?: string | null,
     reservedByName?: string | null,
     revisions?: number | null,
+    purchasePrice?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -584,6 +696,47 @@ export type ListAdvertsQuery = {
       reservedBySub?: string | null,
       reservedByName?: string | null,
       revisions?: number | null,
+      purchasePrice?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetPageQueryVariables = {
+  slug?: string,
+};
+
+export type GetPageQuery = {
+  getPage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListPagesQueryVariables = {
+  slug?: string | null,
+  filter?: ModelPageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListPagesQuery = {
+  listPages?:  {
+    __typename: "ModelPageConnection",
+    items?:  Array< {
+      __typename: "Page",
+      id: string,
+      slug: string,
+      title: string,
+      content?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -634,6 +787,7 @@ export type OnCreateAdvertSubscription = {
     reservedBySub?: string | null,
     reservedByName?: string | null,
     revisions?: number | null,
+    purchasePrice?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -682,6 +836,7 @@ export type OnUpdateAdvertSubscription = {
     reservedBySub?: string | null,
     reservedByName?: string | null,
     revisions?: number | null,
+    purchasePrice?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -730,6 +885,43 @@ export type OnDeleteAdvertSubscription = {
     reservedBySub?: string | null,
     reservedByName?: string | null,
     revisions?: number | null,
+    purchasePrice?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreatePageSubscription = {
+  onCreatePage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdatePageSubscription = {
+  onUpdatePage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeletePageSubscription = {
+  onDeletePage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

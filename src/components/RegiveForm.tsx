@@ -60,7 +60,7 @@ const RegiveForm: FC<Props> = ({
     redirect,
     result,
     file,
-    fileUploading
+    fileUploading,
   } = useForm(
     {
       id: item.id,
@@ -102,18 +102,23 @@ const RegiveForm: FC<Props> = ({
   }
   return (
     <>
-      {!redirect && <button type="button" onClick={() => setRegive(false)}>
-        X
-      </button> &&
-      <Form
-        values={values}
-        fields={fields}
-        mutation={updateAdvert}
-        handleInputChange={handleInputChange}
-        handleSubmit={handleSubmit}
-        handleCheckboxChange={handleCheckboxChange}
-      />}
-      {redirect && <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />}
+      {!redirect && (
+          <button type="button" onClick={() => setRegive(false)}>
+            X
+          </button>
+        ) && (
+          <Form
+            values={values}
+            fields={fields}
+            mutation={updateAdvert}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            handleCheckboxChange={handleCheckboxChange}
+          />
+        )}
+      {redirect && (
+        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+      )}
     </>
   );
 };

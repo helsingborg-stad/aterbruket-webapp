@@ -21,6 +21,16 @@ const Container = styled.div`
   margin: 0 0 50px 0;
 `;
 
+const ButtonContainer = styled.div`
+  margin: 24px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  > button {
+    margin: 8px;
+  }
+`;
+
 const About: FC = () => {
   const [page, setPage] = useState<Page | undefined>(undefined);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -82,12 +92,12 @@ const About: FC = () => {
           },
         },
       });
-      console.log("updatedPage", updatedPage);
     } catch (error) {
       console.log("Update page error: ", error);
     }
 
     setIsEditing(false);
+    window.scrollTo(0, 0);
   };
 
   const handleEditorChange = (
@@ -102,8 +112,8 @@ const About: FC = () => {
 
   const handleCancelEdit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("handleCancelEdit");
     fetchPageContent();
+    window.scrollTo(0, 0);
     setIsEditing(false);
   };
 
@@ -116,13 +126,12 @@ const About: FC = () => {
               value={page?.content || ""}
               onChange={handleEditorChange}
             />
-
-            <div>
+            <ButtonContainer>
               <Button type="submit">Spara</Button>
-              <Button type="button" onClick={handleCancelEdit}>
+              <Button type="button" secondary onClick={handleCancelEdit}>
                 Avbryt
               </Button>
-            </div>
+            </ButtonContainer>
           </form>
         </Container>
       </main>
@@ -138,9 +147,9 @@ const About: FC = () => {
           }}
         />
         {user.isAdmin && page?.content && (
-          <div>
+          <ButtonContainer>
             <Button onClick={editClick}>Ändra</Button>
-          </div>
+          </ButtonContainer>
         )}
       </Container>
     </main>

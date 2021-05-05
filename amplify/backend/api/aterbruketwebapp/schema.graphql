@@ -79,6 +79,7 @@ type Page
   @key(fields: [ "slug" ])
   @auth(
     rules: [
+      { allow: private, operations: [read] },
       { allow: groups, groups: ["administrator"] }
   ])
 {

@@ -18,11 +18,11 @@ const Container = styled.div`
   flex-direction: column;
   width: 90%;
   max-width: 600px;
-  margin: 0 0 50px 0;
+  margin: 20px 0 50px 0;
 `;
 
 const ButtonContainer = styled.div`
-  margin: 24px 0;
+  margin: 16px 0;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -37,21 +37,6 @@ const About: FC = () => {
   const { user } = useContext(UserContext);
 
   const fetchPageContent = async () => {
-    // try {
-    //   await API.graphql({
-    //     query: createPage,
-    //     variables: {
-    //       input: {
-    //         title: "Vadå Haffa?",
-    //         slug: "about",
-    //         content: "<h1>Titel</h1><p>Text</p>",
-    //       },
-    //     },
-    //   });
-    // } catch (error) {
-    //   console.log("Error", error);
-    // }
-
     try {
       const response = (await API.graphql(
         graphqlOperation(getPage, { slug: "about" })
@@ -81,7 +66,7 @@ const About: FC = () => {
   ): Promise<void> => {
     e.preventDefault();
     try {
-      const updatedPage = await API.graphql({
+      await API.graphql({
         query: updatePage,
         variables: {
           input: {

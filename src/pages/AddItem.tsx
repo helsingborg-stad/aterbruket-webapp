@@ -1,15 +1,15 @@
 /* eslint-disable no-console */
-import React, { FC, useContext, useEffect, useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
-import { API, graphqlOperation } from "aws-amplify";
+import React, { FC, useContext, useEffect, useState, Suspense } from "react";
+import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "react-loader-spinner";
-import Form from "../components/Form";
 import useForm from "../hooks/useForm";
 import { createAdvert } from "../graphql/mutations";
-import OpenCamera from "../components/OpenCamera";
 import { fieldsForm as fields } from "../utils/formUtils";
 import UserContext from "../contexts/UserContext";
+
+const OpenCamera = React.lazy(() => import("../components/OpenCamera"));
+const Form = React.lazy(() => import("../components/Form"));
 
 const ItemImg = styled.img`
   width: 200px;
@@ -99,23 +99,25 @@ const AddItem: FC<Props> = ({
   }
   return (
     <main>
-      {!redirect && file && <ItemImg src={imageURL} />}
-      {!redirect && !alreadyAQRCode ? (
-        <Form
-          values={values}
-          fields={fields}
-          mutation={createAdvert}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-          handleCheckboxChange={handleCheckboxChange}
-        />
-      ) : (
-        <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
-      )}
+      <Suspense fallback={<div>Loading...</div>}>
+        {!redirect && file && <ItemImg src={imageURL} />}
+        {!redirect && !alreadyAQRCode ? (
+          <Form
+            values={values}
+            fields={fields}
+            mutation={createAdvert}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            handleCheckboxChange={handleCheckboxChange}
+          />
+        ) : (
+          <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
+        )}
 
-      {fileUploading && redirect && (
-        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
-      )}
+        {fileUploading && redirect && (
+          <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+        )}
+      </Suspense>
     </main>
   );
 };

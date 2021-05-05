@@ -112,10 +112,10 @@ const About: FC = () => {
               onChange={handleEditorChange}
             />
             <ButtonContainer>
-              <Button type="submit">Spara</Button>
               <Button type="button" secondary onClick={handleCancelEdit}>
                 Avbryt
               </Button>
+              <Button type="submit">Spara</Button>
             </ButtonContainer>
           </form>
         </Container>

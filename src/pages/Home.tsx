@@ -1,9 +1,11 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
-import { API, Storage } from "aws-amplify";
+import { API } from "aws-amplify";
 import styled from "styled-components";
 import { MdNewReleases, MdSearch, MdTune, MdPhotoCamera } from "react-icons/md";
+import { AuthState } from "@aws-amplify/ui-components";
+import { sortBy } from "sort-by-typescript";
 import { listAdverts } from "../graphql/queries";
 import { ListAdvertsQuery } from "../API";
 import AdvertContainer from "../components/AdvertContainer";
@@ -12,6 +14,11 @@ import ModalAddItemContent from "../components/ModalAddItemContent";
 import OpenCamera from "../components/OpenCamera";
 import FilterMenu from "../components/FilterMenu";
 import Pagination from "../components/Pagination";
+
+import { fieldsForm } from "../utils/formUtils";
+import convertToSwe from "../utils/convert";
+import UserContext from "../contexts/UserContext";
+import { DEFAULTSORTVALUE } from "../utils/sortValuesUtils";
 
 const AddBtn = styled.button`
   position: fixed;
@@ -49,10 +56,11 @@ const ScanBtn = styled.button`
     0px 3px 2px rgba(98, 98, 98, 0.12), 0px 6px 8px rgba(98, 98, 98, 0.12),
     0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
   border-radius: 34.5px;
-  position: absolute;
-  top: 27vh;
+  position: fixed;
+  top: 13vh;
   right: 30px;
   outline: none;
+  z-index: 11;
 
   svg {
     color: white;
@@ -107,14 +115,14 @@ const SearchFilterDiv = styled.div`
     border: none;
     background-color: transparent;
 
-    #filterIcon {
+    .filterIcon {
       color: ${(props) => props.theme.colors.primaryDark};
       font-size: 18px;
     }
   }
 `;
 
-const TabCtn = styled.div`
+/* const TabCtn = styled.div`
   width: 100%;
   background-color: ${(props) => props.theme.colors.offWhite};
 
@@ -133,7 +141,22 @@ const TabCtn = styled.div`
       outline: none;
     }
   }
+`; */
+
+const MessageCtn = styled.div`
+  width: 50%;
+  text-align: center;
+
+  .filterIcon {
+    font-size: 7rem;
+    color: #e5e5e5;
+  }
+
+  .message {
+    margin-bottom: 50px;
+  }
 `;
+
 interface IQrCamera {
   delay: number;
   result: string;
@@ -166,6 +189,7 @@ const Home: FC<Props> = ({
   const [showQRCamera, setShowQRCamera] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
   const updateSearch = (event: React.ChangeEvent<any>) => {
     const { target } = event;
     const { value } = target;
@@ -181,6 +205,7 @@ const Home: FC<Props> = ({
   const [items, setItems] = useState([]) as any;
   const [filterValueUpdated, setFilterValueUpdated] = useState(false);
   const [conditionValues, setConditionValues] = useState<string[]>([]);
+  const [allValues, setAllValues] = useState<string[]>([]);
   const [error, setError] = useState(false);
   const [filterValue, setFilterValue] = useState({
     version: { eq: 0 },
@@ -188,6 +213,8 @@ const Home: FC<Props> = ({
     or: [],
   }) as any;
   const [renderItems, setRenderItems] = useState([]) as any;
+  const { authState } = useContext(UserContext);
+  const [activeSorting, setActiveSorting] = useState(DEFAULTSORTVALUE);
 
   const handlePages = (updatePage: number) => {
     setPaginationOption({
@@ -199,7 +226,11 @@ const Home: FC<Props> = ({
       const start = (updatePage - 1) * paginationOption.amountToShow;
       const end = start + paginationOption.amountToShow;
 
-      setRenderItems(items.slice(start, end));
+      setRenderItems(
+        items
+          .sort(sortBy(activeSorting.first, activeSorting.second))
+          .slice(start, end)
+      );
     }
   };
 
@@ -258,7 +289,6 @@ const Home: FC<Props> = ({
     }
 
     setItems(advertItems);
-
     setFilterValue({
       ...filterValue,
       or: [],
@@ -271,12 +301,42 @@ const Home: FC<Props> = ({
       itemLength: advertItems.length,
     });
 
-    setRenderItems(advertItems.slice(0, paginationOption.amountToShow));
+    setRenderItems(
+      advertItems
+        .sort(sortBy(activeSorting.first, activeSorting.second))
+        .slice(0, paginationOption.amountToShow)
+    );
   };
 
   useEffect(() => {
-    fetchItems();
-  }, [filterValueUpdated]);
+    if (authState === AuthState.SignedIn) {
+      fetchItems();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authState, filterValueUpdated, activeSorting]);
+
+  const categoryData = fieldsForm[2];
+  const conditionData = fieldsForm[9];
+  const indexes: number[] = [];
+  let filteredSweValues: string[] = [];
+
+  if (categoryData.eng && conditionData.eng) {
+    const valuesInEng = [...categoryData.eng, ...conditionData.eng];
+    const valuesInSwe = [...categoryData.swe, ...conditionData.swe];
+
+    const findSameValuesIndex = (engValues: any, allFilterValues: any) => {
+      return engValues.filter((i: string) => {
+        if (allFilterValues.indexOf(i) >= 0) {
+          indexes.push(engValues.indexOf(i));
+          return true;
+        }
+        return false;
+      });
+    };
+
+    findSameValuesIndex(valuesInEng, allValues);
+    filteredSweValues = convertToSwe(valuesInSwe, indexes);
+  }
 
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
@@ -301,10 +361,10 @@ const Home: FC<Props> = ({
           <ScanBtn type="button" onClick={() => setShowQRCamera(true)}>
             <MdPhotoCamera />
           </ScanBtn>
-          <TabCtn>
+          {/* <TabCtn>
             <button type="button">INSPIRATION</button>
             <button type="button">KATEGORIER</button>
-          </TabCtn>
+          </TabCtn> */}
           <SearchFilterDiv>
             <div className="searchWrapper">
               <MdSearch id="searchIcon" />
@@ -321,10 +381,11 @@ const Home: FC<Props> = ({
               type="button"
               id="filterBtn"
             >
-              Filter <MdTune id="filterIcon" />
+              Filter <MdTune className="filterIcon" />
             </button>
 
             <FilterMenu
+              setAllValues={setAllValues}
               setIsOpen={setIsOpen}
               isOpen={isOpen}
               filterValueUpdated={filterValueUpdated}
@@ -332,12 +393,16 @@ const Home: FC<Props> = ({
               filterValue={filterValue}
               setFilterValue={setFilterValue}
               setConditionValues={setConditionValues}
+              activeSorting={activeSorting}
+              setActiveSorting={setActiveSorting}
             />
           </SearchFilterDiv>
           <AdvertContainer
+            filteredSweValues={filteredSweValues}
             items={renderItems}
             searchValue={searchValue}
             itemsFrom="home"
+            activeSorting={activeSorting}
           />
           {items.length > 0 && (
             <Pagination
@@ -345,7 +410,14 @@ const Home: FC<Props> = ({
               handlePagination={handlePages}
             />
           )}
-          {error && <h4> Vi hittade visst inget med dina filter </h4>}
+          {error && (
+            <MessageCtn>
+              <MdTune className="filterIcon" />
+              <h4 className="message">
+                Du råkade visst filtrera bort precis allt{" "}
+              </h4>
+            </MessageCtn>
+          )}
           <AddBtn
             type="button"
             onClick={() => {

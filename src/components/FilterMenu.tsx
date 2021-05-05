@@ -3,7 +3,9 @@ import React, { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { MdCancel } from "react-icons/md";
 import FilterCheckbox from "./FilterCheckbox";
+import SortRadioButtons from "./SortRadioButtons";
 import { fieldsForm } from "../utils/formUtils";
+import { DEFAULTSORTVALUE } from "../utils/sortValuesUtils";
 
 const FilterCtn = styled.div`
   display: ${({ className }) => (className === "show" ? "block" : "none")};
@@ -93,6 +95,13 @@ const FilterBody = styled.div`
   }
 `;
 
+type ISorting = {
+  first: string;
+  second: string;
+  sortTitle: string;
+  secText: string;
+};
+
 interface Props {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isOpen: boolean;
@@ -101,6 +110,9 @@ interface Props {
   setFilterValue: React.Dispatch<React.SetStateAction<any>>;
   setConditionValues: React.Dispatch<React.SetStateAction<any>>;
   filterValueUpdated: boolean;
+  setAllValues: React.Dispatch<React.SetStateAction<any>>;
+  setActiveSorting: React.Dispatch<React.SetStateAction<ISorting>>;
+  activeSorting: ISorting;
 }
 
 const FLITER_OPEN_CLASS = "openFilter";
@@ -113,9 +125,19 @@ const FilterMenu: FC<Props> = ({
   filterValueUpdated,
   filterValue,
   setConditionValues,
+  setAllValues,
+  activeSorting,
+  setActiveSorting,
 }: Props) => {
   const [saveValues, setSaveValues] = useState({});
-
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [newSorting, setNewSorting] = useState({
+    first: activeSorting.first,
+    second: activeSorting.second,
+    sortTitle: activeSorting.sortTitle,
+    secText: activeSorting.secText,
+  });
+  const [showToggle, setShowToggle] = useState(activeSorting.sortTitle);
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add(FLITER_OPEN_CLASS);
@@ -124,13 +146,9 @@ const FilterMenu: FC<Props> = ({
     return () => document.body.classList.remove(FLITER_OPEN_CLASS);
   }, [isOpen]);
 
-  const closeFilter = (e: any) => {
-    e.stopPropagation();
-    setIsOpen(false);
-  };
-
   const handleSaveFilter = () => {
     let categories: any = [];
+    let cateValues: any = [];
     let conditions: any = [];
 
     Object.entries(saveValues).forEach((entry: any) => {
@@ -141,13 +159,14 @@ const FilterMenu: FC<Props> = ({
         if (value[innerKey] === true) {
           if (key === "category") {
             categories.push(group);
+            cateValues.push(innerKey);
           } else if (key === "condition") {
             conditions.push(innerKey);
           }
         }
       });
     });
-
+    setAllValues([...cateValues, ...conditions]);
     setFilterValue({
       ...filterValue,
       or: [...filterValue.or.concat(categories)],
@@ -158,6 +177,11 @@ const FilterMenu: FC<Props> = ({
 
     categories = [];
     conditions = [];
+    setActiveSorting({ ...newSorting });
+  };
+  const closeFilter = (e: any) => {
+    e.stopPropagation();
+    setIsOpen(false);
   };
 
   const handleCancelFilter = () => {
@@ -168,7 +192,36 @@ const FilterMenu: FC<Props> = ({
     setConditionValues([]);
     setSaveValues({});
     setFilterValueUpdated(!filterValueUpdated);
+    setAllValues([]);
+    setActiveSorting(DEFAULTSORTVALUE);
+    setNewSorting(DEFAULTSORTVALUE);
+    setShowToggle(DEFAULTSORTVALUE.sortTitle);
   };
+
+  useEffect(() => {
+    const count: string[] = [];
+    Object.entries(saveValues).forEach((entry: any) => {
+      const [key, value] = entry;
+
+      Object.keys(value).forEach((innerKey: string) => {
+        if (value[innerKey] === true) {
+          if (key === "category") {
+            count.push(innerKey);
+          } else if (key === "condition") {
+            count.push(innerKey);
+          }
+        }
+      });
+    });
+
+    if (count.length === 0 && newSorting.first === activeSorting.first) {
+      setAllValues([]);
+      setIsDisabled(true);
+      setFilterValueUpdated(!filterValueUpdated);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [newSorting, saveValues]);
 
   return (
     <FilterCtn className={isOpen ? "show" : "hide"}>
@@ -183,6 +236,13 @@ const FilterMenu: FC<Props> = ({
         <h1 className="pageTitle">Filtrera</h1>
       </FilterHeader>
       <FilterBody>
+        <SortRadioButtons
+          setNewSorting={setNewSorting}
+          groupTitle="SORTERING"
+          newSorting={newSorting}
+          setShowToggle={setShowToggle}
+          showToggle={showToggle}
+        />
         <FilterCheckbox
           setSaveValues={setSaveValues}
           group={fieldsForm[2]}
@@ -193,12 +253,24 @@ const FilterMenu: FC<Props> = ({
           group={fieldsForm[9]}
           saveValues={saveValues}
         />
-        {/* all the small filtering components, the following p tag is just for showing how it looks like, can be removed when component is added */}
-
-        <button className="saveBtn" type="button" onClick={handleSaveFilter}>
+        <button
+          disabled={isDisabled}
+          style={{
+            backgroundColor: isDisabled ? "#F5F5F5" : "#50811B",
+            color: isDisabled ? "#A3A3A3" : "white",
+          }}
+          className="saveBtn"
+          type="button"
+          onClick={handleSaveFilter}
+        >
           Spara
         </button>
-        <button className="resetBtn" type="button" onClick={handleCancelFilter}>
+        <button
+          style={{ display: isDisabled ? "none" : "block" }}
+          className="resetBtn"
+          type="button"
+          onClick={handleCancelFilter}
+        >
           Avbryt/ Nollställ
         </button>
       </FilterBody>

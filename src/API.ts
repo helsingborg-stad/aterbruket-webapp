@@ -29,6 +29,7 @@ export type CreateAdvertInput = {
   reservedBySub?: string | null,
   reservedByName?: string | null,
   revisions?: number | null,
+  purchasePrice?: string | null,
 };
 
 export enum ItemStatus {
@@ -56,9 +57,9 @@ export type ItemAMaterialInput = {
 };
 
 export enum ItemCondition {
-  new = "new",
-  good = "good",
-  worn = "worn",
+  Anew = "Anew",
+  Bgood = "Bgood",
+  Cworn = "Cworn",
 }
 
 
@@ -94,6 +95,7 @@ export type ModelAdvertConditionInput = {
   reservedBySub?: ModelStringInput | null,
   reservedByName?: ModelStringInput | null,
   revisions?: ModelIntInput | null,
+  purchasePrice?: ModelStringInput | null,
   and?: Array< ModelAdvertConditionInput | null > | null,
   or?: Array< ModelAdvertConditionInput | null > | null,
   not?: ModelAdvertConditionInput | null,
@@ -166,6 +168,59 @@ export type ModelIntInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
+export type Advert = {
+  __typename: "Advert",
+  id?: string,
+  title?: string,
+  description?: string | null,
+  location?: string | null,
+  height?: string | null,
+  width?: string | null,
+  length?: string | null,
+  status?: ItemStatus | null,
+  category?: ItemCategory | null,
+  material?:  Array<ItemAMaterial | null > | null,
+  condition?: ItemCondition | null,
+  color?: string | null,
+  areaOfUse?:  Array<ItemAreaOfUse | null > | null,
+  images?:  Array<ItemImages | null > | null,
+  quantity?: number | null,
+  department?: string | null,
+  instructions?: string | null,
+  contactPerson?: string | null,
+  email?: string | null,
+  phoneNumber?: string | null,
+  giver?: string | null,
+  version?: number,
+  climateImpact?: number | null,
+  reservedBySub?: string | null,
+  reservedByName?: string | null,
+  revisions?: number | null,
+  purchasePrice?: string | null,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
+export type ItemAMaterial = {
+  __typename: "ItemAMaterial",
+  wood?: boolean | null,
+  plastic?: boolean | null,
+  metal?: boolean | null,
+  other?: boolean | null,
+};
+
+export type ItemAreaOfUse = {
+  __typename: "ItemAreaOfUse",
+  indoors?: boolean | null,
+  outside?: boolean | null,
+};
+
+export type ItemImages = {
+  __typename: "ItemImages",
+  src?: string | null,
+  alt?: string | null,
+};
+
 export type UpdateAdvertInput = {
   id: string,
   title?: string | null,
@@ -193,11 +248,48 @@ export type UpdateAdvertInput = {
   reservedBySub?: string | null,
   reservedByName?: string | null,
   revisions?: number | null,
+  purchasePrice?: string | null,
 };
 
 export type DeleteAdvertInput = {
   id: string,
   version: number,
+};
+
+export type CreatePageInput = {
+  id?: string | null,
+  slug: string,
+  title: string,
+  content?: string | null,
+};
+
+export type ModelPageConditionInput = {
+  title?: ModelStringInput | null,
+  content?: ModelStringInput | null,
+  and?: Array< ModelPageConditionInput | null > | null,
+  or?: Array< ModelPageConditionInput | null > | null,
+  not?: ModelPageConditionInput | null,
+};
+
+export type Page = {
+  __typename: "Page",
+  id?: string,
+  slug?: string,
+  title?: string,
+  content?: string | null,
+  createdAt?: string,
+  updatedAt?: string,
+};
+
+export type UpdatePageInput = {
+  id: string,
+  slug: string,
+  title?: string | null,
+  content?: string | null,
+};
+
+export type DeletePageInput = {
+  slug: string,
 };
 
 export type ModelIntKeyConditionInput = {
@@ -233,6 +325,7 @@ export type ModelAdvertFilterInput = {
   reservedBySub?: ModelStringInput | null,
   reservedByName?: ModelStringInput | null,
   revisions?: ModelIntInput | null,
+  purchasePrice?: ModelStringInput | null,
   and?: Array< ModelAdvertFilterInput | null > | null,
   or?: Array< ModelAdvertFilterInput | null > | null,
   not?: ModelAdvertFilterInput | null,
@@ -260,213 +353,290 @@ export enum ModelSortDirection {
 }
 
 
+export type ModelAdvertConnection = {
+  __typename: "ModelAdvertConnection",
+  items?:  Array<Advert | null > | null,
+  nextToken?: string | null,
+};
+
+export type ModelPageFilterInput = {
+  id?: ModelIDInput | null,
+  slug?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  content?: ModelStringInput | null,
+  and?: Array< ModelPageFilterInput | null > | null,
+  or?: Array< ModelPageFilterInput | null > | null,
+  not?: ModelPageFilterInput | null,
+};
+
+export type ModelPageConnection = {
+  __typename: "ModelPageConnection",
+  items?:  Array<Page | null > | null,
+  nextToken?: string | null,
+};
+
 export type CreateAdvertMutationVariables = {
-  input: CreateAdvertInput,
+  input?: CreateAdvertInput,
   condition?: ModelAdvertConditionInput | null,
 };
 
 export type CreateAdvertMutation = {
-  createAdvert:  {
+  createAdvert?:  {
     __typename: "Advert",
     id: string,
     title: string,
-    description: string | null,
-    location: string | null,
-    height: string | null,
-    width: string | null,
-    length: string | null,
-    status: ItemStatus | null,
-    category: ItemCategory | null,
-    material:  Array< {
+    description?: string | null,
+    location?: string | null,
+    height?: string | null,
+    width?: string | null,
+    length?: string | null,
+    status?: ItemStatus | null,
+    category?: ItemCategory | null,
+    material?:  Array< {
       __typename: "ItemAMaterial",
-      wood: boolean | null,
-      plastic: boolean | null,
-      metal: boolean | null,
-      other: boolean | null,
+      wood?: boolean | null,
+      plastic?: boolean | null,
+      metal?: boolean | null,
+      other?: boolean | null,
     } | null > | null,
-    condition: ItemCondition | null,
-    color: string | null,
-    areaOfUse:  Array< {
+    condition?: ItemCondition | null,
+    color?: string | null,
+    areaOfUse?:  Array< {
       __typename: "ItemAreaOfUse",
-      indoors: boolean | null,
-      outside: boolean | null,
+      indoors?: boolean | null,
+      outside?: boolean | null,
     } | null > | null,
-    images:  Array< {
+    images?:  Array< {
       __typename: "ItemImages",
-      src: string | null,
-      alt: string | null,
+      src?: string | null,
+      alt?: string | null,
     } | null > | null,
-    quantity: number | null,
-    department: string | null,
-    instructions: string | null,
-    contactPerson: string | null,
-    email: string | null,
-    phoneNumber: string | null,
-    giver: string | null,
+    quantity?: number | null,
+    department?: string | null,
+    instructions?: string | null,
+    contactPerson?: string | null,
+    email?: string | null,
+    phoneNumber?: string | null,
+    giver?: string | null,
     version: number,
-    climateImpact: number | null,
-    reservedBySub: string | null,
-    reservedByName: string | null,
-    revisions: number | null,
+    climateImpact?: number | null,
+    reservedBySub?: string | null,
+    reservedByName?: string | null,
+    revisions?: number | null,
+    purchasePrice?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
 export type UpdateAdvertMutationVariables = {
-  input: UpdateAdvertInput,
+  input?: UpdateAdvertInput,
   condition?: ModelAdvertConditionInput | null,
 };
 
 export type UpdateAdvertMutation = {
-  updateAdvert:  {
+  updateAdvert?:  {
     __typename: "Advert",
     id: string,
     title: string,
-    description: string | null,
-    location: string | null,
-    height: string | null,
-    width: string | null,
-    length: string | null,
-    status: ItemStatus | null,
-    category: ItemCategory | null,
-    material:  Array< {
+    description?: string | null,
+    location?: string | null,
+    height?: string | null,
+    width?: string | null,
+    length?: string | null,
+    status?: ItemStatus | null,
+    category?: ItemCategory | null,
+    material?:  Array< {
       __typename: "ItemAMaterial",
-      wood: boolean | null,
-      plastic: boolean | null,
-      metal: boolean | null,
-      other: boolean | null,
+      wood?: boolean | null,
+      plastic?: boolean | null,
+      metal?: boolean | null,
+      other?: boolean | null,
     } | null > | null,
-    condition: ItemCondition | null,
-    color: string | null,
-    areaOfUse:  Array< {
+    condition?: ItemCondition | null,
+    color?: string | null,
+    areaOfUse?:  Array< {
       __typename: "ItemAreaOfUse",
-      indoors: boolean | null,
-      outside: boolean | null,
+      indoors?: boolean | null,
+      outside?: boolean | null,
     } | null > | null,
-    images:  Array< {
+    images?:  Array< {
       __typename: "ItemImages",
-      src: string | null,
-      alt: string | null,
+      src?: string | null,
+      alt?: string | null,
     } | null > | null,
-    quantity: number | null,
-    department: string | null,
-    instructions: string | null,
-    contactPerson: string | null,
-    email: string | null,
-    phoneNumber: string | null,
-    giver: string | null,
+    quantity?: number | null,
+    department?: string | null,
+    instructions?: string | null,
+    contactPerson?: string | null,
+    email?: string | null,
+    phoneNumber?: string | null,
+    giver?: string | null,
     version: number,
-    climateImpact: number | null,
-    reservedBySub: string | null,
-    reservedByName: string | null,
-    revisions: number | null,
+    climateImpact?: number | null,
+    reservedBySub?: string | null,
+    reservedByName?: string | null,
+    revisions?: number | null,
+    purchasePrice?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
 export type DeleteAdvertMutationVariables = {
-  input: DeleteAdvertInput,
+  input?: DeleteAdvertInput,
   condition?: ModelAdvertConditionInput | null,
 };
 
 export type DeleteAdvertMutation = {
-  deleteAdvert:  {
+  deleteAdvert?:  {
     __typename: "Advert",
     id: string,
     title: string,
-    description: string | null,
-    location: string | null,
-    height: string | null,
-    width: string | null,
-    length: string | null,
-    status: ItemStatus | null,
-    category: ItemCategory | null,
-    material:  Array< {
+    description?: string | null,
+    location?: string | null,
+    height?: string | null,
+    width?: string | null,
+    length?: string | null,
+    status?: ItemStatus | null,
+    category?: ItemCategory | null,
+    material?:  Array< {
       __typename: "ItemAMaterial",
-      wood: boolean | null,
-      plastic: boolean | null,
-      metal: boolean | null,
-      other: boolean | null,
+      wood?: boolean | null,
+      plastic?: boolean | null,
+      metal?: boolean | null,
+      other?: boolean | null,
     } | null > | null,
-    condition: ItemCondition | null,
-    color: string | null,
-    areaOfUse:  Array< {
+    condition?: ItemCondition | null,
+    color?: string | null,
+    areaOfUse?:  Array< {
       __typename: "ItemAreaOfUse",
-      indoors: boolean | null,
-      outside: boolean | null,
+      indoors?: boolean | null,
+      outside?: boolean | null,
     } | null > | null,
-    images:  Array< {
+    images?:  Array< {
       __typename: "ItemImages",
-      src: string | null,
-      alt: string | null,
+      src?: string | null,
+      alt?: string | null,
     } | null > | null,
-    quantity: number | null,
-    department: string | null,
-    instructions: string | null,
-    contactPerson: string | null,
-    email: string | null,
-    phoneNumber: string | null,
-    giver: string | null,
+    quantity?: number | null,
+    department?: string | null,
+    instructions?: string | null,
+    contactPerson?: string | null,
+    email?: string | null,
+    phoneNumber?: string | null,
+    giver?: string | null,
     version: number,
-    climateImpact: number | null,
-    reservedBySub: string | null,
-    reservedByName: string | null,
-    revisions: number | null,
+    climateImpact?: number | null,
+    reservedBySub?: string | null,
+    reservedByName?: string | null,
+    revisions?: number | null,
+    purchasePrice?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreatePageMutationVariables = {
+  input?: CreatePageInput,
+  condition?: ModelPageConditionInput | null,
+};
+
+export type CreatePageMutation = {
+  createPage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdatePageMutationVariables = {
+  input?: UpdatePageInput,
+  condition?: ModelPageConditionInput | null,
+};
+
+export type UpdatePageMutation = {
+  updatePage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeletePageMutationVariables = {
+  input?: DeletePageInput,
+  condition?: ModelPageConditionInput | null,
+};
+
+export type DeletePageMutation = {
+  deletePage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
 export type GetAdvertQueryVariables = {
-  id: string,
-  version: number,
+  id?: string,
+  version?: number,
 };
 
 export type GetAdvertQuery = {
-  getAdvert:  {
+  getAdvert?:  {
     __typename: "Advert",
     id: string,
     title: string,
-    description: string | null,
-    location: string | null,
-    height: string | null,
-    width: string | null,
-    length: string | null,
-    status: ItemStatus | null,
-    category: ItemCategory | null,
-    material:  Array< {
+    description?: string | null,
+    location?: string | null,
+    height?: string | null,
+    width?: string | null,
+    length?: string | null,
+    status?: ItemStatus | null,
+    category?: ItemCategory | null,
+    material?:  Array< {
       __typename: "ItemAMaterial",
-      wood: boolean | null,
-      plastic: boolean | null,
-      metal: boolean | null,
-      other: boolean | null,
+      wood?: boolean | null,
+      plastic?: boolean | null,
+      metal?: boolean | null,
+      other?: boolean | null,
     } | null > | null,
-    condition: ItemCondition | null,
-    color: string | null,
-    areaOfUse:  Array< {
+    condition?: ItemCondition | null,
+    color?: string | null,
+    areaOfUse?:  Array< {
       __typename: "ItemAreaOfUse",
-      indoors: boolean | null,
-      outside: boolean | null,
+      indoors?: boolean | null,
+      outside?: boolean | null,
     } | null > | null,
-    images:  Array< {
+    images?:  Array< {
       __typename: "ItemImages",
-      src: string | null,
-      alt: string | null,
+      src?: string | null,
+      alt?: string | null,
     } | null > | null,
-    quantity: number | null,
-    department: string | null,
-    instructions: string | null,
-    contactPerson: string | null,
-    email: string | null,
-    phoneNumber: string | null,
-    giver: string | null,
+    quantity?: number | null,
+    department?: string | null,
+    instructions?: string | null,
+    contactPerson?: string | null,
+    email?: string | null,
+    phoneNumber?: string | null,
+    giver?: string | null,
     version: number,
-    climateImpact: number | null,
-    reservedBySub: string | null,
-    reservedByName: string | null,
-    revisions: number | null,
+    climateImpact?: number | null,
+    reservedBySub?: string | null,
+    reservedByName?: string | null,
+    revisions?: number | null,
+    purchasePrice?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -482,196 +652,276 @@ export type ListAdvertsQueryVariables = {
 };
 
 export type ListAdvertsQuery = {
-  listAdverts:  {
+  listAdverts?:  {
     __typename: "ModelAdvertConnection",
-    items:  Array< {
+    items?:  Array< {
       __typename: "Advert",
       id: string,
       title: string,
-      description: string | null,
-      location: string | null,
-      height: string | null,
-      width: string | null,
-      length: string | null,
-      status: ItemStatus | null,
-      category: ItemCategory | null,
-      material:  Array< {
+      description?: string | null,
+      location?: string | null,
+      height?: string | null,
+      width?: string | null,
+      length?: string | null,
+      status?: ItemStatus | null,
+      category?: ItemCategory | null,
+      material?:  Array< {
         __typename: "ItemAMaterial",
-        wood: boolean | null,
-        plastic: boolean | null,
-        metal: boolean | null,
-        other: boolean | null,
+        wood?: boolean | null,
+        plastic?: boolean | null,
+        metal?: boolean | null,
+        other?: boolean | null,
       } | null > | null,
-      condition: ItemCondition | null,
-      color: string | null,
-      areaOfUse:  Array< {
+      condition?: ItemCondition | null,
+      color?: string | null,
+      areaOfUse?:  Array< {
         __typename: "ItemAreaOfUse",
-        indoors: boolean | null,
-        outside: boolean | null,
+        indoors?: boolean | null,
+        outside?: boolean | null,
       } | null > | null,
-      images:  Array< {
+      images?:  Array< {
         __typename: "ItemImages",
-        src: string | null,
-        alt: string | null,
+        src?: string | null,
+        alt?: string | null,
       } | null > | null,
-      quantity: number | null,
-      department: string | null,
-      instructions: string | null,
-      contactPerson: string | null,
-      email: string | null,
-      phoneNumber: string | null,
-      giver: string | null,
+      quantity?: number | null,
+      department?: string | null,
+      instructions?: string | null,
+      contactPerson?: string | null,
+      email?: string | null,
+      phoneNumber?: string | null,
+      giver?: string | null,
       version: number,
-      climateImpact: number | null,
-      reservedBySub: string | null,
-      reservedByName: string | null,
-      revisions: number | null,
+      climateImpact?: number | null,
+      reservedBySub?: string | null,
+      reservedByName?: string | null,
+      revisions?: number | null,
+      purchasePrice?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
-    nextToken: string | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetPageQueryVariables = {
+  slug?: string,
+};
+
+export type GetPageQuery = {
+  getPage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListPagesQueryVariables = {
+  slug?: string | null,
+  filter?: ModelPageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListPagesQuery = {
+  listPages?:  {
+    __typename: "ModelPageConnection",
+    items?:  Array< {
+      __typename: "Page",
+      id: string,
+      slug: string,
+      title: string,
+      content?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
   } | null,
 };
 
 export type OnCreateAdvertSubscription = {
-  onCreateAdvert:  {
+  onCreateAdvert?:  {
     __typename: "Advert",
     id: string,
     title: string,
-    description: string | null,
-    location: string | null,
-    height: string | null,
-    width: string | null,
-    length: string | null,
-    status: ItemStatus | null,
-    category: ItemCategory | null,
-    material:  Array< {
+    description?: string | null,
+    location?: string | null,
+    height?: string | null,
+    width?: string | null,
+    length?: string | null,
+    status?: ItemStatus | null,
+    category?: ItemCategory | null,
+    material?:  Array< {
       __typename: "ItemAMaterial",
-      wood: boolean | null,
-      plastic: boolean | null,
-      metal: boolean | null,
-      other: boolean | null,
+      wood?: boolean | null,
+      plastic?: boolean | null,
+      metal?: boolean | null,
+      other?: boolean | null,
     } | null > | null,
-    condition: ItemCondition | null,
-    color: string | null,
-    areaOfUse:  Array< {
+    condition?: ItemCondition | null,
+    color?: string | null,
+    areaOfUse?:  Array< {
       __typename: "ItemAreaOfUse",
-      indoors: boolean | null,
-      outside: boolean | null,
+      indoors?: boolean | null,
+      outside?: boolean | null,
     } | null > | null,
-    images:  Array< {
+    images?:  Array< {
       __typename: "ItemImages",
-      src: string | null,
-      alt: string | null,
+      src?: string | null,
+      alt?: string | null,
     } | null > | null,
-    quantity: number | null,
-    department: string | null,
-    instructions: string | null,
-    contactPerson: string | null,
-    email: string | null,
-    phoneNumber: string | null,
-    giver: string | null,
+    quantity?: number | null,
+    department?: string | null,
+    instructions?: string | null,
+    contactPerson?: string | null,
+    email?: string | null,
+    phoneNumber?: string | null,
+    giver?: string | null,
     version: number,
-    climateImpact: number | null,
-    reservedBySub: string | null,
-    reservedByName: string | null,
-    revisions: number | null,
+    climateImpact?: number | null,
+    reservedBySub?: string | null,
+    reservedByName?: string | null,
+    revisions?: number | null,
+    purchasePrice?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
 export type OnUpdateAdvertSubscription = {
-  onUpdateAdvert:  {
+  onUpdateAdvert?:  {
     __typename: "Advert",
     id: string,
     title: string,
-    description: string | null,
-    location: string | null,
-    height: string | null,
-    width: string | null,
-    length: string | null,
-    status: ItemStatus | null,
-    category: ItemCategory | null,
-    material:  Array< {
+    description?: string | null,
+    location?: string | null,
+    height?: string | null,
+    width?: string | null,
+    length?: string | null,
+    status?: ItemStatus | null,
+    category?: ItemCategory | null,
+    material?:  Array< {
       __typename: "ItemAMaterial",
-      wood: boolean | null,
-      plastic: boolean | null,
-      metal: boolean | null,
-      other: boolean | null,
+      wood?: boolean | null,
+      plastic?: boolean | null,
+      metal?: boolean | null,
+      other?: boolean | null,
     } | null > | null,
-    condition: ItemCondition | null,
-    color: string | null,
-    areaOfUse:  Array< {
+    condition?: ItemCondition | null,
+    color?: string | null,
+    areaOfUse?:  Array< {
       __typename: "ItemAreaOfUse",
-      indoors: boolean | null,
-      outside: boolean | null,
+      indoors?: boolean | null,
+      outside?: boolean | null,
     } | null > | null,
-    images:  Array< {
+    images?:  Array< {
       __typename: "ItemImages",
-      src: string | null,
-      alt: string | null,
+      src?: string | null,
+      alt?: string | null,
     } | null > | null,
-    quantity: number | null,
-    department: string | null,
-    instructions: string | null,
-    contactPerson: string | null,
-    email: string | null,
-    phoneNumber: string | null,
-    giver: string | null,
+    quantity?: number | null,
+    department?: string | null,
+    instructions?: string | null,
+    contactPerson?: string | null,
+    email?: string | null,
+    phoneNumber?: string | null,
+    giver?: string | null,
     version: number,
-    climateImpact: number | null,
-    reservedBySub: string | null,
-    reservedByName: string | null,
-    revisions: number | null,
+    climateImpact?: number | null,
+    reservedBySub?: string | null,
+    reservedByName?: string | null,
+    revisions?: number | null,
+    purchasePrice?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
 export type OnDeleteAdvertSubscription = {
-  onDeleteAdvert:  {
+  onDeleteAdvert?:  {
     __typename: "Advert",
     id: string,
     title: string,
-    description: string | null,
-    location: string | null,
-    height: string | null,
-    width: string | null,
-    length: string | null,
-    status: ItemStatus | null,
-    category: ItemCategory | null,
-    material:  Array< {
+    description?: string | null,
+    location?: string | null,
+    height?: string | null,
+    width?: string | null,
+    length?: string | null,
+    status?: ItemStatus | null,
+    category?: ItemCategory | null,
+    material?:  Array< {
       __typename: "ItemAMaterial",
-      wood: boolean | null,
-      plastic: boolean | null,
-      metal: boolean | null,
-      other: boolean | null,
+      wood?: boolean | null,
+      plastic?: boolean | null,
+      metal?: boolean | null,
+      other?: boolean | null,
     } | null > | null,
-    condition: ItemCondition | null,
-    color: string | null,
-    areaOfUse:  Array< {
+    condition?: ItemCondition | null,
+    color?: string | null,
+    areaOfUse?:  Array< {
       __typename: "ItemAreaOfUse",
-      indoors: boolean | null,
-      outside: boolean | null,
+      indoors?: boolean | null,
+      outside?: boolean | null,
     } | null > | null,
-    images:  Array< {
+    images?:  Array< {
       __typename: "ItemImages",
-      src: string | null,
-      alt: string | null,
+      src?: string | null,
+      alt?: string | null,
     } | null > | null,
-    quantity: number | null,
-    department: string | null,
-    instructions: string | null,
-    contactPerson: string | null,
-    email: string | null,
-    phoneNumber: string | null,
-    giver: string | null,
+    quantity?: number | null,
+    department?: string | null,
+    instructions?: string | null,
+    contactPerson?: string | null,
+    email?: string | null,
+    phoneNumber?: string | null,
+    giver?: string | null,
     version: number,
-    climateImpact: number | null,
-    reservedBySub: string | null,
-    reservedByName: string | null,
-    revisions: number | null,
+    climateImpact?: number | null,
+    reservedBySub?: string | null,
+    reservedByName?: string | null,
+    revisions?: number | null,
+    purchasePrice?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreatePageSubscription = {
+  onCreatePage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdatePageSubscription = {
+  onUpdatePage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeletePageSubscription = {
+  onDeletePage?:  {
+    __typename: "Page",
+    id: string,
+    slug: string,
+    title: string,
+    content?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

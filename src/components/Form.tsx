@@ -104,7 +104,14 @@ export default function Form(props: {
       if (props.values[field.name] !== undefined) {
         attributes.value = props.values[field.name];
       }
-      if (dimensions.includes(field.name) || field.name === "phoneNumber") {
+      if (field.name === "title") {
+        attributes.maxLength = "20";
+      }
+      if (
+        dimensions.includes(field.name) ||
+        field.name === "phoneNumber" ||
+        field.name === "purchasePrice"
+      ) {
         attributes.pattern = "[0-9]*";
       }
 
@@ -115,12 +122,21 @@ export default function Form(props: {
             {field.name === "location" && (
               <span className="infoSpan">ex, Drottninggatan 14</span>
             )}
+            {field.name === "title" && (
+              <span className="infoSpan">max 20 tecken</span>
+            )}
             {dimensions.includes(field.name) && (
               <span className="infoSpan">ange i cm</span>
             )}
             {field.name === "phoneNumber" && (
               <span className="infoSpan">
                 ange endast siffror ex, 0701234567
+              </span>
+            )}
+            {field.name === "purchasePrice" && (
+              <span className="infoSpan">
+                Vet du inte exakt vad den köptes in för? <br />
+                Ange då en uppskattning av priset.
               </span>
             )}
           </div>

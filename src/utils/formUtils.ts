@@ -110,7 +110,7 @@ export const fieldsForm = [
     required: true,
     title: "Skick",
     swe: ["Nyskick", "Bra", "Sliten"],
-    eng: ["new", "good", "worn"],
+    eng: ["Anew", "Bgood", "Cworn"],
   },
   {
     name: "areaOfUse",
@@ -131,6 +131,14 @@ export const fieldsForm = [
         eng: ["outside"],
       },
     ],
+  },
+  {
+    name: "purchasePrice",
+    dataType: "number",
+    fieldType: "input",
+    disabled: false,
+    required: false,
+    title: "Inköpspris",
   },
   {
     name: "description",
@@ -298,7 +306,7 @@ export const fieldsEditForm = [
     required: true,
     title: "Skick",
     swe: ["Nyskick", "Bra", "Sliten"],
-    eng: ["new", "good", "worn"],
+    eng: ["Anew", "Bgood", "Cworn"],
   },
   {
     name: "areaOfUse",
@@ -319,6 +327,14 @@ export const fieldsEditForm = [
         eng: ["outside"],
       },
     ],
+  },
+  {
+    name: "purchasePrice",
+    dataType: "number",
+    fieldType: "input",
+    disabled: false,
+    required: false,
+    title: "Inköpspris",
   },
   {
     name: "description",

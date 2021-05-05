@@ -1,16 +1,16 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useEffect } from "react";
 import { API, Storage } from "aws-amplify";
+import { MdArrowForward } from "react-icons/md";
+import { graphqlOperation } from "@aws-amplify/api";
+import { createAdvert, updateAdvert } from "../graphql/mutations";
+import UserContext from "../contexts/UserContext";
 
 interface Props {
-  title: string;
-  description: string;
-  id: string;
-  condition: string;
-  quantity: number;
   imageKey: string;
+  filteredItem: any;
+  fetchReservedAdverts: any;
 }
 
 const CardDiv = styled.div`
@@ -36,7 +36,7 @@ const CardDiv = styled.div`
   }
 
   .picDiv {
-    width: 35%;
+    width: 25%;
     align-self: stretch;
 
     img {
@@ -93,17 +93,42 @@ const CardDiv = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+  .btn--pickUp {
+    width: 202px;
+    height: 40px;
+    border: none;
+    margin: 0px 24px 24px 0px;
+    padding-left: 12px;
+    background-color: ${(props) => props.theme.colors.primaryLighter};
+    box-sizing: border-box;
+    border-radius: 4.5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    span {
+      font-family: ${(props) => props.theme.appTheme.fontFamily};
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 132%;
+      font-style: normal;
+      color: ${(props) => props.theme.colors.primaryDark};
+    }
+    svg {
+      color: ${(props) => props.theme.colors.secondaryDark};
+      font-size: 24px;
+    }
+  }
 `;
 
 const Card: FC<Props> = ({
-  id,
-  title,
-  description,
-  condition,
-  quantity,
   imageKey,
+  filteredItem,
+  fetchReservedAdverts,
 }: Props) => {
   const [url, setURL] = useState(undefined) as any;
+  const { user } = useContext(UserContext);
+  const [itemUpdated, setItemUpdated] = useState(false);
+
   const fetchImage = (): void => {
     Storage.get(imageKey).then((url: any) => {
       setURL(url);
@@ -113,16 +138,71 @@ const Card: FC<Props> = ({
     fetchImage();
   }, []);
 
+  const updateItem = async (newStatus: string) => {
+    const result = (await API.graphql(
+      graphqlOperation(updateAdvert, {
+        input: {
+          id: filteredItem.id,
+          status: newStatus,
+          reservedBySub: user.sub,
+          reservedByName: user.name,
+          version: 0,
+          revisions: filteredItem.revisions + 1,
+        },
+      })
+    )) as any;
+
+    setItemUpdated(true);
+
+    delete filteredItem.createdAt;
+    delete filteredItem.updatedAt;
+    filteredItem.version = result.data.updateAdvert.revisions + 1;
+
+    await API.graphql(graphqlOperation(createAdvert, { input: filteredItem }));
+  };
+
+  const onClickPickUpBtn = () => {
+    updateItem("pickedUp");
+  };
+
+  useEffect(() => {
+    if (itemUpdated) {
+      fetchReservedAdverts();
+      setItemUpdated(false);
+    }
+  }, [itemUpdated]);
+
   return (
-    <CardDiv as={Link} to={`/item/${id}`} id={id}>
+    <CardDiv
+      as={Link}
+      to={`/item/${filteredItem.id}`}
+      id={filteredItem.id}
+      style={{
+        opacity: filteredItem.status === "pickedUp" ? "0.5" : "1",
+        filter: filteredItem.status === "pickedUp" ? "grayscale(1)" : "none",
+      }}
+    >
       <div className="picDiv">
         <img src={url} alt="" />
       </div>
       <div className="infoDiv">
-        <h3>{title}</h3>
-        <h4>{quantity} stycken</h4>
-        <p>Condition: {condition}</p>
-        <p className="desc">Beskrivning: {description}</p>
+        <h3>{filteredItem.title}</h3>
+        <h4>{filteredItem.quantity} stycken</h4>
+        <p className="desc">Beskrivning: {filteredItem.description}</p>
+        {filteredItem.status === "reserved" && (
+          <button
+            className="btn--pickUp"
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              onClickPickUpBtn();
+            }}
+          >
+            <span>Haffa ut!</span>
+
+            <MdArrowForward />
+          </button>
+        )}
       </div>
     </CardDiv>
   );

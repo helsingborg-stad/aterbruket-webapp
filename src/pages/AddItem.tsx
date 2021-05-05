@@ -2,14 +2,14 @@
 import React, { FC, useContext, useEffect, useState } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 import { API, graphqlOperation } from "aws-amplify";
+import styled from "styled-components";
+import Loader from "react-loader-spinner";
 import Form from "../components/Form";
 import useForm from "../hooks/useForm";
 import { createAdvert } from "../graphql/mutations";
 import OpenCamera from "../components/OpenCamera";
 import { fieldsForm as fields } from "../utils/formUtils";
-import { UserContext } from "../contexts/UserContext";
-import styled from "styled-components";
-import Loader from "react-loader-spinner";
+import UserContext from "../contexts/UserContext";
 
 const ItemImg = styled.img`
   width: 200px;
@@ -38,8 +38,7 @@ const AddItem: FC<Props> = ({
   qrCamera,
   setQrCamera,
 }: Props) => {
-  const history = useHistory();
-  const user: any = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const {
     values,
     handleInputChange,
@@ -68,18 +67,17 @@ const AddItem: FC<Props> = ({
         wood: false,
       },
       description: "",
-      department: user.attributes["custom:department"]
-        ? user.attributes["custom:department"]
-        : "",
+      department: user.department,
       location: "",
       instructions: "",
-      contactPerson: user.attributes.name ? user.attributes.name : "",
-      email: user.attributes.email ? user.attributes.email : "",
+      contactPerson: user.name ? user.name : "",
+      email: user.email ? user.email : "",
       phoneNumber: "",
-      giver: user.attributes.sub,
+      giver: user.sub,
       climateImpact: 0,
       version: 0,
       revisions: 0,
+      purchasePrice: "",
     },
     createAdvert
   );

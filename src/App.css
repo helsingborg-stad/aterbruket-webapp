@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+/** Amplify Authenticator specific styling **/
+
+:root {
+  --amplify-font-family:  'Roboto', sans-serif;
+  --amplify-primary-color: #50811B;
+  --amplify-primary-tint: #205400;
+  --amplify-primary-shade: #205400;
+}

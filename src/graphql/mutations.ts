@@ -45,6 +45,7 @@ export const createAdvert = /* GraphQL */ `
       reservedBySub
       reservedByName
       revisions
+      purchasePrice
       createdAt
       updatedAt
     }
@@ -93,6 +94,7 @@ export const updateAdvert = /* GraphQL */ `
       reservedBySub
       reservedByName
       revisions
+      purchasePrice
       createdAt
       updatedAt
     }
@@ -141,6 +143,52 @@ export const deleteAdvert = /* GraphQL */ `
       reservedBySub
       reservedByName
       revisions
+      purchasePrice
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createPage = /* GraphQL */ `
+  mutation CreatePage(
+    $input: CreatePageInput!
+    $condition: ModelPageConditionInput
+  ) {
+    createPage(input: $input, condition: $condition) {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updatePage = /* GraphQL */ `
+  mutation UpdatePage(
+    $input: UpdatePageInput!
+    $condition: ModelPageConditionInput
+  ) {
+    updatePage(input: $input, condition: $condition) {
+      id
+      slug
+      title
+      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deletePage = /* GraphQL */ `
+  mutation DeletePage(
+    $input: DeletePageInput!
+    $condition: ModelPageConditionInput
+  ) {
+    deletePage(input: $input, condition: $condition) {
+      id
+      slug
+      title
+      content
       createdAt
       updatedAt
     }

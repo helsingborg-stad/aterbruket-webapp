@@ -1,6 +1,6 @@
 {
     "identityPoolName": "aterbruketwebapp75287c9a_identitypool_75287c9a",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "aterbr75287c9a",
     "userPoolName": "aterbruketwebapp75287c9a_userpool_75287c9a",
     "autoVerifiedAttributes": [

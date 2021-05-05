@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 const InputGroup = styled.div`
    {
+    color: ${(props) => props.theme.colors.dark};
+    font-weight: 500;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -16,7 +18,7 @@ const InputGroup = styled.div`
 
     input {
       appearance: none;
-      border: 1px solid #c9d6c2;
+      border: 2px solid ${(props) => props.theme.colors.illustration};
       border-radius: 4px;
 
       width: 18px;
@@ -26,10 +28,31 @@ const InputGroup = styled.div`
 
     input[type="checkbox"]:checked,
     &:focus {
-      border: 1px solid ${(props) => props.theme.colors.lightGray};
+      border: 2px solid ${(props) => props.theme.colors.lightGray};
       background-color: ${(props) => props.theme.colors.primaryLight};
       outline: none;
     }
+
+    label {
+      font-weight: 500;
+    }
+
+    input[type="checkbox"]:checked + label,
+    &:focus {
+      font-weight: 900;
+      color: ${(props) => props.theme.colors.darker};
+    }
+    
+    }
+  }
+`;
+
+const Divider = styled.div`
+   {
+    width: 71px;
+    height: 2px;
+    margin-top: 15px;
+    background-color: ${(props) => props.theme.colors.primaryLighter};
   }
 `;
 
@@ -38,6 +61,14 @@ const GroupCtn = styled.div`
     width: 350px;
     height: 100%;
     margin-bottom: 3px;
+
+    h2 {
+      font-size: 12px;
+      font-weight: 900;
+      color: ${(props) => props.theme.colors.darker};
+      margin-block-end: 0;
+      letter-spacing: 0.5px;
+    }
   }
 `;
 
@@ -52,19 +83,13 @@ const FilterCheckbox: FC<Props> = ({
   saveValues,
   group,
 }: Props) => {
-  const handleInputChange = (
-    e: React.ChangeEvent<any>,
-    groupName: any,
-    element: any
-  ) => {
-    const { target } = e;
-
-    const value = target.type === "checkbox" ? target.checked : target.value;
-    // eslint-disable-next-line no-console
-
+  const handleInputChange = (e: React.ChangeEvent<any>, groupName: any) => {
     setSaveValues({
       ...saveValues,
-      [groupName]: { ...saveValues[groupName], [element]: value },
+      [groupName]: {
+        ...saveValues[groupName],
+        [e.target.name]: e.target.checked,
+      },
     });
   };
 
@@ -78,13 +103,23 @@ const FilterCheckbox: FC<Props> = ({
         <InputGroup key={element}>
           <input
             type="checkbox"
+            id={element}
             name={element}
-            onChange={(e) => handleInputChange(e, [group.name], element)}
+            onChange={(e) => handleInputChange(e, [group.name])}
             checked={
               !!(saveValues[group.name] && saveValues[group.name][element])
             }
           />
-          <label htmlFor={element}>{group.swe[idx]} </label>
+          <label
+            htmlFor={element}
+            className={
+              saveValues[group.name] && saveValues[group.name][element]
+                ? "active"
+                : "normal"
+            }
+          >
+            {group.swe[idx]}
+          </label>
         </InputGroup>
       );
     });
@@ -92,7 +127,12 @@ const FilterCheckbox: FC<Props> = ({
 
   return (
     <GroupCtn>
-      {group.title}
+      <h2>{group.title.toUpperCase()}</h2>
+      <Divider
+        style={{
+          width: group.title === "Skick" ? "37px" : "92px",
+        }}
+      />
       {checkboxes}
     </GroupCtn>
   );

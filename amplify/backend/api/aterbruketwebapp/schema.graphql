@@ -1,5 +1,12 @@
-
-type Advert @model @key(fields: [ "id", "version" ]){
+type Advert
+  @model
+  @key(fields: [ "id", "version" ])
+  @auth(
+    rules: [
+      { allow: private },
+      { allow: groups, groups: ["administrator"] }
+  ])
+{
   id: ID!
   title: String!
   description: String
@@ -26,6 +33,7 @@ type Advert @model @key(fields: [ "id", "version" ]){
   reservedBySub: String
   reservedByName: String
   revisions: Int
+  purchasePrice: String
 }
 
 enum ItemStatus {
@@ -51,9 +59,9 @@ type ItemAMaterial {
 }
 
 enum ItemCondition {
-  new
-  good
-  worn
+  Anew
+  Bgood
+  Cworn
 }
 
 type ItemAreaOfUse {
@@ -64,4 +72,18 @@ type ItemAreaOfUse {
 type ItemImages {
   src: String
   alt: String
+}
+
+type Page
+  @model
+  @key(fields: [ "slug" ])
+  @auth(
+    rules: [
+      { allow: groups, groups: ["administrator"] }
+  ])
+{
+  id: ID!
+  slug: String!
+  title: String!
+  content: String
 }

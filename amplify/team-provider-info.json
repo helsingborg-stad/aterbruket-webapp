@@ -29,7 +29,10 @@
         "aterbruketwebapp75287c9a": {}
       },
       "function": {
-        "migrateADUser": {}
+        "migrateADUser": {
+          "deploymentBucketName": "amplify-aterbruketwebapp-dev-224145-deployment",
+          "s3Key": "amplify-builds/migrateADUser-536a5438575072547853-build.zip"
+        }
       }
     }
   },
@@ -93,7 +96,10 @@
         "userPoolGroups": {}
       },
       "function": {
-        "migrateADUser": {}
+        "migrateADUser": {
+          "deploymentBucketName": "amplify-aterbruketwebapp-jsandbox-111327-deployment",
+          "s3Key": "amplify-builds/migrateADUser-31315579523834414735-build.zip"
+        }
       }
     }
   },
@@ -112,10 +118,14 @@
     "categories": {
       "auth": {
         "aterbruketwebapp75287c9a_userpool_75287c9a-esandbox": {},
-        "aterbruketwebapp75287c9a": {}
+        "aterbruketwebapp75287c9a": {},
+        "userPoolGroups": {}
       },
       "function": {
-        "migrateADUser": {}
+        "migrateADUser": {
+          "deploymentBucketName": "amplify-aterbruketwebapp-annabox-134822-deployment",
+          "s3Key": "amplify-builds/migrateADUser-536a5438575072547853-build.zip"
+        }
       }
     }
   },
@@ -137,7 +147,10 @@
         "userPoolGroups": {}
       },
       "function": {
-        "migrateADUser": {}
+        "migrateADUser": {
+          "deploymentBucketName": "amplify-aterbruketwebapp-rubibox-132529-deployment",
+          "s3Key": "amplify-builds/migrateADUser-536a5438575072547853-build.zip"
+        }
       }
     }
   },
@@ -159,7 +172,10 @@
         "userPoolGroups": {}
       },
       "function": {
-        "migrateADUser": {}
+        "migrateADUser": {
+          "deploymentBucketName": "amplify-aterbruketwebapp-ericbox-121222-deployment",
+          "s3Key": "amplify-builds/migrateADUser-536a5438575072547853-build.zip"
+        }
       }
     },
     "nonCFNdata": {

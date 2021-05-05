@@ -16,6 +16,7 @@ import UserContext from "../contexts/UserContext";
 import SignIn from "./SignIn";
 import BG from "../pics/onboarding_bg_x2.png";
 import HbgLogo from "../pics/HBG_logo_sm.png";
+import Button from "../components/Button";
 
 SwiperCore.use([Navigation, Parallax, Pagination, Scrollbar, A11y]);
 
@@ -54,55 +55,6 @@ const Text = styled.p`
   color: #3d3d3d;
   line-height: 27px;
   margin: 0px 0px 16px 0px;
-`;
-
-type ButtonProps = {
-  transparent?: boolean;
-  secondary?: boolean;
-  shadow?: boolean;
-  size?: "sm" | "md" | "lg";
-};
-
-const Button = styled.button<ButtonProps>`
-  background: #50811b;
-  border-radius: 4.5px;
-  border: none;
-  color: white;
-  font-size: 14px;
-  padding: 12px 24px;
-  cursor: pointer;
-  font-weight: 500;
-  ${({ size }) =>
-    size === "sm" &&
-    `
-      font-size: 12px;
-      padding: 8px 12px;
-  `}
-  ${({ size }) =>
-    size === "lg" &&
-    `
-    font-size: 16px;
-    padding: 16px 32px;
-  `}
-  ${({ secondary }) =>
-    secondary &&
-    `
-      color: #205400;
-      background: #E1E9DB;
-      font-weight: 700;
-  `}
- ${({ transparent }) =>
-    transparent &&
-    `
-      color: #565656;
-      background: transparent;
-      box-shadow: none;
-  `}
-  ${({ shadow }) =>
-    shadow &&
-    `
-      box-shadow: 0px 0px 2px rgba(98, 98, 98, 0.18), 0px 3px 2px rgba(98, 98, 98, 0.12), 0px 6px 8px rgba(98, 98, 98, 0.12), 0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
-  `}
 `;
 
 const NextButtonWrapper = styled.div`

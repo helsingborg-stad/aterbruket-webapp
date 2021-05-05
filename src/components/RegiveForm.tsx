@@ -1,9 +1,8 @@
 import React, { FC } from "react";
 import Form from "./Form";
 import useForm from "../hooks/useForm";
-import { createAdvert, updateAdvert } from "../graphql/mutations";
+import { updateAdvert } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
-import { API, graphqlOperation } from "aws-amplify";
 import Loader from "react-loader-spinner";
 
 interface IareaOfUse {

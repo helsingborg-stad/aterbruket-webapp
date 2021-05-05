@@ -6,7 +6,14 @@
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable-next-line react-hooks/exhaustive-deps */
 
-import React, { FC, useState, useEffect, useContext, useRef } from "react";
+import React, {
+  FC,
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  Suspense,
+} from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
@@ -24,13 +31,15 @@ import QRCode from "../components/QRCodeContainer";
 import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
-import EditItemForm from "../components/EditItemForm";
+import { loadMapApi } from "../utils/GoogleMapsUtils";
 import Map from "../components/Map";
-import CarouselComp from "../components/CarouselComp";
 import UserContext from "../contexts/UserContext";
-import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
 import { fieldsForm } from "../utils/formUtils";
+
+const CarouselComp = React.lazy(() => import("../components/CarouselComp"));
+const EditItemForm = React.lazy(() => import("../components/EditItemForm"));
+const RegiveForm = React.lazy(() => import("../components/RegiveForm"));
 
 const TopSection = styled.div`
   background-color: ${(props) => props.theme.colors.offWhite};
@@ -464,6 +473,10 @@ const ItemDetails: FC<ParamTypes> = () => {
     };
   });
 
+  useEffect(() => {
+    loadMapApi();
+  }, []);
+
   const updateItem = async (newStatus: string) => {
     const result = (await API.graphql(
       graphqlOperation(updateAdvert, {
@@ -608,20 +621,20 @@ const ItemDetails: FC<ParamTypes> = () => {
 
         {item.status ===
           "available" /* && item.giver !== user.attributes.sub */ && (
-            <Button
-              ref={(el: any) => {
-                buttonOutOfScreen.current = el;
-                setRefVisible(!!el);
-              }}
-              className="btn--haffa"
-              onClick={() => {
-                onClickReservBtn();
-              }}
-              type="button"
-            >
-              Haffa!
-            </Button>
-          )}
+          <Button
+            ref={(el: any) => {
+              buttonOutOfScreen.current = el;
+              setRefVisible(!!el);
+            }}
+            className="btn--haffa"
+            onClick={() => {
+              onClickReservBtn();
+            }}
+            type="button"
+          >
+            Haffa!
+          </Button>
+        )}
 
         {item.status === "reserved" && item.reservedBySub === user.sub && (
           <>
@@ -845,24 +858,26 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   return (
     <main style={{ padding: 0 }}>
-      {editItem ? (
-        <EditItemForm
-          setEditItem={setEditItem}
-          item={item}
-          closeEditformAndFetchItem={closeEditformAndFetchItem}
-          image={image}
-        />
-      ) : regive ? (
-        <RegiveForm
-          setRegive={setRegive}
-          item={item}
-          closeEditformAndFetchItem={closeEditformAndFetchItem}
-        />
-      ) : showCarousel ? (
-        <CarouselComp setShowCarousel={setShowCarousel} image={image} />
-      ) : (
-        allDetails
-      )}
+      <Suspense fallback={<div>Loading...</div>}>
+        {editItem ? (
+          <EditItemForm
+            setEditItem={setEditItem}
+            item={item}
+            closeEditformAndFetchItem={closeEditformAndFetchItem}
+            image={image}
+          />
+        ) : regive ? (
+          <RegiveForm
+            setRegive={setRegive}
+            item={item}
+            closeEditformAndFetchItem={closeEditformAndFetchItem}
+          />
+        ) : showCarousel ? (
+          <CarouselComp setShowCarousel={setShowCarousel} image={image} />
+        ) : (
+          allDetails
+        )}
+      </Suspense>
     </main>
   );
 };

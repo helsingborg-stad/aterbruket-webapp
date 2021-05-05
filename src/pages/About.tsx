@@ -10,6 +10,7 @@ import { updatePage } from "../graphql/mutations";
 import { getPage } from "../graphql/queries";
 import { Page, GetPageQuery } from "../API";
 import UserContext from "../contexts/UserContext";
+import Button from "../components/Button";
 
 const Container = styled.div`
   display: flex;
@@ -115,16 +116,12 @@ const About: FC = () => {
               onChange={handleEditorChange}
             />
 
-            <br />
-            <br />
-
-            <button type="submit">Spara</button>
-            <br />
-            <br />
-
-            <button type="button" onClick={handleCancelEdit}>
-              Avbryt
-            </button>
+            <div>
+              <Button type="submit">Spara</Button>
+              <Button type="button" onClick={handleCancelEdit}>
+                Avbryt
+              </Button>
+            </div>
           </form>
         </Container>
       </main>
@@ -134,17 +131,16 @@ const About: FC = () => {
   return (
     <main>
       <Container>
-        {user.isAdmin && (
-          <button type="button" onClick={editClick}>
-            Ändra
-          </button>
-        )}
-
         <article
           dangerouslySetInnerHTML={{
             __html: page?.content || "",
           }}
         />
+        {user.isAdmin && page?.content && (
+          <div>
+            <Button onClick={editClick}>Ändra</Button>
+          </div>
+        )}
       </Container>
     </main>
   );

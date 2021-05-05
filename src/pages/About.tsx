@@ -1,7 +1,7 @@
 /* eslint-disable react/no-danger */
 /* eslint-disable prefer-object-spread */
 /* eslint-disable no-console */
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { API, graphqlOperation } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
@@ -9,6 +9,7 @@ import { DefaultEditor } from "react-simple-wysiwyg";
 import { updatePage } from "../graphql/mutations";
 import { getPage } from "../graphql/queries";
 import { Page, GetPageQuery } from "../API";
+import UserContext from "../contexts/UserContext";
 
 const Container = styled.div`
   display: flex;
@@ -21,6 +22,7 @@ const Container = styled.div`
 const About: FC = () => {
   const [page, setPage] = useState<Page | undefined>(undefined);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { user } = useContext(UserContext);
 
   const fetchPageContent = async () => {
     // try {
@@ -59,7 +61,6 @@ const About: FC = () => {
   }, []);
 
   const editClick = () => {
-    console.log("edit click");
     setIsEditing(true);
   };
 
@@ -67,9 +68,6 @@ const About: FC = () => {
     e: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     e.preventDefault();
-
-    console.log("Submit click");
-
     try {
       const updatedPage = await API.graphql({
         query: updatePage,
@@ -88,16 +86,6 @@ const About: FC = () => {
     }
 
     setIsEditing(false);
-  };
-
-  const handleInputChange = (
-    e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    e.preventDefault();
-    const newPageState: Page = Object.assign({}, page, {
-      [e.currentTarget.name]: e.currentTarget.value,
-    });
-    setPage(newPageState);
   };
 
   const handleEditorChange = (
@@ -122,20 +110,6 @@ const About: FC = () => {
       <main>
         <Container>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="title">
-              Titel
-              <input
-                onChange={handleInputChange}
-                className="input"
-                type="text"
-                name="title"
-                value={page?.title}
-              />
-            </label>
-
-            <br />
-            <br />
-
             <DefaultEditor
               value={page?.content || ""}
               onChange={handleEditorChange}
@@ -160,11 +134,11 @@ const About: FC = () => {
   return (
     <main>
       <Container>
-        <button type="button" onClick={editClick}>
-          Ändra
-        </button>
-
-        <h1>{page?.title}</h1>
+        {user.isAdmin && (
+          <button type="button" onClick={editClick}>
+            Ändra
+          </button>
+        )}
 
         <article
           dangerouslySetInnerHTML={{

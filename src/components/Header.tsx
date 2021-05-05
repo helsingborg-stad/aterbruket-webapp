@@ -1,10 +1,9 @@
 /* eslint-disable no-nested-ternary */
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useLocation, Link } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
 import { useReactPWAInstall } from "react-pwa-install";
-import { useCallback } from "react";
 
 interface MyProps {
   isHidden: boolean;

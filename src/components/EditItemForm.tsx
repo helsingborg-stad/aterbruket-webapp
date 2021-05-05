@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Loader from "react-loader-spinner";
 import Form from "./Form";
 import useForm from "../hooks/useForm";
-import { createAdvert, updateAdvert } from "../graphql/mutations";
+import { updateAdvert } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
 
 const ItemImg = styled.img`

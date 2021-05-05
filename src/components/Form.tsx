@@ -7,7 +7,6 @@
 import React from "react";
 import styled from "styled-components";
 import { IFields } from "../interfaces/IForm";
-// import { options } from "../utils/formUtils";
 
 const FormContainerDiv = styled.div`
   width: 100%;

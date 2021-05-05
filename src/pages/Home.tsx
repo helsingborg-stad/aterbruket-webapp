@@ -114,6 +114,7 @@ const SearchFilterDiv = styled.div`
     font-size: 16px;
     border: none;
     background-color: transparent;
+    color: ${(props) => props.theme.colors.darkest};
 
     .filterIcon {
       color: ${(props) => props.theme.colors.primaryDark};

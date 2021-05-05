@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { API, graphqlOperation } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import { DefaultEditor } from "react-simple-wysiwyg";
+import sanitizeHtml from "sanitize-html";
 import { updatePage } from "../graphql/mutations";
 import { getPage } from "../graphql/queries";
 import { Page, GetPageQuery } from "../API";
@@ -77,7 +78,7 @@ const About: FC = () => {
             id: page?.id,
             slug: page?.slug,
             title: page?.title,
-            content: page?.content,
+            content: sanitizeHtml(page?.content || ""),
           },
         },
       });

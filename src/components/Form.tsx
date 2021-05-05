@@ -99,14 +99,11 @@ export default function Form(props: {
         placeholder: field.title,
         disabled: field.disabled,
         required: field.required,
-        value: props.values[field.name],
       };
       console.log("name", field.name, ". value:", props.values[field.name]);
-      /* if (props.values[field.name] !== undefined) {
-        // console.log("inte undefined", props.values[field.name]);
-
+      if (props.values[field.name] !== undefined) {
         attributes.value = props.values[field.name];
-      } */
+      }
       if (field.name === "title") {
         attributes.maxLength = "20";
       }
@@ -117,6 +114,11 @@ export default function Form(props: {
       ) {
         attributes.pattern = "[0-9]*";
       }
+      if (props.values[field.name] === undefined) {
+        attributes.value = props.values[field.name];
+
+      }
+      console.log("att value", attributes.value);
 
       return (
         <section className="allDiv" key={field.name}>

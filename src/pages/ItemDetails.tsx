@@ -436,6 +436,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   useEffect(() => {
     fetchItem();
     setItemUpdated(false);
+    return () => {};
   }, [itemUpdated]);
 
   let handler: any;
@@ -467,8 +468,8 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   useEffect(() => {
     loadMapApi();
+    return () => {};
   }, []);
-
 
   const updateItem = async (newStatus: string) => {
     const result = (await API.graphql(

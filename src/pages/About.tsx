@@ -1,7 +1,7 @@
 /* eslint-disable react/no-danger */
 /* eslint-disable prefer-object-spread */
 /* eslint-disable no-console */
-import React, { FC, useState, useEffect, useContext } from "react";
+import React, { FC, useState, useEffect, useContext, useCallback } from "react";
 import styled from "styled-components";
 import { API, graphqlOperation } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
@@ -36,7 +36,7 @@ const About: FC = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const { user } = useContext(UserContext);
 
-  const fetchPageContent = async () => {
+  const fetchPageContent = useCallback(async () => {
     try {
       const response = (await API.graphql(
         graphqlOperation(getPage, { slug: "about" })
@@ -50,12 +50,14 @@ const About: FC = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, []);
 
   useEffect(() => {
+    if (Object.keys(user).length === 0) {
+      return;
+    }
     fetchPageContent();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchPageContent, user]);
 
   const editClick = () => {
     setIsEditing(true);

@@ -171,6 +171,7 @@ const Card: FC<Props> = ({
       fetchReservedAdverts();
       setItemUpdated(false);
     }
+    return () => {};
   }, [itemUpdated]);
 
   return (

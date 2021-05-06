@@ -67,8 +67,8 @@ const AddItem: FC<Props> = ({
         wood: false,
       },
       description: "",
-      department: user.department,
-      location: "",
+      department: user.department ? user.department : "",
+      location: user.address ? user.address : "",
       instructions: "",
       contactPerson: user.name ? user.name : "",
       email: user.email ? user.email : "",
@@ -81,7 +81,7 @@ const AddItem: FC<Props> = ({
     },
     createAdvert
   );
-
+  console.log("user", user);
   const [imageURL, setImageURL] = useState("");
 
   useEffect(() => {}, [fileUploading]);

@@ -15,6 +15,7 @@ const CarouselWrapper = styled.div`
     top: 0;
     right: 0;
     z-index: 3;
+    margin: 16px;
   }
   //genererat classnam
   .bOCFav {
@@ -41,7 +42,6 @@ type Props = {
 };
 
 const CarouselComp: FC<Props> = ({ setShowCarousel, image }: Props) => {
-  console.log("image i carusel", image);
   return (
     <CarouselWrapper>
       <button
@@ -54,27 +54,13 @@ const CarouselComp: FC<Props> = ({ setShowCarousel, image }: Props) => {
 
       <Carousel
         center
-        infinite
-        swipeable
-        showArrows
-        showIndicator
-        slidesToShow={1}
+        infinite={false}
+        swipeable={false}
+        showArrows={false}
+        showIndicator={false}
       >
         <div className="imgDiv">
-          <img
-            src="https://www.fully.com/media/catalog/product/cache/0403c939416b062257652d84420a5735/b/a/bamboo_curve_new_visual.jpg"
-            alt=""
-          />
-        </div>
-        <div className="imgDiv">
           <img src={image} alt="" />
-        </div>
-
-        <div className="imgDiv">
-          <img
-            src="https://www.kinnarps.se/contentassets/3f8885420d58434da4bfb1289215d5c8/frisbee-feed_560x745.jpg?preset=product-card"
-            alt=""
-          />
         </div>
       </Carousel>
     </CarouselWrapper>

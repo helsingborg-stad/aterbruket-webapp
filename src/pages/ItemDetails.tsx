@@ -5,7 +5,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable-next-line react-hooks/exhaustive-deps */
-/* global google */
 
 import React, { FC, useState, useEffect, useContext, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
@@ -26,7 +25,6 @@ import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
 import EditItemForm from "../components/EditItemForm";
-import { loadMapApi } from "../utils/GoogleMapsUtils";
 import Map from "../components/Map";
 import CarouselComp from "../components/CarouselComp";
 import UserContext from "../contexts/UserContext";
@@ -465,11 +463,6 @@ const ItemDetails: FC<ParamTypes> = () => {
     };
   });
 
-  useEffect(() => {
-    loadMapApi();
-  }, []);
-
-
   const updateItem = async (newStatus: string) => {
     const result = (await API.graphql(
       graphqlOperation(updateAdvert, {
@@ -614,20 +607,20 @@ const ItemDetails: FC<ParamTypes> = () => {
 
         {item.status ===
           "available" /* && item.giver !== user.attributes.sub */ && (
-          <Button
-            ref={(el: any) => {
-              buttonOutOfScreen.current = el;
-              setRefVisible(!!el);
-            }}
-            className="btn--haffa"
-            onClick={() => {
-              onClickReservBtn();
-            }}
-            type="button"
-          >
-            Haffa!
-          </Button>
-        )}
+            <Button
+              ref={(el: any) => {
+                buttonOutOfScreen.current = el;
+                setRefVisible(!!el);
+              }}
+              className="btn--haffa"
+              onClick={() => {
+                onClickReservBtn();
+              }}
+              type="button"
+            >
+              Haffa!
+            </Button>
+          )}
 
         {item.status === "reserved" && item.reservedBySub === user.sub && (
           <>
@@ -797,11 +790,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           <div className="card mapCard">
             <div className="cardHeader">
               {item && item.location && (
-                <Map
-                  mapType={google.maps.MapTypeId.ROADMAP}
-                  mapTypeControl={false}
-                  location={item.location}
-                />
+                <Map mapTypeControl={false} location={item.location} />
               )}
 
               {!item.location && (

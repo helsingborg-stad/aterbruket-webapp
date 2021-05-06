@@ -5,6 +5,7 @@ import emailjs from "emailjs-com";
 import { v4 as uuidv4 } from "uuid";
 import HandleClimatImpact from "./HandleClimatImpact";
 import { createAdvert } from "../graphql/mutations";
+import imageCompression from "browser-image-compression";
 
 const recreateInitial = async (mutation: any, values: any) => {
   delete values.createdAt;
@@ -34,6 +35,7 @@ const useForm = (initialValues: any, mutation: string) => {
   };
 
   const upload = (file: any) => {
+    file.uuid = uuidv4();
     Storage.put(file.uuid, file)
       .then((result: any) => {
         setFileUploading(false);
@@ -44,16 +46,27 @@ const useForm = (initialValues: any, mutation: string) => {
       });
   };
 
+  function handleImageUpload(imageFile: any) {
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1500,
+      useWebWorker: true,
+    };
+    imageCompression(imageFile, options)
+      .then((compressedFile) => {
+        setFile(compressedFile);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }
+
   const handleInputChange = async (event: React.ChangeEvent<any>) => {
     const { target } = event;
     const { name, value } = target;
     if (target.files) {
-      console.log("target.files", target.files);
-      target.files[0].uuid = uuidv4();
-      setFile(target.files[0]);
+      handleImageUpload(target.files[0]);
       setFileUploading(true);
-      console.log("target.files[0]", target.files[0]);
-
       return;
     }
     setValues({
@@ -65,6 +78,7 @@ const useForm = (initialValues: any, mutation: string) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     if (file) {
       upload(file);
+      // handleImageUpload(file);
       values.images = { src: file.uuid, alt: file.name };
     }
 

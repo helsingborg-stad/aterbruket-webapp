@@ -48,7 +48,7 @@ const useForm = (initialValues: any, mutation: string) => {
 
   function handleImageUpload(imageFile: any) {
     const options = {
-      maxSizeMB: 1,
+      maxSizeMB: 0.8,
       maxWidthOrHeight: 1500,
       useWebWorker: true,
     };

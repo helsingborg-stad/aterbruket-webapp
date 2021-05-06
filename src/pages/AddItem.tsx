@@ -81,7 +81,6 @@ const AddItem: FC<Props> = ({
     },
     createAdvert
   );
-  console.log("user", user);
   const [imageURL, setImageURL] = useState("");
 
   useEffect(() => {}, [fileUploading]);

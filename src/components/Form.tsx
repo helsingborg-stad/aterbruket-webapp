@@ -100,7 +100,6 @@ export default function Form(props: {
         disabled: field.disabled,
         required: field.required,
       };
-      //console.log("name", field.name, ". value:", props.values[field.name]);
 
       if (props.values[field.name] !== undefined) {
         attributes.value = props.values[field.name];
@@ -115,10 +114,6 @@ export default function Form(props: {
       ) {
         attributes.pattern = "[0-9]*";
       }
-      /* if (props.values[field.name] === undefined) {
-        attributes.value = props.values[field.name];
-      } */
-      //console.log("att value", attributes.value);
 
       return (
         <section className="allDiv" key={field.name}>

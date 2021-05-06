@@ -117,7 +117,6 @@ const EditItemForm: FC<Props> = ({
   }, [file]);
 
   if (redirect && !fileUploading) {
-    console.log(fileUploading);
     closeEditformAndFetchItem();
   }
   return (

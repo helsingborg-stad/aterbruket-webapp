@@ -1,9 +1,9 @@
 /* eslint-disable no-new */
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
+import useGoogleMapApi from "../hooks/useGoogleMapApi";
 
 interface IMap {
-  mapType: google.maps.MapTypeId;
   mapTypeControl: boolean;
   location: string;
 }
@@ -17,13 +17,11 @@ const MapDiv = styled.div`
 type GoogleLatLng = google.maps.LatLng;
 type GoogleMap = google.maps.Map;
 
-const Map: React.FC<IMap> = ({
-  mapType,
-  mapTypeControl = false,
-  location,
-}: IMap) => {
+const Map: React.FC<IMap> = ({ mapTypeControl = false, location }: IMap) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<GoogleMap>();
+  const isScriptLoaded = useGoogleMapApi();
+
   const geocodeAddress = (
     geocoder: google.maps.Geocoder,
     resultsMap: google.maps.Map,
@@ -39,12 +37,13 @@ const Map: React.FC<IMap> = ({
           title: `${address}`,
         });
       } else {
-        alert(`Geocode was not successful for the following reason: ${status}`);
+        console.error(
+          `Geocode was not successful for the following reason: ${status}`
+        );
       }
     });
   };
 
-  // init Map
   const initMap = useCallback(
     (zoomLevel: number, address: GoogleLatLng): void => {
       if (mapRef.current) {
@@ -59,7 +58,7 @@ const Map: React.FC<IMap> = ({
           panControl: false,
           zoomControl: true,
           gestureHandling: "cooperative",
-          mapTypeId: mapType,
+          mapTypeId: "roadmap",
           draggableCursor: "pointer",
         });
         setMap(myMap);
@@ -67,7 +66,7 @@ const Map: React.FC<IMap> = ({
         geocodeAddress(geocoder, myMap, location);
       }
     },
-    [location, mapType, mapTypeControl]
+    [location, mapTypeControl]
   );
 
   const defaultMapStart = useCallback((): void => {
@@ -76,18 +75,14 @@ const Map: React.FC<IMap> = ({
   }, [initMap]);
 
   const startMap = (): void => {
-    // if map is null or undefined
-    if (!map) {
+    if (!map && isScriptLoaded) {
       defaultMapStart();
     }
   };
-  useEffect(startMap, [defaultMapStart, map]);
 
-  return (
-    <>
-      <MapDiv ref={mapRef} />
-    </>
-  );
+  useEffect(startMap, [isScriptLoaded, defaultMapStart, map]);
+
+  return <MapDiv ref={mapRef} />;
 };
 
 export default Map;

@@ -5,9 +5,9 @@ import React, { useState } from "react";
 import emailjs from "emailjs-com";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
+import imageCompression from "browser-image-compression";
 import HandleClimatImpact from "./HandleClimatImpact";
 import { createAdvert } from "../graphql/mutations";
-import imageCompression from "browser-image-compression";
 
 const recreateInitial = async (mutation: any, values: any) => {
   delete values.createdAt;
@@ -36,12 +36,11 @@ const useForm = (initialValues: any, mutation: string) => {
     });
   };
 
-  const upload = (file: any) => {
-    file.uuid = uuidv4();
-    Storage.put(file.uuid, file)
-      .then((result: any) => {
-        setFileUploading(false);
-        return { src: result.key, alt: file.name };
+  const upload = async (fileObject: any) => {
+    const uuid = uuidv4();
+    return Storage.put(uuid, file)
+      .then((putResult: any) => {
+        return { src: putResult.key, alt: fileObject.name };
       })
       .catch((err) => {
         console.error("Image upload error: ", err);
@@ -69,7 +68,6 @@ const useForm = (initialValues: any, mutation: string) => {
     const { name, value } = target;
     if (target.files) {
       handleImageUpload(target.files[0]);
-      setFileUploading(true);
       return;
     }
     setValues({
@@ -84,9 +82,14 @@ const useForm = (initialValues: any, mutation: string) => {
 
     let uploadedFile;
     if (file) {
-      upload(file);
-      // handleImageUpload(file);
-      values.images = { src: file.uuid, alt: file.name };
+      try {
+        uploadedFile = await upload(file);
+      } catch (error) {
+        console.error(error);
+        setFileUploading(false);
+        toast("Ett fel inträffade när bilden laddades upp, försök igen!");
+        return;
+      }
     }
 
     const lca = await HandleClimatImpact(values);

@@ -1,7 +1,9 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
 import { API, graphqlOperation, Storage } from "aws-amplify";
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
+import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import HandleClimatImpact from "./HandleClimatImpact";
 import { createAdvert } from "../graphql/mutations";
@@ -42,6 +44,7 @@ const useForm = (initialValues: any, mutation: string) => {
         return { src: result.key, alt: file.name };
       })
       .catch((err) => {
+        console.error("Image upload error: ", err);
         return err;
       });
   };
@@ -76,30 +79,49 @@ const useForm = (initialValues: any, mutation: string) => {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setFileUploading(true);
+
+    let uploadedFile;
     if (file) {
       upload(file);
       // handleImageUpload(file);
       values.images = { src: file.uuid, alt: file.name };
     }
 
-    event.preventDefault();
     const lca = await HandleClimatImpact(values);
-    const result: any = await API.graphql(
-      graphqlOperation(mutation, {
-        input: { ...values, climateImpact: lca },
-      })
-    );
+
+    let mutationResult: any;
+    try {
+      mutationResult = await API.graphql(
+        graphqlOperation(mutation, {
+          input: {
+            ...values,
+            images: uploadedFile,
+            climateImpact: lca,
+          },
+        })
+      );
+    } catch (error) {
+      console.error(error);
+      setFileUploading(false);
+      toast("Ett okänt fel inträffade 😵 Försök igen!");
+      return;
+    }
+
     setValues(initialValues);
 
-    if (result.data && values.id) {
+    if (mutationResult.data && values.id) {
       recreateInitial(createAdvert, initialValues);
+      setFileUploading(false);
       return setRedirect(true);
     }
 
-    setResult(result.data.createAdvert);
+    setResult(mutationResult.data.createAdvert);
 
-    if (result.data && !values.id) {
-      return setRedirect(result.data.createAdvert.id);
+    if (mutationResult.data && !values.id) {
+      setFileUploading(false);
+      return setRedirect(mutationResult.data.createAdvert.id);
     }
   };
 

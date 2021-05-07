@@ -1,11 +1,21 @@
 import API, { GraphQLResult } from "@aws-amplify/api";
 import { graphqlOperation } from "aws-amplify";
-import React, { FC, useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  Suspense,
+} from "react";
 import { ListAdvertsQuery } from "../API";
-import AdvertContainer from "../components/AdvertContainer";
-import Pagination from "../components/Pagination";
 import UserContext from "../contexts/UserContext";
 import { listAdverts } from "../graphql/queries";
+
+const AdvertContainer = React.lazy(
+  () => import("../components/AdvertContainer")
+);
+const Pagination = React.lazy(() => import("../components/Pagination"));
 
 const Haffat: FC = () => {
   const { user } = useContext(UserContext);
@@ -71,28 +81,30 @@ const Haffat: FC = () => {
 
   return (
     <main style={{ marginTop: "60px" }}>
-      <AdvertContainer
-        filteredSweValues={[]}
-        searchValue={false}
-        items={haffatItems}
-        itemsFrom="haffat"
-        activeSorting={{ first: "", second: "", sortTitle: "", secText: "" }}
-        fetchReservedAdverts={fetchReservedAdverts}
-      />
-
-      <AdvertContainer
-        filteredSweValues={[]}
-        searchValue={false}
-        items={pickedUpItems}
-        itemsFrom="pickedUp"
-        activeSorting={{ first: "", second: "", sortTitle: "", secText: "" }}
-      />
-      {reservedItems.length > 0 && (
-        <Pagination
-          paginationOption={paginationOption}
-          handlePagination={handlePages}
+      <Suspense fallback={<div>Loading...</div>}>
+        <AdvertContainer
+          filteredSweValues={[]}
+          searchValue={false}
+          items={haffatItems}
+          itemsFrom="haffat"
+          activeSorting={{ first: "", second: "", sortTitle: "", secText: "" }}
+          fetchReservedAdverts={fetchReservedAdverts}
         />
-      )}
+
+        <AdvertContainer
+          filteredSweValues={[]}
+          searchValue={false}
+          items={pickedUpItems}
+          itemsFrom="pickedUp"
+          activeSorting={{ first: "", second: "", sortTitle: "", secText: "" }}
+        />
+        {reservedItems.length > 0 && (
+          <Pagination
+            paginationOption={paginationOption}
+            handlePagination={handlePages}
+          />
+        )}
+      </Suspense>
     </main>
   );
 };

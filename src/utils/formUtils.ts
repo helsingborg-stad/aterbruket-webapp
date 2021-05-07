@@ -5,7 +5,7 @@ export const fieldsForm = [
     fieldType: "input",
     disabled: false,
     required: true,
-    title: "Bilder",
+    title: "",
   },
   {
     name: "title",
@@ -13,14 +13,14 @@ export const fieldsForm = [
     fieldType: "input",
     disabled: false,
     required: true,
-    title: "Titel",
+    title: "Rubrik",
   },
   {
     name: "category",
     fieldType: "select",
     disabled: false,
     required: true,
-    title: "Typ av möbel",
+    title: "Kategori / Typ av möbel",
     swe: [
       "Bord",
       "Skrivbord",
@@ -38,7 +38,12 @@ export const fieldsForm = [
       "other",
     ],
   },
-
+  {
+    name: "description",
+    fieldType: "textarea",
+    disabled: false,
+    title: "Beskrivning",
+  },
   {
     name: "quantity",
     dataType: "number",
@@ -141,10 +146,20 @@ export const fieldsForm = [
     title: "Inköpspris",
   },
   {
-    name: "description",
-    fieldType: "textarea",
+    name: "department",
+    dataType: "text",
+    fieldType: "input",
     disabled: false,
-    title: "Beskrivning",
+    required: true,
+    title: "Avdelning",
+  },
+  {
+    name: "location",
+    dataType: "text",
+    fieldType: "input",
+    disabled: false,
+    required: true,
+    title: "Adress",
   },
 
   {
@@ -162,30 +177,14 @@ export const fieldsForm = [
     fieldType: "input",
     disabled: false,
     required: true,
-    title: "Email till kontaktperson",
+    title: "Epost",
   },
   {
     name: "phoneNumber",
     dataType: "text",
     fieldType: "input",
     disabled: false,
-    title: "Telefonnummer till kontaktperson",
-  },
-  {
-    name: "department",
-    dataType: "text",
-    fieldType: "input",
-    disabled: false,
-    required: true,
-    title: "Avdelning",
-  },
-  {
-    name: "location",
-    dataType: "text",
-    fieldType: "input",
-    disabled: false,
-    required: true,
-    title: "Adress",
+    title: "Telefon",
   },
 ];
 
@@ -196,7 +195,7 @@ export const fieldsEditForm = [
     fieldType: "input",
     disabled: false,
     required: true,
-    title: "Bilder",
+    title: "",
   },
   {
     name: "title",
@@ -204,14 +203,14 @@ export const fieldsEditForm = [
     fieldType: "input",
     disabled: false,
     required: true,
-    title: "Titel",
+    title: "Rubrik",
   },
   {
     name: "category",
     fieldType: "select",
     disabled: false,
     required: true,
-    title: "Typ av möbel",
+    title: "Kategori / Typ av möbel",
     swe: [
       "Bord",
       "Skrivbord",
@@ -228,6 +227,12 @@ export const fieldsEditForm = [
       "chair",
       "other",
     ],
+  },
+  {
+    name: "description",
+    fieldType: "textarea",
+    disabled: false,
+    title: "Beskrivning",
   },
   {
     name: "quantity",
@@ -331,10 +336,20 @@ export const fieldsEditForm = [
     title: "Inköpspris",
   },
   {
-    name: "description",
-    fieldType: "textarea",
+    name: "department",
+    dataType: "text",
+    fieldType: "input",
     disabled: false,
-    title: "Beskrivning",
+    required: true,
+    title: "Avdelning",
+  },
+  {
+    name: "location",
+    dataType: "text",
+    fieldType: "input",
+    disabled: false,
+    required: true,
+    title: "Adress",
   },
 
   {
@@ -351,29 +366,13 @@ export const fieldsEditForm = [
     fieldType: "input",
     disabled: false,
     required: true,
-    title: "Email till kontaktperson",
+    title: "Epost",
   },
   {
     name: "phoneNumber",
     dataType: "text",
     fieldType: "input",
     disabled: false,
-    title: "Telefonnummer till kontaktperson",
-  },
-  {
-    name: "department",
-    dataType: "text",
-    fieldType: "input",
-    disabled: false,
-    required: true,
-    title: "Avdelning",
-  },
-  {
-    name: "location",
-    dataType: "text",
-    fieldType: "input",
-    disabled: false,
-    required: true,
-    title: "Adress",
+    title: "Telefon",
   },
 ];

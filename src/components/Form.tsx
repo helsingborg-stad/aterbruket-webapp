@@ -5,8 +5,10 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { IFields } from "../interfaces/IForm";
+import Button from "./Button";
 
 const FormContainerDiv = styled.div`
   width: 100%;
@@ -234,11 +236,30 @@ export default function Form(props: {
     }
   });
 
+  const history = useHistory();
+
+  const goBackFunc = () => {
+    history.goBack();
+  };
+
   return (
     <FormContainerDiv>
       <form onSubmit={props.handleSubmit}>
         {fields}
-        <button type="submit">Submit</button>
+        <Button
+          type="submit"
+          style={{ width: "350px", height: "56px", fontSize: "16px" }}
+        >
+          Färdig!
+        </Button>
+        <Button
+          type="button"
+          onClick={() => goBackFunc()}
+          transparent
+          style={{ fontSize: "16px", color: "#A3A3A3", border: "none" }}
+        >
+          Avbryt
+        </Button>
       </form>
     </FormContainerDiv>
   );

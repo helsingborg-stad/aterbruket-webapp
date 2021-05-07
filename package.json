@@ -39,6 +39,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
     "react-simple-wysiwyg": "^1.0.2",
+    "react-toastify": "^7.0.4",
     "sanitize-html": "^2.3.3",
     "sort-by-typescript": "^1.1.0",
     "styled-components": "^5.2.0",

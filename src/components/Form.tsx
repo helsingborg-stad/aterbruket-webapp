@@ -6,7 +6,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import styled from "styled-components";
+import { ToastContainer } from "react-toastify";
 import { IFields } from "../interfaces/IForm";
+import "react-toastify/dist/ReactToastify.css";
 
 const FormContainerDiv = styled.div`
   width: 100%;
@@ -240,6 +242,17 @@ export default function Form(props: {
         {fields}
         <button type="submit">Submit</button>
       </form>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </FormContainerDiv>
   );
 }

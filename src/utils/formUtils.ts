@@ -187,12 +187,6 @@ export const fieldsForm = [
     required: true,
     title: "Adress",
   },
-  {
-    name: "instructions",
-    fieldType: "textarea",
-    disabled: false,
-    title: "Instruktioner vid hämtning",
-  },
 ];
 
 export const fieldsEditForm = [
@@ -381,11 +375,5 @@ export const fieldsEditForm = [
     disabled: false,
     required: true,
     title: "Adress",
-  },
-  {
-    name: "instructions",
-    fieldType: "textarea",
-    disabled: false,
-    title: "Instruktioner vid hämtning",
   },
 ];

@@ -121,12 +121,16 @@ const EditItemForm: FC<Props> = ({
   }
   return (
     <>
-      {!redirect ? (
-        (
+      {fileUploading && (
+        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+      )}
+
+      {!fileUploading && (
+        <>
           <button type="button" onClick={() => setEditItem(false)}>
             X
           </button>
-        ) && <ItemImg src={imageURL} /> && (
+          {/* <ItemImg src={imageURL} /> */}
           <Form
             values={values}
             fields={fields}
@@ -135,9 +139,7 @@ const EditItemForm: FC<Props> = ({
             handleSubmit={handleSubmit}
             handleCheckboxChange={handleCheckboxChange}
           />
-        )
-      ) : (
-        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+        </>
       )}
     </>
   );

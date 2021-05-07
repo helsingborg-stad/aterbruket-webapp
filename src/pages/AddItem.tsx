@@ -83,8 +83,6 @@ const AddItem: FC<Props> = ({
   );
   const [imageURL, setImageURL] = useState("");
 
-  useEffect(() => {}, [fileUploading]);
-
   useEffect(() => {
     if (file) {
       setImageURL(URL.createObjectURL(file));
@@ -100,23 +98,26 @@ const AddItem: FC<Props> = ({
   return (
     <main>
       <Suspense fallback={<div>Loading...</div>}>
-        {!redirect && file && <ItemImg src={imageURL} />}
-        {!redirect && !alreadyAQRCode ? (
-          <Form
-            values={values}
-            fields={fields}
-            mutation={createAdvert}
-            handleInputChange={handleInputChange}
-            handleSubmit={handleSubmit}
-            handleCheckboxChange={handleCheckboxChange}
-          />
-        ) : (
-          <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
-        )}
+      {!fileUploading && file && <ItemImg src={imageURL} />}
 
-        {fileUploading && redirect && (
-          <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
-        )}
+      {!fileUploading && !alreadyAQRCode && (
+        <Form
+          values={values}
+          fields={fields}
+          mutation={createAdvert}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          handleCheckboxChange={handleCheckboxChange}
+        />
+      )}
+
+      {!fileUploading && alreadyAQRCode && (
+        <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
+      )}
+
+      {fileUploading && (
+        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+      )}
       </Suspense>
     </main>
   );

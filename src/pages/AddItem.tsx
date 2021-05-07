@@ -98,26 +98,26 @@ const AddItem: FC<Props> = ({
   return (
     <main>
       <Suspense fallback={<div>Loading...</div>}>
-      {!fileUploading && file && <ItemImg src={imageURL} />}
+        {!fileUploading && file && <ItemImg src={imageURL} />}
 
-      {!fileUploading && !alreadyAQRCode && (
-        <Form
-          values={values}
-          fields={fields}
-          mutation={createAdvert}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-          handleCheckboxChange={handleCheckboxChange}
-        />
-      )}
+        {!fileUploading && !alreadyAQRCode && (
+          <Form
+            values={values}
+            fields={fields}
+            mutation={createAdvert}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            handleCheckboxChange={handleCheckboxChange}
+          />
+        )}
 
-      {!fileUploading && alreadyAQRCode && (
-        <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
-      )}
+        {!fileUploading && alreadyAQRCode && (
+          <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
+        )}
 
-      {fileUploading && (
-        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
-      )}
+        {fileUploading && (
+          <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+        )}
       </Suspense>
     </main>
   );

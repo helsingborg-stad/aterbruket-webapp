@@ -14,6 +14,7 @@ export const fieldsForm = [
     disabled: false,
     required: true,
     title: "Rubrik",
+    placeholder: "Döp annonsen...",
   },
   {
     name: "category",
@@ -43,6 +44,7 @@ export const fieldsForm = [
     fieldType: "textarea",
     disabled: false,
     title: "Beskrivning",
+    placeholder: "Beskriv grejen...",
   },
   {
     name: "quantity",
@@ -50,6 +52,7 @@ export const fieldsForm = [
     fieldType: "input",
     disabled: false,
     title: "Antal",
+    placeholder: "Hur många?",
   },
   {
     name: "height",
@@ -57,6 +60,7 @@ export const fieldsForm = [
     fieldType: "input",
     disabled: false,
     title: "Höjd",
+    placeholder: "34 cm",
   },
   {
     name: "width",
@@ -64,6 +68,7 @@ export const fieldsForm = [
     fieldType: "input",
     disabled: false,
     title: "Bredd",
+    placeholder: "34 cm",
   },
   {
     name: "length",
@@ -71,6 +76,7 @@ export const fieldsForm = [
     fieldType: "input",
     disabled: false,
     title: "Djup",
+    placeholder: "34 cm",
   },
   {
     name: "color",
@@ -78,6 +84,7 @@ export const fieldsForm = [
     fieldType: "input",
     disabled: false,
     title: "Färg",
+    placeholder: "Färg",
   },
   {
     name: "material",
@@ -144,6 +151,7 @@ export const fieldsForm = [
     disabled: false,
     required: false,
     title: "Inköpspris",
+    placeholder: "Inköpspris",
   },
   {
     name: "department",
@@ -152,6 +160,7 @@ export const fieldsForm = [
     disabled: false,
     required: true,
     title: "Avdelning",
+    placeholder: "ex. Miljöförvaltningen",
   },
   {
     name: "location",
@@ -160,6 +169,7 @@ export const fieldsForm = [
     disabled: false,
     required: true,
     title: "Adress",
+    placeholder: "ex. Larmvägen 33 Helsingborg",
   },
 
   {
@@ -170,6 +180,15 @@ export const fieldsForm = [
     required: true,
 
     title: "Kontaktperson",
+    placeholder: "Kontaktperson",
+  },
+  {
+    name: "phoneNumber",
+    dataType: "text",
+    fieldType: "input",
+    disabled: false,
+    title: "Telefon",
+    placeholder: "ex. 0701234567",
   },
   {
     name: "email",
@@ -178,13 +197,7 @@ export const fieldsForm = [
     disabled: false,
     required: true,
     title: "Epost",
-  },
-  {
-    name: "phoneNumber",
-    dataType: "text",
-    fieldType: "input",
-    disabled: false,
-    title: "Telefon",
+    placeholder: "namn.efternamn@helsingborg.se",
   },
 ];
 
@@ -204,6 +217,7 @@ export const fieldsEditForm = [
     disabled: false,
     required: true,
     title: "Rubrik",
+    placeholder: "Döp annonsen...",
   },
   {
     name: "category",
@@ -233,6 +247,7 @@ export const fieldsEditForm = [
     fieldType: "textarea",
     disabled: false,
     title: "Beskrivning",
+    placeholder: "Beskriv grejen...",
   },
   {
     name: "quantity",
@@ -240,6 +255,7 @@ export const fieldsEditForm = [
     fieldType: "input",
     disabled: false,
     title: "Antal",
+    placeholder: "Hur många?",
   },
   {
     name: "height",
@@ -247,6 +263,7 @@ export const fieldsEditForm = [
     fieldType: "input",
     disabled: false,
     title: "Höjd",
+    placeholder: "34 cm",
   },
   {
     name: "width",
@@ -254,6 +271,7 @@ export const fieldsEditForm = [
     fieldType: "input",
     disabled: false,
     title: "Bredd",
+    placeholder: "34 cm",
   },
   {
     name: "length",
@@ -261,6 +279,7 @@ export const fieldsEditForm = [
     fieldType: "input",
     disabled: false,
     title: "Djup",
+    placeholder: "34 cm",
   },
   {
     name: "color",
@@ -268,6 +287,7 @@ export const fieldsEditForm = [
     fieldType: "input",
     disabled: false,
     title: "Färg",
+    placeholder: "Färg",
   },
   {
     name: "material",
@@ -334,6 +354,7 @@ export const fieldsEditForm = [
     disabled: false,
     required: false,
     title: "Inköpspris",
+    placeholder: "Inköpspris",
   },
   {
     name: "department",
@@ -342,6 +363,7 @@ export const fieldsEditForm = [
     disabled: false,
     required: true,
     title: "Avdelning",
+    placeholder: "ex. Miljöförvaltningen",
   },
   {
     name: "location",
@@ -350,6 +372,7 @@ export const fieldsEditForm = [
     disabled: false,
     required: true,
     title: "Adress",
+    placeholder: "ex. Larmvägen 33 Helsingborg",
   },
 
   {
@@ -359,6 +382,15 @@ export const fieldsEditForm = [
     disabled: false,
     required: true,
     title: "Kontaktperson",
+    placeholder: "Kontaktperson",
+  },
+  {
+    name: "phoneNumber",
+    dataType: "text",
+    fieldType: "input",
+    disabled: false,
+    title: "Telefon",
+    placeholder: "ex. 0701234567",
   },
   {
     name: "email",
@@ -367,12 +399,6 @@ export const fieldsEditForm = [
     disabled: false,
     required: true,
     title: "Epost",
-  },
-  {
-    name: "phoneNumber",
-    dataType: "text",
-    fieldType: "input",
-    disabled: false,
-    title: "Telefon",
+    placeholder: "namn.efternamn@helsingborg.se",
   },
 ];

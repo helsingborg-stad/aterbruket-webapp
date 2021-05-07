@@ -5,6 +5,7 @@ export interface IFields {
   disabled: boolean;
   required?: boolean;
   title: string;
+  placeholder?: string;
   option?: IOption[];
   swe?: string[] | undefined;
   eng?: string[] | undefined;

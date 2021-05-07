@@ -23,6 +23,7 @@ const FormContainerDiv = styled.div`
     flex-direction: column;
     align-items: center;
   }
+  
   section {
     background-color: ${(props) => props.theme.colors.lightGray};
     width: 90%;
@@ -92,14 +93,15 @@ export default function Form(props: {
   const fields = props.fields.map((field: IFields) => {
     const dimensions = ["width", "height", "length"];
 
+
     if (field.fieldType === "input" && field.dataType !== "checkbox") {
       const attributes: any = {
         type: field.dataType,
         name: field.name,
         onChange: props.handleInputChange,
-        placeholder: field.title,
         disabled: field.disabled,
         required: field.required,
+        placeholder: field.placeholder,
       };
 
       if (props.values[field.name] !== undefined) {
@@ -120,20 +122,11 @@ export default function Form(props: {
         <section className="allDiv" key={field.name}>
           <div className="validationInfo">
             {field.required && <span className="required">obligatorisk</span>}
-            {field.name === "location" && (
-              <span className="infoSpan">ex, Drottninggatan 14</span>
-            )}
+
             {field.name === "title" && (
               <span className="infoSpan">max 20 tecken</span>
             )}
-            {dimensions.includes(field.name) && (
-              <span className="infoSpan">ange i cm</span>
-            )}
-            {field.name === "phoneNumber" && (
-              <span className="infoSpan">
-                ange endast siffror ex, 0701234567
-              </span>
-            )}
+
             {field.name === "purchasePrice" && (
               <span className="infoSpan">
                 Vet du inte exakt vad den köptes in för? <br />
@@ -183,14 +176,14 @@ export default function Form(props: {
       return (
         <section className="allDiv" key={field.name}>
           <div className="validationInfo">
-            {field.required && <span className="required">obligatorisk</span>}{" "}
+            {field.required && <span className="required">obligatorisk</span>}
             <span className="infoSpan">max 200 tecken</span>
           </div>
           <textarea
             name={field.name}
             onChange={props.handleInputChange}
             value={props.values[field.name]}
-            placeholder={field.title}
+            placeholder={field.placeholder}
             required={field.required}
             maxLength={200}
           />

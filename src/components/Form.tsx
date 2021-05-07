@@ -213,11 +213,11 @@ export default function Form(props: {
             id={field.name}
             onChange={props.handleInputChange}
             defaultValue={
-              props.values[field.name] ? props.values[field.name] : "select"
+              props.values[field.name] ? props.values[field.name] : ""
             }
             required={field.required}
           >
-            <option value="select" disabled>
+            <option value="" disabled>
               Välj ett alternativ
             </option>
             {data.map((x: string, idx: number) => {

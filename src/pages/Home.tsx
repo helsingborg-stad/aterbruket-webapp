@@ -313,6 +313,8 @@ const Home: FC<Props> = ({
     if (authState === AuthState.SignedIn) {
       fetchItems();
     }
+    return () => {};
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState, filterValueUpdated, activeSorting]);
 

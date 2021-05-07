@@ -48,11 +48,9 @@ const useForm = (initialValues: any, mutation: string) => {
     const { target } = event;
     const { name, value } = target;
     if (target.files) {
-      console.log("target.files", target.files);
       target.files[0].uuid = uuidv4();
       setFile(target.files[0]);
       setFileUploading(true);
-      console.log("target.files[0]", target.files[0]);
 
       return;
     }
@@ -79,15 +77,12 @@ const useForm = (initialValues: any, mutation: string) => {
 
     if (result.data && values.id) {
       recreateInitial(createAdvert, initialValues);
-      // console.log("db UPDATE ", result.data.updateAdvert);
       return setRedirect(true);
     }
 
     setResult(result.data.createAdvert);
 
     if (result.data && !values.id) {
-      // console.log("db CREATE ", result.data.createAdvert);
-      // sendEmail(result.data.createAdvert);
       return setRedirect(result.data.createAdvert.id);
     }
   };

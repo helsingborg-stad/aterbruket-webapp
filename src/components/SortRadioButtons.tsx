@@ -41,6 +41,8 @@ const InputGroup = styled.div`
 
     input {
       appearance: none;
+      outline: none;
+      border: none;
     }
 
    

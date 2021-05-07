@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Auth } from "aws-amplify";
 import { RouteComponentProps } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
+import Button from "./Button";
 
 const InformationFrame = styled.header`
   padding: 24px;
@@ -19,18 +20,7 @@ const InformationHeader = styled.p`
 const InformationContainer = styled.div`
   width: 90%;
   background: #fcfcfc;
-`;
-
-const SignOutButton = styled.button`
-  background: #50811b;
-  border-radius: 4.5px;
-  border: none;
-  color: white;
-  font-size: 14px;
-  padding: 12px 24px;
-  cursor: pointer;
-  font-weight: 500;
-  margin-top: 24px;
+  margin-bottom: 32px;
 `;
 
 const PersonalInfo: FC<RouteComponentProps> = ({ history }) => {
@@ -83,7 +73,7 @@ const PersonalInfo: FC<RouteComponentProps> = ({ history }) => {
         )}
       </InformationContainer>
 
-      <SignOutButton onClick={handleSignOut}>Logga ut</SignOutButton>
+      <Button onClick={handleSignOut}>Logga ut</Button>
     </main>
   );
 };

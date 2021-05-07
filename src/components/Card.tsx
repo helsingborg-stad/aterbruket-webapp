@@ -136,6 +136,7 @@ const Card: FC<Props> = ({
   };
   useEffect(() => {
     fetchImage();
+    return () => {};
   }, []);
 
   const updateItem = async (newStatus: string) => {
@@ -170,6 +171,7 @@ const Card: FC<Props> = ({
       fetchReservedAdverts();
       setItemUpdated(false);
     }
+    return () => {};
   }, [itemUpdated]);
 
   return (

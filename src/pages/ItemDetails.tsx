@@ -434,6 +434,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   useEffect(() => {
     fetchItem();
     setItemUpdated(false);
+    return () => {};
   }, [itemUpdated]);
 
   let handler: any;

@@ -3,9 +3,9 @@ import { API, graphqlOperation, Storage } from "aws-amplify";
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
 import { v4 as uuidv4 } from "uuid";
+import imageCompression from "browser-image-compression";
 import HandleClimatImpact from "./HandleClimatImpact";
 import { createAdvert } from "../graphql/mutations";
-import imageCompression from "browser-image-compression";
 
 const recreateInitial = async (mutation: any, values: any) => {
   delete values.createdAt;
@@ -78,7 +78,6 @@ const useForm = (initialValues: any, mutation: string) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     if (file) {
       upload(file);
-      // handleImageUpload(file);
       values.images = { src: file.uuid, alt: file.name };
     }
 
@@ -93,15 +92,12 @@ const useForm = (initialValues: any, mutation: string) => {
 
     if (result.data && values.id) {
       recreateInitial(createAdvert, initialValues);
-      // console.log("db UPDATE ", result.data.updateAdvert);
       return setRedirect(true);
     }
 
     setResult(result.data.createAdvert);
 
     if (result.data && !values.id) {
-      // console.log("db CREATE ", result.data.createAdvert);
-      // sendEmail(result.data.createAdvert);
       return setRedirect(result.data.createAdvert.id);
     }
   };

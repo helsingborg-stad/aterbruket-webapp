@@ -87,7 +87,7 @@ const useForm = (initialValues: any, mutation: string) => {
       } catch (error) {
         console.error(error);
         setFileUploading(false);
-        toast("Ett fel inträffade när bilden laddades upp, försök igen!");
+        toast.warn("Ett fel inträffade när bilden laddades upp, försök igen!");
         return;
       }
     }
@@ -108,7 +108,7 @@ const useForm = (initialValues: any, mutation: string) => {
     } catch (error) {
       console.error(error);
       setFileUploading(false);
-      toast("Ett okänt fel inträffade 😵 Försök igen!");
+      toast.warn("Ett okänt fel inträffade 😵 Försök igen!");
       return;
     }
 

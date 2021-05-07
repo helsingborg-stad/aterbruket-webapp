@@ -244,7 +244,7 @@ export default function Form(props: {
       </form>
       <ToastContainer
         position="top-center"
-        autoClose={5000}
+        autoClose={6000}
         hideProgressBar
         newestOnTop={false}
         closeOnClick

@@ -15,7 +15,7 @@ const FormContainerDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 150px;
+  margin-bottom: 60px;
 
   form {
     width: 100%;
@@ -23,28 +23,39 @@ const FormContainerDiv = styled.div`
     flex-direction: column;
     align-items: center;
   }
-  
+
   section {
-    background-color: ${(props) => props.theme.colors.lightGray};
+    background-color: ${(props) => props.theme.colors.white};
     width: 90%;
-    height: 110px;
+    height: auto;
     border-radius: 4.5px;
     padding: 4px 16px 4px 16px;
     margin: 8px 0px;
-    p {
-      margin-block-end: 0;
-      margin-block-start: 0;
+    label {
+      display: flex;
     }
+    .labelP {
+      color: ${(props) => props.theme.colors.primary};
+      letter-spacing: 0.005em;
+      padding-bottom: 2px;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 150%;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    span {
+      margin-left: 3px;
+      color: ${(props) => props.theme.colors.primary};
+    }
+
     .validationInfo {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       padding: 5px;
-      .required {
-        font-style: italic;
-        color: red;
-        font-size: 14px;
-      }
+
       .infoSpan {
         color: grey;
         font-style: italic;
@@ -56,21 +67,17 @@ const FormContainerDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-  }
-  .labelP {
-    color: ${(props) => props.theme.cardTheme.descColor};
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 150%;
-    letter-spacing: 0.005em;
-    padding-bottom: 2px;
+    .labelP {
+      color: ${(props) => props.theme.colors.darker};
+      text-transform: none;
+    }
   }
 
   .allDiv {
     display: flex;
     //align-items: center;
     justify-content: space-around;
-    flex-direction: column-reverse;
+    flex-direction: column;
 
     input,
     textarea,
@@ -78,7 +85,36 @@ const FormContainerDiv = styled.div`
       border-radius: 4.5px;
       border: none;
       font-size: 16px;
-      height: 2em;
+      height: 56px;
+      padding: 0 0 0 24px;
+      background-color: ${(props) => props.theme.colors.lightGray};
+      ::placeholder {
+        font-style: italic;
+      }
+    }
+    textarea {
+      padding: 16px 0 0 24px;
+      height: 192px;
+      ::placeholder {
+        font-family: "Roboto";
+      }
+    }
+  }
+
+  input[type="file"] {
+    white-space: break-spaces;
+    padding: 0;
+
+    ::-webkit-file-upload-button {
+      background: ${(props) => props.theme.colors.lightGray};
+      color: black;
+      width: 100%;
+      height: 100%;
+      border: none;
+      padding: 3px;
+      font-weight: 500;
+      font-size: 18px;
+      margin-bottom: 3px;
     }
   }
 `;
@@ -92,7 +128,6 @@ export default function Form(props: {
 }) {
   const fields = props.fields.map((field: IFields) => {
     const dimensions = ["width", "height", "length"];
-
 
     if (field.fieldType === "input" && field.dataType !== "checkbox") {
       const attributes: any = {
@@ -120,9 +155,12 @@ export default function Form(props: {
 
       return (
         <section className="allDiv" key={field.name}>
+          <label htmlFor={field.name}>
+            <p className="labelP">{field.title}</p>
+            {field.required && <span className="required">*</span>}
+          </label>
+          <input {...attributes} />
           <div className="validationInfo">
-            {field.required && <span className="required">obligatorisk</span>}
-
             {field.name === "title" && (
               <span className="infoSpan">max 20 tecken</span>
             )}
@@ -134,10 +172,6 @@ export default function Form(props: {
               </span>
             )}
           </div>
-          <input {...attributes} />
-          <label htmlFor={field.name}>
-            <p className="labelP">{field.title}</p>
-          </label>
         </section>
       );
     }
@@ -163,10 +197,13 @@ export default function Form(props: {
       });
       return (
         <section key={field.name}>
-          <p className="labelP">{field.title}</p>
+          <label htmlFor={field.name}>
+            <p className="labelP">{field.title}</p>{" "}
+            {field.required && <span className="required">*</span>}
+          </label>
+
           <div className="checkboxDiv">{checkboxInput}</div>
           <div className="validationInfo">
-            {field.required && <span className="required">obligatorisk</span>}
             <span className="infoSpan">välj en eller flera</span>
           </div>
         </section>
@@ -175,10 +212,10 @@ export default function Form(props: {
     if (field.fieldType === "textarea") {
       return (
         <section className="allDiv" key={field.name}>
-          <div className="validationInfo">
-            {field.required && <span className="required">obligatorisk</span>}
-            <span className="infoSpan">max 200 tecken</span>
-          </div>
+          <label htmlFor={field.name}>
+            <p className="labelP">{field.title}</p>
+            {field.required && <span className="required">*</span>}
+          </label>
           <textarea
             name={field.name}
             onChange={props.handleInputChange}
@@ -187,9 +224,9 @@ export default function Form(props: {
             required={field.required}
             maxLength={200}
           />
-          <label htmlFor={field.name}>
-            <p className="labelP">{field.title}</p>
-          </label>
+          <div className="validationInfo">
+            <span className="infoSpan">max 200 tecken</span>
+          </div>
         </section>
       );
     }
@@ -197,10 +234,11 @@ export default function Form(props: {
       const data = field.eng ? field.eng : [];
       return (
         <section className="allDiv" key={field.name}>
-          <div className="validationInfo">
-            {field.required && <span className="required">obligatorisk</span>}
-          </div>
-
+          {" "}
+          <label htmlFor={field.name} key={field.name}>
+            <p className="labelP">{field.title}</p>{" "}
+            {field.required && <span className="required">*</span>}
+          </label>{" "}
           <select
             name={field.name}
             id={field.name}
@@ -221,9 +259,6 @@ export default function Form(props: {
               );
             })}
           </select>
-          <label htmlFor={field.name} key={field.name}>
-            <p className="labelP">{field.title}</p>
-          </label>
         </section>
       );
     }
@@ -241,7 +276,12 @@ export default function Form(props: {
         {fields}
         <Button
           type="submit"
-          style={{ width: "350px", height: "56px", fontSize: "16px" }}
+          style={{
+            width: "350px",
+            height: "56px",
+            fontSize: "16px",
+            fontWeight: "bold",
+          }}
         >
           Färdig!
         </Button>
@@ -249,7 +289,12 @@ export default function Form(props: {
           type="button"
           onClick={() => goBackFunc()}
           transparent
-          style={{ fontSize: "16px", color: "#A3A3A3", border: "none" }}
+          style={{
+            fontSize: "16px",
+            color: "#A3A3A3",
+            border: "none",
+            fontWeight: "bold",
+          }}
         >
           Avbryt
         </Button>

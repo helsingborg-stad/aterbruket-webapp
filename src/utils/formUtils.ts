@@ -5,7 +5,7 @@ export const fieldsForm = [
     fieldType: "input",
     disabled: false,
     required: true,
-    title: "",
+    title: "Lägg till en bild",
   },
   {
     name: "title",

@@ -200,7 +200,7 @@ const Card: FC<Props> = ({
               onClickPickUpBtn();
             }}
           >
-            <span>Haffa ut!</span>
+            <span>Hämta ut!</span>
 
             <MdArrowForward />
           </button>

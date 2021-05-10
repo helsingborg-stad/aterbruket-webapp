@@ -34,6 +34,10 @@ function createUser(username, password, user, callback, context, event) {
 		params.UserAttributes.push({ Name: 'custom:department', Value: user.department })
 	}
 
+  if (user.company) {
+    params.UserAttributes.push({ Name: 'custom:company', Value: user.company })
+  }
+
 	/* if (user.mobile) {
 		params.UserAttributes.push({ Name: 'phone_number', Value: user.mobile })
 	} */
@@ -91,18 +95,16 @@ function createUser(username, password, user, callback, context, event) {
 						},
 						Session: data.Session
 					};
-					
+
 					cognitoidentityserviceprovider.adminRespondToAuthChallenge(params, function (err, data) {
 						if (err) console.log(err, err.stack); // an error occurred
 						else { // successful response
 							console.log('Successful response from RespondToAuthChallenge: ' + username);
-							
+
 				            event.response.messageAction = "SUPPRESS";
 				            event.response.finalUserStatus = "CONFIRMED";
-				            
+
 				            return context.succeed(event);
-				            
-							
 						}
 					});
 				}

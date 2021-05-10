@@ -1,9 +1,10 @@
 import React, { FC } from "react";
+import { API, graphqlOperation } from "aws-amplify";
+import Loader from "react-loader-spinner";
 import Form from "./Form";
 import useForm from "../hooks/useForm";
 import { updateAdvert } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
-import Loader from "react-loader-spinner";
 
 interface IareaOfUse {
   indoors: boolean;
@@ -101,11 +102,15 @@ const RegiveForm: FC<Props> = ({
   }
   return (
     <>
-      {!redirect && (
+      {fileUploading && (
+        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+      )}
+
+      {!fileUploading && (
+        <>
           <button type="button" onClick={() => setRegive(false)}>
             X
           </button>
-        ) && (
           <Form
             values={values}
             fields={fields}
@@ -114,9 +119,7 @@ const RegiveForm: FC<Props> = ({
             handleSubmit={handleSubmit}
             handleCheckboxChange={handleCheckboxChange}
           />
-        )}
-      {redirect && (
-        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+        </>
       )}
     </>
   );

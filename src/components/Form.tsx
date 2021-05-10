@@ -7,8 +7,10 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { ToastContainer } from "react-toastify";
 import { IFields } from "../interfaces/IForm";
 import Button from "./Button";
+import "react-toastify/dist/ReactToastify.css";
 
 const FormContainerDiv = styled.div`
   width: 100%;
@@ -244,11 +246,11 @@ export default function Form(props: {
             id={field.name}
             onChange={props.handleInputChange}
             defaultValue={
-              props.values[field.name] ? props.values[field.name] : "select"
+              props.values[field.name] ? props.values[field.name] : ""
             }
             required={field.required}
           >
-            <option value="select" disabled>
+            <option value="" disabled>
               Välj ett alternativ
             </option>
             {data.map((x: string, idx: number) => {
@@ -299,6 +301,17 @@ export default function Form(props: {
           Avbryt
         </Button>
       </form>
+      <ToastContainer
+        position="top-center"
+        autoClose={6000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </FormContainerDiv>
   );
 }

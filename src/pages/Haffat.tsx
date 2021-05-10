@@ -52,71 +52,12 @@ const Container = styled.div`
 `;
 const Haffat: FC = () => {
   const menuOpions = [
-    { title: "SAKER ATT HÄMTA", active: true },
-    { title: "MINA ANNONSER", active: false },
-    { title: "STATISTIK", active: false },
+    { title: "SAKER ATT HÄMTA" },
+    { title: "MINA ANNONSER" },
+    { title: "STATISTIK" },
   ];
   const [active, setActive] = useState("SAKER ATT HÄMTA");
   const { user } = useContext(UserContext);
-  const [reservedItems, setReservedItems] = useState([]) as any;
-  const [paginationOption, setPaginationOption] = useState({
-    activePage: 1,
-    totalPages: 1, // Will change after the fetch
-    amountToShow: 15,
-    itemLength: 14, // Will change after the fetch
-  });
-  const [renderItems, setRenderItems] = useState([]) as any;
-
-  const handlePages = (updatePage: number) => {
-    setPaginationOption({
-      ...paginationOption,
-      activePage: updatePage,
-    });
-
-    if (paginationOption.activePage !== updatePage) {
-      const start = (updatePage - 1) * paginationOption.amountToShow;
-      const end = start + paginationOption.amountToShow;
-
-      setRenderItems(reservedItems.slice(start, end));
-    }
-  };
-
-  const fetchReservedAdverts = useCallback(async () => {
-    const result = (await API.graphql(
-      graphqlOperation(listAdverts, {
-        filter: {
-          and: [{ reservedBySub: { eq: user.sub } }, { version: { eq: 0 } }],
-          not: { status: { eq: "available" } },
-        },
-      })
-    )) as GraphQLResult<ListAdvertsQuery>;
-    const advertItem: any = result.data?.listAdverts?.items;
-    if (advertItem.length > 0) {
-      setPaginationOption({
-        ...paginationOption,
-        totalPages: Math.ceil(
-          advertItem.length / paginationOption.amountToShow
-        ),
-        itemLength: advertItem.length,
-      });
-      setRenderItems(advertItem.slice(0, paginationOption.amountToShow));
-    }
-    setReservedItems(advertItem);
-  }, [user.sub]);
-
-  useEffect(() => {
-    if (user.sub) {
-      fetchReservedAdverts();
-    }
-  }, [fetchReservedAdverts, user]);
-
-  const haffatItems = renderItems.filter((renderItem: any) => {
-    return renderItem.status === "reserved";
-  });
-
-  const pickedUpItems = renderItems.filter((renderItem: any) => {
-    return renderItem.status === "pickedUp";
-  });
 
   const handleActive = (e: React.ChangeEvent<any>) => {
     console.log(e.target.value);
@@ -127,7 +68,7 @@ const Haffat: FC = () => {
     <main style={{ marginTop: "60px" }}>
       <Suspense fallback={<div>Loading...</div>}>
         <Container>
-          {menuOpions.map((op: { title: string; active: boolean }) => {
+          {menuOpions.map((op: { title: string }) => {
             return (
               <InputGroup key={op.title}>
                 <label

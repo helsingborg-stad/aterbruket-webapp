@@ -42,6 +42,8 @@ interface Props {
     climateImpact: number;
     version: number;
     revisions: number;
+        company?: string;
+
   };
   setRegive: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
@@ -84,6 +86,8 @@ const RegiveForm: FC<Props> = ({
         outside: item.areaOfUse[0].outside,
       },
       description: item.description,
+      company: item.company,
+
       department: item.department,
       location: item.location,
       instructions: item.instructions,

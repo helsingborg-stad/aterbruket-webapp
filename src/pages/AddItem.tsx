@@ -67,6 +67,7 @@ const AddItem: FC<Props> = ({
         wood: false,
       },
       description: "",
+      company: user.company ? user.company : "",
       department: user.department ? user.department : "",
       location: user.address ? user.address : "",
       instructions: "",

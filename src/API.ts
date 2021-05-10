@@ -30,6 +30,7 @@ export type CreateAdvertInput = {
   reservedByName?: string | null,
   revisions?: number | null,
   purchasePrice?: string | null,
+  company?: string | null,
 };
 
 export enum ItemStatus {
@@ -104,6 +105,7 @@ export type ModelAdvertConditionInput = {
   reservedByName?: ModelStringInput | null,
   revisions?: ModelIntInput | null,
   purchasePrice?: ModelStringInput | null,
+  company?: ModelStringInput | null,
   and?: Array< ModelAdvertConditionInput | null > | null,
   or?: Array< ModelAdvertConditionInput | null > | null,
   not?: ModelAdvertConditionInput | null,
@@ -205,6 +207,7 @@ export type Advert = {
   reservedByName?: string | null,
   revisions?: number | null,
   purchasePrice?: string | null,
+  company?: string | null,
   createdAt?: string,
   updatedAt?: string,
 };
@@ -257,6 +260,7 @@ export type UpdateAdvertInput = {
   reservedByName?: string | null,
   revisions?: number | null,
   purchasePrice?: string | null,
+  company?: string | null,
 };
 
 export type DeleteAdvertInput = {
@@ -334,6 +338,7 @@ export type ModelAdvertFilterInput = {
   reservedByName?: ModelStringInput | null,
   revisions?: ModelIntInput | null,
   purchasePrice?: ModelStringInput | null,
+  company?: ModelStringInput | null,
   and?: Array< ModelAdvertFilterInput | null > | null,
   or?: Array< ModelAdvertFilterInput | null > | null,
   not?: ModelAdvertFilterInput | null,
@@ -432,6 +437,7 @@ export type CreateAdvertMutation = {
     reservedByName?: string | null,
     revisions?: number | null,
     purchasePrice?: string | null,
+    company?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -486,6 +492,7 @@ export type UpdateAdvertMutation = {
     reservedByName?: string | null,
     revisions?: number | null,
     purchasePrice?: string | null,
+    company?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -540,6 +547,7 @@ export type DeleteAdvertMutation = {
     reservedByName?: string | null,
     revisions?: number | null,
     purchasePrice?: string | null,
+    company?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -645,6 +653,7 @@ export type GetAdvertQuery = {
     reservedByName?: string | null,
     revisions?: number | null,
     purchasePrice?: string | null,
+    company?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -705,6 +714,7 @@ export type ListAdvertsQuery = {
       reservedByName?: string | null,
       revisions?: number | null,
       purchasePrice?: string | null,
+      company?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -796,6 +806,7 @@ export type OnCreateAdvertSubscription = {
     reservedByName?: string | null,
     revisions?: number | null,
     purchasePrice?: string | null,
+    company?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -845,6 +856,7 @@ export type OnUpdateAdvertSubscription = {
     reservedByName?: string | null,
     revisions?: number | null,
     purchasePrice?: string | null,
+    company?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -894,6 +906,7 @@ export type OnDeleteAdvertSubscription = {
     reservedByName?: string | null,
     revisions?: number | null,
     purchasePrice?: string | null,
+    company?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

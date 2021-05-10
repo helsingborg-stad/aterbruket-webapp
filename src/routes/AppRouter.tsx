@@ -7,7 +7,6 @@ import BG from "../pics/onboarding_bg_x2.png";
 
 const About = React.lazy(() => import("../pages/About"));
 const AddItem = React.lazy(() => import("../pages/AddItem"));
-const MyAdverts = React.lazy(() => import("../components/MyAdverts"));
 const Haffat = React.lazy(() => import("../pages/Haffat"));
 const Header = React.lazy(() => import("../components/Header"));
 const Home = React.lazy(() => import("../pages/Home"));
@@ -18,7 +17,6 @@ const PersonalInfo = React.lazy(() => import("../components/PersonalInfo"));
 const Onboarding = React.lazy(() => import("../pages/Onboarding"));
 const SignIn = React.lazy(() => import("../pages/SignIn"));
 const StartScreen = React.lazy(() => import("../pages/StartScreen"));
-const Statics = React.lazy(() => import("../components/Statics"));
 
 const AppContainer = styled.div`
   min-height: ${(props) => `${props.theme.appTheme.minHeight}vh`};
@@ -148,8 +146,6 @@ const AppRouter: FC = () => {
           <Route path="/haffat" component={Haffat} />
           <Route exact path="/profile" component={Profile} />
           <Route path="/profile/personal-info" component={PersonalInfo} />
-          <Route path="/profile/statics" component={Statics} />
-          <Route path="/profile/myadverts" component={MyAdverts} />
           <Route path="/item/:id" component={ItemDetails} />
           <Route path="/about" component={About} />
           <MenuBar setQrCamera={setQrCamera} qrCamera={qrCamera} />

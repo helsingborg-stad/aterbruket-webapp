@@ -35,7 +35,7 @@ const CountingCategorys = (groups: any) => {
       desk: 0,
       raiseAndLowerableDesk: 0,
       officeChair: 0,
-      chair: 0,
+      seatingFurniture: 0,
       other: 0,
     } as any;
 

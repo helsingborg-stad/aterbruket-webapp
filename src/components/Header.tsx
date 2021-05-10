@@ -1,8 +1,8 @@
 /* eslint-disable no-nested-ternary */
 import React, { FC, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { useLocation, Link } from "react-router-dom";
-import { MdArrowBack } from "react-icons/md";
+import { useLocation, Link, useHistory } from "react-router-dom";
+import { MdArrowBack, MdClose } from "react-icons/md";
 import { useReactPWAInstall } from "react-pwa-install";
 
 interface MyProps {
@@ -28,6 +28,24 @@ const HeaderDiv = styled.header`
     font-size: ${(props) => `${props.theme.headerTheme.fontSize}px`};
     line-height: ${(props) => `${props.theme.headerTheme.lineHeight}%`};
     color: ${(props) => props.theme.colors.darkest};
+  }
+  .circle {
+    width: 32px;
+    height: 32px;
+    background: ${(props) => props.theme.colors.primaryDark};
+    border-radius: 50%;
+    position: absolute;
+    border: none;
+    top: 16px;
+    right: 24px;
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: ${(props) => props.theme.colors.white};
+      font-size: 24px;
+    }
   }
 `;
 
@@ -96,6 +114,12 @@ const Header: FC<MyProps> = () => {
       .catch(() => alert("Ladda gärna ner den nästa gång du använder Haffa."));
   };
 
+  const history = useHistory();
+
+  const goBackFunc = () => {
+    history.goBack();
+  };
+
   return (
     <>
       {path.includes("item") ? (
@@ -127,6 +151,15 @@ const Header: FC<MyProps> = () => {
               <MdArrowBack className="icon" />
             </MenuLink>
           ) : null}
+          {path === "add" && (
+            <button
+              className="circle"
+              type="button"
+              onClick={() => goBackFunc()}
+            >
+              <MdClose />
+            </button>
+          )}
           <h2
             style={{
               transform: visible ? "none" : "scale(0.5)",

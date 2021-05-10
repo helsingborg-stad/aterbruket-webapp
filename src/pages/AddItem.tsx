@@ -96,7 +96,7 @@ const AddItem: FC<Props> = ({
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
   return (
-    <main>
+    <main style={{ marginBottom: "0px" }}>
       <Suspense fallback={<div>Loading...</div>}>
         {!fileUploading && file && <ItemImg src={imageURL} />}
 

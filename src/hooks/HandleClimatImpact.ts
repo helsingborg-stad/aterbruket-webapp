@@ -5,7 +5,7 @@ const HandleClimatImpact = (values: any) => {
   if (values.category === "desk") {
     return 50;
   }
-  if (values.category === "chair") {
+  if (values.category === "seatingFurniture") {
     return 15;
   }
   if (values.category === "officeChair") {

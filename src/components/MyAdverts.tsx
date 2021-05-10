@@ -62,7 +62,7 @@ const MyAdverts: FC = () => {
     }
   }, [user]);
   return (
-    <main style={{ marginTop: "60px" }}>
+    <>
       <AdvertContainer
         filteredSweValues={null}
         items={renderItems}
@@ -76,7 +76,7 @@ const MyAdverts: FC = () => {
           handlePagination={handlePages}
         />
       )}
-    </main>
+    </>
   );
 };
 

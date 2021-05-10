@@ -40,9 +40,6 @@ const Profile: FC = () => {
       option: "personal-info",
       title: "Kontaktuppgifter",
     },
-    { option: "myadverts", title: "Mina annonser" },
-
-    { option: "statics", title: "Haffa statistik" },
   ];
 
   return (

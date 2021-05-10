@@ -14,6 +14,8 @@ import UserContext from "../contexts/UserContext";
 import { listAdverts } from "../graphql/queries";
 
 const ItemsToGet = React.lazy(() => import("../components/ItemsToGet"));
+const MyAdverts = React.lazy(() => import("../components/MyAdverts"));
+const Statics = React.lazy(() => import("../components/Statics"));
 
 const InputGroup = styled.div`
    {
@@ -49,11 +51,11 @@ const Container = styled.div`
   color: ${(props) => props.theme.colors.dark};
 `;
 const Haffat: FC = () => {
-  const [menu, setMenue] = useState([
+  const menuOpions = [
     { title: "SAKER ATT HÄMTA", active: true },
     { title: "MINA ANNONSER", active: false },
     { title: "STATISTIK", active: false },
-  ]);
+  ];
   const [active, setActive] = useState("SAKER ATT HÄMTA");
   const { user } = useContext(UserContext);
   const [reservedItems, setReservedItems] = useState([]) as any;
@@ -125,7 +127,7 @@ const Haffat: FC = () => {
     <main style={{ marginTop: "60px" }}>
       <Suspense fallback={<div>Loading...</div>}>
         <Container>
-          {menu.map((op: { title: string; active: boolean }) => {
+          {menuOpions.map((op: { title: string; active: boolean }) => {
             return (
               <InputGroup key={op.title}>
                 <label
@@ -146,7 +148,9 @@ const Haffat: FC = () => {
             );
           })}
         </Container>
-        <ItemsToGet />
+        {active === "SAKER ATT HÄMTA" && <ItemsToGet />}
+        {active === "MINA ANNONSER" && <MyAdverts />}
+        {active === "STATISTIK" && <Statics />}
       </Suspense>
     </main>
   );

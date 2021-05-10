@@ -104,7 +104,7 @@ const Statics: FC = () => {
   };
 
   return (
-    <main>
+    <>
       <OptionDiv>
         {infoOptions.map((opt) => {
           return (
@@ -171,7 +171,7 @@ const Statics: FC = () => {
           );
         })}
       </InfoWrapper>
-    </main>
+    </>
   );
 };
 

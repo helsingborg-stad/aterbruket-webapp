@@ -135,13 +135,13 @@ const Statics: FC = () => {
                       : group.most === "desk"
                       ? "Skrivbord"
                       : group.most === "raiseAndLowerableDesk"
-                      ? "Höj och sänkbart skrivbord"
+                      ? "Höj- och sänkbart skrivbord"
                       : group.most === "officeChair"
                       ? "Kontorsstol"
-                      : group.most === "chair"
-                      ? "Stol"
+                      : group.most === "seatingFurniture"
+                      ? "Sittmöbler"
                       : group.most === "other"
-                      ? "Övrigt"
+                      ? "Diverse"
                       : null}
                   </h4>
                   <h4>{group.mostNum} stycken</h4>
@@ -151,17 +151,17 @@ const Statics: FC = () => {
                   <h4>
                     Kategori:{" "}
                     {group.min === "table"
-                      ? "bord"
+                      ? "Bord"
                       : group.min === "desk"
                       ? "Skrivbord"
                       : group.min === "raiseAndLowerableDesk"
-                      ? "Höj och sänkbart skrivbord"
+                      ? "Höj- och sänkbart skrivbord"
                       : group.min === "officeChair"
                       ? "Kontorsstol"
-                      : group.min === "chair"
-                      ? "Stol"
+                      : group.min === "seatingFurniture"
+                      ? "Sittmöbler"
                       : group.min === "other"
-                      ? "Övrigt"
+                      ? "Diverse"
                       : null}
                   </h4>
                   <h4>{group.minNum} stycken</h4>

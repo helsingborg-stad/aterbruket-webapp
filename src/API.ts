@@ -40,12 +40,20 @@ export enum ItemStatus {
 
 
 export enum ItemCategory {
-  table = "table",
-  chair = "chair",
   desk = "desk",
-  officeChair = "officeChair",
   raiseAndLowerableDesk = "raiseAndLowerableDesk",
+  kidsFurniture = "kidsFurniture",
+  table = "table",
   other = "other",
+  storageFurniture = "storageFurniture",
+  officeChair = "officeChair",
+  sparepart = "sparepart",
+  seatingFurniture = "seatingFurniture",
+  sofaAndBench = "sofaAndBench",
+  wanted = "wanted",
+  painting = "painting",
+  outdoorItem = "outdoorItem",
+  appliances = "appliances",
 }
 
 

@@ -1,11 +1,13 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
 import { API, graphqlOperation, Storage } from "aws-amplify";
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
+import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
+import imageCompression from "browser-image-compression";
 import HandleClimatImpact from "./HandleClimatImpact";
 import { createAdvert } from "../graphql/mutations";
-import imageCompression from "browser-image-compression";
 
 const recreateInitial = async (mutation: any, values: any) => {
   delete values.createdAt;
@@ -34,14 +36,14 @@ const useForm = (initialValues: any, mutation: string) => {
     });
   };
 
-  const upload = (file: any) => {
-    file.uuid = uuidv4();
-    Storage.put(file.uuid, file)
-      .then((result: any) => {
-        setFileUploading(false);
-        return { src: result.key, alt: file.name };
+  const upload = async (fileObject: any) => {
+    const uuid = uuidv4();
+    return Storage.put(uuid, file)
+      .then((putResult: any) => {
+        return { src: putResult.key, alt: fileObject.name };
       })
       .catch((err) => {
+        console.error("Image upload error: ", err);
         return err;
       });
   };
@@ -66,7 +68,6 @@ const useForm = (initialValues: any, mutation: string) => {
     const { name, value } = target;
     if (target.files) {
       handleImageUpload(target.files[0]);
-      setFileUploading(true);
       return;
     }
     setValues({
@@ -76,30 +77,54 @@ const useForm = (initialValues: any, mutation: string) => {
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setFileUploading(true);
+
+    let uploadedFile;
     if (file) {
-      upload(file);
-      // handleImageUpload(file);
-      values.images = { src: file.uuid, alt: file.name };
+      try {
+        uploadedFile = await upload(file);
+      } catch (error) {
+        console.error(error);
+        setFileUploading(false);
+        toast.warn("Ett fel inträffade när bilden laddades upp, försök igen!");
+        return;
+      }
     }
 
-    event.preventDefault();
     const lca = await HandleClimatImpact(values);
-    const result: any = await API.graphql(
-      graphqlOperation(mutation, {
-        input: { ...values, climateImpact: lca },
-      })
-    );
+
+    let mutationResult: any;
+    try {
+      mutationResult = await API.graphql(
+        graphqlOperation(mutation, {
+          input: {
+            ...values,
+            images: uploadedFile,
+            climateImpact: lca,
+          },
+        })
+      );
+    } catch (error) {
+      console.error(error);
+      setFileUploading(false);
+      toast.warn("Ett okänt fel inträffade 😵 Försök igen!");
+      return;
+    }
+
     setValues(initialValues);
 
-    if (result.data && values.id) {
+    if (mutationResult.data && values.id) {
       recreateInitial(createAdvert, initialValues);
+      setFileUploading(false);
       return setRedirect(true);
     }
 
-    setResult(result.data.createAdvert);
+    setResult(mutationResult.data.createAdvert);
 
-    if (result.data && !values.id) {
-      return setRedirect(result.data.createAdvert.id);
+    if (mutationResult.data && !values.id) {
+      setFileUploading(false);
+      return setRedirect(mutationResult.data.createAdvert.id);
     }
   };
 

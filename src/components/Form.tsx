@@ -6,7 +6,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import styled from "styled-components";
+import { ToastContainer } from "react-toastify";
 import { IFields } from "../interfaces/IForm";
+import "react-toastify/dist/ReactToastify.css";
 
 const FormContainerDiv = styled.div`
   width: 100%;
@@ -211,11 +213,11 @@ export default function Form(props: {
             id={field.name}
             onChange={props.handleInputChange}
             defaultValue={
-              props.values[field.name] ? props.values[field.name] : "select"
+              props.values[field.name] ? props.values[field.name] : ""
             }
             required={field.required}
           >
-            <option value="select" disabled>
+            <option value="" disabled>
               Välj ett alternativ
             </option>
             {data.map((x: string, idx: number) => {
@@ -240,6 +242,17 @@ export default function Form(props: {
         {fields}
         <button type="submit">Submit</button>
       </form>
+      <ToastContainer
+        position="top-center"
+        autoClose={6000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </FormContainerDiv>
   );
 }

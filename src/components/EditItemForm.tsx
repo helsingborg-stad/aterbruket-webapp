@@ -50,6 +50,7 @@ interface Props {
     revisions: number;
     images: [{ url: string }];
     purchasePrice: number;
+    company?: string;
   };
   setEditItem: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
@@ -94,6 +95,8 @@ const EditItemForm: FC<Props> = ({
         outside: item.areaOfUse[0].outside,
       },
       description: item.description,
+      company: item.company,
+
       department: item.department,
       location: item.location,
       instructions: item.instructions,

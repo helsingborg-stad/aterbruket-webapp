@@ -46,6 +46,7 @@ export const createAdvert = /* GraphQL */ `
       reservedByName
       revisions
       purchasePrice
+      company
       createdAt
       updatedAt
     }
@@ -95,6 +96,7 @@ export const updateAdvert = /* GraphQL */ `
       reservedByName
       revisions
       purchasePrice
+      company
       createdAt
       updatedAt
     }
@@ -144,6 +146,7 @@ export const deleteAdvert = /* GraphQL */ `
       reservedByName
       revisions
       purchasePrice
+      company
       createdAt
       updatedAt
     }

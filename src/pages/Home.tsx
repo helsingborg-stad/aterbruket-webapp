@@ -322,7 +322,7 @@ const Home: FC<Props> = ({
   }, [authState, filterValueUpdated, activeSorting]);
 
   const categoryData = fieldsForm[2];
-  const conditionData = fieldsForm[9];
+  const conditionData = fieldsForm[10];
   const indexes: number[] = [];
   let filteredSweValues: string[] = [];
 
@@ -347,6 +347,7 @@ const Home: FC<Props> = ({
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
+
   return (
     <main>
       <Suspense fallback={<div>Loading...</div>}>

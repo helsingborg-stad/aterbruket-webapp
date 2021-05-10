@@ -67,6 +67,7 @@ const AddItem: FC<Props> = ({
         wood: false,
       },
       description: "",
+      company: user.company ? user.company : "",
       department: user.department ? user.department : "",
       location: user.address ? user.address : "",
       instructions: "",
@@ -96,7 +97,7 @@ const AddItem: FC<Props> = ({
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
   return (
-    <main>
+    <main style={{ marginBottom: "0px" }}>
       <Suspense fallback={<div>Loading...</div>}>
         {!fileUploading && file && <ItemImg src={imageURL} />}
 

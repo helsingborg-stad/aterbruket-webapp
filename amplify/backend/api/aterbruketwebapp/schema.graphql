@@ -34,6 +34,7 @@ type Advert
   reservedByName: String
   revisions: Int
   purchasePrice: String
+  company: String
 }
 
 enum ItemStatus {
@@ -43,12 +44,20 @@ enum ItemStatus {
 }
 
 enum ItemCategory {
-  table
-  chair
   desk
-  officeChair
   raiseAndLowerableDesk
+  kidsFurniture
+  table
   other
+  storageFurniture
+  officeChair
+  sparepart
+  seatingFurniture
+  sofaAndBench
+  wanted
+  painting
+  outdoorItem
+  appliances
 }
 
 type ItemAMaterial {

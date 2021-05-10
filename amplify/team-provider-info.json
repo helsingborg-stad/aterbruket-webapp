@@ -124,7 +124,7 @@
       "function": {
         "migrateADUser": {
           "deploymentBucketName": "amplify-aterbruketwebapp-annabox-134822-deployment",
-          "s3Key": "amplify-builds/migrateADUser-536a5438575072547853-build.zip"
+          "s3Key": "amplify-builds/migrateADUser-56764c6d657948776f63-build.zip"
         }
       }
     }
@@ -174,7 +174,7 @@
       "function": {
         "migrateADUser": {
           "deploymentBucketName": "amplify-aterbruketwebapp-ericbox-121222-deployment",
-          "s3Key": "amplify-builds/migrateADUser-536a5438575072547853-build.zip"
+          "s3Key": "amplify-builds/migrateADUser-56764c6d657948776f63-build.zip"
         }
       }
     },

@@ -47,6 +47,12 @@ const PersonalInfo: FC<RouteComponentProps> = ({ history }) => {
             <InformationFrame>{user.name}</InformationFrame>
           </>
         )}
+        {user.company && (
+          <>
+            <InformationHeader>Förvaltning</InformationHeader>
+            <InformationFrame>{user.company}</InformationFrame>
+          </>
+        )}
         {user.department && (
           <>
             <InformationHeader>Avdelning</InformationHeader>

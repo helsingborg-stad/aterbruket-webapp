@@ -6,6 +6,7 @@ export interface User {
   sub?: string;
   email?: string;
   department?: string;
+  company?: string;
   address?: string;
   postalcode?: string;
   isAdmin?: boolean;
@@ -45,6 +46,7 @@ function UserProvider({ children }: ProviderProps) {
           sub: authData?.attributes?.sub || "",
           email: authData?.attributes?.email || "",
           department: authData?.attributes["custom:department"] || "",
+          company: authData?.attributes["custom:company"] || "",
           address: authData?.attributes?.address || "",
           postalcode: authData?.attributes["custom:postalcode"] || "",
           isAdmin,

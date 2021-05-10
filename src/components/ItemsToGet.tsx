@@ -8,53 +8,14 @@ import React, {
   useState,
   Suspense,
 } from "react";
-import styled from "styled-components";
 import { ListAdvertsQuery } from "../API";
 import UserContext from "../contexts/UserContext";
 import { listAdverts } from "../graphql/queries";
 
-const ItemsToGet = React.lazy(() => import("../components/ItemsToGet"));
+const AdvertContainer = React.lazy(() => import("./AdvertContainer"));
+const Pagination = React.lazy(() => import("./Pagination"));
 
-const InputGroup = styled.div`
-   {
-     color: ${(props) => props.theme.colors.dark};
- 
-
-    input {
-      appearance: none;
-      outline: none;
-      border: none;
-    }
-
- 
-    .active {
-      color: ${(props) => props.theme.colors.primaryDark};
-    }
-    
-    input[type="radio"]:checked,
-    &:focus {
-      appearance: none;
-      outline: none;
-      border: none;
-      
-  }
-`;
-
-const Container = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  font-weight: 900;
-  font-size: 12px;
-  color: ${(props) => props.theme.colors.dark};
-`;
-const Haffat: FC = () => {
-  const [menu, setMenue] = useState([
-    { title: "SAKER ATT HÄMTA", active: true },
-    { title: "MINA ANNONSER", active: false },
-    { title: "STATISTIK", active: false },
-  ]);
-  const [active, setActive] = useState("SAKER ATT HÄMTA");
+const ItemsToGet: FC = () => {
   const { user } = useContext(UserContext);
   const [reservedItems, setReservedItems] = useState([]) as any;
   const [paginationOption, setPaginationOption] = useState({
@@ -116,40 +77,34 @@ const Haffat: FC = () => {
     return renderItem.status === "pickedUp";
   });
 
-  const handleActive = (e: React.ChangeEvent<any>) => {
-    console.log(e.target.value);
-    setActive(e.target.value);
-  };
-
   return (
-    <main style={{ marginTop: "60px" }}>
+    <>
       <Suspense fallback={<div>Loading...</div>}>
-        <Container>
-          {menu.map((op: { title: string; active: boolean }) => {
-            return (
-              <InputGroup key={op.title}>
-                <label
-                  className={op.title === active ? "active" : "normal"}
-                  htmlFor={op.title}
-                >
-                  {op.title}
-                </label>
-                <input
-                  type="radio"
-                  id={op.title}
-                  name="menu"
-                  value={op.title}
-                  onChange={(e) => handleActive(e)}
-                  checked={op.title === active}
-                />
-              </InputGroup>
-            );
-          })}
-        </Container>
-        <ItemsToGet />
+        <AdvertContainer
+          filteredSweValues={[]}
+          searchValue={false}
+          items={haffatItems}
+          itemsFrom="haffat"
+          activeSorting={{ first: "", second: "", sortTitle: "", secText: "" }}
+          fetchReservedAdverts={fetchReservedAdverts}
+        />
+
+        <AdvertContainer
+          filteredSweValues={[]}
+          searchValue={false}
+          items={pickedUpItems}
+          itemsFrom="pickedUp"
+          activeSorting={{ first: "", second: "", sortTitle: "", secText: "" }}
+        />
+        {reservedItems.length > 0 && (
+          <Pagination
+            paginationOption={paginationOption}
+            handlePagination={handlePages}
+          />
+        )}
       </Suspense>
-    </main>
+    </>
   );
 };
 
-export default Haffat;
+export default ItemsToGet;

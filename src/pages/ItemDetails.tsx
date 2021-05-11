@@ -549,8 +549,10 @@ const ItemDetails: FC<ParamTypes> = () => {
   const goBackFunc = () => {
     history.goBack();
   };
+  console.log(item);
+  console.log(user);
 
-  const mailtoHref = `mailto:${item.email}?subject=Email från Haffa&body=This is only a test!`;
+  const mailtoHref = `mailto:${item.email}?subject=En kollega vill Haffa "${item.title}"&body=Hej ${item.contactPerson}!%0d%0aDin kollega ${user.name} vill Haffa "${item.title}" och har en fundering:`;
   const telHref = `tel:${item.phoneNumber}`;
 
   const allDetails = (

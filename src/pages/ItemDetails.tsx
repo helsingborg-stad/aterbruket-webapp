@@ -352,7 +352,10 @@ const CardGroups = styled.div`
       margin: 0 16px;
       align-self: unset;
     }
-    div {
+    .company {
+      margin: 0 16px;
+    }
+    .circle {
       padding: 0;
       width: 56px;
       height: 56px;
@@ -374,8 +377,7 @@ const CardGroups = styled.div`
     padding: 0 8px 0 8px;
     display: flex;
     align-items: center;
-    width: 90%;
-    min-width: 334px;
+    min-width: 290px;
     height: 48px;
     background-color: #f5f5f5;
     border-radius: 4.5px;
@@ -545,8 +547,9 @@ const ItemDetails: FC<ParamTypes> = () => {
   const goBackFunc = () => {
     history.goBack();
   };
+ 
 
-  const mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
+  const mailtoHref = `mailto:${item.email}?subject=En kollega vill Haffa "${item.title}"&body=Hej ${item.contactPerson}!%0d%0aDin kollega ${user.name} vill Haffa "${item.title}" och har en fundering:`;
   const telHref = `tel:${item.phoneNumber}`;
 
   const allDetails = (
@@ -825,10 +828,13 @@ const ItemDetails: FC<ParamTypes> = () => {
 
           <div className="card contactCard">
             <div className="contactPersonDiv">
-              <div>
+              <div className="circle">
                 <MdPerson />
               </div>
-              <h4 className="dark">{item.contactPerson}</h4>
+              <div>
+                <h4 className="dark">{item.contactPerson}</h4>
+                <h5 className="company">{item.company}</h5>
+              </div>
             </div>
             {item.phoneNumber && (
               <div className="contactInfo">

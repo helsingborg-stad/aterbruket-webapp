@@ -88,6 +88,7 @@ const AdvertContainer: FC<IAdvert> = ({
     filteredItems = items;
   }
 
+
   return (
     <AdvertContainerDiv>
       <Suspense fallback={<div>Loading...</div>}>
@@ -129,8 +130,8 @@ const AdvertContainer: FC<IAdvert> = ({
           {itemsFrom === "haffat" && items.length !== 0 && (
             <h3>Saker att hämta</h3>
           )}
-          {itemsFrom === "pickedUp" && <h3>Saker som har hämtats</h3>}
-          {itemsFrom === "profile" && <h3>Mina annonser</h3>}
+          {itemsFrom === "pickedUp" && <h3>Saker du hämtat tidigare</h3>}
+          {itemsFrom === "myAdds" && <h3>Mina annonser</h3>}
         </div>
         {filteredItems.map((filteredItem: any) => (
           <Card
@@ -138,6 +139,7 @@ const AdvertContainer: FC<IAdvert> = ({
             imageKey={filteredItem.images[0].src}
             filteredItem={filteredItem}
             fetchReservedAdverts={fetchReservedAdverts}
+            itemsFrom={itemsFrom}
           />
         ))}
       </Suspense>

@@ -81,6 +81,14 @@ const FormContainerDiv = styled.div`
     justify-content: space-around;
     flex-direction: column;
 
+    h4 {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 112%;
+      color: ${(props) => props.theme.colors.darkest};
+    }
+
     input,
     textarea,
     select {
@@ -92,6 +100,8 @@ const FormContainerDiv = styled.div`
       background-color: ${(props) => props.theme.colors.lightGray};
       ::placeholder {
         font-style: italic;
+              color: #a3a3a3;
+
       }
     }
     textarea {
@@ -99,7 +109,45 @@ const FormContainerDiv = styled.div`
       height: 192px;
       ::placeholder {
         font-family: "Roboto";
+              color: #a3a3a3;
+
       }
+    }
+    select:invalid {
+      font-style: italic;
+      color: #a3a3a3;
+    }
+  }
+  .dimensionsDiv {
+    position: relative;
+    height: 56px;
+    margin: 12px 0 0 0;
+    input {
+      text-align: right;
+      padding: 0 10px 0 24px;
+    }
+    h4 {
+      color: ${(props) => props.theme.colors.primary};
+      position: absolute;
+      margin: 0;
+      top: -17px;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 150%;
+      text-transform: uppercase;
+    }
+
+    .labelP {
+      position: absolute;
+      top: 50%;
+      left: 40px;
+      transform: translate(0, -50%);
+      font-style: normal;
+      font-weight: bold;
+      text-transform: none;
+
+      color: ${(props) => props.theme.colors.darkest};
     }
   }
 
@@ -156,24 +204,37 @@ export default function Form(props: {
       }
 
       return (
-        <section className="allDiv" key={field.name}>
+        <section
+          className={
+            dimensions.includes(field.name) ? "allDiv dimensionsDiv" : "allDiv"
+          }
+          key={field.name}
+        >
+          {field.title === "Färg" && <h4>Beskriv prylen</h4>}
+          {field.title === "Avdelning" && <h4>Var finns prylen?</h4>}
+          {field.title === "Kontaktperson" && <h4>Kontakt</h4>}
+          {field.title === "Höjd" && <h4>Mått</h4>}
+
           <label htmlFor={field.name}>
             <p className="labelP">{field.title}</p>
             {field.required && <span className="required">*</span>}
           </label>
           <input {...attributes} />
-          <div className="validationInfo">
-            {field.name === "title" && (
-              <span className="infoSpan">max 20 tecken</span>
-            )}
 
-            {field.name === "purchasePrice" && (
+          {field.name === "title" && (
+            <div className="validationInfo">
+              <span className="infoSpan">max 20 tecken</span>
+            </div>
+          )}
+
+          {field.name === "purchasePrice" && (
+            <div className="validationInfo">
               <span className="infoSpan">
                 Vet du inte exakt vad den köptes in för? <br />
                 Ange då en uppskattning av priset.
-              </span>
-            )}
-          </div>
+              </span>{" "}
+            </div>
+          )}
         </section>
       );
     }

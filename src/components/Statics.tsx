@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
-import React, { useEffect, useState, FC } from "react";
+import React, { useEffect, useState, FC, useContext } from "react";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import styled from "styled-components";
@@ -8,7 +8,7 @@ import { listAdverts } from "../graphql/queries";
 import { ListAdvertsQuery } from "../API";
 import CountingCategorys from "../hooks/CountingCategorys";
 import { fieldsForm } from "../utils/formUtils";
-import ItemsToGet from "./ItemsToGet";
+import UserContext from "../contexts/UserContext";
 
 const OptionDiv = styled.div`
   width: 100%;
@@ -62,6 +62,7 @@ const Statics: FC = () => {
   const [statusGroup, setStatusGroup] = useState([]) as any;
   const [infoOption, setInfoOption] = useState("total");
   const [Categorys, setCategorys] = useState() as any;
+  const { user } = useContext(UserContext);
   const [selectDepartment, setSelectDepartment] = useState([
     { title: "Alla förvaltningar", filterOn: "all" },
     { title: "Återbruket", filterOn: "Larmvägen 33" },
@@ -89,6 +90,13 @@ const Statics: FC = () => {
       found.eng.map((cat: string) => {
         saveAllCategorys[cat] = 0;
       });
+    }
+
+    if (user.sub) {
+      setSelectDepartment([
+        ...selectDepartment,
+        { title: "Min statistik", filterOn: user.sub },
+      ]);
     }
     setCategorys(saveAllCategorys);
 
@@ -121,6 +129,10 @@ const Statics: FC = () => {
     } else if (filterOn === "Larmvägen 33") {
       filteredItems = allItems.filter((item: any) => {
         return item.location.includes(filterOn);
+      });
+    } else {
+      filteredItems = allItems.filter((item: any) => {
+        return item.giver === filterOn;
       });
     }
 

@@ -188,6 +188,10 @@ const Card: FC<Props> = ({
         <img src={url} alt="" />
       </div>
       <div className="infoDiv">
+        {filteredItem.category === "wanted" && (
+          <h4 style={{ color: "#205400", fontSize: "14px" }}>Sökes</h4>
+        )}
+
         <h3>{filteredItem.title}</h3>
         <h4>{filteredItem.quantity} stycken</h4>
         <p className="desc">Beskrivning: {filteredItem.description}</p>

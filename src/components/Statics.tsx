@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { listAdverts } from "../graphql/queries";
 import { ListAdvertsQuery } from "../API";
 import CountingCategorys from "../hooks/CountingCategorys";
+import { fieldsForm } from "../utils/formUtils";
+import ItemsToGet from "./ItemsToGet";
 
 const OptionDiv = styled.div`
   width: 100%;
@@ -54,9 +56,44 @@ const GroupDiv = styled.div`
     margin-bottom: 0;
   }
 `;
+
 const Statics: FC = () => {
+  const [allItems, setAllItems] = useState() as any;
   const [statusGroup, setStatusGroup] = useState([]) as any;
   const [infoOption, setInfoOption] = useState("total");
+  const [Categorys, setCategorys] = useState() as any;
+  const [selectDepartment, setSelectDepartment] = useState([
+    { title: "Alla förvaltningar", filterOn: "all" },
+    { title: "Återbruket", filterOn: "Larmvägen 33" },
+  ]);
+  const [selected, setSelected] = useState("all");
+  const fetchItems = async () => {
+    const result = (await API.graphql(
+      graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
+    )) as GraphQLResult<ListAdvertsQuery>;
+    const advertItems = result.data?.listAdverts?.items;
+    setAllItems(advertItems);
+    filterStatus(advertItems);
+  };
+
+  useEffect(() => {
+    fetchItems();
+    const found = fieldsForm.find((element) => {
+      return element.name === "category";
+    });
+
+    // eslint-disable-next-line prefer-const
+    let saveAllCategorys = {} as any;
+
+    if (found && found.eng) {
+      found.eng.map((cat: string) => {
+        saveAllCategorys[cat] = 0;
+      });
+    }
+    setCategorys(saveAllCategorys);
+
+    return () => {};
+  }, []);
 
   const filterStatus = (advertItems: any) => {
     const newStatusGroup = [
@@ -71,21 +108,25 @@ const Statics: FC = () => {
       newStatusGroup[index].items.push(i);
     });
 
-    const groups = CountingCategorys(newStatusGroup);
+    const groups = CountingCategorys(newStatusGroup, Categorys);
     setStatusGroup(groups);
   };
 
-  const fetchItems = async () => {
-    const result = (await API.graphql(
-      graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
-    )) as GraphQLResult<ListAdvertsQuery>;
-    const advertItems = result.data?.listAdverts?.items;
-    filterStatus(advertItems);
-  };
+  const filterItems = (filterOn: string) => {
+    console.log(filterOn);
+    console.log(allItems);
+    let filteredItems = [] as any;
+    if (filterOn === "all") {
+      filteredItems = allItems;
+    } else if (filterOn === "Larmvägen 33") {
+      filteredItems = allItems.filter((item: any) => {
+        return item.location.includes(filterOn);
+      });
+    }
 
-  useEffect(() => {
-    fetchItems();
-  }, []);
+    console.log("NEW LIST ", filteredItems);
+    filterStatus(filteredItems);
+  };
 
   const infoOptions = [
     { option: "Total", key: "total" },
@@ -102,9 +143,27 @@ const Statics: FC = () => {
       setInfoOption("least");
     }
   };
-
+  const handleInputChange = (e: React.ChangeEvent<any>) => {
+    setSelected(e.target.value);
+    filterItems(e.target.value);
+  };
   return (
     <>
+      <label htmlFor="selectDepartment">Välj</label>
+      <select
+        name="selectDepartment"
+        id="selectDepartment"
+        onChange={(e) => handleInputChange(e)}
+        defaultValue={selected}
+      >
+        {selectDepartment.map((which: { title: string; filterOn: string }) => {
+          return (
+            <option key={which.title} value={which.filterOn}>
+              {which.title}
+            </option>
+          );
+        })}
+      </select>
       <OptionDiv>
         {infoOptions.map((opt) => {
           return (

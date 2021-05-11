@@ -56,7 +56,7 @@ const Haffat: FC = () => {
     { title: "MINA ANNONSER" },
     { title: "STATISTIK" },
   ];
-  const [active, setActive] = useState("SAKER ATT HÄMTA");
+  const [active, setActive] = useState("STATISTIK");
   const { user } = useContext(UserContext);
 
   const handleActive = (e: React.ChangeEvent<any>) => {

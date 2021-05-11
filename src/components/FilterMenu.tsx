@@ -146,8 +146,6 @@ const FilterMenu: FC<Props> = ({
     return () => document.body.classList.remove(FLITER_OPEN_CLASS);
   }, [isOpen]);
 
-  console.log(fieldsForm);
-
   const handleSaveFilter = () => {
     let categories: any = [];
     let cateValues: any = [];

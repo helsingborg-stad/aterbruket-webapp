@@ -28,15 +28,10 @@ const mostCommonCategory = (obj: any) => {
   return { most: maxKey, mostNum: maxValue };
 };
 
-const CountingCategorys = (groups: any) => {
+const CountingCategorys = (groups: any, Categorys: any) => {
   groups.forEach((group: any) => {
     const cateAmount = {
-      table: 0,
-      desk: 0,
-      raiseAndLowerableDesk: 0,
-      officeChair: 0,
-      seatingFurniture: 0,
-      other: 0,
+      ...Categorys,
     } as any;
 
     const eachGroup = group;

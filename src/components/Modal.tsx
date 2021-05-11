@@ -12,8 +12,6 @@ const ModalDiv = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  z-index: 100000;
-  background-color: rgba(188, 188, 188, 0.59);
 `;
 
 const ContentWrapper = styled.div`

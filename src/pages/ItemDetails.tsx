@@ -353,7 +353,6 @@ const CardGroups = styled.div`
       align-self: unset;
     }
     .company {
-      color: ${(props) => props.theme.colors.darkest};
       margin: 0 16px;
     }
     .circle {
@@ -378,8 +377,7 @@ const CardGroups = styled.div`
     padding: 0 8px 0 8px;
     display: flex;
     align-items: center;
-    width: 90%;
-    min-width: 334px;
+    min-width: 290px;
     height: 48px;
     background-color: #f5f5f5;
     border-radius: 4.5px;

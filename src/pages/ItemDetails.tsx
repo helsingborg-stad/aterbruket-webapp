@@ -352,7 +352,11 @@ const CardGroups = styled.div`
       margin: 0 16px;
       align-self: unset;
     }
-    div {
+    .company {
+      color: ${(props) => props.theme.colors.darkest};
+      margin: 0 16px;
+    }
+    .circle {
       padding: 0;
       width: 56px;
       height: 56px;
@@ -825,10 +829,13 @@ const ItemDetails: FC<ParamTypes> = () => {
 
           <div className="card contactCard">
             <div className="contactPersonDiv">
-              <div>
+              <div className="circle">
                 <MdPerson />
               </div>
-              <h4 className="dark">{item.contactPerson}</h4>
+              <div>
+                <h4 className="dark">{item.contactPerson}</h4>
+                <h5 className="company">{item.company}</h5>
+              </div>
             </div>
             {item.phoneNumber && (
               <div className="contactInfo">

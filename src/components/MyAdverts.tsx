@@ -67,7 +67,7 @@ const MyAdverts: FC = () => {
         filteredSweValues={null}
         items={renderItems}
         searchValue={false}
-        itemsFrom="profile"
+        itemsFrom="myAdds"
         activeSorting={{ first: "", second: "", sortTitle: "", secText: "" }}
       />
       {renderItems.length > 0 && (

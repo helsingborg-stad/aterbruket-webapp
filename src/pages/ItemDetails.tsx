@@ -550,7 +550,7 @@ const ItemDetails: FC<ParamTypes> = () => {
     history.goBack();
   };
 
-  const mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
+  const mailtoHref = `mailto:${item.email}?subject=Email från Haffa&body=This is only a test!`;
   const telHref = `tel:${item.phoneNumber}`;
 
   const allDetails = (

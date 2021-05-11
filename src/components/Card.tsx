@@ -11,6 +11,7 @@ interface Props {
   imageKey: string;
   filteredItem: any;
   fetchReservedAdverts: any;
+  itemsFrom: string;
 }
 
 const CardDiv = styled.div`
@@ -124,6 +125,7 @@ const Card: FC<Props> = ({
   imageKey,
   filteredItem,
   fetchReservedAdverts,
+  itemsFrom,
 }: Props) => {
   const [url, setURL] = useState(undefined) as any;
   const { user } = useContext(UserContext);
@@ -195,7 +197,7 @@ const Card: FC<Props> = ({
         <h3>{filteredItem.title}</h3>
         <h4>{filteredItem.quantity} stycken</h4>
         <p className="desc">Beskrivning: {filteredItem.description}</p>
-        {filteredItem.status === "reserved" && (
+        {filteredItem.status === "reserved" && itemsFrom !== "myAdds" && (
           <button
             className="btn--pickUp"
             type="button"

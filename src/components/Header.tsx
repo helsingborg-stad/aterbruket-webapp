@@ -3,6 +3,7 @@ import React, { FC, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { useLocation, Link, useHistory } from "react-router-dom";
 import { MdArrowBack, MdClose } from "react-icons/md";
+import { FiShare } from "react-icons/fi";
 import { useReactPWAInstall } from "react-pwa-install";
 
 interface MyProps {
@@ -61,7 +62,15 @@ const MenuLink = styled(Link)`
 `;
 
 const InstallButton = styled.button`
-  margin: 0 auto;
+  background-color: ${(props) => props.theme.colors.lightGrey};
+  color: ${(props) => props.theme.colors.primaryDark};
+  padding: 10px;
+  border-radius: 4.5px;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Header: FC<MyProps> = () => {
@@ -141,7 +150,7 @@ const Header: FC<MyProps> = () => {
                 display: visible ? "block" : "none",
               }}
             >
-              Lägg Haffa på hemskärmen
+              <FiShare /> Lägg Haffa på hemskärmen
             </InstallButton>
           )}
           {subPath === "personal-info" ||

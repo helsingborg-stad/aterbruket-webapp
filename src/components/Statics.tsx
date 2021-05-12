@@ -2,15 +2,14 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState, FC, useContext } from "react";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
-import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
 import { API } from "aws-amplify";
 import styled from "styled-components";
 import { listAdverts } from "../graphql/queries";
 import { ListAdvertsQuery } from "../API";
-import CountingCategorys from "../hooks/CountingCategorys";
 import { fieldsForm } from "../utils/formUtils";
 import UserContext from "../contexts/UserContext";
 import CardStatics from "./CardStatics";
+import filterStatus from "../hooks/filterStatus";
 
 const StaticContainer = styled.div`
   width: 90%;
@@ -94,6 +93,7 @@ const GroupDiv = styled.div`
 `;
 
 const Statics: FC = () => {
+  const ATERBRUKETADRESS = "Larmvägen 33";
   const [allItems, setAllItems] = useState() as any;
   const [statusGroup, setStatusGroup] = useState([]) as any;
   const [infoOption, setInfoOption] = useState("total");
@@ -101,7 +101,7 @@ const Statics: FC = () => {
   const { user } = useContext(UserContext);
   const [selectDepartment, setSelectDepartment] = useState([
     { title: "Alla förvaltningar", filterOn: "all" },
-    { title: "Återbruket", filterOn: "Larmvägen 33" },
+    { title: "Återbruket", filterOn: ATERBRUKETADRESS },
   ]);
   const [selected, setSelected] = useState("all");
   const fetchItems = async () => {
@@ -110,10 +110,22 @@ const Statics: FC = () => {
     )) as GraphQLResult<ListAdvertsQuery>;
     const advertItems = result.data?.listAdverts?.items;
     setAllItems(advertItems);
-    filterStatus(advertItems);
+    const res = filterStatus(advertItems, Categorys);
+    setStatusGroup(res);
   };
 
+  // const fetchItemsOverTime = async () => {
+  //   const result = (await API.graphql(
+  //     graphqlOperation(listAdverts)
+  //   )) as GraphQLResult<ListAdvertsQuery>;
+  //   const advertItems = result.data?.listAdverts?.items;
+  //   console.log("ALL ITEMS OVER TIME ", advertItems);
+  //   // setAllItems(advertItems);
+  //   // filterStatus(advertItems);
+  // };
+
   useEffect(() => {
+    // fetchItemsOverTime();
     fetchItems();
     const found = fieldsForm.find((element) => {
       return element.name === "category";
@@ -139,30 +151,13 @@ const Statics: FC = () => {
     return () => {};
   }, []);
 
-  const filterStatus = (advertItems: any) => {
-    const newStatusGroup = [
-      { option: "available", sweOp: "Inlaggda annonser", items: [] as any },
-      { option: "reserved", sweOp: "Saker att hämta", items: [] as any },
-      { option: "pickedUp", sweOp: "Uthämtade", items: [] as any },
-    ];
-    advertItems.forEach((i: any) => {
-      const index = newStatusGroup.findIndex(
-        (group) => group.option === i.status
-      );
-      newStatusGroup[index].items.push(i);
-    });
-
-    const groups = CountingCategorys(newStatusGroup, Categorys);
-    setStatusGroup(groups);
-  };
-
   const filterItems = (filterOn: string) => {
     console.log(filterOn);
     console.log(allItems);
     let filteredItems = [] as any;
     if (filterOn === "all") {
       filteredItems = allItems;
-    } else if (filterOn === "Larmvägen 33") {
+    } else if (filterOn === ATERBRUKETADRESS) {
       filteredItems = allItems.filter((item: any) => {
         return item.location.includes(filterOn);
       });
@@ -172,8 +167,8 @@ const Statics: FC = () => {
       });
     }
 
-    console.log("NEW LIST ", filteredItems);
-    filterStatus(filteredItems);
+    const res = filterStatus(filteredItems, Categorys);
+    setStatusGroup(res);
   };
 
   const infoOptions = [
@@ -218,13 +213,30 @@ const Statics: FC = () => {
       <InfoWrapper>
         <h3>Just nu</h3>
         {statusGroup.map((group: any) => {
-          return <CardStatics group={group} key={group.sweOp} />;
+          if (group.option !== "pickedUp") {
+            return (
+              <CardStatics
+                group={group}
+                key={group.sweOp}
+                filterItems={filterItems}
+              />
+            );
+          }
         })}
       </InfoWrapper>
       <InfoWrapper>
         <h3>Totalt över tid</h3>
-        <GroupDiv>NU</GroupDiv>
-        <GroupDiv>NU</GroupDiv>
+        {statusGroup.map((group: any) => {
+          if (group.option !== "reserved") {
+            return (
+              <CardStatics
+                group={group}
+                key={group.sweOp}
+                filterItems={filterItems}
+              />
+            );
+          }
+        })}
       </InfoWrapper>
 
       {/* <OptionDiv>

@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
 import React, { useEffect, useState, FC, useContext } from "react";
+import UserContext from "../contexts/UserContext";
 
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
 
@@ -51,26 +52,36 @@ const ClaspedInfo = styled.div`
 `;
 
 const ExpandCard = styled.div`
-font-weight: 500;
-color: red;
+  font-weight: 500;
 
-}
+  flex-direction: column;
+  align-items: center;
+
+  .group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 `;
 
 interface Props {
   group: any;
+  filterItems: any;
 }
 
-const CardStatics: FC<Props> = ({ group }) => {
+const CardStatics: FC<Props> = ({ group, filterItems }) => {
   const [expandCard, setExpandCard] = useState(false);
-  console.log(group.categoryAmount);
+  const { user } = useContext(UserContext);
+  const { categoryAmount, sweOp } = group;
+  console.log(categoryAmount);
   const handleCard = () => {
     setExpandCard(!expandCard);
   };
   console.log("prssed on a card", expandCard);
+
   return (
-    <GroupDiv onClick={handleCard}>
-      <ClaspedInfo>
+    <GroupDiv>
+      <ClaspedInfo onClick={handleCard}>
         <span>{group.sweOp}</span>
         <div className="group">
           <span>{group.items.length}</span>
@@ -83,13 +94,28 @@ const CardStatics: FC<Props> = ({ group }) => {
       </ClaspedInfo>
       {expandCard && (
         <ExpandCard style={{ display: expandCard ? "flex" : "none" }}>
-          ever since the 1500s, when an unknown printer took a galley of type
-          and scrambled it to make a type specimen book. It has survived not
-          only five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including{" "}
+          {sweOp === "Inlaggda annonser" && (
+            <div className="group">
+              <button type="button" onClick={() => filterItems("all")}>
+                Totalt
+              </button>
+              <button type="button" onClick={() => filterItems(user.sub)}>
+                Dina annonser
+              </button>
+            </div>
+          )}
+          {categoryAmount &&
+            Object.entries(categoryAmount).map(([key, value]) => {
+              console.log(key, value);
+              if ((value as number) > 0) {
+                return (
+                  <div key={key} className="group">
+                    <span>{key}: </span>
+                    <span> {value as number}</span>
+                  </div>
+                );
+              }
+            })}
         </ExpandCard>
       )}
     </GroupDiv>

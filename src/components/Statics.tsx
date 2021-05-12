@@ -2,6 +2,7 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState, FC, useContext } from "react";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
+import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
 import { API } from "aws-amplify";
 import styled from "styled-components";
 import { listAdverts } from "../graphql/queries";
@@ -9,24 +10,32 @@ import { ListAdvertsQuery } from "../API";
 import CountingCategorys from "../hooks/CountingCategorys";
 import { fieldsForm } from "../utils/formUtils";
 import UserContext from "../contexts/UserContext";
+import CardStatics from "./CardStatics";
 
-const OptionDiv = styled.div`
+const StaticContainer = styled.div`
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const SelectWrapper = styled.div`
   width: 100%;
-  text-align: center;
-  margin: 10px;
-  button {
-    border: none;
-    margin: 2px;
+  margin-top: 32px;
+
+  select {
+    width: 100%;
     font-weight: 700;
-    background-color: #e1e9db;
-    color: #205400;
-    height: 1.5rem;
-    border-radius: 5px;
-    :active,
-    :focus {
-      background-color: ${(props) => props.theme.colors.primaryDark};
-      color: white;
-      outline: none;
+    border-radius: 4.5px;
+    border: none;
+    font-size: 18px;
+    height: 50px;
+    padding: 12px 12px 12px 24px;
+    color: ${(props) => props.theme.colors.darker};
+    background-color: ${(props) => props.theme.colors.lightGray};
+    ::placeholder {
+      font-style: italic;
     }
   }
 `;
@@ -34,26 +43,53 @@ const OptionDiv = styled.div`
 const InfoWrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-grow: 1;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 48px 16px 0 16px;
+
+  h3 {
+    color: ${(props) => props.theme.colors.darkest};
+    padding-left: 8px;
+    margin-block-start: 0;
+    margin-block-end: 16px;
+  }
 `;
 
 const GroupDiv = styled.div`
-  width: 90%;
-  max-width: 350px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 0.5px solid #ececec;
-  border-radius: 20px;
-  text-align: center;
-  margin: 5px;
-  background-color: rgb(247, 247, 247);
+  flex-direction: row;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 74px;
+  min-width: 382px
+  border: 1px solid ${(props) => props.theme.colors.illustration};
+  border-radius: 9.5px;
+  color: ${(props) => props.theme.colors.primaryDark};
 
-  .groupTitle {
-    margin-bottom: 0;
+  background-color: ${(props) => props.theme.colors.primaryLighter};
+  margin-bottom: 8px;
+  padding: 24px;
+
+  .group {
+    display: flex;
+    flex-direction: row;
+    
+  }
+
+  .amount {
+    font-weight: 500;
+    color: ${(props) => props.theme.colors.secondaryDark};
+    margin-right: 23px;
+    margin-left: 4px;
+  }
+
+  .iconContainer {
+    display: flex;
+    flex-direction: column;
+    
+    color: ${(props) => props.theme.colors.secondaryDark};
   }
 `;
 
@@ -105,8 +141,8 @@ const Statics: FC = () => {
 
   const filterStatus = (advertItems: any) => {
     const newStatusGroup = [
-      { option: "available", sweOp: "Tillgängliga", items: [] as any },
-      { option: "reserved", sweOp: "Reserverade", items: [] as any },
+      { option: "available", sweOp: "Inlaggda annonser", items: [] as any },
+      { option: "reserved", sweOp: "Saker att hämta", items: [] as any },
       { option: "pickedUp", sweOp: "Uthämtade", items: [] as any },
     ];
     advertItems.forEach((i: any) => {
@@ -160,23 +196,38 @@ const Statics: FC = () => {
     filterItems(e.target.value);
   };
   return (
-    <>
-      <label htmlFor="selectDepartment">Välj</label>
-      <select
-        name="selectDepartment"
-        id="selectDepartment"
-        onChange={(e) => handleInputChange(e)}
-        defaultValue={selected}
-      >
-        {selectDepartment.map((which: { title: string; filterOn: string }) => {
-          return (
-            <option key={which.title} value={which.filterOn}>
-              {which.title}
-            </option>
-          );
+    <StaticContainer>
+      <SelectWrapper>
+        <select
+          name="selectDepartment"
+          id="selectDepartment"
+          onChange={(e) => handleInputChange(e)}
+          defaultValue={selected}
+        >
+          {selectDepartment.map(
+            (which: { title: string; filterOn: string }) => {
+              return (
+                <option key={which.title} value={which.filterOn}>
+                  {which.title}
+                </option>
+              );
+            }
+          )}
+        </select>
+      </SelectWrapper>
+      <InfoWrapper>
+        <h3>Just nu</h3>
+        {statusGroup.map((group: any) => {
+          return <CardStatics group={group} key={group.sweOp} />;
         })}
-      </select>
-      <OptionDiv>
+      </InfoWrapper>
+      <InfoWrapper>
+        <h3>Totalt över tid</h3>
+        <GroupDiv>NU</GroupDiv>
+        <GroupDiv>NU</GroupDiv>
+      </InfoWrapper>
+
+      {/* <OptionDiv>
         {infoOptions.map((opt) => {
           return (
             <button
@@ -189,7 +240,7 @@ const Statics: FC = () => {
             </button>
           );
         })}
-      </OptionDiv>
+      </OptionDiv> */}
       <InfoWrapper>
         {statusGroup.map((group: any) => {
           return (
@@ -242,7 +293,7 @@ const Statics: FC = () => {
           );
         })}
       </InfoWrapper>
-    </>
+    </StaticContainer>
   );
 };
 

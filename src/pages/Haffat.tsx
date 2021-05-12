@@ -47,7 +47,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
   font-weight: 900;
-  font-size: 12px;
+  font-size: 14px;
   color: ${(props) => props.theme.colors.dark};
 `;
 const Haffat: FC = () => {

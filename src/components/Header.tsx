@@ -29,6 +29,7 @@ const HeaderDiv = styled.header`
     font-size: ${(props) => `${props.theme.headerTheme.fontSize}px`};
     line-height: ${(props) => `${props.theme.headerTheme.lineHeight}%`};
     color: ${(props) => props.theme.colors.darkest};
+    padding-left: 20px;
   }
   .circle {
     width: 32px;
@@ -62,15 +63,20 @@ const MenuLink = styled(Link)`
 `;
 
 const InstallButton = styled.button`
-  background-color: ${(props) => props.theme.colors.lightGrey};
-  color: ${(props) => props.theme.colors.primaryDark};
-  padding: 10px;
+  background-color: ${(props) => props.theme.colors.primaryLighter};
+  color: ${(props) => props.theme.colors.primary};
+  font-weight: 500;
+  font-size: 18px;
+  padding:16px, 24px, 16px, 24px
   border-radius: 4.5px;
   border: none;
   outline: none;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 70%;
+  height: 50px;
+  margin: 0 auto;
 `;
 
 const Header: FC<MyProps> = () => {
@@ -139,10 +145,10 @@ const Header: FC<MyProps> = () => {
           style={{
             height: visible ? "auto" : "65px",
             alignItems: visible ? "flex-start" : "center",
-            padding: visible ? "12px 0px 0px 24px" : "0",
+            padding: visible ? "12px 0px 0px 0px" : "0",
           }}
         >
-          {supported() && !isInstalled() && (
+          {path === "app" && supported() && !isInstalled() && (
             <InstallButton
               type="button"
               onClick={handleClick}
@@ -153,6 +159,7 @@ const Header: FC<MyProps> = () => {
               <FiShare /> Lägg Haffa på hemskärmen
             </InstallButton>
           )}
+
           {subPath === "personal-info" ||
           subPath === "myadverts" ||
           subPath === "statics" ? (

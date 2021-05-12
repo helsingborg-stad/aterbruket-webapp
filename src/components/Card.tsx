@@ -196,7 +196,7 @@ const Card: FC<Props> = ({
 
         <h3>{filteredItem.title}</h3>
         <h4>{filteredItem.quantity} stycken</h4>
-        <p className="desc">Beskrivning: {filteredItem.description}</p>
+        <p className="desc">{filteredItem.description}</p>
         {filteredItem.status === "reserved" && itemsFrom !== "myAdds" && (
           <button
             className="btn--pickUp"

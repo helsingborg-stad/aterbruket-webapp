@@ -145,7 +145,7 @@ const Header: FC<MyProps> = () => {
           style={{
             height: visible ? "auto" : "65px",
             alignItems: visible ? "flex-start" : "center",
-            padding: visible ? "12px 0px 0px 0px" : "0",
+            padding: visible ? "15px 0px 0px 0px" : "0",
           }}
         >
           {path === "app" && supported() && !isInstalled() && (

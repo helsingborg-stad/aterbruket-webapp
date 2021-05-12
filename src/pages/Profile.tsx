@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const OptionsDiv = styled.div`
   width: 90%;
   max-width: 700px;
-  margin-top: 60px;
+  margin-top: 20px;
 `;
 
 const OptionLink = styled(Link)`

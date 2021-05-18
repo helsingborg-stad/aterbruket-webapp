@@ -35,6 +35,10 @@ const InputGroup = styled.div`
 
     label {
       font-weight: 500;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
     }
 
     input[type="checkbox"]:checked + label,
@@ -101,15 +105,6 @@ const FilterCheckbox: FC<Props> = ({
     checkboxes = group.eng.map((element: any, idx: number) => {
       return (
         <InputGroup key={element}>
-          <input
-            type="checkbox"
-            id={element}
-            name={element}
-            onChange={(e) => handleInputChange(e, [group.name])}
-            checked={
-              !!(saveValues[group.name] && saveValues[group.name][element])
-            }
-          />
           <label
             htmlFor={element}
             className={
@@ -118,6 +113,16 @@ const FilterCheckbox: FC<Props> = ({
                 : "normal"
             }
           >
+            <input
+              type="checkbox"
+              id={element}
+              name={element}
+              onChange={(e) => handleInputChange(e, [group.name])}
+              checked={
+                !!(saveValues[group.name] && saveValues[group.name][element])
+              }
+            />
+
             {group.swe[idx]}
           </label>
         </InputGroup>

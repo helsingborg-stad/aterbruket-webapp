@@ -1,17 +1,6 @@
-import API, { GraphQLResult } from "@aws-amplify/api";
-import { graphqlOperation } from "aws-amplify";
-import React, {
-  FC,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-  Suspense,
-} from "react";
+import React, { FC, useContext, useState, Suspense } from "react";
 import styled from "styled-components";
-import { ListAdvertsQuery } from "../API";
 import UserContext from "../contexts/UserContext";
-import { listAdverts } from "../graphql/queries";
 
 const ItemsToGet = React.lazy(() => import("../components/ItemsToGet"));
 const MyAdverts = React.lazy(() => import("../components/MyAdverts"));
@@ -20,15 +9,12 @@ const Statics = React.lazy(() => import("../components/Statics"));
 const InputGroup = styled.div`
    {
      color: ${(props) => props.theme.colors.dark};
- 
-
     input {
       appearance: none;
       outline: none;
       border: none;
     }
 
- 
     .active {
       color: ${(props) => props.theme.colors.primaryDark};
     }
@@ -60,12 +46,11 @@ const Haffat: FC = () => {
   const { user } = useContext(UserContext);
 
   const handleActive = (e: React.ChangeEvent<any>) => {
-    console.log(e.target.value);
     setActive(e.target.value);
   };
 
   return (
-    <main style={{ marginTop: "60px" }}>
+    <main style={{ marginTop: "30px" }}>
       <Suspense fallback={<div>Loading...</div>}>
         <Container>
           {menuOpions.map((op: { title: string }) => {

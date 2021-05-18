@@ -24,6 +24,7 @@ const FormContainerDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: ${(props) => props.theme.colors.white};
   }
 
   section {
@@ -49,7 +50,7 @@ const FormContainerDiv = styled.div`
     }
     span {
       margin-left: 3px;
-      color: ${(props) => props.theme.colors.primary};
+      color: ${(props) => props.theme.colors.darkest};
     }
 
     .validationInfo {
@@ -69,9 +70,31 @@ const FormContainerDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    background-color: ${(props) => props.theme.colors.lightGray};
+    border-radius: 4.5px;
+    height: 56px;
+    align-items: center;
+
     .labelP {
       color: ${(props) => props.theme.colors.darker};
       text-transform: none;
+    }
+  }
+  .areaOfUseDiv {
+    flex-direction: column;
+    align-items: flex-start;
+    height: 116px;
+
+    div {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      //margin: 8px 0 8px 0;
+      padding: 0 0 0 12px;
+
+      .labelP {
+        margin: 0 0 0 4px;
+      }
     }
   }
 
@@ -80,6 +103,14 @@ const FormContainerDiv = styled.div`
     //align-items: center;
     justify-content: space-around;
     flex-direction: column;
+
+    h4 {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 112%;
+      color: ${(props) => props.theme.colors.darkest};
+    }
 
     input,
     textarea,
@@ -92,6 +123,7 @@ const FormContainerDiv = styled.div`
       background-color: ${(props) => props.theme.colors.lightGray};
       ::placeholder {
         font-style: italic;
+        color: #a3a3a3;
       }
     }
     textarea {
@@ -99,19 +131,58 @@ const FormContainerDiv = styled.div`
       height: 192px;
       ::placeholder {
         font-family: "Roboto";
+        color: #a3a3a3;
       }
+    }
+    select:invalid {
+      font-style: italic;
+      color: #a3a3a3;
+    }
+  }
+  .dimensionsDiv {
+    position: relative;
+    height: 56px;
+    margin: 12px 0 0 0;
+    input {
+      text-align: right;
+      padding: 0 10px 0 24px;
+    }
+    h4 {
+      color: ${(props) => props.theme.colors.primary};
+      position: absolute;
+      margin: 0;
+      top: -17px;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 150%;
+      text-transform: uppercase;
+    }
+
+    .labelP {
+      position: absolute;
+      top: 50%;
+      left: 40px;
+      transform: translate(0, -50%);
+      font-style: normal;
+      font-weight: bold;
+      text-transform: none;
+
+      color: ${(props) => props.theme.colors.darkest};
     }
   }
 
   input[type="file"] {
     white-space: break-spaces;
     padding: 0;
+    background: transparent;
+    height: 80px;
 
     ::-webkit-file-upload-button {
       background: ${(props) => props.theme.colors.lightGray};
       color: black;
       width: 100%;
-      height: 100%;
+      height: 56px;
       border: none;
       padding: 3px;
       font-weight: 500;
@@ -156,24 +227,38 @@ export default function Form(props: {
       }
 
       return (
-        <section className="allDiv" key={field.name}>
+        <section
+          className={
+            dimensions.includes(field.name) ? "allDiv dimensionsDiv" : "allDiv"
+          }
+          style={{ marginTop: field.title === "Höjd" ? "24px" : "12px" }}
+          key={field.name}
+        >
+          {field.title === "Färg" && <h4>Beskriv prylen</h4>}
+          {field.title === "Förvaltning" && <h4>Var finns prylen?</h4>}
+          {field.title === "Kontaktperson" && <h4>Kontakt</h4>}
+          {field.title === "Höjd" && <h4>Mått</h4>}
+
           <label htmlFor={field.name}>
             <p className="labelP">{field.title}</p>
             {field.required && <span className="required">*</span>}
           </label>
           <input {...attributes} />
-          <div className="validationInfo">
-            {field.name === "title" && (
-              <span className="infoSpan">max 20 tecken</span>
-            )}
 
-            {field.name === "purchasePrice" && (
+          {field.name === "title" && (
+            <div className="validationInfo">
+              <span className="infoSpan">max 20 tecken</span>
+            </div>
+          )}
+
+          {field.name === "purchasePrice" && (
+            <div className="validationInfo">
               <span className="infoSpan">
                 Vet du inte exakt vad den köptes in för? <br />
                 Ange då en uppskattning av priset.
-              </span>
-            )}
-          </div>
+              </span>{" "}
+            </div>
+          )}
         </section>
       );
     }
@@ -204,7 +289,15 @@ export default function Form(props: {
             {field.required && <span className="required">*</span>}
           </label>
 
-          <div className="checkboxDiv">{checkboxInput}</div>
+          <div
+            className={
+              field.title === "Användningsområde"
+                ? "checkboxDiv areaOfUseDiv"
+                : "checkboxDiv"
+            }
+          >
+            {checkboxInput}
+          </div>
           <div className="validationInfo">
             <span className="infoSpan">välj en eller flera</span>
           </div>

@@ -63,6 +63,28 @@ const ExpandCard = styled.div`
     flex-direction: row;
     align-items: center;
   }
+
+  .notActive {
+    background-color: ${(props) => props.theme.colors.lightGreen};
+    color: ${(props) => props.theme.colors.primaryDark};
+    border: 2px solid ${(props) => props.theme.colors.primaryLighter};
+  }
+  .active {
+    background-color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme.colors.lightGreen};
+    border: 2px solid ${(props) => props.theme.colors.secondaryDark};
+  }
+`;
+
+const Buttons = styled.button`
+  height: 38px;
+  width: 167px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 28px;
+  font-family: Roboto;
+  font-style: normal;
+  margin: 16px 0;
 `;
 
 interface Props {
@@ -75,6 +97,7 @@ const CardStatics: FC<Props> = ({ group, filterItems }) => {
   const { user } = useContext(UserContext);
   const { categoryAmount, sweOp } = group;
   const [chartData, setChartData] = useState({}) as any;
+  const [active, setActive] = useState(1);
 
   const handleCard = () => {
     setExpandCard(!expandCard);
@@ -128,12 +151,20 @@ const CardStatics: FC<Props> = ({ group, filterItems }) => {
         <ExpandCard style={{ display: expandCard ? "flex" : "none" }}>
           {sweOp === "Inlaggda annonser" && (
             <div className="group">
-              <button type="button" onClick={() => filterItems("all")}>
+              <Buttons
+                onClick={() => (filterItems("all"), setActive(1))}
+                style={{ borderRadius: "4.5px 0px 0px 4.5px" }}
+                className={active === 1 ? "active" : "notActive"}
+              >
                 Totalt
-              </button>
-              <button type="button" onClick={() => filterItems(user.sub)}>
+              </Buttons>
+              <Buttons
+                onClick={() => (filterItems(user.sub), setActive(2))}
+                style={{ borderRadius: "0px 4.5px 4.5px 0px" }}
+                className={active === 2 ? "active" : "notActive"}
+              >
                 Dina annonser
-              </button>
+              </Buttons>
             </div>
           )}
           {sweOp !== "Inlaggda annonser" && <StaticsIcons group={group} />}

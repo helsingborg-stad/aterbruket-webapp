@@ -13,7 +13,6 @@ const GroupDiv = styled.div`
   height: 100%;
   width: 100%;
 
-  background-color: ${(props) => props.theme.colors.primaryLighter};
   margin-bottom: 8px;
   padding: 24px;
 `;
@@ -26,7 +25,7 @@ const ItemGroup = styled.div`
   font-weight: 500;
 
   margin: 5px;
-  background-color: red;
+
   .value {
     color: ${(props) => props.theme.colors.primaryDark};
     font-weight: 700;
@@ -54,7 +53,6 @@ const ItemGroup = styled.div`
     width: 54px;
 
     border: 1px solid ${(props) => props.theme.colors.secondaryDark};
-    background-color: ${(props) => props.theme.colors.lightGreen};
     border-radius: 100%;
     color: ${(props) => props.theme.colors.primaryDark};
   }
@@ -62,7 +60,6 @@ const ItemGroup = styled.div`
 
 interface Props {
   group: any;
-  //   filterItems: any;
 }
 
 const StaticsIcons: FC<Props> = ({ group }) => {

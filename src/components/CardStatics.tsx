@@ -3,7 +3,7 @@
 import React, { useEffect, useState, FC, useContext } from "react";
 import UserContext from "../contexts/UserContext";
 import StaticsIcons from "./StaticsIcons";
-import { FaChair } from "react-icons/fa";
+import StaticsCharts from "./StaticsCharts.js";
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
 
 import styled from "styled-components";
@@ -74,10 +74,35 @@ const CardStatics: FC<Props> = ({ group, filterItems }) => {
   const [expandCard, setExpandCard] = useState(false);
   const { user } = useContext(UserContext);
   const { categoryAmount, sweOp } = group;
+  const [chartData, setChartData] = useState({}) as any;
 
   const handleCard = () => {
     setExpandCard(!expandCard);
   };
+  const handleChartData = () => {
+    const labelArr = [] as any;
+    const valuesArr = [] as any;
+
+    Object.entries(categoryAmount).forEach((entrys) => {
+      const [key, value] = entrys;
+      if ((value as number) > 0) {
+        const str = key + " " + value;
+
+        labelArr.push(str as string);
+        valuesArr.push(value as number);
+      }
+    });
+    setChartData({
+      label: labelArr as string[],
+      values: valuesArr as number[],
+    });
+  };
+
+  useEffect(() => {
+    setChartData({});
+    handleChartData();
+    return () => {};
+  }, [group]);
 
   return (
     <GroupDiv>
@@ -87,8 +112,15 @@ const CardStatics: FC<Props> = ({ group, filterItems }) => {
           <span>{group.items.length}</span>
           <span className="amount"> st</span>
           <div className="iconContainer">
-            <RiArrowUpSLine />
-            <RiArrowDownSLine />
+            {expandCard ? (
+              <>
+                <RiArrowDownSLine /> <RiArrowUpSLine />
+              </>
+            ) : (
+              <>
+                <RiArrowUpSLine /> <RiArrowDownSLine />
+              </>
+            )}
           </div>
         </div>
       </ClaspedInfo>
@@ -105,19 +137,9 @@ const CardStatics: FC<Props> = ({ group, filterItems }) => {
             </div>
           )}
           {sweOp !== "Inlaggda annonser" && <StaticsIcons group={group} />}
-          {sweOp === "Inlaggda annonser" &&
-            categoryAmount &&
-            Object.entries(categoryAmount).map(([key, value]) => {
-              console.log(key, value);
-              if ((value as number) > 0) {
-                return (
-                  <div key={key} className="group">
-                    <span>{key}: </span>
-                    <span> {value as number}</span>
-                  </div>
-                );
-              }
-            })}
+          {sweOp === "Inlaggda annonser" && categoryAmount && (
+            <StaticsCharts group={chartData} />
+          )}
         </ExpandCard>
       )}
     </GroupDiv>

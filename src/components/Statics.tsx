@@ -96,7 +96,6 @@ const Statics: FC = () => {
   const ATERBRUKETADRESS = "Larmvägen 33";
   const [allItems, setAllItems] = useState() as any;
   const [statusGroup, setStatusGroup] = useState([]) as any;
-  const [infoOption, setInfoOption] = useState("total");
   const [Categorys, setCategorys] = useState() as any;
   const { user } = useContext(UserContext);
   const [selectDepartment, setSelectDepartment] = useState([
@@ -104,6 +103,7 @@ const Statics: FC = () => {
     { title: "Återbruket", filterOn: ATERBRUKETADRESS },
   ]);
   const [selected, setSelected] = useState("all");
+
   const fetchItems = async () => {
     const result = (await API.graphql(
       graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
@@ -168,21 +168,7 @@ const Statics: FC = () => {
     const res = filterStatus(filteredItems, Categorys);
     setStatusGroup(res);
   };
-  const infoOptions = [
-    { option: "Total", key: "total" },
-    { option: "Mest Poplulär", key: "most" },
-    { option: "Minst Populär", key: "least" },
-  ];
 
-  const infoOptionControl = (option: string) => {
-    if (option === "total") {
-      setInfoOption("total");
-    } else if (option === "most") {
-      setInfoOption("most");
-    } else if (option === "least") {
-      setInfoOption("least");
-    }
-  };
   const handleInputChange = (e: React.ChangeEvent<any>) => {
     setSelected(e.target.value);
     filterItems(e.target.value);
@@ -233,73 +219,6 @@ const Statics: FC = () => {
               />
             );
           }
-        })}
-      </InfoWrapper>
-
-      {/* <OptionDiv>
-        {infoOptions.map((opt) => {
-          return (
-            <button
-              onClick={() => infoOptionControl(opt.key)}
-              className={opt.key}
-              key={opt.key}
-              type="button"
-            >
-              {opt.option}
-            </button>
-          );
-        })}
-      </OptionDiv> */}
-      <InfoWrapper>
-        {statusGroup.map((group: any) => {
-          return (
-            <GroupDiv key={group.option}>
-              <h4 className="groupTitle">{group.sweOp.toUpperCase()}</h4>
-              {infoOption === "total" ? (
-                <h4> {group.items.length} stycken</h4>
-              ) : infoOption === "most" ? (
-                <div>
-                  <h4>
-                    Kategori:{" "}
-                    {group.most === "table"
-                      ? "Bord"
-                      : group.most === "desk"
-                      ? "Skrivbord"
-                      : group.most === "raiseAndLowerableDesk"
-                      ? "Höj- och sänkbart skrivbord"
-                      : group.most === "officeChair"
-                      ? "Kontorsstol"
-                      : group.most === "seatingFurniture"
-                      ? "Sittmöbler"
-                      : group.most === "other"
-                      ? "Diverse"
-                      : null}
-                  </h4>
-                  <h4>{group.mostNum} stycken</h4>
-                </div>
-              ) : infoOption === "least" ? (
-                <div>
-                  <h4>
-                    Kategori:{" "}
-                    {group.min === "table"
-                      ? "Bord"
-                      : group.min === "desk"
-                      ? "Skrivbord"
-                      : group.min === "raiseAndLowerableDesk"
-                      ? "Höj- och sänkbart skrivbord"
-                      : group.min === "officeChair"
-                      ? "Kontorsstol"
-                      : group.min === "seatingFurniture"
-                      ? "Sittmöbler"
-                      : group.min === "other"
-                      ? "Diverse"
-                      : null}
-                  </h4>
-                  <h4>{group.minNum} stycken</h4>
-                </div>
-              ) : null}
-            </GroupDiv>
-          );
         })}
       </InfoWrapper>
     </StaticContainer>

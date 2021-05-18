@@ -176,12 +176,13 @@ const FormContainerDiv = styled.div`
     white-space: break-spaces;
     padding: 0;
     background: transparent;
+    height: 80px;
 
     ::-webkit-file-upload-button {
       background: ${(props) => props.theme.colors.lightGray};
       color: black;
       width: 100%;
-      height: 100%;
+      height: 56px;
       border: none;
       padding: 3px;
       font-weight: 500;

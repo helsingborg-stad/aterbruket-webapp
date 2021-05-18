@@ -11,33 +11,40 @@ import { sortValues } from "../utils/sortValuesUtils";
 
 const InputGroup = styled.div`
    {
-     color: ${(props) => props.theme.colors.dark};
+    color: ${(props) => props.theme.colors.dark};
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     
     
-    .flexGroup {
+    .radioWrapper{
+      width: 100%;
       display: flex;
-      flex-direction: row;
-      align-items: center;
       justify-content: space-between;
-      width: 100%
-    }
-    .flexGroupNotActive {
-      display: flex;
-      flex-direction: row;
       align-items: center;
-      
-      width: 100%
     }
+
 
     background-color: ${(props) => props.theme.colors.lightGray};
     width: 350px;
     height: 56px;
     border-radius: 4.5px;
     margin: 16px 0px 19px 0px;
+
+
+    label.radioLabel{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    
+    label.active {
+      justify-content: flex-start;
+ 
+    }
 
     input {
       appearance: none;
@@ -99,6 +106,9 @@ const GroupRadio = styled.div`
 
     label {
       height: 22px;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 `;
@@ -191,38 +201,53 @@ const SortRadioButtons: FC<Props> = ({
       <InputGroup key={element.title}>
         <div
           className={
-            showToggle !== element.title ? "flexGroup" : "flexGroupNotActive"
+            showToggle !== element.title
+              ? "flexGroup radioWrapper"
+              : "flexGroupNotActive radioWrapper"
           }
         >
           <label
-            className={showToggle === element.title ? "active" : "masterRadio"}
+            className={
+              showToggle === element.title
+                ? "active radioLabel"
+                : "masterRadio radioLabel"
+            }
             htmlFor={element.title}
           >
             {element.title}
             {showToggle === element.title && ": "}
+
+            <span>
+              {showToggle &&
+                newSorting.first === element.high &&
+                element.highText}
+              {showToggle &&
+                newSorting.first === element.low &&
+                element.lowText}
+            </span>
+            <input
+              className="radioInput"
+              type="radio"
+              id={element.title}
+              name="sortingMaster"
+              value={element.title}
+              onChange={(e) =>
+                handleRadioInput(
+                  e,
+                  element.low,
+                  element.second,
+                  element.lowText
+                )
+              }
+              checked={element.title === showToggle}
+            />
           </label>
-          <span>
-            {showToggle &&
-              newSorting.first === element.high &&
-              element.highText}
-            {showToggle && newSorting.first === element.low && element.lowText}
-          </span>
-          <input
-            className="radioInput"
-            type="radio"
-            id={element.title}
-            name="sortingMaster"
-            value={element.title}
-            onChange={(e) =>
-              handleRadioInput(e, element.low, element.second, element.lowText)
-            }
-            checked={element.title === showToggle}
-          />
         </div>
         {showToggle === element.title && (
           <GroupRadio>
             <label
               htmlFor={element.high}
+              className="radioLabel"
               style={{
                 color:
                   newSorting.first === element.high ? "#80B14A" : "#6F9725",
@@ -251,6 +276,7 @@ const SortRadioButtons: FC<Props> = ({
               />
             </label>
             <label
+              className="radioLabel"
               htmlFor={element.low}
               style={{
                 color: newSorting.first === element.low ? "#80B14A" : "#6F9725",

@@ -1,10 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import Loader from "react-loader-spinner";
 import Form from "./Form";
 import useForm from "../hooks/useForm";
 import { updateAdvert } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
+import UserContext from "../contexts/UserContext";
 
 interface IareaOfUse {
   indoors: boolean;
@@ -35,15 +36,16 @@ interface Props {
     description?: string;
     department?: string;
     location?: string;
-    instructions?: string;
     contactPerson?: string;
+    giver: string;
+
     email?: string;
     phoneNumber?: number;
     climateImpact: number;
     version: number;
     revisions: number;
-        company?: string;
-
+    company?: string;
+    purchasePrice: number;
   };
   setRegive: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
@@ -54,6 +56,8 @@ const RegiveForm: FC<Props> = ({
   item,
   closeEditformAndFetchItem,
 }: Props) => {
+  const { user } = useContext(UserContext);
+
   const {
     values,
     handleInputChange,
@@ -86,20 +90,21 @@ const RegiveForm: FC<Props> = ({
         outside: item.areaOfUse[0].outside,
       },
       description: item.description,
-      company: item.company,
-
-      department: item.department,
-      location: item.location,
-      instructions: item.instructions,
-      contactPerson: item.contactPerson,
-      email: item.email,
-      phoneNumber: item.phoneNumber,
+      company: user.company ? user.company : "",
+      department: user.department ? user.department : "",
+      location: user.address ? user.address : "",
+      contactPerson: user.name ? user.name : "",
+      email: user.email ? user.email : "",
+      phoneNumber: item.phoneNumber ? item.phoneNumber : "",
       climateImpact: item.climateImpact,
       version: 0,
       revisions: item.revisions + 1,
+      purchasePrice: item.purchasePrice ? item.purchasePrice : "",
+      giver: user.sub,
     },
     updateAdvert
   );
+  console.log(user);
 
   if (redirect && !fileUploading) {
     closeEditformAndFetchItem();

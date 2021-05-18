@@ -88,7 +88,6 @@ const AdvertContainer: FC<IAdvert> = ({
     filteredItems = items;
   }
 
-
   return (
     <AdvertContainerDiv>
       <Suspense fallback={<div>Loading...</div>}>

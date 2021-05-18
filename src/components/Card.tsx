@@ -176,6 +176,8 @@ const Card: FC<Props> = ({
     return () => {};
   }, [itemUpdated]);
 
+
+
   return (
     <CardDiv
       as={Link}

@@ -41,7 +41,6 @@ interface Props {
     description?: string;
     department?: string;
     location?: string;
-    instructions?: string;
     contactPerson?: string;
     email?: string;
     phoneNumber?: string;
@@ -99,7 +98,6 @@ const EditItemForm: FC<Props> = ({
 
       department: item.department,
       location: item.location,
-      instructions: item.instructions,
       contactPerson: item.contactPerson,
       email: item.email,
       phoneNumber: item.phoneNumber,
@@ -110,6 +108,7 @@ const EditItemForm: FC<Props> = ({
     },
     updateAdvert
   );
+
 
   const [imageURL, setImageURL] = useState(image);
 

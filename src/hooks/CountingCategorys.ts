@@ -1,3 +1,5 @@
+import { fieldsForm } from "../utils/formUtils";
+
 const minCommonCategory = (obj: any) => {
   let maxValue = Infinity as any;
   let maxKey = "";
@@ -29,10 +31,24 @@ const mostCommonCategory = (obj: any) => {
 };
 
 const translate = (word: any) => {
-  console.log("----> ", word);
-  Object.entries(word).forEach((x: any) => {
-    console.log(x);
+  let translatedGroup = {};
+  const found = fieldsForm.find((element) => {
+    return element.name === "category";
   });
+
+  if (found && found.swe) {
+    found.eng.find((x: any, idx: number) => {
+      Object.entries(word).forEach((entry: any) => {
+        const [key, value] = entry;
+
+        if (x === key) {
+          const sweKey = found.swe[idx];
+          translatedGroup = { ...translatedGroup, [sweKey]: value };
+        }
+      });
+    });
+  }
+  return translatedGroup;
 };
 
 const CountingCategorys = (groups: any, Categorys: any) => {
@@ -51,11 +67,11 @@ const CountingCategorys = (groups: any, Categorys: any) => {
         cateAmount[i.category] = 1;
       }
     });
-    eachGroup.categoryAmount = cateAmount;
+    eachGroup.categoryAmount = translate(cateAmount);
 
     const mostComon = mostCommonCategory(cateAmount);
     const minComon = minCommonCategory(cateAmount);
-    translate(eachGroup.categoryAmount);
+
     eachGroup.min = minComon.min;
     eachGroup.minNum = minComon.minNum;
     eachGroup.most = mostComon.most;

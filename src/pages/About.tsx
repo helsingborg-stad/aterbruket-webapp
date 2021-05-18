@@ -18,7 +18,7 @@ const Container = styled.div`
   flex-direction: column;
   width: 90%;
   max-width: 600px;
-  margin: 20px 0 50px 0;
+  margin: 10px 0 50px 0;
 `;
 
 const ButtonContainer = styled.div`

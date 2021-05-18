@@ -152,8 +152,6 @@ const Statics: FC = () => {
   }, []);
 
   const filterItems = (filterOn: string) => {
-    console.log(filterOn);
-    console.log(allItems);
     let filteredItems = [] as any;
     if (filterOn === "all") {
       filteredItems = allItems;

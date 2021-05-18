@@ -49,6 +49,8 @@ interface DefaultTheme {
     dark: string;
     darker: string;
     illustration: string;
+    lightGreen: string;
+    monoLight: string;
   };
 }
 
@@ -103,6 +105,8 @@ const theme: DefaultTheme = {
     darker: "#565656",
     darkest: "#3D3D3D",
     illustration: "#C9D6C2",
+    lightGreen: "#F2F6EE",
+    monoLight: "#A3A3A3",
   },
 };
 

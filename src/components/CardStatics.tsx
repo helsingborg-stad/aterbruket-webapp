@@ -2,7 +2,8 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState, FC, useContext } from "react";
 import UserContext from "../contexts/UserContext";
-
+import StaticsIcons from "./StaticsIcons";
+import { FaChair } from "react-icons/fa";
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
 
 import styled from "styled-components";
@@ -19,7 +20,7 @@ const GroupDiv = styled.div`
   border-radius: 9.5px;
   color: ${(props) => props.theme.colors.primaryDark};
 
-  background-color: ${(props) => props.theme.colors.primaryLighter};
+  background-color: ${(props) => props.theme.colors.lightGreen};
   margin-bottom: 8px;
   padding: 24px;
 `;
@@ -104,7 +105,9 @@ const CardStatics: FC<Props> = ({ group, filterItems }) => {
               </button>
             </div>
           )}
-          {categoryAmount &&
+          {sweOp !== "Inlaggda annonser" && <StaticsIcons group={group} />}
+          {sweOp === "Inlaggda annonser" &&
+            categoryAmount &&
             Object.entries(categoryAmount).map(([key, value]) => {
               console.log(key, value);
               if ((value as number) > 0) {

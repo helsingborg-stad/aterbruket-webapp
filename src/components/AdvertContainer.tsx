@@ -125,11 +125,18 @@ const AdvertContainer: FC<IAdvert> = ({
               </span>
             </OptionWrapper>
           )}
-
           {itemsFrom === "haffat" && items.length !== 0 && (
             <h3>Saker att hämta</h3>
           )}
-          {itemsFrom === "pickedUp" && <h3>Saker som har hämtats</h3>}
+          {itemsFrom === "haffat" && items.length === 0 && (
+            <h3>Inga saker att hämta</h3>
+          )}
+          {itemsFrom === "pickedUp" && items.length !== 0 && (
+            <h3>Saker som har hämtats</h3>
+          )}
+          {itemsFrom === "pickedUp" && items.length === 0 && (
+            <h3>Inga saker har hämtats</h3>
+          )}
           {itemsFrom === "myAdds" && <h3>Mina annonser</h3>}
         </div>
         {filteredItems.map((filteredItem: any) => (

@@ -104,7 +104,6 @@ const RegiveForm: FC<Props> = ({
     },
     updateAdvert
   );
-  console.log(user);
 
   if (redirect && !fileUploading) {
     closeEditformAndFetchItem();

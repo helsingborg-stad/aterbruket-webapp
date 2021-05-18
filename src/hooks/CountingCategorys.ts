@@ -28,6 +28,13 @@ const mostCommonCategory = (obj: any) => {
   return { most: maxKey, mostNum: maxValue };
 };
 
+const translate = (word: any) => {
+  console.log("----> ", word);
+  Object.entries(word).forEach((x: any) => {
+    console.log(x);
+  });
+};
+
 const CountingCategorys = (groups: any, Categorys: any) => {
   groups.forEach((group: any) => {
     const cateAmount = {
@@ -45,14 +52,16 @@ const CountingCategorys = (groups: any, Categorys: any) => {
       }
     });
     eachGroup.categoryAmount = cateAmount;
+
     const mostComon = mostCommonCategory(cateAmount);
     const minComon = minCommonCategory(cateAmount);
-
+    translate(eachGroup.categoryAmount);
     eachGroup.min = minComon.min;
     eachGroup.minNum = minComon.minNum;
     eachGroup.most = mostComon.most;
     eachGroup.mostNum = mostComon.mostNum;
   });
+
   return groups;
 };
 

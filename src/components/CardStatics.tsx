@@ -74,11 +74,10 @@ const CardStatics: FC<Props> = ({ group, filterItems }) => {
   const [expandCard, setExpandCard] = useState(false);
   const { user } = useContext(UserContext);
   const { categoryAmount, sweOp } = group;
-  console.log(categoryAmount);
+
   const handleCard = () => {
     setExpandCard(!expandCard);
   };
-  console.log("prssed on a card", expandCard);
 
   return (
     <GroupDiv>

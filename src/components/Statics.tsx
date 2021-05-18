@@ -168,7 +168,6 @@ const Statics: FC = () => {
     const res = filterStatus(filteredItems, Categorys);
     setStatusGroup(res);
   };
-
   const infoOptions = [
     { option: "Total", key: "total" },
     { option: "Mest Poplulär", key: "most" },

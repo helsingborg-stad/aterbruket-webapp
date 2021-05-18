@@ -14,6 +14,7 @@ const filterStatus = (advertItems: any, Categorys: any) => {
   });
 
   const groups = CountingCategorys(newStatusGroup, Categorys);
+  console.log("*************", groups);
   return groups;
 };
 

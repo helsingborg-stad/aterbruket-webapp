@@ -548,8 +548,6 @@ const ItemDetails: FC<ParamTypes> = () => {
     history.goBack();
   };
 
-  console.log(item);
-
   const mailtoHref = `mailto:${item.email}?subject=En kollega vill Haffa "${item.title}"&body=Hej ${item.contactPerson}!%0d%0aDin kollega ${user.name} vill Haffa "${item.title}" och har en fundering:`;
   const telHref = `tel:${item.phoneNumber}`;
 

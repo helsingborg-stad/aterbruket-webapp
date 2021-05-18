@@ -60,7 +60,6 @@ const Haffat: FC = () => {
   const { user } = useContext(UserContext);
 
   const handleActive = (e: React.ChangeEvent<any>) => {
-    console.log(e.target.value);
     setActive(e.target.value);
   };
 

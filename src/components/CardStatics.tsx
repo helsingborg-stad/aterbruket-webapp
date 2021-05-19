@@ -147,7 +147,7 @@ const CardStatics: FC<Props> = ({ group, filterItems }) => {
           </div>
         </div>
       </ClaspedInfo>
-      {expandCard && (
+      {expandCard && group.expandCard && (
         <ExpandCard style={{ display: expandCard ? "flex" : "none" }}>
           {sweOp === "Inlaggda annonser" && (
             <div className="group">

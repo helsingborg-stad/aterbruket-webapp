@@ -121,7 +121,6 @@ const Statics: FC = () => {
       graphqlOperation(listAdverts)
     )) as GraphQLResult<ListAdvertsQuery>;
     const advertItems = result.data?.listAdverts?.items;
-    console.log("ALL ITEMS OVER TIME ", advertItems);
     const res = filterStatus(advertItems, Categorys);
     setAllItemsOverTime(advertItems);
 

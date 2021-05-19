@@ -46,6 +46,11 @@ const InputGroup = styled.div`
  
     }
 
+    .labelText{
+      ${(props) => props.theme.colors.dark};
+      font-weight: 500;
+    }
+
     input {
       appearance: none;
       outline: none;
@@ -55,7 +60,7 @@ const InputGroup = styled.div`
    
     svg {
       font-size: 14px;
-      padding: 4px 0 0 2px;
+      padding-left: 2px;
       color: ${(props) => props.theme.colors.primaryLight}
    
     }
@@ -196,6 +201,14 @@ const SortRadioButtons: FC<Props> = ({
     });
   };
 
+  const toggleHandlar = (value: any) => {
+    if (newSorting.first === value.low) {
+      handleInputChange(value.high, value.second, value.title, value.highText);
+    } else {
+      handleInputChange(value.low, value.first, value.title, value.lowText);
+    }
+  };
+
   const radio = sortValues.map((element: IElement) => {
     return (
       <InputGroup key={element.title}>
@@ -217,7 +230,7 @@ const SortRadioButtons: FC<Props> = ({
             {element.title}
             {showToggle === element.title && ": "}
 
-            <span>
+            <span className="labelText">
               {showToggle &&
                 newSorting.first === element.high &&
                 element.highText}
@@ -225,12 +238,14 @@ const SortRadioButtons: FC<Props> = ({
                 newSorting.first === element.low &&
                 element.lowText}
             </span>
+
             <input
               className="radioInput"
               type="radio"
               id={element.title}
               name="sortingMaster"
               value={element.title}
+              onClick={() => toggleHandlar(element)}
               onChange={(e) =>
                 handleRadioInput(
                   e,

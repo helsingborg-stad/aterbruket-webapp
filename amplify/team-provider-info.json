@@ -98,7 +98,7 @@
       "function": {
         "migrateADUser": {
           "deploymentBucketName": "amplify-aterbruketwebapp-jsandbox-111327-deployment",
-          "s3Key": "amplify-builds/migrateADUser-31315579523834414735-build.zip"
+          "s3Key": "amplify-builds/migrateADUser-7074706b472b6c79476d-build.zip"
         }
       }
     }

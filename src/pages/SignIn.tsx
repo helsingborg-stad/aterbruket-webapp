@@ -10,7 +10,7 @@ const SignIn: FC = ({ children }) => {
         headerText=""
         submitButtonText="Logga in"
         usernameAlias="username"
-        hideSignUp
+        // hideSignUp
         formFields={[
           {
             type: "username",

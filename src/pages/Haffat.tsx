@@ -33,7 +33,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
   font-weight: 900;
-  font-size: 12px;
+  font-size: 14px;
   color: ${(props) => props.theme.colors.dark};
 `;
 const Haffat: FC = () => {
@@ -42,7 +42,7 @@ const Haffat: FC = () => {
     { title: "MINA ANNONSER" },
     { title: "STATISTIK" },
   ];
-  const [active, setActive] = useState("SAKER ATT HÄMTA");
+  const [active, setActive] = useState("STATISTIK");
   const { user } = useContext(UserContext);
 
   const handleActive = (e: React.ChangeEvent<any>) => {

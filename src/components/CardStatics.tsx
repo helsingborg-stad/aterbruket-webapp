@@ -150,7 +150,7 @@ const CardStatics: FC<Props> = ({ group, filterItems, specialHeading }) => {
       </ClaspedInfo>
       {expandCard && group.expandCard && (
         <ExpandCard style={{ display: expandCard ? "flex" : "none" }}>
-          {sweOp === "Tillgängliga annonser" && (
+          {/* {sweOp === "Tillgängliga annonser" && (
             <div className="group">
               <Buttons
                 onClick={() => (filterItems("all"), setActive(1))}
@@ -167,7 +167,7 @@ const CardStatics: FC<Props> = ({ group, filterItems, specialHeading }) => {
                 Dina annonser
               </Buttons>
             </div>
-          )}
+          )} */}
           {sweOp !== "Tillgängliga annonser" && <StaticsIcons group={group} />}
           {sweOp === "Tillgängliga annonser" && categoryAmount && (
             <StaticsCharts group={chartData} />

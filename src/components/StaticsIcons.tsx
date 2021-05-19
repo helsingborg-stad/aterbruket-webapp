@@ -25,7 +25,9 @@ const ItemGroup = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: 500;
-  width: min-content;
+  box-sizing: border-box;
+  width: 90px;
+  padding: 10px;
 
   .value {
     color: ${(props) => props.theme.colors.primaryDark};

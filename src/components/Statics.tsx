@@ -95,6 +95,8 @@ const GroupDiv = styled.div`
 const Statics: FC = () => {
   const ATERBRUKETADRESS = "Larmvägen 33";
   const [allItems, setAllItems] = useState() as any;
+  const [allItemsOverTime, setAllItemsOverTime] = useState() as any;
+  const [statusGroupOverTime, setStatusGroupOverTime] = useState([]) as any;
   const [statusGroup, setStatusGroup] = useState([]) as any;
   const [Categorys, setCategorys] = useState() as any;
   const { user } = useContext(UserContext);
@@ -114,18 +116,20 @@ const Statics: FC = () => {
     setStatusGroup(res);
   };
 
-  // const fetchItemsOverTime = async () => {
-  //   const result = (await API.graphql(
-  //     graphqlOperation(listAdverts)
-  //   )) as GraphQLResult<ListAdvertsQuery>;
-  //   const advertItems = result.data?.listAdverts?.items;
-  //   console.log("ALL ITEMS OVER TIME ", advertItems);
-  //   // setAllItems(advertItems);
-  //   // filterStatus(advertItems);
-  // };
+  const fetchItemsOverTime = async () => {
+    const result = (await API.graphql(
+      graphqlOperation(listAdverts)
+    )) as GraphQLResult<ListAdvertsQuery>;
+    const advertItems = result.data?.listAdverts?.items;
+    console.log("ALL ITEMS OVER TIME ", advertItems);
+    const res = filterStatus(advertItems, Categorys);
+    setAllItemsOverTime(advertItems);
+
+    setStatusGroupOverTime(res);
+  };
 
   useEffect(() => {
-    // fetchItemsOverTime();
+    fetchItemsOverTime();
     fetchItems();
     const found = fieldsForm.find((element) => {
       return element.name === "category";

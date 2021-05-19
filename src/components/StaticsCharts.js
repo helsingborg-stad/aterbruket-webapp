@@ -14,6 +14,11 @@ const GroupDiv = styled.div`
 
   margin-bottom: 8px;
   padding: 24px;
+
+  #myChart {
+    height: 286px;
+    width: 286px;
+  }
 `;
 
 const StaticsCharts = ({ group }) => {
@@ -26,9 +31,12 @@ const StaticsCharts = ({ group }) => {
         label: "My First Dataset",
         data: values,
         backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
+          "rgb(232, 76, 49)",
+          "rgb(173, 66, 139)",
+          "rgb(73, 137, 182)",
+          "rgb(128, 177, 74)",
+          "rgb(255, 152, 62)",
+          "rgb(255, 130, 201)",
         ],
         hoverOffset: 4,
       },
@@ -38,7 +46,7 @@ const StaticsCharts = ({ group }) => {
   console.log(data);
   return (
     <GroupDiv>
-      <Doughnut data={data} />
+      <Doughnut data={data} id="myChart" />
     </GroupDiv>
   );
 };

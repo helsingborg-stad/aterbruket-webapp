@@ -69,8 +69,9 @@ const ScanBtn = styled.button`
   svg {
     color: white;
     border-radius: 4px;
-    font-size: 37px;
+    font-size: 36px;
     padding-top: 5px;
+    padding-right: 1px;
   }
 `;
 
@@ -366,7 +367,11 @@ const Home: FC<Props> = ({
                 setAlreadyAQRCode={setAlreadyAQRCode}
               />
             </Modal>
-            <ScanBtn type="button" onClick={() => setShowQRCamera(true)}>
+            <ScanBtn
+              id="scanBtn"
+              type="button"
+              onClick={() => setShowQRCamera(true)}
+            >
               <MdPhotoCamera />
             </ScanBtn>
             {/* <TabCtn>

@@ -13,7 +13,6 @@ const GroupDiv = styled.div`
   flex-direction: column;
   box-sizing: border-box;
 
-  min-width: 382px;
   min-height: 74px;
 
   border: 1px solid ${(props) => props.theme.colors.illustration};
@@ -22,7 +21,7 @@ const GroupDiv = styled.div`
 
   background-color: ${(props) => props.theme.colors.lightGreen};
   margin-bottom: 8px;
-  padding: 24px;
+  padding: 24px 24px 0 24px;
 `;
 
 const ClaspedInfo = styled.div`

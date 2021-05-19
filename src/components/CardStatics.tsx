@@ -90,9 +90,10 @@ const Buttons = styled.button`
 interface Props {
   group: any;
   filterItems: any;
+  specialHeading?: string;
 }
 
-const CardStatics: FC<Props> = ({ group, filterItems }) => {
+const CardStatics: FC<Props> = ({ group, filterItems, specialHeading }) => {
   const [expandCard, setExpandCard] = useState(false);
   const { user } = useContext(UserContext);
   const { categoryAmount, sweOp } = group;
@@ -130,7 +131,7 @@ const CardStatics: FC<Props> = ({ group, filterItems }) => {
   return (
     <GroupDiv>
       <ClaspedInfo onClick={handleCard}>
-        <span>{group.sweOp}</span>
+        <span>{specialHeading}</span>
         <div className="group">
           <span>{group.items.length}</span>
           <span className="amount"> st</span>
@@ -149,7 +150,7 @@ const CardStatics: FC<Props> = ({ group, filterItems }) => {
       </ClaspedInfo>
       {expandCard && group.expandCard && (
         <ExpandCard style={{ display: expandCard ? "flex" : "none" }}>
-          {sweOp === "Inlaggda annonser" && (
+          {sweOp === "Tillgängliga annonser" && (
             <div className="group">
               <Buttons
                 onClick={() => (filterItems("all"), setActive(1))}
@@ -167,8 +168,8 @@ const CardStatics: FC<Props> = ({ group, filterItems }) => {
               </Buttons>
             </div>
           )}
-          {sweOp !== "Inlaggda annonser" && <StaticsIcons group={group} />}
-          {sweOp === "Inlaggda annonser" && categoryAmount && (
+          {sweOp !== "Tillgängliga annonser" && <StaticsIcons group={group} />}
+          {sweOp === "Tillgängliga annonser" && categoryAmount && (
             <StaticsCharts group={chartData} />
           )}
         </ExpandCard>

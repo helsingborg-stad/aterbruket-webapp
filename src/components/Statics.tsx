@@ -220,29 +220,38 @@ const Statics: FC = () => {
       <InfoWrapper>
         <h3>Just nu</h3>
         {statusGroup.map((group: any) => {
-          if (group.option !== "pickedUp") {
-            return (
-              <CardStatics
-                group={group}
-                key={group.sweOp}
-                filterItems={filterItems}
-              />
-            );
-          }
+          return (
+            <CardStatics
+              group={group}
+              key={group.sweOp}
+              filterItems={filterItems}
+              specialHeading={group.sweOp}
+            />
+          );
         })}
       </InfoWrapper>
       <InfoWrapper>
         <h3>Totalt över tid</h3>
-        {statusGroupOverTime.map((group: any) => {
-          if (group.option !== "reserved") {
+        {statusGroupOverTime.map((group: any, idx: number) => {
+          if (idx === 0) {
             return (
               <CardStatics
                 group={group}
                 key={group.sweOp}
                 filterItems={filterItemsAllOverTime}
+                specialHeading="Totalt inlagda annonser"
               />
             );
           }
+
+          return (
+            <CardStatics
+              group={group}
+              key={group.sweOp}
+              filterItems={filterItemsAllOverTime}
+              specialHeading={group.sweOp}
+            />
+          );
         })}
       </InfoWrapper>
     </StaticContainer>

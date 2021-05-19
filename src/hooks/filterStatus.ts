@@ -4,7 +4,7 @@ const filterStatus = (advertItems: any, Categorys: any) => {
   const newStatusGroup = [
     {
       option: "available",
-      sweOp: "Inlaggda annonser",
+      sweOp: "Tillgängliga annonser",
       expandCard: true,
       items: [] as any,
     },
@@ -16,7 +16,7 @@ const filterStatus = (advertItems: any, Categorys: any) => {
     },
     {
       option: "pickedUp",
-      sweOp: "Haffade objekt",
+      sweOp: "Saker som har blivit hämtade",
       expandCard: true,
       items: [] as any,
     },

@@ -5,9 +5,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable-next-line react-hooks/exhaustive-deps */
-/* global google */
 
-import React, { FC, useState, useEffect, useContext, useRef } from "react";
+import React, {
+  FC,
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  Suspense,
+} from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Loader from "react-loader-spinner";
 import styled from "styled-components";
@@ -25,14 +31,14 @@ import QRCode from "../components/QRCodeContainer";
 import { GetAdvertQuery } from "../API";
 import { getAdvert } from "../graphql/queries";
 import { createAdvert, updateAdvert } from "../graphql/mutations";
-import EditItemForm from "../components/EditItemForm";
-import { loadMapApi } from "../utils/GoogleMapsUtils";
 import Map from "../components/Map";
-import CarouselComp from "../components/CarouselComp";
 import UserContext from "../contexts/UserContext";
-import RegiveForm from "../components/RegiveForm";
 import showDays from "../hooks/showDays";
 import { fieldsForm } from "../utils/formUtils";
+
+const CarouselComp = React.lazy(() => import("../components/CarouselComp"));
+const EditItemForm = React.lazy(() => import("../components/EditItemForm"));
+const RegiveForm = React.lazy(() => import("../components/RegiveForm"));
 
 const TopSection = styled.div`
   background-color: ${(props) => props.theme.colors.offWhite};
@@ -346,7 +352,10 @@ const CardGroups = styled.div`
       margin: 0 16px;
       align-self: unset;
     }
-    div {
+    .company {
+      margin: 0 16px;
+    }
+    .circle {
       padding: 0;
       width: 56px;
       height: 56px;
@@ -368,8 +377,7 @@ const CardGroups = styled.div`
     padding: 0 8px 0 8px;
     display: flex;
     align-items: center;
-    width: 90%;
-    min-width: 334px;
+    min-width: 290px;
     height: 48px;
     background-color: #f5f5f5;
     border-radius: 4.5px;
@@ -436,6 +444,7 @@ const ItemDetails: FC<ParamTypes> = () => {
   useEffect(() => {
     fetchItem();
     setItemUpdated(false);
+    return () => {};
   }, [itemUpdated]);
 
   let handler: any;
@@ -464,11 +473,6 @@ const ItemDetails: FC<ParamTypes> = () => {
       window.removeEventListener("scroll", handler, false);
     };
   });
-
-  useEffect(() => {
-    loadMapApi();
-  }, []);
-
 
   const updateItem = async (newStatus: string) => {
     const result = (await API.graphql(
@@ -544,7 +548,7 @@ const ItemDetails: FC<ParamTypes> = () => {
     history.goBack();
   };
 
-  const mailtoHref = `mailto:${item.email}?subject=Email från Haffa`;
+  const mailtoHref = `mailto:${item.email}?subject=En kollega vill Haffa "${item.title}"&body=Hej ${item.contactPerson}!%0d%0aDin kollega ${user.name} vill Haffa "${item.title}" och har en fundering:`;
   const telHref = `tel:${item.phoneNumber}`;
 
   const allDetails = (
@@ -797,11 +801,7 @@ const ItemDetails: FC<ParamTypes> = () => {
           <div className="card mapCard">
             <div className="cardHeader">
               {item && item.location && (
-                <Map
-                  mapType={google.maps.MapTypeId.ROADMAP}
-                  mapTypeControl={false}
-                  location={item.location}
-                />
+                <Map mapTypeControl={false} location={item.location} />
               )}
 
               {!item.location && (
@@ -827,10 +827,13 @@ const ItemDetails: FC<ParamTypes> = () => {
 
           <div className="card contactCard">
             <div className="contactPersonDiv">
-              <div>
+              <div className="circle">
                 <MdPerson />
               </div>
-              <h4 className="dark">{item.contactPerson}</h4>
+              <div>
+                <h4 className="dark">{item.contactPerson}</h4>
+                <h5 className="company">{item.company}</h5>
+              </div>
             </div>
             {item.phoneNumber && (
               <div className="contactInfo">
@@ -855,24 +858,26 @@ const ItemDetails: FC<ParamTypes> = () => {
 
   return (
     <main style={{ padding: 0 }}>
-      {editItem ? (
-        <EditItemForm
-          setEditItem={setEditItem}
-          item={item}
-          closeEditformAndFetchItem={closeEditformAndFetchItem}
-          image={image}
-        />
-      ) : regive ? (
-        <RegiveForm
-          setRegive={setRegive}
-          item={item}
-          closeEditformAndFetchItem={closeEditformAndFetchItem}
-        />
-      ) : showCarousel ? (
-        <CarouselComp setShowCarousel={setShowCarousel} image={image} />
-      ) : (
-        allDetails
-      )}
+      <Suspense fallback={<div>Loading...</div>}>
+        {editItem ? (
+          <EditItemForm
+            setEditItem={setEditItem}
+            item={item}
+            closeEditformAndFetchItem={closeEditformAndFetchItem}
+            image={image}
+          />
+        ) : regive ? (
+          <RegiveForm
+            setRegive={setRegive}
+            item={item}
+            closeEditformAndFetchItem={closeEditformAndFetchItem}
+          />
+        ) : showCarousel ? (
+          <CarouselComp setShowCarousel={setShowCarousel} image={image} />
+        ) : (
+          allDetails
+        )}
+      </Suspense>
     </main>
   );
 };

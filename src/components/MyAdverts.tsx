@@ -42,6 +42,7 @@ const MyAdverts: FC = () => {
       })
     )) as GraphQLResult<ListAdvertsQuery>;
 
+
     const advertItem: any = result.data?.listAdverts?.items;
     if (advertItem.length > 0) {
       setPaginationOption({
@@ -62,12 +63,12 @@ const MyAdverts: FC = () => {
     }
   }, [user]);
   return (
-    <main style={{ marginTop: "60px" }}>
+    <>
       <AdvertContainer
         filteredSweValues={null}
         items={renderItems}
         searchValue={false}
-        itemsFrom="profile"
+        itemsFrom="myAdds"
         activeSorting={{ first: "", second: "", sortTitle: "", secText: "" }}
       />
       {renderItems.length > 0 && (
@@ -76,7 +77,7 @@ const MyAdverts: FC = () => {
           handlePagination={handlePages}
         />
       )}
-    </main>
+    </>
   );
 };
 

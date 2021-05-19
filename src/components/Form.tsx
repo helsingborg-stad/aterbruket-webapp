@@ -5,44 +5,60 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { ToastContainer } from "react-toastify";
 import { IFields } from "../interfaces/IForm";
-// import { options } from "../utils/formUtils";
+import Button from "./Button";
+import "react-toastify/dist/ReactToastify.css";
 
 const FormContainerDiv = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 150px;
+  margin-bottom: 60px;
 
   form {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: ${(props) => props.theme.colors.white};
   }
+
   section {
-    background-color: ${(props) => props.theme.colors.lightGray};
+    background-color: ${(props) => props.theme.colors.white};
     width: 90%;
-    height: 110px;
+    height: auto;
     border-radius: 4.5px;
     padding: 4px 16px 4px 16px;
     margin: 8px 0px;
-    p {
-      margin-block-end: 0;
-      margin-block-start: 0;
+    label {
+      display: flex;
     }
+    .labelP {
+      color: ${(props) => props.theme.colors.primary};
+      letter-spacing: 0.005em;
+      padding-bottom: 2px;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 150%;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    span {
+      margin-left: 3px;
+      color: ${(props) => props.theme.colors.darkest};
+    }
+
     .validationInfo {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       padding: 5px;
-      .required {
-        font-style: italic;
-        color: red;
-        font-size: 14px;
-      }
+
       .infoSpan {
         color: grey;
         font-style: italic;
@@ -54,21 +70,47 @@ const FormContainerDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    background-color: ${(props) => props.theme.colors.lightGray};
+    border-radius: 4.5px;
+    height: 56px;
+    align-items: center;
+
+    .labelP {
+      color: ${(props) => props.theme.colors.darker};
+      text-transform: none;
+    }
   }
-  .labelP {
-    color: ${(props) => props.theme.cardTheme.descColor};
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 150%;
-    letter-spacing: 0.005em;
-    padding-bottom: 2px;
+  .areaOfUseDiv {
+    flex-direction: column;
+    align-items: flex-start;
+    height: 116px;
+
+    div {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      //margin: 8px 0 8px 0;
+      padding: 0 0 0 12px;
+
+      .labelP {
+        margin: 0 0 0 4px;
+      }
+    }
   }
 
   .allDiv {
     display: flex;
     //align-items: center;
     justify-content: space-around;
-    flex-direction: column-reverse;
+    flex-direction: column;
+
+    h4 {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 112%;
+      color: ${(props) => props.theme.colors.darkest};
+    }
 
     input,
     textarea,
@@ -76,7 +118,76 @@ const FormContainerDiv = styled.div`
       border-radius: 4.5px;
       border: none;
       font-size: 16px;
-      height: 2em;
+      height: 56px;
+      padding: 0 0 0 24px;
+      background-color: ${(props) => props.theme.colors.lightGray};
+      ::placeholder {
+        font-style: italic;
+        color: #a3a3a3;
+      }
+    }
+    textarea {
+      padding: 16px 0 0 24px;
+      height: 192px;
+      ::placeholder {
+        font-family: "Roboto";
+        color: #a3a3a3;
+      }
+    }
+    select:invalid {
+      font-style: italic;
+      color: #a3a3a3;
+    }
+  }
+  .dimensionsDiv {
+    position: relative;
+    height: 56px;
+    margin: 12px 0 0 0;
+    input {
+      text-align: right;
+      padding: 0 10px 0 24px;
+    }
+    h4 {
+      color: ${(props) => props.theme.colors.primary};
+      position: absolute;
+      margin: 0;
+      top: -17px;
+      font-style: normal;
+      font-weight: 900;
+      font-size: 14px;
+      line-height: 150%;
+      text-transform: uppercase;
+    }
+
+    .labelP {
+      position: absolute;
+      top: 50%;
+      left: 40px;
+      transform: translate(0, -50%);
+      font-style: normal;
+      font-weight: bold;
+      text-transform: none;
+
+      color: ${(props) => props.theme.colors.darkest};
+    }
+  }
+
+  input[type="file"] {
+    white-space: break-spaces;
+    padding: 0;
+    background: transparent;
+    height: 80px;
+
+    ::-webkit-file-upload-button {
+      background: ${(props) => props.theme.colors.lightGray};
+      color: black;
+      width: 100%;
+      height: 56px;
+      border: none;
+      padding: 3px;
+      font-weight: 500;
+      font-size: 18px;
+      margin-bottom: 3px;
     }
   }
 `;
@@ -96,9 +207,9 @@ export default function Form(props: {
         type: field.dataType,
         name: field.name,
         onChange: props.handleInputChange,
-        placeholder: field.title,
         disabled: field.disabled,
         required: field.required,
+        placeholder: field.placeholder,
       };
 
       if (props.values[field.name] !== undefined) {
@@ -116,34 +227,38 @@ export default function Form(props: {
       }
 
       return (
-        <section className="allDiv" key={field.name}>
-          <div className="validationInfo">
-            {field.required && <span className="required">obligatorisk</span>}
-            {field.name === "location" && (
-              <span className="infoSpan">ex, Drottninggatan 14</span>
-            )}
-            {field.name === "title" && (
+        <section
+          className={
+            dimensions.includes(field.name) ? "allDiv dimensionsDiv" : "allDiv"
+          }
+          style={{ marginTop: field.title === "Höjd" ? "24px" : "12px" }}
+          key={field.name}
+        >
+          {field.title === "Färg" && <h4>Beskriv prylen</h4>}
+          {field.title === "Förvaltning" && <h4>Var finns prylen?</h4>}
+          {field.title === "Kontaktperson" && <h4>Kontakt</h4>}
+          {field.title === "Höjd" && <h4>Mått</h4>}
+
+          <label htmlFor={field.name}>
+            <p className="labelP">{field.title}</p>
+            {field.required && <span className="required">*</span>}
+          </label>
+          <input {...attributes} />
+
+          {field.name === "title" && (
+            <div className="validationInfo">
               <span className="infoSpan">max 20 tecken</span>
-            )}
-            {dimensions.includes(field.name) && (
-              <span className="infoSpan">ange i cm</span>
-            )}
-            {field.name === "phoneNumber" && (
-              <span className="infoSpan">
-                ange endast siffror ex, 0701234567
-              </span>
-            )}
-            {field.name === "purchasePrice" && (
+            </div>
+          )}
+
+          {field.name === "purchasePrice" && (
+            <div className="validationInfo">
               <span className="infoSpan">
                 Vet du inte exakt vad den köptes in för? <br />
                 Ange då en uppskattning av priset.
-              </span>
-            )}
-          </div>
-          <input {...attributes} />
-          <label htmlFor={field.name}>
-            <p className="labelP">{field.title}</p>
-          </label>
+              </span>{" "}
+            </div>
+          )}
         </section>
       );
     }
@@ -169,10 +284,21 @@ export default function Form(props: {
       });
       return (
         <section key={field.name}>
-          <p className="labelP">{field.title}</p>
-          <div className="checkboxDiv">{checkboxInput}</div>
+          <label htmlFor={field.name}>
+            <p className="labelP">{field.title}</p>{" "}
+            {field.required && <span className="required">*</span>}
+          </label>
+
+          <div
+            className={
+              field.title === "Användningsområde"
+                ? "checkboxDiv areaOfUseDiv"
+                : "checkboxDiv"
+            }
+          >
+            {checkboxInput}
+          </div>
           <div className="validationInfo">
-            {field.required && <span className="required">obligatorisk</span>}
             <span className="infoSpan">välj en eller flera</span>
           </div>
         </section>
@@ -181,21 +307,21 @@ export default function Form(props: {
     if (field.fieldType === "textarea") {
       return (
         <section className="allDiv" key={field.name}>
-          <div className="validationInfo">
-            {field.required && <span className="required">obligatorisk</span>}{" "}
-            <span className="infoSpan">max 200 tecken</span>
-          </div>
+          <label htmlFor={field.name}>
+            <p className="labelP">{field.title}</p>
+            {field.required && <span className="required">*</span>}
+          </label>
           <textarea
             name={field.name}
             onChange={props.handleInputChange}
             value={props.values[field.name]}
-            placeholder={field.title}
+            placeholder={field.placeholder}
             required={field.required}
             maxLength={200}
           />
-          <label htmlFor={field.name}>
-            <p className="labelP">{field.title}</p>
-          </label>
+          <div className="validationInfo">
+            <span className="infoSpan">max 200 tecken</span>
+          </div>
         </section>
       );
     }
@@ -203,20 +329,21 @@ export default function Form(props: {
       const data = field.eng ? field.eng : [];
       return (
         <section className="allDiv" key={field.name}>
-          <div className="validationInfo">
-            {field.required && <span className="required">obligatorisk</span>}
-          </div>
-
+          {" "}
+          <label htmlFor={field.name} key={field.name}>
+            <p className="labelP">{field.title}</p>{" "}
+            {field.required && <span className="required">*</span>}
+          </label>{" "}
           <select
             name={field.name}
             id={field.name}
             onChange={props.handleInputChange}
             defaultValue={
-              props.values[field.name] ? props.values[field.name] : "select"
+              props.values[field.name] ? props.values[field.name] : ""
             }
             required={field.required}
           >
-            <option value="select" disabled>
+            <option value="" disabled>
               Välj ett alternativ
             </option>
             {data.map((x: string, idx: number) => {
@@ -227,20 +354,58 @@ export default function Form(props: {
               );
             })}
           </select>
-          <label htmlFor={field.name} key={field.name}>
-            <p className="labelP">{field.title}</p>
-          </label>
         </section>
       );
     }
   });
 
+
+  const history = useHistory();
+
+  const goBackFunc = () => {
+    history.goBack();
+  };
+
   return (
     <FormContainerDiv>
       <form onSubmit={props.handleSubmit}>
         {fields}
-        <button type="submit">Submit</button>
+        <Button
+          type="submit"
+          style={{
+            width: "350px",
+            height: "56px",
+            fontSize: "16px",
+            fontWeight: "bold",
+          }}
+        >
+          Färdig!
+        </Button>
+        <Button
+          type="button"
+          onClick={() => goBackFunc()}
+          transparent
+          style={{
+            fontSize: "16px",
+            color: "#A3A3A3",
+            border: "none",
+            fontWeight: "bold",
+          }}
+        >
+          Avbryt
+        </Button>
       </form>
+      <ToastContainer
+        position="top-center"
+        autoClose={6000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </FormContainerDiv>
   );
 }

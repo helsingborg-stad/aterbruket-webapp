@@ -1,15 +1,15 @@
 /* eslint-disable no-console */
-import React, { FC, useContext, useEffect, useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
-import { API, graphqlOperation } from "aws-amplify";
+import React, { FC, useContext, useEffect, useState, Suspense } from "react";
+import { Redirect } from "react-router-dom";
 import styled from "styled-components";
 import Loader from "react-loader-spinner";
-import Form from "../components/Form";
 import useForm from "../hooks/useForm";
 import { createAdvert } from "../graphql/mutations";
-import OpenCamera from "../components/OpenCamera";
 import { fieldsForm as fields } from "../utils/formUtils";
 import UserContext from "../contexts/UserContext";
+
+const OpenCamera = React.lazy(() => import("../components/OpenCamera"));
+const Form = React.lazy(() => import("../components/Form"));
 
 const ItemImg = styled.img`
   width: 200px;
@@ -67,8 +67,9 @@ const AddItem: FC<Props> = ({
         wood: false,
       },
       description: "",
-      department: user.department,
-      location: "",
+      company: user.company ? user.company : "",
+      department: user.department ? user.department : "",
+      location: user.address ? user.address : "",
       instructions: "",
       contactPerson: user.name ? user.name : "",
       email: user.email ? user.email : "",
@@ -81,10 +82,7 @@ const AddItem: FC<Props> = ({
     },
     createAdvert
   );
-
   const [imageURL, setImageURL] = useState("");
-
-  useEffect(() => {}, [fileUploading]);
 
   useEffect(() => {
     if (file) {
@@ -99,24 +97,29 @@ const AddItem: FC<Props> = ({
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
   return (
-    <main>
-      {!redirect && file && <ItemImg src={imageURL} />}
-      {!redirect && !alreadyAQRCode ? (
-        <Form
-          values={values}
-          fields={fields}
-          mutation={createAdvert}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-          handleCheckboxChange={handleCheckboxChange}
-        />
-      ) : (
-        <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
-      )}
+    <main style={{ marginBottom: "0px" }}>
+      <Suspense fallback={<div>Loading...</div>}>
+        {!fileUploading && file && <ItemImg src={imageURL} />}
 
-      {fileUploading && redirect && (
-        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
-      )}
+        {!fileUploading && !alreadyAQRCode && (
+          <Form
+            values={values}
+            fields={fields}
+            mutation={createAdvert}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
+            handleCheckboxChange={handleCheckboxChange}
+          />
+        )}
+
+        {!fileUploading && alreadyAQRCode && (
+          <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
+        )}
+
+        {fileUploading && (
+          <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+        )}
+      </Suspense>
     </main>
   );
 };

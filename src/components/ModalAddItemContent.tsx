@@ -1,56 +1,87 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { MdClose, MdAdd } from "react-icons/md";
+import { ImQrcode } from "react-icons/im";
 
-const ModalHeader = styled.header`
+const Modal = styled.div`
+position: absolute;
+bottom: 0;
+background-color: #F5F5F5;
+border-radius: 10px 10px 0 0;
+width: 100%;   
+height 157px;
+
+`;
+const ModalHeader = styled.div`
+  width: 100%;
+  height: 61px;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  h2 {
-    font-style: ${(props) => props.theme.headerTheme.fontStyle};
-    font-weight: ${(props) => props.theme.headerTheme.fontWeight};
-    font-size: ${(props) => `${props.theme.headerTheme.fontSize}px`};
-    line-height: ${(props) => `${props.theme.headerTheme.lineHeight}%`};
-  }
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 10px 10px 0 0;
+  background-color: #f8f8f8;
 
   .closeBtn {
     height: 20px;
-    width: auto;
+    width: 20px;
+    font-size: 20px;
+    line-height: 20px;
     position: absolute;
-    top: 0px;
-    right: 10px;
-    border: 1px solid black;
-    border-radius: 5px;
+    top: 30%;
+    right: 5%;
+    outline: 0;
+    border: none;
     background-color: transparent;
   }
 `;
 
-const ContentDiv = styled.section`
+const ModalBody = styled.div`
+  width: 100%;
+  height: calc(100% - 61px);
+  background-color: #f5f5f5;
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-direction: column;
+  align-items: center;
 
-  h4 {
-    color: ${(props) => `${props.theme.cardTheme.descColor}`};
-    font-weight: 500;
-    font-size: 25px;
-    line-height: 150%;
-    text-align: center;
-    margin-top: 100px;
+  .link {
+    width: 160px;
+    height: 48px;
+    display: inline-block;
+    border-radius: 4.5px;
+    margin: 0 8px;
+    text-decoration: none;
   }
 
-  .selectionBtn {
-    height: 50px;
-    width: 100px;
-    border: 1px solid black;
-    border-radius: 5px;
-    background-color: transparent;
-    border-radius: 14.5px;
-    margin: 5px;
+  .selectBtn {
+    width: 160px;
+    height: 48px;
+    border-radius: 4.5px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    span {
-      font-size: 20px;
+    .btnIcon {
+      display: inline-block;
+      margin-right: 5px;
     }
+  }
+  .scanBtn {
+    color: ${(props) => props.theme.colors.primaryDark};
+    background-color: ${(props) => props.theme.colors.primaryLighter};
+  }
+  .addBtn {
+    color: ${(props) => props.theme.colors.white};
+    background-color: ${(props) => props.theme.colors.primary};
   }
 `;
 
@@ -63,47 +94,46 @@ const ModalAddItemContent: FC<Props> = ({
   setModalOpen,
   setAlreadyAQRCode,
 }: Props) => (
-  <>
+  <Modal>
     <ModalHeader>
-      <h2>Lägg till en annons</h2>
       <button
         className="closeBtn"
         type="button"
         onClick={() => setModalOpen(false)}
       >
-        X
+        <MdClose />
       </button>
+      <p>Skapa en ny annons</p>
     </ModalHeader>
-
-    <ContentDiv>
-      <h4>Finns det redan en QR-kod på din pryl?</h4>
-      <Link to="/add">
+    <ModalBody>
+      <Link className="link" to="/add">
         <button
-          className="selectionBtn"
-          type="button"
-          onClick={() => {
-            setModalOpen(false);
-            setAlreadyAQRCode(false);
-          }}
-        >
-          <span>NEJ</span>
-        </button>
-      </Link>
-
-      <Link to="/add">
-        <button
-          className="selectionBtn"
+          className="selectBtn scanBtn"
           type="button"
           onClick={() => {
             setModalOpen(false);
             setAlreadyAQRCode(true);
           }}
         >
-          <span>JA</span>
+          <ImQrcode className="btnIcon" />
+          Skanna QR
         </button>
       </Link>
-    </ContentDiv>
-  </>
+      <Link className="link" to="/add">
+        <button
+          className="selectBtn addBtn"
+          type="button"
+          onClick={() => {
+            setModalOpen(false);
+            setAlreadyAQRCode(false);
+          }}
+        >
+          <MdAdd className="btnIcon" />
+          Skapa Ny
+        </button>
+      </Link>
+    </ModalBody>
+  </Modal>
 );
 
 export default ModalAddItemContent;

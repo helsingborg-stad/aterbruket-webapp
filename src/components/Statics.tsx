@@ -1,30 +1,40 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
-import React, { useEffect, useState, FC } from "react";
+import React, { useEffect, useState, FC, useContext } from "react";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import styled from "styled-components";
 import { listAdverts } from "../graphql/queries";
 import { ListAdvertsQuery } from "../API";
-import CountingCategorys from "../hooks/CountingCategorys";
+import { fieldsForm } from "../utils/formUtils";
+import UserContext from "../contexts/UserContext";
+import CardStatics from "./CardStatics";
+import filterStatus from "../hooks/filterStatus";
 
-const OptionDiv = styled.div`
+const StaticContainer = styled.div`
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const SelectWrapper = styled.div`
   width: 100%;
-  text-align: center;
-  margin: 10px;
-  button {
-    border: none;
-    margin: 2px;
+  margin-top: 32px;
+
+  select {
+    width: 100%;
     font-weight: 700;
-    background-color: #e1e9db;
-    color: #205400;
-    height: 1.5rem;
-    border-radius: 5px;
-    :active,
-    :focus {
-      background-color: ${(props) => props.theme.colors.primaryDark};
-      color: white;
-      outline: none;
+    border-radius: 4.5px;
+    border: none;
+    font-size: 18px;
+    height: 50px;
+    padding: 12px 12px 12px 24px;
+    color: ${(props) => props.theme.colors.darker};
+    background-color: ${(props) => props.theme.colors.lightGray};
+    ::placeholder {
+      font-style: italic;
     }
   }
 `;
@@ -32,147 +42,219 @@ const OptionDiv = styled.div`
 const InfoWrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-grow: 1;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 48px 16px 0 16px;
+
+  h3 {
+    color: ${(props) => props.theme.colors.darkest};
+    padding-left: 8px;
+    margin-block-start: 0;
+    margin-block-end: 16px;
+  }
 `;
 
 const GroupDiv = styled.div`
-  width: 90%;
-  max-width: 350px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 0.5px solid #ececec;
-  border-radius: 20px;
-  text-align: center;
-  margin: 5px;
-  background-color: rgb(247, 247, 247);
+  flex-direction: row;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 74px;
+  min-width: 382px
+  border: 1px solid ${(props) => props.theme.colors.illustration};
+  border-radius: 9.5px;
+  color: ${(props) => props.theme.colors.primaryDark};
 
-  .groupTitle {
-    margin-bottom: 0;
+  background-color: ${(props) => props.theme.colors.primaryLighter};
+  margin-bottom: 8px;
+  padding: 24px;
+
+  .group {
+    display: flex;
+    flex-direction: row;
+    
+  }
+
+  .amount {
+    font-weight: 500;
+    color: ${(props) => props.theme.colors.secondaryDark};
+    margin-right: 23px;
+    margin-left: 4px;
+  }
+
+  .iconContainer {
+    display: flex;
+    flex-direction: column;
+    
+    color: ${(props) => props.theme.colors.secondaryDark};
   }
 `;
+
 const Statics: FC = () => {
+  const ATERBRUKETADRESS = "Larmvägen 33";
+  const [allItems, setAllItems] = useState() as any;
+  const [allItemsOverTime, setAllItemsOverTime] = useState() as any;
+  const [statusGroupOverTime, setStatusGroupOverTime] = useState([]) as any;
   const [statusGroup, setStatusGroup] = useState([]) as any;
-  const [infoOption, setInfoOption] = useState("total");
-  // console.log("statusGroup ", statusGroup[0]);
-
-  const filterStatus = (advertItems: any) => {
-    const newStatusGroup = [
-      { option: "available", sweOp: "Tillgängliga", items: [] as any },
-      { option: "reserved", sweOp: "Reserverade", items: [] as any },
-      { option: "pickedUp", sweOp: "Uthämtade", items: [] as any },
-    ];
-    advertItems.forEach((i: any) => {
-      const index = newStatusGroup.findIndex(
-        (group) => group.option === i.status
-      );
-      newStatusGroup[index].items.push(i);
-    });
-
-    const groups = CountingCategorys(newStatusGroup);
-    setStatusGroup(groups);
-  };
+  const [Categorys, setCategorys] = useState() as any;
+  const { user } = useContext(UserContext);
+  const [selectDepartment, setSelectDepartment] = useState([
+    { title: "Alla förvaltningar", filterOn: "all" },
+    { title: "Återbruket", filterOn: ATERBRUKETADRESS },
+  ]);
+  const [selected, setSelected] = useState("all");
 
   const fetchItems = async () => {
     const result = (await API.graphql(
       graphqlOperation(listAdverts, { filter: { version: { eq: 0 } } })
     )) as GraphQLResult<ListAdvertsQuery>;
     const advertItems = result.data?.listAdverts?.items;
-    filterStatus(advertItems);
+    setAllItems(advertItems);
+    const res = filterStatus(advertItems, Categorys);
+    setStatusGroup(res);
+  };
+
+  const fetchItemsOverTime = async () => {
+    const result = (await API.graphql(
+      graphqlOperation(listAdverts)
+    )) as GraphQLResult<ListAdvertsQuery>;
+    const advertItems = result.data?.listAdverts?.items;
+    console.log("ALL ITEMS OVER TIME ", advertItems);
+    const res = filterStatus(advertItems, Categorys);
+    setAllItemsOverTime(advertItems);
+
+    setStatusGroupOverTime(res);
   };
 
   useEffect(() => {
+    fetchItemsOverTime();
     fetchItems();
+    const found = fieldsForm.find((element) => {
+      return element.name === "category";
+    });
+
+    // eslint-disable-next-line prefer-const
+    let saveAllCategorys = {} as any;
+
+    if (found && found.eng) {
+      found.eng.map((cat: string) => {
+        saveAllCategorys[cat] = 0;
+      });
+    }
+
+    if (user.sub) {
+      setSelectDepartment([
+        ...selectDepartment,
+        { title: "Min statistik", filterOn: user.sub },
+      ]);
+    }
+    setCategorys(saveAllCategorys);
+
+    return () => {};
   }, []);
 
-  const infoOptions = [
-    { option: "Total", key: "total" },
-    { option: "Mest Poplulär", key: "most" },
-    { option: "Minst Populär", key: "least" },
-  ];
-
-  const infoOptionControl = (option: string) => {
-    if (option === "total") {
-      setInfoOption("total");
-    } else if (option === "most") {
-      setInfoOption("most");
-    } else if (option === "least") {
-      setInfoOption("least");
+  const filterItems = (filterOn: string) => {
+    let filteredItems = [] as any;
+    if (filterOn === "all") {
+      filteredItems = allItems;
+    } else if (filterOn === ATERBRUKETADRESS) {
+      filteredItems = allItems.filter((item: any) => {
+        return item.location.includes(filterOn);
+      });
+    } else {
+      filteredItems = allItems.filter((item: any) => {
+        return item.giver === filterOn;
+      });
     }
+
+    const res = filterStatus(filteredItems, Categorys);
+    setStatusGroup(res);
+  };
+
+  const filterItemsAllOverTime = (filterOn: string) => {
+    let filteredItems = [] as any;
+    if (filterOn === "all") {
+      filteredItems = allItems;
+    } else if (filterOn === ATERBRUKETADRESS) {
+      filteredItems = allItemsOverTime.filter((item: any) => {
+        return item.location.includes(filterOn);
+      });
+    } else {
+      filteredItems = allItemsOverTime.filter((item: any) => {
+        return item.giver === filterOn;
+      });
+    }
+
+    const res = filterStatus(filteredItems, Categorys);
+    setStatusGroupOverTime(res);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<any>) => {
+    setSelected(e.target.value);
+    filterItems(e.target.value);
+    filterItemsAllOverTime(e.target.value);
   };
 
   return (
-    <main>
-      <OptionDiv>
-        {infoOptions.map((opt) => {
-          return (
-            <button
-              onClick={() => infoOptionControl(opt.key)}
-              className={opt.key}
-              key={opt.key}
-              type="button"
-            >
-              {opt.option}
-            </button>
-          );
-        })}
-      </OptionDiv>
+    <StaticContainer>
+      <SelectWrapper>
+        <select
+          name="selectDepartment"
+          id="selectDepartment"
+          onChange={(e) => handleInputChange(e)}
+          defaultValue={selected}
+        >
+          {selectDepartment.map(
+            (which: { title: string; filterOn: string }) => {
+              return (
+                <option key={which.title} value={which.filterOn}>
+                  {which.title}
+                </option>
+              );
+            }
+          )}
+        </select>
+      </SelectWrapper>
       <InfoWrapper>
+        <h3>Just nu</h3>
         {statusGroup.map((group: any) => {
           return (
-            <GroupDiv key={group.option}>
-              <h4 className="groupTitle">{group.sweOp.toUpperCase()}</h4>
-              {infoOption === "total" ? (
-                <h4> {group.items.length} stycken</h4>
-              ) : infoOption === "most" ? (
-                <div>
-                  <h4>
-                    Kategori:{" "}
-                    {group.most === "table"
-                      ? "Bord"
-                      : group.most === "desk"
-                      ? "Skrivbord"
-                      : group.most === "raiseAndLowerableDesk"
-                      ? "Höj och sänkbart skrivbord"
-                      : group.most === "officeChair"
-                      ? "Kontorsstol"
-                      : group.most === "chair"
-                      ? "Stol"
-                      : group.most === "other"
-                      ? "Övrigt"
-                      : null}
-                  </h4>
-                  <h4>{group.mostNum} stycken</h4>
-                </div>
-              ) : infoOption === "least" ? (
-                <div>
-                  <h4>
-                    Kategori:{" "}
-                    {group.min === "table"
-                      ? "bord"
-                      : group.min === "desk"
-                      ? "Skrivbord"
-                      : group.min === "raiseAndLowerableDesk"
-                      ? "Höj och sänkbart skrivbord"
-                      : group.min === "officeChair"
-                      ? "Kontorsstol"
-                      : group.min === "chair"
-                      ? "Stol"
-                      : group.min === "other"
-                      ? "Övrigt"
-                      : null}
-                  </h4>
-                  <h4>{group.minNum} stycken</h4>
-                </div>
-              ) : null}
-            </GroupDiv>
+            <CardStatics
+              group={group}
+              key={group.sweOp}
+              filterItems={filterItems}
+              specialHeading={group.sweOp}
+            />
           );
         })}
       </InfoWrapper>
-    </main>
+      <InfoWrapper>
+        <h3>Totalt över tid</h3>
+        {statusGroupOverTime.map((group: any, idx: number) => {
+          if (idx === 0) {
+            return (
+              <CardStatics
+                group={group}
+                key={group.sweOp}
+                filterItems={filterItemsAllOverTime}
+                specialHeading="Totalt inlagda annonser"
+              />
+            );
+          }
+
+          return (
+            <CardStatics
+              group={group}
+              key={group.sweOp}
+              filterItems={filterItemsAllOverTime}
+              specialHeading={group.sweOp}
+            />
+          );
+        })}
+      </InfoWrapper>
+    </StaticContainer>
   );
 };
 

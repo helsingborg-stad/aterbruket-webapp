@@ -1,6 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, Suspense } from "react";
 import styled from "styled-components";
-import Card from "./Card";
+
+const Card = React.lazy(() => import("./Card"));
 
 type ISorting = {
   first: string;
@@ -89,52 +90,65 @@ const AdvertContainer: FC<IAdvert> = ({
 
   return (
     <AdvertContainerDiv>
-      <div className="allaDiv">
-        {itemsFrom === "home" && filteredSweValues.length > 0 ? (
-          <OptionWrapper>
-            <h3>Aktiva filter :</h3>
-            {filteredSweValues.map((value: string) => {
-              return (
-                <span
-                  className="options"
-                  key={value}
-                  style={{ margin: "5px", height: "15px" }}
-                >
-                  {value}
-                </span>
-              );
-            })}
-          </OptionWrapper>
-        ) : (
-          itemsFrom === "home" && (
+      <Suspense fallback={<div>Loading...</div>}>
+        <div className="allaDiv">
+          {itemsFrom === "home" && filteredSweValues.length > 0 ? (
             <OptionWrapper>
-              <h3>Alla möbler</h3>
+              <h3>Aktiva filter :</h3>
+              {filteredSweValues.map((value: string) => {
+                return (
+                  <span
+                    className="options"
+                    key={value}
+                    style={{ margin: "5px", height: "15px" }}
+                  >
+                    {value}
+                  </span>
+                );
+              })}
             </OptionWrapper>
-          )
-        )}
-        {itemsFrom === "home" && activeSorting.sortTitle !== "" && (
-          <OptionWrapper>
-            <h3>Sorterar på:</h3>
-            <span className="options" style={{ margin: "5px", height: "15px" }}>
-              {activeSorting.sortTitle}: {activeSorting.secText}
-            </span>
-          </OptionWrapper>
-        )}
-
-        {itemsFrom === "haffat" && items.length !== 0 && (
-          <h3>Saker att hämta</h3>
-        )}
-        {itemsFrom === "pickedUp" && <h3>Saker du hämtat tidigare</h3>}
-        {itemsFrom === "profile" && <h3>Mina annonser</h3>}
-      </div>
-      {filteredItems.map((filteredItem: any) => (
-        <Card
-          key={filteredItem.id}
-          imageKey={filteredItem.images[0].src}
-          filteredItem={filteredItem}
-          fetchReservedAdverts={fetchReservedAdverts}
-        />
-      ))}
+          ) : (
+            itemsFrom === "home" && (
+              <OptionWrapper>
+                <h3>Alla möbler</h3>
+              </OptionWrapper>
+            )
+          )}
+          {itemsFrom === "home" && activeSorting.sortTitle !== "" && (
+            <OptionWrapper>
+              <h3>Sorterar på:</h3>
+              <span
+                className="options"
+                style={{ margin: "5px", height: "15px" }}
+              >
+                {activeSorting.sortTitle}: {activeSorting.secText}
+              </span>
+            </OptionWrapper>
+          )}
+          {itemsFrom === "haffat" && items.length !== 0 && (
+            <h3>Saker att hämta</h3>
+          )}
+          {itemsFrom === "haffat" && items.length === 0 && (
+            <h3>Inga saker att hämta</h3>
+          )}
+          {itemsFrom === "pickedUp" && items.length !== 0 && (
+            <h3>Saker som har hämtats</h3>
+          )}
+          {itemsFrom === "pickedUp" && items.length === 0 && (
+            <h3>Inga saker har hämtats</h3>
+          )}
+          {itemsFrom === "myAdds" && <h3>Mina annonser</h3>}
+        </div>
+        {filteredItems.map((filteredItem: any) => (
+          <Card
+            key={filteredItem.id}
+            imageKey={filteredItem.images[0].src}
+            filteredItem={filteredItem}
+            fetchReservedAdverts={fetchReservedAdverts}
+            itemsFrom={itemsFrom}
+          />
+        ))}
+      </Suspense>
     </AdvertContainerDiv>
   );
 };

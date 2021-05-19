@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Loader from "react-loader-spinner";
 import Form from "./Form";
 import useForm from "../hooks/useForm";
-import { createAdvert, updateAdvert } from "../graphql/mutations";
+import { updateAdvert } from "../graphql/mutations";
 import { fieldsEditForm as fields } from "../utils/formUtils";
 
 const ItemImg = styled.img`
@@ -41,7 +41,6 @@ interface Props {
     description?: string;
     department?: string;
     location?: string;
-    instructions?: string;
     contactPerson?: string;
     email?: string;
     phoneNumber?: string;
@@ -50,6 +49,7 @@ interface Props {
     revisions: number;
     images: [{ url: string }];
     purchasePrice: number;
+    company?: string;
   };
   setEditItem: React.Dispatch<React.SetStateAction<boolean>>;
   closeEditformAndFetchItem: () => void;
@@ -94,9 +94,10 @@ const EditItemForm: FC<Props> = ({
         outside: item.areaOfUse[0].outside,
       },
       description: item.description,
+      company: item.company,
+
       department: item.department,
       location: item.location,
-      instructions: item.instructions,
       contactPerson: item.contactPerson,
       email: item.email,
       phoneNumber: item.phoneNumber,
@@ -108,6 +109,7 @@ const EditItemForm: FC<Props> = ({
     updateAdvert
   );
 
+
   const [imageURL, setImageURL] = useState(image);
 
   useEffect(() => {
@@ -117,17 +119,20 @@ const EditItemForm: FC<Props> = ({
   }, [file]);
 
   if (redirect && !fileUploading) {
-    console.log(fileUploading);
     closeEditformAndFetchItem();
   }
   return (
     <>
-      {!redirect ? (
-        (
+      {fileUploading && (
+        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+      )}
+
+      {!fileUploading && (
+        <>
           <button type="button" onClick={() => setEditItem(false)}>
             X
           </button>
-        ) && <ItemImg src={imageURL} /> && (
+          {/* <ItemImg src={imageURL} /> */}
           <Form
             values={values}
             fields={fields}
@@ -136,9 +141,7 @@ const EditItemForm: FC<Props> = ({
             handleSubmit={handleSubmit}
             handleCheckboxChange={handleCheckboxChange}
           />
-        )
-      ) : (
-        <Loader type="ThreeDots" color="#9db0c6" height={200} width={200} />
+        </>
       )}
     </>
   );

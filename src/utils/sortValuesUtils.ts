@@ -39,8 +39,8 @@ export const sortValues = [
 ];
 
 export const DEFAULTSORTVALUE = {
-  sortTitle: "Klimatavtryck",
-  first: "climateImpact",
-  second: "-createdAt",
-  secText: "Lägst",
+  sortTitle: "Skapad",
+  first: "-createdAt",
+  second: "",
+  secText: "Senast",
 };

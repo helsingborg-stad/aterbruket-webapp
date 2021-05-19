@@ -1,10 +1,10 @@
 /* eslint-disable no-nested-ternary */
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { useLocation, Link } from "react-router-dom";
-import { MdArrowBack } from "react-icons/md";
+import { useLocation, Link, useHistory } from "react-router-dom";
+import { MdArrowBack, MdClose } from "react-icons/md";
+import { FiShare } from "react-icons/fi";
 import { useReactPWAInstall } from "react-pwa-install";
-import { useCallback } from "react";
 
 interface MyProps {
   isHidden: boolean;
@@ -29,6 +29,25 @@ const HeaderDiv = styled.header`
     font-size: ${(props) => `${props.theme.headerTheme.fontSize}px`};
     line-height: ${(props) => `${props.theme.headerTheme.lineHeight}%`};
     color: ${(props) => props.theme.colors.darkest};
+    padding-left: 20px;
+  }
+  .circle {
+    width: 32px;
+    height: 32px;
+    background: ${(props) => props.theme.colors.primaryDark};
+    border-radius: 50%;
+    position: absolute;
+    border: none;
+    top: 16px;
+    right: 24px;
+    svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: ${(props) => props.theme.colors.white};
+      font-size: 24px;
+    }
   }
 `;
 
@@ -44,6 +63,19 @@ const MenuLink = styled(Link)`
 `;
 
 const InstallButton = styled.button`
+  background-color: ${(props) => props.theme.colors.primaryLighter};
+  color: ${(props) => props.theme.colors.primary};
+  font-weight: 500;
+  font-size: 18px;
+  padding:16px, 24px, 16px, 24px
+  border-radius: 4.5px;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70%;
+  height: 50px;
   margin: 0 auto;
 `;
 
@@ -79,6 +111,7 @@ const Header: FC<MyProps> = () => {
 
   useEffect(() => {
     const button: HTMLElement | null = document.getElementById("scanBtn");
+
     if (button) {
       if (!visible) {
         button.style.top = "5vh";
@@ -97,6 +130,12 @@ const Header: FC<MyProps> = () => {
       .catch(() => alert("Ladda gärna ner den nästa gång du använder Haffa."));
   };
 
+  const history = useHistory();
+
+  const goBackFunc = () => {
+    history.goBack();
+  };
+
   return (
     <>
       {path.includes("item") ? (
@@ -107,10 +146,10 @@ const Header: FC<MyProps> = () => {
           style={{
             height: visible ? "auto" : "65px",
             alignItems: visible ? "flex-start" : "center",
-            padding: visible ? "12px 0px 0px 24px" : "0",
+            padding: visible ? "15px 0px 0px 0px" : "0",
           }}
         >
-          {supported() && !isInstalled() && (
+          {path === "app" && supported() && !isInstalled() && (
             <InstallButton
               type="button"
               onClick={handleClick}
@@ -118,9 +157,10 @@ const Header: FC<MyProps> = () => {
                 display: visible ? "block" : "none",
               }}
             >
-              Lägg Haffa på hemskärmen
+              <FiShare /> Lägg Haffa på hemskärmen
             </InstallButton>
           )}
+
           {subPath === "personal-info" ||
           subPath === "myadverts" ||
           subPath === "statics" ? (
@@ -128,6 +168,15 @@ const Header: FC<MyProps> = () => {
               <MdArrowBack className="icon" />
             </MenuLink>
           ) : null}
+          {path === "add" && (
+            <button
+              className="circle"
+              type="button"
+              onClick={() => goBackFunc()}
+            >
+              <MdClose />
+            </button>
+          )}
           <h2
             style={{
               transform: visible ? "none" : "scale(0.5)",

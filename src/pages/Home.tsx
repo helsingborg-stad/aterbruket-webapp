@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useContext } from "react";
+import React, { FC, useState, useEffect, useContext, Suspense } from "react";
 import { Redirect } from "react-router-dom";
 import { graphqlOperation, GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
@@ -8,17 +8,21 @@ import { AuthState } from "@aws-amplify/ui-components";
 import { sortBy } from "sort-by-typescript";
 import { listAdverts } from "../graphql/queries";
 import { ListAdvertsQuery } from "../API";
-import AdvertContainer from "../components/AdvertContainer";
-import Modal from "../components/Modal";
-import ModalAddItemContent from "../components/ModalAddItemContent";
-import OpenCamera from "../components/OpenCamera";
-import FilterMenu from "../components/FilterMenu";
-import Pagination from "../components/Pagination";
-
 import { fieldsForm } from "../utils/formUtils";
 import convertToSwe from "../utils/convert";
 import UserContext from "../contexts/UserContext";
 import { DEFAULTSORTVALUE } from "../utils/sortValuesUtils";
+
+const AdvertContainer = React.lazy(
+  () => import("../components/AdvertContainer")
+);
+const FilterMenu = React.lazy(() => import("../components/FilterMenu"));
+const Modal = React.lazy(() => import("../components/Modal"));
+const ModalAddItemContent = React.lazy(
+  () => import("../components/ModalAddItemContent")
+);
+const OpenCamera = React.lazy(() => import("../components/OpenCamera"));
+const Pagination = React.lazy(() => import("../components/Pagination"));
 
 const AddBtn = styled.button`
   position: fixed;
@@ -65,8 +69,9 @@ const ScanBtn = styled.button`
   svg {
     color: white;
     border-radius: 4px;
-    font-size: 37px;
+    font-size: 36px;
     padding-top: 5px;
+    padding-right: 1px;
   }
 `;
 
@@ -85,11 +90,11 @@ const SearchFilterDiv = styled.div`
     position: relative;
 
     #searchIcon {
-      position: absolute;
-      top: 47px;
-      left: 20px;
       color: ${(props) => props.theme.colors.primaryDark};
-      font-size: 16px;
+      position: absolute;
+      top: 43px;
+      left: 13px;
+      font-size: 22px;
     }
 
     #searchInput {
@@ -114,6 +119,7 @@ const SearchFilterDiv = styled.div`
     font-size: 16px;
     border: none;
     background-color: transparent;
+    color: ${(props) => props.theme.colors.darkest};
 
     .filterIcon {
       color: ${(props) => props.theme.colors.primaryDark};
@@ -233,7 +239,6 @@ const Home: FC<Props> = ({
       );
     }
   };
-
   const filterConditions: any = (fetchedData: any, conditions: any) => {
     let copyItems: any[] = [];
     let results: any[] = [];
@@ -312,11 +317,13 @@ const Home: FC<Props> = ({
     if (authState === AuthState.SignedIn) {
       fetchItems();
     }
+    return () => {};
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState, filterValueUpdated, activeSorting]);
 
   const categoryData = fieldsForm[2];
-  const conditionData = fieldsForm[9];
+  const conditionData = fieldsForm[10];
   const indexes: number[] = [];
   let filteredSweValues: string[] = [];
 
@@ -341,95 +348,102 @@ const Home: FC<Props> = ({
   if (qrCamera.result.length > 2) {
     return <Redirect to={`/item/${qrCamera.result}`} />;
   }
+
   return (
     <main>
-      {showQRCamera ? (
-        <>
-          <button type="button" onClick={() => setShowQRCamera(false)}>
-            X
-          </button>
-          <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
-        </>
-      ) : (
-        <>
-          <Modal modalOpen={modalOpen}>
-            <ModalAddItemContent
-              setModalOpen={setModalOpen}
-              setAlreadyAQRCode={setAlreadyAQRCode}
-            />
-          </Modal>
-          <ScanBtn type="button" onClick={() => setShowQRCamera(true)}>
-            <MdPhotoCamera />
-          </ScanBtn>
-          {/* <TabCtn>
+      <Suspense fallback={<div>Loading...</div>}>
+        {showQRCamera ? (
+          <>
+            <button type="button" onClick={() => setShowQRCamera(false)}>
+              X
+            </button>
+            <OpenCamera qrCamera={qrCamera} setQrCamera={setQrCamera} />
+          </>
+        ) : (
+          <>
+            <Modal modalOpen={modalOpen}>
+              <ModalAddItemContent
+                setModalOpen={setModalOpen}
+                setAlreadyAQRCode={setAlreadyAQRCode}
+              />
+            </Modal>
+            <ScanBtn
+              id="scanBtn"
+              type="button"
+              onClick={() => setShowQRCamera(true)}
+            >
+              <MdPhotoCamera />
+            </ScanBtn>
+            {/* <TabCtn>
             <button type="button">INSPIRATION</button>
             <button type="button">KATEGORIER</button>
           </TabCtn> */}
-          <SearchFilterDiv>
-            <div className="searchWrapper">
-              <MdSearch id="searchIcon" />
-              <input
-                id="searchInput"
-                type="text"
-                placeholder="Sök"
-                onChange={updateSearch}
+            <SearchFilterDiv>
+              <div className="searchWrapper">
+                <MdSearch id="searchIcon" />
+                <input
+                  id="searchInput"
+                  type="text"
+                  placeholder="Sök"
+                  onChange={updateSearch}
+                />
+              </div>
+
+              <button
+                onClick={() => setIsOpen(true)}
+                type="button"
+                id="filterBtn"
+              >
+                Filter <MdTune className="filterIcon" />
+              </button>
+
+              <FilterMenu
+                setAllValues={setAllValues}
+                setIsOpen={setIsOpen}
+                isOpen={isOpen}
+                filterValueUpdated={filterValueUpdated}
+                setFilterValueUpdated={setFilterValueUpdated}
+                filterValue={filterValue}
+                setFilterValue={setFilterValue}
+                setConditionValues={setConditionValues}
+                activeSorting={activeSorting}
+                setActiveSorting={setActiveSorting}
               />
-            </div>
-
-            <button
-              onClick={() => setIsOpen(true)}
-              type="button"
-              id="filterBtn"
-            >
-              Filter <MdTune className="filterIcon" />
-            </button>
-
-            <FilterMenu
-              setAllValues={setAllValues}
-              setIsOpen={setIsOpen}
-              isOpen={isOpen}
-              filterValueUpdated={filterValueUpdated}
-              setFilterValueUpdated={setFilterValueUpdated}
-              filterValue={filterValue}
-              setFilterValue={setFilterValue}
-              setConditionValues={setConditionValues}
+            </SearchFilterDiv>
+            <AdvertContainer
+              filteredSweValues={filteredSweValues}
+              items={renderItems}
+              searchValue={searchValue}
+              itemsFrom="home"
               activeSorting={activeSorting}
-              setActiveSorting={setActiveSorting}
             />
-          </SearchFilterDiv>
-          <AdvertContainer
-            filteredSweValues={filteredSweValues}
-            items={renderItems}
-            searchValue={searchValue}
-            itemsFrom="home"
-            activeSorting={activeSorting}
-          />
-          {items.length > 0 && (
-            <Pagination
-              paginationOption={paginationOption}
-              handlePagination={handlePages}
-            />
-          )}
-          {error && (
-            <MessageCtn>
-              <MdTune className="filterIcon" />
-              <h4 className="message">
-                Du råkade visst filtrera bort precis allt{" "}
-              </h4>
-            </MessageCtn>
-          )}
-          <AddBtn
-            type="button"
-            onClick={() => {
-              setModalOpen(true);
-              setAlreadyAQRCode(false);
-            }}
-          >
-            <MdNewReleases />
-            <p>Gör en egen annons!</p>
-          </AddBtn>
-        </>
-      )}
+            {items.length > 0 && (
+              <Pagination
+                paginationOption={paginationOption}
+                handlePagination={handlePages}
+              />
+            )}
+            {error && (
+              <MessageCtn>
+                <MdTune className="filterIcon" />
+                <h4 className="message">
+                  Du råkade visst filtrera bort precis allt{" "}
+                </h4>
+              </MessageCtn>
+            )}
+            <AddBtn
+              type="button"
+              onClick={() => {
+                setModalOpen(true);
+                setAlreadyAQRCode(false);
+              }}
+            >
+              <MdNewReleases />
+              <p>Gör en egen annons!</p>
+            </AddBtn>
+          </>
+        )}
+      </Suspense>
     </main>
   );
 };

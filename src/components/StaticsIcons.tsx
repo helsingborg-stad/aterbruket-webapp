@@ -43,6 +43,7 @@ const ItemGroup = styled.div`
     color: ${(props) => props.theme.colors.monoLight};
     font-weight: 900;
     font-size: 14px;
+    margin-top: 0;
   }
 
   .iconContainer {

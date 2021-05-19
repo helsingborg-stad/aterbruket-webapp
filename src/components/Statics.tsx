@@ -173,10 +173,30 @@ const Statics: FC = () => {
     setStatusGroup(res);
   };
 
+  const filterItemsAllOverTime = (filterOn: string) => {
+    let filteredItems = [] as any;
+    if (filterOn === "all") {
+      filteredItems = allItems;
+    } else if (filterOn === ATERBRUKETADRESS) {
+      filteredItems = allItemsOverTime.filter((item: any) => {
+        return item.location.includes(filterOn);
+      });
+    } else {
+      filteredItems = allItemsOverTime.filter((item: any) => {
+        return item.giver === filterOn;
+      });
+    }
+
+    const res = filterStatus(filteredItems, Categorys);
+    setStatusGroupOverTime(res);
+  };
+
   const handleInputChange = (e: React.ChangeEvent<any>) => {
     setSelected(e.target.value);
     filterItems(e.target.value);
+    filterItemsAllOverTime(e.target.value);
   };
+
   return (
     <StaticContainer>
       <SelectWrapper>
@@ -213,13 +233,13 @@ const Statics: FC = () => {
       </InfoWrapper>
       <InfoWrapper>
         <h3>Totalt över tid</h3>
-        {statusGroup.map((group: any) => {
+        {statusGroupOverTime.map((group: any) => {
           if (group.option !== "reserved") {
             return (
               <CardStatics
                 group={group}
                 key={group.sweOp}
-                filterItems={filterItems}
+                filterItems={filterItemsAllOverTime}
               />
             );
           }

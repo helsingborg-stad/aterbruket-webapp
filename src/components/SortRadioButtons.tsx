@@ -93,7 +93,6 @@ const InputGroup = styled.div`
       appearance: none;
       outline: none;
       border: none;
-      
   }
 `;
 const GroupRadio = styled.div`

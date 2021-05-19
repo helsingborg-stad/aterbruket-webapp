@@ -111,6 +111,7 @@ const Header: FC<MyProps> = () => {
 
   useEffect(() => {
     const button: HTMLElement | null = document.getElementById("scanBtn");
+
     if (button) {
       if (!visible) {
         button.style.top = "5vh";

@@ -13,8 +13,10 @@ const GroupDiv = styled.div`
   height: 100%;
   width: 100%;
 
-  margin-bottom: 8px;
   padding: 24px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 `;
 
 const ItemGroup = styled.div`
@@ -23,8 +25,7 @@ const ItemGroup = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: 500;
-
-  margin: 5px;
+  width: min-content;
 
   .value {
     color: ${(props) => props.theme.colors.primaryDark};

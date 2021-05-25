@@ -359,7 +359,6 @@ export default function Form(props: {
     }
   });
 
-
   const history = useHistory();
 
   const goBackFunc = () => {

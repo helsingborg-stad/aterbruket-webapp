@@ -322,8 +322,8 @@ const Home: FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authState, filterValueUpdated, activeSorting]);
 
-  const categoryData = fieldsForm[2];
-  const conditionData = fieldsForm[10];
+  const categoryData = fieldsForm[3];
+  const conditionData = fieldsForm[11];
   const indexes: number[] = [];
   let filteredSweValues: string[] = [];
 

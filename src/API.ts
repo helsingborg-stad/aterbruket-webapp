@@ -31,6 +31,7 @@ export type CreateAdvertInput = {
   revisions?: number | null,
   purchasePrice?: string | null,
   company?: string | null,
+  aterbruketId?: string | null,
 };
 
 export enum ItemStatus {
@@ -106,6 +107,7 @@ export type ModelAdvertConditionInput = {
   revisions?: ModelIntInput | null,
   purchasePrice?: ModelStringInput | null,
   company?: ModelStringInput | null,
+  aterbruketId?: ModelStringInput | null,
   and?: Array< ModelAdvertConditionInput | null > | null,
   or?: Array< ModelAdvertConditionInput | null > | null,
   not?: ModelAdvertConditionInput | null,
@@ -208,6 +210,7 @@ export type Advert = {
   revisions?: number | null,
   purchasePrice?: string | null,
   company?: string | null,
+  aterbruketId?: string | null,
   createdAt?: string,
   updatedAt?: string,
 };
@@ -261,6 +264,7 @@ export type UpdateAdvertInput = {
   revisions?: number | null,
   purchasePrice?: string | null,
   company?: string | null,
+  aterbruketId?: string | null,
 };
 
 export type DeleteAdvertInput = {
@@ -339,6 +343,7 @@ export type ModelAdvertFilterInput = {
   revisions?: ModelIntInput | null,
   purchasePrice?: ModelStringInput | null,
   company?: ModelStringInput | null,
+  aterbruketId?: ModelStringInput | null,
   and?: Array< ModelAdvertFilterInput | null > | null,
   or?: Array< ModelAdvertFilterInput | null > | null,
   not?: ModelAdvertFilterInput | null,
@@ -438,6 +443,7 @@ export type CreateAdvertMutation = {
     revisions?: number | null,
     purchasePrice?: string | null,
     company?: string | null,
+    aterbruketId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -493,6 +499,7 @@ export type UpdateAdvertMutation = {
     revisions?: number | null,
     purchasePrice?: string | null,
     company?: string | null,
+    aterbruketId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -548,6 +555,7 @@ export type DeleteAdvertMutation = {
     revisions?: number | null,
     purchasePrice?: string | null,
     company?: string | null,
+    aterbruketId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -654,6 +662,7 @@ export type GetAdvertQuery = {
     revisions?: number | null,
     purchasePrice?: string | null,
     company?: string | null,
+    aterbruketId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -715,6 +724,7 @@ export type ListAdvertsQuery = {
       revisions?: number | null,
       purchasePrice?: string | null,
       company?: string | null,
+      aterbruketId?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -807,6 +817,7 @@ export type OnCreateAdvertSubscription = {
     revisions?: number | null,
     purchasePrice?: string | null,
     company?: string | null,
+    aterbruketId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -857,6 +868,7 @@ export type OnUpdateAdvertSubscription = {
     revisions?: number | null,
     purchasePrice?: string | null,
     company?: string | null,
+    aterbruketId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -907,6 +919,7 @@ export type OnDeleteAdvertSubscription = {
     revisions?: number | null,
     purchasePrice?: string | null,
     company?: string | null,
+    aterbruketId?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

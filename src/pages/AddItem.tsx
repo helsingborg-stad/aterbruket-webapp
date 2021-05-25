@@ -52,6 +52,7 @@ const AddItem: FC<Props> = ({
     {
       title: "",
       status: "available",
+      aterbruketId: "",
       category: "",
       quantity: 1,
       height: "",

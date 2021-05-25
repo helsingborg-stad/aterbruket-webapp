@@ -47,6 +47,7 @@ export const createAdvert = /* GraphQL */ `
       revisions
       purchasePrice
       company
+      aterbruketId
       createdAt
       updatedAt
     }
@@ -97,6 +98,7 @@ export const updateAdvert = /* GraphQL */ `
       revisions
       purchasePrice
       company
+      aterbruketId
       createdAt
       updatedAt
     }
@@ -147,6 +149,7 @@ export const deleteAdvert = /* GraphQL */ `
       revisions
       purchasePrice
       company
+      aterbruketId
       createdAt
       updatedAt
     }

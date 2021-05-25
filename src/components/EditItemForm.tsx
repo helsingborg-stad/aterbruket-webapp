@@ -28,6 +28,7 @@ interface Props {
   item: {
     id: number;
     title: string;
+    aterbruketId: string;
     status: string;
     category?: string;
     quantity?: number;
@@ -75,6 +76,7 @@ const EditItemForm: FC<Props> = ({
     {
       id: item.id,
       title: item.title,
+      aterbruketId: item.aterbruketId ? item.aterbruketId : "",
       status: item.status,
       category: item.category,
       quantity: item.quantity,
@@ -108,7 +110,6 @@ const EditItemForm: FC<Props> = ({
     },
     updateAdvert
   );
-
 
   const [imageURL, setImageURL] = useState(image);
 

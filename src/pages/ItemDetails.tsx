@@ -151,7 +151,14 @@ const TopSection = styled.div`
       font-weight: 900;
       font-size: 36px;
       line-height: 124%;
+      margin: 8px 32px 12px 32px;
+    }
+    p {
       margin: 8px 32px 24px 32px;
+      color: ${(props) => props.theme.colors.primaryDark};
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
     }
   }
 
@@ -614,6 +621,7 @@ const ItemDetails: FC<ParamTypes> = () => {
               : item.category}
           </h4>
           <h1>{item.title}</h1>
+          <p>{item.aterbruketId}</p>
         </div>
 
         {item.status ===

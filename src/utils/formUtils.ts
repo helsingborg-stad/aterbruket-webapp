@@ -17,6 +17,14 @@ export const fieldsForm = [
     placeholder: "Döp annonsen...",
   },
   {
+    name: "aterbruketId",
+    dataType: "text",
+    fieldType: "input",
+    disabled: false,
+    title: "Återbruket ID",
+    placeholder: "ex. 4435A",
+  },
+  {
     name: "category",
     fieldType: "select",
     disabled: false,
@@ -243,6 +251,14 @@ export const fieldsEditForm = [
     required: true,
     title: "Rubrik",
     placeholder: "Döp annonsen...",
+  },
+  {
+    name: "aterbruketId",
+    dataType: "text",
+    fieldType: "input",
+    disabled: false,
+    title: "Återbruket ID",
+    placeholder: "ex. 4435A",
   },
   {
     name: "category",

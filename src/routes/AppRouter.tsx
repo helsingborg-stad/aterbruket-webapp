@@ -13,7 +13,6 @@ const Home = React.lazy(() => import("../pages/Home"));
 const ItemDetails = React.lazy(() => import("../pages/ItemDetails"));
 const MenuBar = React.lazy(() => import("../components/MenuBar"));
 const Profile = React.lazy(() => import("../pages/Profile"));
-const PersonalInfo = React.lazy(() => import("../components/PersonalInfo"));
 const Onboarding = React.lazy(() => import("../pages/Onboarding"));
 const SignIn = React.lazy(() => import("../pages/SignIn"));
 const StartScreen = React.lazy(() => import("../pages/StartScreen"));
@@ -145,7 +144,6 @@ const AppRouter: FC = () => {
           />
           <Route path="/haffat" component={Haffat} />
           <Route exact path="/profile" component={Profile} />
-          <Route path="/profile/personal-info" component={PersonalInfo} />
           <Route path="/item/:id" component={ItemDetails} />
           <Route path="/about" component={About} />
           <MenuBar setQrCamera={setQrCamera} qrCamera={qrCamera} />

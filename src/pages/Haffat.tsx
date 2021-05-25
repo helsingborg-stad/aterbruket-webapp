@@ -36,13 +36,21 @@ const Container = styled.div`
   font-size: 14px;
   color: ${(props) => props.theme.colors.dark};
 `;
+
+const Divider = styled.div`
+   {
+    height: 2px;
+    margin-top: 15px;
+    background-color: ${(props) => props.theme.colors.primaryLighter};
+  }
+`;
 const Haffat: FC = () => {
   const menuOpions = [
     { title: "SAKER ATT HÄMTA" },
     { title: "MINA ANNONSER" },
     { title: "STATISTIK" },
   ];
-  const [active, setActive] = useState("STATISTIK");
+  const [active, setActive] = useState("SAKER ATT HÄMTA");
   const { user } = useContext(UserContext);
 
   const handleActive = (e: React.ChangeEvent<any>) => {
@@ -62,6 +70,7 @@ const Haffat: FC = () => {
                 >
                   {op.title}
                 </label>
+                {active === op.title && <Divider />}
                 <input
                   type="radio"
                   id={op.title}

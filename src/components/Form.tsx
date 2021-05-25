@@ -274,6 +274,7 @@ export default function Form(props: {
               <input
                 type={field.dataType}
                 name={x.name}
+                id={x.name}
                 onChange={(e) => props.handleCheckboxChange(e, field.name)}
                 checked={props.values[field.name][x.name]}
                 disabled={x.disabled}

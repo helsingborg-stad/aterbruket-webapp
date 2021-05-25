@@ -1,58 +1,88 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { RiArrowRightSLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Auth } from "aws-amplify";
+import UserContext from "../contexts/UserContext";
 
-const OptionsDiv = styled.div`
-  width: 90%;
-  max-width: 700px;
-  margin-top: 20px;
+import Button from "../components/Button";
+
+const InformationFrame = styled.header`
+  padding: 24px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.04)),
+    #ffffff;
+  border-radius: 4.5px;
 `;
 
-const OptionLink = styled(Link)`
-  width: 100%;
-  display: flex;
-  font-weight: 500;
-  font-size: 18px;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-  padding: 0 16px;
-  margin-top: 10px;
-  background-color: #e1e9db;
-  color: ${(props) => props.theme.colors.primaryDark};
-  text-decoration: none;
-  height: 50px;
-  border-radius: 14.5px;
-  box-shadow: 0px 0px 2px rgba(98, 98, 98, 0.18),
-    0px 3px 2px rgba(98, 98, 98, 0.12), 0px 6px 8px rgba(98, 98, 98, 0.12),
-    0px 10px 16px rgba(98, 98, 98, 0.12), 0px 26px 32px rgba(98, 98, 98, 0.12);
+const InformationHeader = styled.p`
+  text-transform: uppercase;
+  color: #0069b4;
+`;
 
-  :active,
-  :focus {
-    color: #80b14a;
-  }
+const InformationContainer = styled.div`
+  width: 90%;
+  background: #fcfcfc;
+  margin-bottom: 32px;
 `;
 
 const Profile: FC = () => {
-  const menuOptions = [
-    {
-      option: "personal-info",
-      title: "Kontaktuppgifter",
-    },
-  ];
+  const { user } = useContext(UserContext);
+
+  const history = useHistory();
+
+  const handleSignOut = async () => {
+    try {
+      await Auth.signOut().then(() => {
+        history.push("/");
+      });
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  };
 
   return (
     <main>
-      <OptionsDiv>
-        {menuOptions.map((opt: any) => {
-          return (
-            <OptionLink to={`/profile/${opt.option}`} key={opt.option}>
-              <p>{opt.title}</p> <RiArrowRightSLine />
-            </OptionLink>
-          );
-        })}
-      </OptionsDiv>
+      <h2>{user.name}</h2>
+      {user.isAdmin && <strong>Administratör</strong>}
+      <InformationContainer>
+        {user.name && (
+          <>
+            <InformationHeader>Namn</InformationHeader>
+            <InformationFrame>{user.name}</InformationFrame>
+          </>
+        )}
+        {user.company && (
+          <>
+            <InformationHeader>Förvaltning</InformationHeader>
+            <InformationFrame>{user.company}</InformationFrame>
+          </>
+        )}
+        {user.department && (
+          <>
+            <InformationHeader>Avdelning</InformationHeader>
+            <InformationFrame>{user.department}</InformationFrame>
+          </>
+        )}
+        {user.email && (
+          <>
+            <InformationHeader>Email</InformationHeader>
+            <InformationFrame>{user.email}</InformationFrame>
+          </>
+        )}
+        {user.address && (
+          <>
+            <InformationHeader>Adress</InformationHeader>
+            <InformationFrame>{user.address}</InformationFrame>
+          </>
+        )}
+        {user.postalcode && (
+          <>
+            <InformationHeader>Postnummer</InformationHeader>
+            <InformationFrame>{user.postalcode}</InformationFrame>
+          </>
+        )}
+      </InformationContainer>
+
+      <Button onClick={handleSignOut}>Logga ut</Button>
     </main>
   );
 };

@@ -35,6 +35,7 @@ type Advert
   revisions: Int
   purchasePrice: String
   company: String
+  aterbruketId: String
 }
 
 enum ItemStatus {

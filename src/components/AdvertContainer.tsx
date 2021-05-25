@@ -81,7 +81,11 @@ const AdvertContainer: FC<IAdvert> = ({
           -1 ||
         item.description
           .toLowerCase()
-          .indexOf(searchValue.toLocaleLowerCase()) !== -1
+          .indexOf(searchValue.toLocaleLowerCase()) !== -1 ||
+        (item.aterbruketId &&
+          item.aterbruketId
+            .toLowerCase()
+            .indexOf(searchValue.toLocaleLowerCase()) !== -1)
       );
     });
   } else {

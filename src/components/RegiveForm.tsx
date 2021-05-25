@@ -23,6 +23,7 @@ interface Props {
   item: {
     id: number;
     title: string;
+    aterbruketId: string;
     status: string;
     category?: string;
     quantity?: number;
@@ -71,6 +72,7 @@ const RegiveForm: FC<Props> = ({
     {
       id: item.id,
       title: item.title,
+      aterbruketId: item.aterbruketId ? item.aterbruketId : "",
       status: "available",
       category: item.category,
       quantity: item.quantity,

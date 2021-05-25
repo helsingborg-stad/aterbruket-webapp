@@ -245,12 +245,12 @@ const FilterMenu: FC<Props> = ({
         />
         <FilterCheckbox
           setSaveValues={setSaveValues}
-          group={fieldsForm[2]}
+          group={fieldsForm[3]}
           saveValues={saveValues}
         />
         <FilterCheckbox
           setSaveValues={setSaveValues}
-          group={fieldsForm[10]}
+          group={fieldsForm[11]}
           saveValues={saveValues}
         />
         <button

@@ -44,6 +44,7 @@ export const onCreateAdvert = /* GraphQL */ `
       revisions
       purchasePrice
       company
+      aterbruketId
       createdAt
       updatedAt
     }
@@ -91,6 +92,7 @@ export const onUpdateAdvert = /* GraphQL */ `
       revisions
       purchasePrice
       company
+      aterbruketId
       createdAt
       updatedAt
     }
@@ -138,6 +140,7 @@ export const onDeleteAdvert = /* GraphQL */ `
       revisions
       purchasePrice
       company
+      aterbruketId
       createdAt
       updatedAt
     }

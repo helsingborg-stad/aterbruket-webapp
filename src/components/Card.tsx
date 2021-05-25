@@ -176,8 +176,6 @@ const Card: FC<Props> = ({
     return () => {};
   }, [itemUpdated]);
 
-
-
   return (
     <CardDiv
       as={Link}
@@ -194,6 +192,11 @@ const Card: FC<Props> = ({
       <div className="infoDiv">
         {filteredItem.category === "wanted" && (
           <h4 style={{ color: "#205400", fontSize: "14px" }}>Sökes</h4>
+        )}
+        {filteredItem.aterbruketId && (
+          <h4 style={{ color: "#205400", fontSize: "14px" }}>
+            {filteredItem.aterbruketId}
+          </h4>
         )}
 
         <h3>{filteredItem.title}</h3>

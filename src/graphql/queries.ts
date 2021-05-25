@@ -44,6 +44,7 @@ export const getAdvert = /* GraphQL */ `
       revisions
       purchasePrice
       company
+      aterbruketId
       createdAt
       updatedAt
     }
@@ -106,6 +107,7 @@ export const listAdverts = /* GraphQL */ `
         revisions
         purchasePrice
         company
+        aterbruketId
         createdAt
         updatedAt
       }

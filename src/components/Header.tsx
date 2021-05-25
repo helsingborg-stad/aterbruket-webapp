@@ -161,7 +161,7 @@ const Header: FC<MyProps> = () => {
             </InstallButton>
           )}
 
-          {subPath === "personal-info" ||
+          {
           subPath === "myadverts" ||
           subPath === "statics" ? (
             <MenuLink to="/profile">
@@ -184,7 +184,7 @@ const Header: FC<MyProps> = () => {
               width: visible ? "unset" : "max-content",
             }}
           >
-            {subPath === "personal-info"
+            {path === "profile"
               ? "Kontaktuppgifter"
               : subPath === "myadverts"
               ? "Dina grejer som kan Haffas!"

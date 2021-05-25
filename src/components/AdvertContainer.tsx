@@ -114,7 +114,13 @@ const AdvertContainer: FC<IAdvert> = ({
           ) : (
             itemsFrom === "home" && (
               <OptionWrapper>
-                <h3>Alla möbler</h3>
+                {searchValue ? (
+                  <h3>
+                    Sökning "{searchValue}" gav {filteredItems.length} annonser
+                  </h3>
+                ) : (
+                  <h3>Alla möbler</h3>
+                )}
               </OptionWrapper>
             )
           )}

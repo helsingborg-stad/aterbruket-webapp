@@ -199,7 +199,6 @@ const Home: FC<Props> = ({
   const updateSearch = (event: React.ChangeEvent<any>) => {
     const { target } = event;
     const { value } = target;
-    console.log(value);
     setSearchValue(value);
   };
   const [paginationOption, setPaginationOption] = useState({

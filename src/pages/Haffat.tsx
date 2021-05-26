@@ -15,8 +15,10 @@ const InputGroup = styled.div`
       border: none;
     }
 
+
     .active {
       color: ${(props) => props.theme.colors.primaryDark};
+  
     }
     
     input[type="radio"]:checked,
@@ -41,7 +43,6 @@ const Divider = styled.div`
    {
     height: 2px;
     margin-top: 15px;
-    background-color: ${(props) => props.theme.colors.primaryLighter};
   }
 `;
 const Haffat: FC = () => {
@@ -70,7 +71,13 @@ const Haffat: FC = () => {
                 >
                   {op.title}
                 </label>
-                {active === op.title && <Divider />}
+                <Divider
+                  style={{
+                    backgroundColor:
+                      active === op.title ? "#E1E9DB" : "transparent",
+                  }}
+                />
+
                 <input
                   type="radio"
                   id={op.title}

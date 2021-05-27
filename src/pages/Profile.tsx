@@ -32,7 +32,7 @@ const Profile: FC = () => {
   const handleSignOut = async () => {
     try {
       await Auth.signOut().then(() => {
-        history.push("/");
+        history.push("/onboarding");
       });
     } catch (error) {
       console.log("error signing out: ", error);

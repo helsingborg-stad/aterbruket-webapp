@@ -283,6 +283,7 @@ export const fieldsEditForm = [
       "Tavlor",
       "UteÅterbrukat",
       "Vitvaror",
+      "Återbygg",
     ],
     eng: [
       "kidsFurniture",
@@ -299,6 +300,7 @@ export const fieldsEditForm = [
       "painting",
       "outdoorItem",
       "appliances",
+      "constructionMaterial",
     ],
   },
   {

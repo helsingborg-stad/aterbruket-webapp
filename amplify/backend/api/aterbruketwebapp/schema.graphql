@@ -59,6 +59,7 @@ enum ItemCategory {
   painting
   outdoorItem
   appliances
+  constructionMaterial
 }
 
 type ItemAMaterial {

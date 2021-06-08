@@ -56,6 +56,7 @@ export enum ItemCategory {
   painting = "painting",
   outdoorItem = "outdoorItem",
   appliances = "appliances",
+  constructionMaterial = "constructionMaterial",
 }
 
 

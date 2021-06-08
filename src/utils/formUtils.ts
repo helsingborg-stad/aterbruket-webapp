@@ -45,6 +45,7 @@ export const fieldsForm = [
       "Tavlor",
       "UteÅterbrukat",
       "Vitvaror",
+      "Återbygg",
     ],
     eng: [
       "kidsFurniture",
@@ -61,6 +62,7 @@ export const fieldsForm = [
       "painting",
       "outdoorItem",
       "appliances",
+      "constructionMaterial",
     ],
   },
   {
